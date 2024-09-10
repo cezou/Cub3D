@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/10 11:44:43 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/10 13:57:42 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -320,24 +320,6 @@ typedef struct s_trig
 	double	cosz;
 	double	sinz;
 }	t_trig;
-
-typedef struct s_texinfo
-{
-	char			*north;
-	char			*south;
-	char			*west;
-	char			*east;
-	int				*floor;
-	int				*ceiling;
-	unsigned long	hex_floor;
-	unsigned long	hex_ceiling;
-	int				size;
-	int				index;
-	double			step;
-	double			pos;
-	int				x;
-	int				y;
-}	t_texinfo;
 
 typedef struct s_imga
 {

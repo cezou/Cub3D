@@ -22,10 +22,10 @@ static uint64_t	gettimeofday_ms(void)
 
 uint64_t	timestamp_in_ms(t_vars *v)
 {
-	static int	frames = -1;
+	// static int	frames = -1;
 
-	if (MANDATORY)
-		return (++frames);
+	// if (MANDATORY)
+	// 	return (++frames);
 	if (v->game.created_at == 0)
 		v->game.created_at = gettimeofday_ms();
 	return (gettimeofday_ms() - v->game.created_at);

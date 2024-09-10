@@ -6,12 +6,13 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 18:24:52 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/10 11:35:25 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/10 14:03:19 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
 
+# define M_PI		3.14159265358979323846	/* pi */
 
 float	rad_to_deg(float rad)
 {
