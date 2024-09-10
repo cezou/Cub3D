@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:59:52 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/10 11:27:56 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/10 13:50:57 by cviegas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,16 @@ void	showparams(t_vars *v)
 	ft_printf(1, "\t\t(default): 1024 768\n");
 	ft_printf(1, "%s", RCOLOR);
 	ft_printf(1, "\n%s", POTATO);
-	ft_printf(1, "\n%s\t\t\t\t\t\t\tBy ELIOTT NORIE <enorie@student.42.fr>%s\
-", GREEN, RCOLOR);
-	ft_printf(1, "\n%s\t\t\t\t\t\t\t+ PIERRE MAGNERON <pmagnero@student.42.fr>%s\
-\n\n\n", GREEN, RCOLOR);
+	ft_printf(1,
+				"\n%s\t\t\t\t\t\t\tBy CESAIRE VIEGAS <cviegas@student.42.fr>%s\
+",
+				GREEN,
+				RCOLOR);
+	ft_printf(1,
+				"\n%s\t\t\t\t\t\t\t+ PIERRE MAGNERON <pmagnero@student.42.fr>%s\
+\n\n\n",
+				GREEN,
+				RCOLOR);
 }
 
 int	myrand(int nb)
