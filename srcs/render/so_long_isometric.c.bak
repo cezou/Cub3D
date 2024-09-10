@@ -1,0 +1,132 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    cub3D_isometric.c.bak                            :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/03/13 15:57:12 by pmagnero          #+#    #+#              #
+#    Updated: 2024/04/05 12:19:12 by pmagnero         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+#include "../../includes/cub3D.h"
+
+static void	puttextures(t_vars *v, int i, int ph, int pw, int dest)
+{
+	size_t	k;
+	t_point	p;
+	t_point	d;
+
+	p.y = -1;
+	p.z = 10;
+	while (++(p.y) <= v->img[i].height)
+	{
+		p.x = -1;
+		while (++(p.x) <= v->img[i].width)
+		{
+			k = (p.y * v->img[i].len) + (p.x * 4);
+			if (v->img[i].addr[k + 3] == 0)
+			{
+				d = p;
+				d.x = (p.x + pw) * v->mouse.zoom
+					- (v->mapw * v->mouse.zoom / 2) + v->mouse.xoff;
+				d.y = (p.y + ph) * v->mouse.zoom
+					- (v->mapw * v->mouse.zoom / 2);
+				convertpoint(v, &d, (t_point){0});
+				// else if (i == ESPAWN || i == EGUARD)
+				// 	convertpoint(v, &d, (t_point){1, 1, 1, 0});
+				img_pix_put(&v->img[dest], (t_point){d.x, d.y, 0,
+					getcolorpix(v->img[i].addr, k, 0)}, v->resw, v->resh);
+			}
+		}
+	}
+}
+
+static void	animations(t_vars *v)
+{
+	// puttextures(v, EGUARD, 250, 250 + v->frame, EMAP);
+	puttextures(v, ESPAWN, v->img[ESPAWN].posy + v->img[ESPAWN].ydelta,
+		v->img[ESPAWN].posx + v->img[ESPAWN].xdelta, EMAP);
+}
+
+static void	displayisometric(t_vars *v)
+{
+	t_point	p;
+	t_point	d;
+
+	p.y = -1;
+	while (++(p.y) <= v->img[EMAP].height)
+	{
+		p.x = -1;
+		while (++(p.x) <= v->img[EMAP].width)
+		{
+			d = p;
+			// d.y += (v->img[EMAP].height + (v->maph / 4) * v->mouse.zoom) / 4;
+			img_pix_put(&v->img[EMAP], (t_point){d.x, d.y + v->mouse.yoff, 0,
+				getcolorpix(v->img[COMP_N].addr,
+					(p.y * v->img[COMP_N].len) + (p.x * 4), 0)}, v->resw, v->resh);
+		}
+	}
+	// mlx_put_image_to_window(v->mlx, v->win, v->img[EMAP].img, 0, 0);
+}
+
+void	isometric(t_vars *v, t_map *tmp)
+{
+	int	i;
+	int		prevw;
+	int		prevh;
+
+	prevw = 0;
+	prevh = 0;
+	inittrigo(v);
+	while (tmp)
+	{
+		getindex(v, &i, tmp);
+		// puttextures(v, i, prevh, prevw, COMP_N);
+		if (v->refreshmap)//(!v->refreshmap && v->prevplayer
+				// && (tmp == v->prevplayer || tmp == v->player)) || 
+		{
+			v->mouse.xangle = -0.615472907;
+			v->mouse.yangle = -0.523599;
+			v->mouse.zangle = 0.615472907;
+			inittrigo(v);
+			puttextures(v, i, prevh, prevw, COMP_N);
+		}
+		if (v->start == 2 && tmp->val == SPAWN)
+		{
+			v->img[ESPAWN].posx = prevw + v->img[ESPAWN].xdelta;
+			v->img[ESPAWN].posy = prevh + v->img[ESPAWN].ydelta;
+			// v->mouse.xangle = -0.615472907;
+			// v->mouse.yangle = 0.523599;
+			// v->mouse.zangle = 0;
+			// inittrigo(v);
+			// puttextures(v, ESPAWN, prevh, prevw, COMP_N);
+		}
+		if (tmp->val == EXIT)
+		{
+			v->mouse.xangle = -0.615472907;
+			v->mouse.yangle = 0.523599;
+			v->mouse.zangle = 0;
+			inittrigo(v);
+			puttextures(v, EEXIT, prevh, prevw, COMP_N);
+		}
+		else if (tmp->val == COLLECT)
+		{
+			v->mouse.xangle = -0.615472907;
+			v->mouse.yangle = 0.523599;
+			v->mouse.zangle = 0;
+			inittrigo(v);
+			puttextures(v, ECOLLECT, prevh, prevw, COMP_N);
+		}
+		prevw += v->img[i].width;
+		if (tmp->right && tmp->right->x == 0)
+		{
+			prevw = 0;
+			prevh += v->img[i].height;
+		}
+		tmp = tmp->right;
+	}
+	displayisometric(v);
+	animations(v);
+}
