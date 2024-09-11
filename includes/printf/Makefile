@@ -14,7 +14,7 @@ NAME = libftprintf.a
 
 HEADER = .
 
-FLAG = -Wall -Wextra -Werror
+FLAG = -Wall -Wextra -Werror -g
 
 OPTION =  -I ./libft -I $(HEADER)
 
@@ -23,6 +23,8 @@ SRC =	ft_printf.c \
 		ft_printptr.c \
 		ft_printux.c \
 		ft_printutils.c\
+		get_next_line.c \
+		get_next_line_utils.c \
 
 OBJ = $(SRC:.c=.o)
 

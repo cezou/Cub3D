@@ -21,7 +21,7 @@ HEADER_MINIAUDIO = ./includes/miniaudio
 OBJS_DIR	= objs/
 OBJS_DIR_B	= objs_b/
 
-FLAG = -Wall -Wextra -Werror
+FLAG = -Wall -Wextra -Werror -g
 
 MLX_FLAG = -lXext -lX11 -lz -lm -pthread -ldl -lpthread -lXfixes -lasound
 

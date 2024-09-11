@@ -15,7 +15,8 @@
 void	initvars(t_vars *v)
 {
 	v->mapv = (t_mapv){NULL, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, v->mapv.filename};
-	v->player = (t_player){NULL, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, v->player.movspeed, 0, 0};
+	v->player = (t_player){NULL, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
+		v->player.movspeed, 0, 0};
 	v->guard = (t_guard){NULL, 0, 1, 0, 5, 0, v->guard.movspeedguard, 0, 0};
 	v->proj = (t_proj){0};
 	v->menu = (t_menu){0};
@@ -149,4 +150,4 @@ void	init_cam(t_vars *v)
 	// 		/ v->screen.resh) + 1;
 }
 //(long double)(long double)v->resh
-	//	/ ((long double)v->maph * (long double)v->img[1].height);
+//	/ ((long double)v->maph * (long double)v->img[1].height);

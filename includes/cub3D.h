@@ -32,6 +32,7 @@
 # define FAIL EXIT_FAILURE
 # define SUCCESS EXIT_SUCCESS
 # define STDERR STDERR_FILENO
+# define WHITESPACES " \t\n\v\f\r"
 
 // Debug
 
@@ -502,23 +503,66 @@ typedef struct s_game
 // couleur: entre 0 et 255
 
 // Map: - Ne peut pas avoir de
+
+typedef struct s_is_set
+{
+	bool				no;
+	bool				so;
+	bool				we;
+	bool				ea;
+	bool				f;
+	bool				c;
+}						t_is_set;
+
 typedef struct s_infos
 {
-	char				*north_path;
-	char				*south_path;
-	char				*east_path;
-	char				*west_path;
+	t_is_set			is_set;
+	void				*north_path;
+	void				*south_path;
+	void				*east_path;
+	void				*west_path;
 
-	int					ceil;
-	int					floor;
+	uint32_t			ceil;
+	uint32_t			floor;
 
 }						t_infos;
+
+typedef __uint8_t		t_hexa;
+
+typedef union u_color	t_color;
+
+union					u_color
+{
+	__uint32_t			integer;
+	struct
+	{
+		__uint8_t		r;
+		__uint8_t		g;
+		__uint8_t		b;
+		__uint8_t		a;
+	};
+};
+
+typedef struct s_img
+{
+	void				*img;
+	void				*address;
+	t_color				*pixels;
+	size_t				height;
+	size_t				width;
+}						t_img;
 
 typedef struct s_vars
 {
 	t_infos				infos;
 	t_xvar				*mlx;
 	t_imga				*img;
+
+	t_imga				north;
+	t_imga				south;
+	t_imga				east;
+	t_imga				west;
+
 	t_mouse				mouse;
 	t_map				*exit;
 	t_map				*last;
@@ -539,6 +583,8 @@ typedef struct s_vars
 
 // Parsing
 void					parsing(char *file, t_infos *v);
+int						cmp(const char *s1, const char *s2);
+
 // Utils
 void					showparams(t_vars *v);
 int						parse(t_vars *vars, int j, t_map *p);
@@ -561,7 +607,7 @@ void					scrolling(t_vars *v, float *h, char *str, t_point2 p);
 
 // Clear
 int						clearimgs(t_vars *v);
-int						freeall(char **tab);
+void					freeall(char **tab);
 int						cleardata(t_vars *vars, int b);
 int						map_clear(t_map *lst);
 
@@ -648,5 +694,12 @@ void					moveshor(t_vars *v, t_map *dir, t_point d, int ent);
 void					movesvert(t_vars *v, t_map *dir, t_point d, int ent);
 void					iscollected(t_vars *v, int i, int ent, t_point p);
 void					attack(t_vars *v);
+
+/* FUNCTIONS */
+void					lerr(size_t i, const char *s);
+size_t					tab_len(char **tab);
+int						cmp(const char *s1, const char *s2);
+t_is_set				init_is_set(void);
+t_is_set				set_is_set(void);
 
 #endif
