@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+         #
+#    By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 11:28:17 by pmagnero          #+#    #+#              #
-#    Updated: 2024/09/10 13:54:49 by cviegas          ###   ########.fr        #
+#    Updated: 2024/09/11 17:08:35 by pmagnero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,6 +66,7 @@ SRCS =	srcs/cub3D.c \
 		srcs/render/cub3D_topdown.c \
 		srcs/render/cub3D_scenes.c \
 		srcs/render/cub3D_raycasting.c \
+		srcs/render/cub3D_raycasting_floor_ceiling.c \
 		srcs/menus/cub3D_menus_naviguation.c \
 		srcs/utils/cub3D_time.c \
 		srcs/utils/cub3D_utils.c \

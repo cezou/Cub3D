@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 09:51:53 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/10 14:07:58 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/11 15:37:17 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	inittextures(t_vars *v, int i)
 	initimage(v, EMAP);
 	while (++i < COMP_N)
 	{
+		TRACE("img: %d", i);
 		v->img[i].img = mlx_xpm_file_to_image(v->mlx, v->img[i].filename,
 				&v->img[i].width, &v->img[i].height);
 		if (!v->img[i].img)
@@ -45,7 +46,7 @@ int	main(int ac, char **av)
 	int		xycolor;
 	t_infos	i;
 
-	if (ac != 2)
+	if (ac < 2)
 		return (perr(E_ARG), FAIL);
 	parsing(av[1], &i);
 	v.img = (t_imga *)malloc(sizeof(t_imga) * (COMP_N + 1));

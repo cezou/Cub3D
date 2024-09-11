@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 14:32:25 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/06/14 17:01:05 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/11 12:37:01 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,8 @@ int	parse(t_vars *v, int j, t_map *p)
 		(free(line), v->mapv.tmpy += 1);
 		line = get_next_line(fd);
 	}
-	// checkcomp((v->mapv.maph = j + 1, v), v->mapv.map);
+	v->mapv.maph = j + 1;
+	// checkcomp(v, v->mapv.map);
 	// if (!v->player.player)
 	// 	exit((prterr(v, "No player on the map\n", 1, 1), 1));
 	// if (!v->exit)

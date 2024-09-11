@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 18:24:52 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/09 16:01:53 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/11 15:34:29 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@
 
 static void	kek(t_vars *v, t_map *dir, int ent, int d)
 {
-	// d++;
+	d++;
+	ent++;
 	(void)dir;
 	(void)v;
 	// printmap2(v);
@@ -80,16 +81,16 @@ static void	kek(t_vars *v, t_map *dir, int ent, int d)
 	// if (ent == ESPAWN && dir->val == EXIT
 	// 	&& v->player.pocket != v->objs.collect)
 	// 	mlx_loop_end((v->game.won = 2, v->mlx));
-	if (ent == ESPAWN)
-	{
-		if (v->player.player->val == N || v->player.player->val == S
-			|| v->player.player->val == E || v->player.player->val == W)
-			v->player.player->val = SPACE;
-		v->player.player = dir;
-		if (v->player.player->val == SPACE)
-			v->player.player->val = d;
-		// ft_printf(1, "\anb of movement: %d\n", ++v->player.nbmove);
-	}
+	// if (ent == ESPAWN)
+	// {
+	// 	if (v->player.player->val == N || v->player.player->val == S
+	// 		|| v->player.player->val == E || v->player.player->val == W)
+	// 		v->player.player->val = SPACE;
+	// 	v->player.player = dir;
+	// 	if (v->player.player->val == SPACE)
+	// 		v->player.player->val = d;
+	// 	// ft_printf(1, "\anb of movement: %d\n", ++v->player.nbmove);
+	// }
 	// else
 	// {
 	// 	if (v->guard.guard->val == GUARD)

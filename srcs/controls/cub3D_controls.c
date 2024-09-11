@@ -49,14 +49,14 @@ void	resetpos(t_vars *v, int renderb)
 	v->mouse.yangle = -0.523599;
 	v->mouse.zangle = 0.1515472907;
 	v->mouse.zheight = 1;
-	v->mapv.shiftx = -(v->player.player->x * v->img[EWALL].width
-			/ v->screen.resw) * v->screen.resw;
-	v->mapv.resdeltax = (v->player.player->x * v->img[EWALL].width
-			/ v->screen.resw) + 1;
-	v->mapv.shifty = -(v->player.player->y * v->img[EWALL].height
-			/ v->screen.resh) * v->screen.resh;
-	v->mapv.resdeltay = (v->player.player->y * v->img[EWALL].height
-			/ v->screen.resh) + 1;
+	// v->mapv.shiftx = -(v->player.player->x * v->img[EWALL].width
+	// 		/ v->screen.resw) * v->screen.resw;
+	// v->mapv.resdeltax = (v->player.player->x * v->img[EWALL].width
+	// 		/ v->screen.resw) + 1;
+	// v->mapv.shifty = -(v->player.player->y * v->img[EWALL].height
+	// 		/ v->screen.resh) * v->screen.resh;
+	// v->mapv.resdeltay = (v->player.player->y * v->img[EWALL].height
+	// 		/ v->screen.resh) + 1;
 	v->mouse.zoom = 1;
 	v->game.refreshmap = 1;
 	v->game.start = 2;

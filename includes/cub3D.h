@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/10 14:07:40 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/11 17:14:39 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,42 +257,42 @@ typedef enum s_components
 {
 	EMAP,
 	ESPACE,
-	ESPACE2,
-	ESPACE3,
+	// ESPACE2,
+	// ESPACE3,
 	EWALL,
-	EWALL2,
-	EWALL3,
-	EWALL4,
-	EWALLD,
-	EWALLD2,
-	EWALLD3,
-	EWALLD4,
-	EWALLL,
-	EWALLL2,
-	EWALLL3,
-	EWALLL4,
-	EWALLR,
-	EWALLR2,
-	EWALLR3,
-	EWALLR4,
-	EWALLCUL,
-	EWALLCUR,
-	EWALLCDR,
-	EWALLCDL,
-	EOBST1V1,
-	EOBST1V1W,
-	EOBST1V2,
-	EOBST2V2,
-	ECOLLECT,
-	EEXIT,
-	ESPAWN,
-	EGUARD,
+	// EWALL2,
+	// EWALL3,
+	// EWALL4,
+	// EWALLD,
+	// EWALLD2,
+	// EWALLD3,
+	// EWALLD4,
+	// EWALLL,
+	// EWALLL2,
+	// EWALLL3,
+	// EWALLL4,
+	// EWALLR,
+	// EWALLR2,
+	// EWALLR3,
+	// EWALLR4,
+	// EWALLCUL,
+	// EWALLCUR,
+	// EWALLCDR,
+	// EWALLCDL,
+	// EOBST1V1,
+	// EOBST1V1W,
+	// EOBST1V2,
+	// EOBST2V2,
+	// ECOLLECT,
+	// EEXIT,
+	// ESPAWN,
+	// EGUARD,
 	ETITLE,
 	EMENUSELECT,
 	EMENU,
 	EMENUIG,
 	EMENUOPT,
-	EPROJ,
+	// EPROJ,
 	COMP_N
 }						t_comp;
 
@@ -301,6 +301,8 @@ typedef struct s_ray
 	double				camera_x;
 	double				dir_x;
 	double				dir_y;
+	double				dir_x1;
+	double				dir_y1;
 	int					map_x;
 	int					map_y;
 	int					step_x;
@@ -328,8 +330,8 @@ typedef struct s_point
 
 typedef struct s_point2
 {
-	float				x;
-	float				y;
+	double				x;
+	double				y;
 	int					z;
 	int					color;
 }						t_point2;
@@ -344,27 +346,6 @@ typedef struct s_trig
 	double				sinz;
 }						t_trig;
 
-<<<<<<< HEAD
-=======
-typedef struct s_texinfo
-{
-	char				*north;
-	char				*south;
-	char				*west;
-	char				*east;
-	int					*floor;
-	int					*ceiling;
-	unsigned long		hex_floor;
-	unsigned long		hex_ceiling;
-	int					size;
-	int					index;
-	double				step;
-	double				pos;
-	int					x;
-	int					y;
-}						t_texinfo;
-
->>>>>>> refs/remotes/origin/main
 typedef struct s_imga
 {
 	void				*img;
@@ -622,9 +603,10 @@ void					menuoptions(t_vars *v);
 // Rendering
 
 int						raycasting(t_vars *v);
+void					set_floor_ceiling(t_vars *v, t_ray *ray);
 
 int						render(t_vars *data);
-void	img_pix_put(t_imga *img, t_point p, int width, int height); // kek
+void					img_pix_put(t_imga *img, t_point p, int width, int height); // kek
 
 void					convertpoint(t_vars *vars, t_point *b, t_point a);
 void					inittrigo(t_vars *vars);

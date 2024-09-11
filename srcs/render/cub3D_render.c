@@ -14,28 +14,29 @@
 
 int	getindex2(t_vars *v, t_map *tmp)
 {
-	if (tmp->val == WALL && tmp->y == 0 && tmp->x != 0
-		&& tmp->x != v->mapv.mapw - 1)
-		return (EWALL + myrand(4));
-	else if (tmp->val == WALL && tmp->y == v->mapv.maph - 1
-		&& tmp->x != 0 && tmp->x != v->mapv.mapw - 1)
-		return (EWALLD + myrand(4));
-	else if (tmp->val == WALL && tmp->x == 0
-		&& tmp->y != 0 && tmp->y != v->mapv.maph - 1)
-		return (EWALLL + myrand(4));
-	else if (tmp->val == WALL && tmp->x == v->mapv.mapw - 1
-		&& tmp->y != 0 && tmp->y != v->mapv.maph - 1)
-		return (EWALLR + myrand(4));
-	else if (tmp->val == WALL && tmp->x == 0 && tmp->y == 0)
-		return (EWALLCUL);
-	else if (tmp->val == WALL && tmp->x == v->mapv.mapw - 1 && tmp->y == 0)
-		return (EWALLCUR);
-	else if (tmp->val == WALL && tmp->x == 0 && tmp->y == v->mapv.maph - 1)
-		return (EWALLCDL);
-	else if (tmp->val == WALL && tmp->x == v->mapv.mapw - 1
-		&& tmp->y == v->mapv.maph - 1)
-		return (EWALLCDR);
-	else if (tmp->val == SPACE || tmp->val == COLLECT || tmp->val == EXIT
+	(void)v;
+	// if (tmp->val == WALL && tmp->y == 0 && tmp->x != 0
+	// 	&& tmp->x != v->mapv.mapw - 1)
+	// 	return (EWALL + myrand(4));
+	// else if (tmp->val == WALL && tmp->y == v->mapv.maph - 1
+	// 	&& tmp->x != 0 && tmp->x != v->mapv.mapw - 1)
+	// 	return (EWALLD + myrand(4));
+	// else if (tmp->val == WALL && tmp->x == 0
+	// 	&& tmp->y != 0 && tmp->y != v->mapv.maph - 1)
+	// 	return (EWALLL + myrand(4));
+	// else if (tmp->val == WALL && tmp->x == v->mapv.mapw - 1
+	// 	&& tmp->y != 0 && tmp->y != v->mapv.maph - 1)
+	// 	return (EWALLR + myrand(4));
+	// else if (tmp->val == WALL && tmp->x == 0 && tmp->y == 0)
+	// 	return (EWALLCUL);
+	// else if (tmp->val == WALL && tmp->x == v->mapv.mapw - 1 && tmp->y == 0)
+	// 	return (EWALLCUR);
+	// else if (tmp->val == WALL && tmp->x == 0 && tmp->y == v->mapv.maph - 1)
+	// 	return (EWALLCDL);
+	// else if (tmp->val == WALL && tmp->x == v->mapv.mapw - 1
+	// 	&& tmp->y == v->mapv.maph - 1)
+	// 	return (EWALLCDR);
+	if (tmp->val == SPACE || tmp->val == COLLECT || tmp->val == EXIT
 		|| tmp->val == SPAWN || tmp->val == GUARD)
 		return (ESPACE + myrand(3));
 	return (-1);

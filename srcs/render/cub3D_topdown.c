@@ -93,8 +93,8 @@ static void	render_entities(t_vars *v, t_map *tmp, t_point i)
 		puttextures(v, i.x, i.y, i.z);
 	if (v->game.start == 2 && (tmp->val == E || tmp->val == W || tmp->val == N || tmp->val == S))
 	{
-		v->img[ESPAWN].posx = i.z;
-		v->img[ESPAWN].posy = i.y;
+		// v->img[ESPAWN].posx = i.z;
+		// v->img[ESPAWN].posy = i.y;
 	}
 	// if (v->game.start == 2 && tmp->val == GUARD)
 	// {
