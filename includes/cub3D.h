@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/11 17:14:39 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/11 17:48:16 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -543,14 +543,14 @@ union					u_color
 	};
 };
 
-typedef struct s_img
+typedef struct s_imgc
 {
 	void				*img;
 	void				*address;
 	t_color				*pixels;
 	size_t				height;
 	size_t				width;
-}						t_img;
+}						t_imgc;
 
 typedef struct s_vars
 {

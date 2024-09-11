@@ -115,6 +115,6 @@ void	parsing(char *file, t_infos *i)
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 		(merr("file doesn't exist or open failed"), exit(FAIL));
-	parse_file(fd, i);
+	// parse_file(fd, i);
 	close(fd);
 }

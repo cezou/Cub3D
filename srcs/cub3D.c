@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 09:51:53 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/11 17:45:18 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/11 17:54:13 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	main(int ac, char **av)
 	if (ac < 2)
 		return (perr(E_ARG), FAIL);
 	parsing(av[1], &i);
-	return (0);
+	// return (0);
 	v.img = (t_imga *)malloc(sizeof(t_imga) * (COMP_N + 1));
 	if (!v.img)
 		exit((prterr(&v, ERRMALL, 1, 1), 1));
