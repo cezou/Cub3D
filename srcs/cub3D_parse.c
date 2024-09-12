@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 14:32:25 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/11 12:37:01 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/12 17:27:42 by cviegas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,20 @@ int	parse(t_vars *v, int j, t_map *p)
 {
 	int		fd;
 	char	*line;
+	size_t	i;
 
 	fd = open(v->mapv.filename, O_RDONLY);
 	if (fd == -1)
 		exit((prterr(v, ERROF, 1, 1), 1));
-	v->mapv.mapw = ft_strlen((line = get_next_line(fd), line)) - 1;
+	i = 0;
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (i++ == v->infos.map_index)
+			break ;
+		free(line);
+	}
+	v->mapv.mapw = ft_strlen(line) - 1;
 	while (line)
 	{
 		p = populate_map((j++, line), v, p, NULL);

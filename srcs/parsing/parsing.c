@@ -6,7 +6,7 @@
 /*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 17:22:43 by cviegas           #+#    #+#             */
-/*   Updated: 2024/09/12 17:22:44 by cviegas          ###   ########.fr       */
+/*   Updated: 2024/09/12 17:27:37 by cviegas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	parse_map(t_vars *v, int fd, int i)
 		if (!l[0] && (freeall(l), 1))
 			continue ;
 		freeall(l);
-		v->infos.map_index = i;
+		v->infos.map_index = i - 1;
 		return ;
 	}
 }
