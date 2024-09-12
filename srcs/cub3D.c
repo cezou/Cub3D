@@ -15,6 +15,10 @@
 void	inittextures(t_vars *v, int i)
 {
 	initimage(v, EMAP);
+	v->img[ESOUTH] = v->infos.south.imga;
+	v->img[EEAST] = v->infos.east.imga;
+	v->img[EWEST] = v->infos.west.imga;
+	v->img[ENORTH] = v->infos.north.imga;
 	while (++i < COMP_N)
 	{
 		TRACE("img: %d", i);
@@ -44,21 +48,10 @@ int	main(int ac, char **av)
 	int		xorcolor;
 	int		ycolor;
 	int		xycolor;
-	t_infos	i;
 
-	if (ac < 2)
-		return (perr(E_ARG), FAIL);
-	parsing(av[1], &i);
-	// return (0);
-	v.img = (t_imga *)malloc(sizeof(t_imga) * (COMP_N + 1));
-	if (!v.img)
-		exit((prterr(&v, ERRMALL, 1, 1), 1));
-	// (void)argc;
-	// (void)argv;
-	// showparams(&v);
+	parsing(ac, av, &v);
 	init(&v, ac, av);
 	init_cam(&v);
-	// TEST FLAT TEXTURES
 	for (int x = 0; x < 64; x++)
 	{
 		for (int y = 0; y < 64; y++)

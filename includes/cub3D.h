@@ -257,6 +257,10 @@ typedef enum s_anim
 typedef enum s_components
 {
 	EMAP,
+	ESOUTH,
+	ENORTH,
+	EWEST,
+	EEAST,
 	ESPACE,
 	// ESPACE2,
 	// ESPACE3,
@@ -504,24 +508,23 @@ typedef struct s_game
 
 // Map: - Ne peut pas avoir de
 
-typedef struct s_is_set
+typedef struct s_boolimage
 {
-	bool				no;
-	bool				so;
-	bool				we;
-	bool				ea;
-	bool				f;
-	bool				c;
-}						t_is_set;
+	bool				is_set;
+	t_imga				imga;
+}						t_boolimage;
 
 typedef struct s_infos
 {
-	t_is_set			is_set;
-	void				*north_path;
-	void				*south_path;
-	void				*east_path;
-	void				*west_path;
+	size_t				map_index;
 
+	t_boolimage			north;
+	t_boolimage			south;
+	t_boolimage			east;
+	t_boolimage			west;
+
+	bool				f;
+	bool				c;
 	uint32_t			ceil;
 	uint32_t			floor;
 
@@ -557,12 +560,6 @@ typedef struct s_vars
 	t_infos				infos;
 	t_xvar				*mlx;
 	t_imga				*img;
-
-	t_imga				north;
-	t_imga				south;
-	t_imga				east;
-	t_imga				west;
-
 	t_mouse				mouse;
 	t_map				*exit;
 	t_map				*last;
@@ -582,7 +579,6 @@ typedef struct s_vars
 }						t_vars;
 
 // Parsing
-void					parsing(char *file, t_infos *v);
 int						cmp(const char *s1, const char *s2);
 
 // Utils
@@ -652,7 +648,7 @@ int						raycasting(t_vars *v);
 void					set_floor_ceiling(t_vars *v, t_ray *ray);
 
 int						render(t_vars *data);
-void					img_pix_put(t_imga *img, t_point p, int width, int height); // kek
+void	img_pix_put(t_imga *img, t_point p, int width, int height); // kek
 
 void					convertpoint(t_vars *vars, t_point *b, t_point a);
 void					inittrigo(t_vars *vars);
@@ -696,10 +692,29 @@ void					iscollected(t_vars *v, int i, int ent, t_point p);
 void					attack(t_vars *v);
 
 /* FUNCTIONS */
+int						init_xpm(t_imga *img, char *path, void *mlx, int i);
+size_t					nb_occur(const char *s, char c);
+bool					is_color(char *s);
+bool					is_texture(char *s);
+bool					is_everything_set(t_infos i);
+int						set_value(t_boolimage *bimg, char *file, void *mlx,
+							int i);
+int						set_texture(t_infos *i, char **l, int ind, void *mlx);
+int						set_a_color(int i, char *values, uint32_t *color,
+							bool *is_set);
+int						set_colors(t_infos *i, char **l, int ind);
+int						set_a_value(t_infos *i, char **l, int ind, void *mlx);
+void					init_imgs(t_vars *v);
+void					clean_exit(char **l, int fd, t_vars *v, bool free_line);
+void					pfree_img(t_imga *img, t_vars *v);
+char					*strrev(char *s);
+bool					is_valid_int(const char *s);
+bool					is_valid_int(const char *s);
+void					parsing(int ac, char **av, t_vars *v);
+bool					isnt_cub_ended(const char *s);
+
 void					lerr(size_t i, const char *s);
 size_t					tab_len(char **tab);
 int						cmp(const char *s1, const char *s2);
-t_is_set				init_is_set(void);
-t_is_set				set_is_set(void);
 
 #endif

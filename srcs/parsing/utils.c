@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/12 17:22:46 by cviegas           #+#    #+#             */
+/*   Updated: 2024/09/12 17:22:47 by cviegas          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
 
@@ -39,20 +50,3 @@ size_t	tab_len(char **tab)
 		;
 	return (i);
 }
-
-// t_imgc	*init_xpm(const char *path, t_vars *v)
-// {
-// 	t_imgc *image;
-// 	int trash;
-
-// 	image = malloc(sizeof(t_imgc));
-// 	if (!image)
-// 		exit((prterr(v, ERRMALL, 1, 1), 1));
-// 	image->img = mlx_xpm_file_to_image(v->mlx, path, &image->width,
-// 			&image->height);
-// 	if (!image->img)
-// 		exit((free(image), prterr(&v, ERRMALL, 1, 1), 1));
-// 	image->pixels = (t_color *)(t_hexa *)mlx_get_data_addr(image->img, &trash,
-// 			&trash, &trash);
-// 	return (image);
-// }

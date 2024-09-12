@@ -71,37 +71,47 @@ int	hashit(t_vars *v, int x, int y)
 	// 	if ((*tmp)->up->val == '1')
 	// 		return (1);
 	// }
-	// else if ((*tmp)->up->left->y != 0 && (*tmp)->up->left->x != 0 && (*tmp)->up->left->x == x && (*tmp)->up->left->y == y)
-	// {
-	// 	if ((*tmp)->up->left->val == '1')
-	// 		return (1);
-	// }
-	// else if ((*tmp)->up->right->y != 0 && (*tmp)->up->right->x != v->mapv.mapw - 1 && (*tmp)->up->right->x == x && (*tmp)->up->right->y == y)
-	// {
-	// 	if ((*tmp)->up->right->val == '1')
-	// 		return (1);
-	// }
-	// else if ((*tmp)->down->y != v->mapv.maph - 1 && (*tmp)->down->x == x && (*tmp)->down->y == y)
-	// {
-	// 	if ((*tmp)->down->val == '1')
-	// 		return (1);
-	// }
-	// else if ((*tmp)->down->left->y != v->mapv.maph - 1 && (*tmp)->down->left->x != 0 && (*tmp)->down->left->x == x && (*tmp)->down->left->y == y)
-	// {
-	// 	if ((*tmp)->down->left->val == '1')
-	// 		return (1);
-	// }
-	// else if ((*tmp)->down->right->y != v->mapv.maph - 1 && (*tmp)->down->right->x != v->mapv.mapw && (*tmp)->down->right->x == x && (*tmp)->down->right->y == y)
-	// {
-	// 	if ((*tmp)->down->right->val == '1')
-	// 		return (1);
-	// }
-	// else if ((*tmp)->left->x != 0 && (*tmp)->left->x == x && (*tmp)->left->y == y)
-	// {
-	// 	if ((*tmp)->left->val == '1')
-	// 		return (1);
-	// }
-	// else if ((*tmp)->right->x != v->mapv.mapw - 1 && (*tmp)->right->x == x && (*tmp)->right->y == y)
+	// // else if ((*tmp)->up->left->y != 0 && (*tmp)->up->left->x != 0
+	// 	&& (*tmp)->up->left->x == x && (*tmp)->up->left->y == y)
+	// // {
+	// // 	if ((*tmp)->up->left->val == '1')
+	// // 		return (1);
+	// // }
+	// // else if ((*tmp)->up->right->y != 0
+	// 	&& (*tmp)->up->right->x != v->mapv.mapw - 1 && (*tmp)->up->right->x == x
+	// 	&& (*tmp)->up->right->y == y)
+	// // {
+	// // 	if ((*tmp)->up->right->val == '1')
+	// // 		return (1);
+	// // }
+	// // else if ((*tmp)->down->y != v->mapv.maph - 1 && (*tmp)->down->x == x
+	// 	&& (*tmp)->down->y == y)
+	// // {
+	// // 	if ((*tmp)->down->val == '1')
+	// // 		return (1);
+	// // }
+	// // else if ((*tmp)->down->left->y != v->mapv.maph - 1
+	// 	&& (*tmp)->down->left->x != 0 && (*tmp)->down->left->x == x
+	// 	&& (*tmp)->down->left->y == y)
+	// // {
+	// // 	if ((*tmp)->down->left->val == '1')
+	// // 		return (1);
+	// // }
+	// // else if ((*tmp)->down->right->y != v->mapv.maph - 1
+	// 	&& (*tmp)->down->right->x != v->mapv.mapw && (*tmp)->down->right->x == x
+	// 	&& (*tmp)->down->right->y == y)
+	// // {
+	// // 	if ((*tmp)->down->right->val == '1')
+	// // 		return (1);
+	// // }
+	// // else if ((*tmp)->left->x != 0 && (*tmp)->left->x == x
+	// 	&& (*tmp)->left->y == y)
+	// // {
+	// // 	if ((*tmp)->left->val == '1')
+	// // 		return (1);
+	// // }
+	// // else if ((*tmp)->right->x != v->mapv.mapw - 1 && (*tmp)->right->x == x
+	// 	&& (*tmp)->right->y == y)
 	// {
 	// 	if ((*tmp)->right->val == '1')
 	// 		return (1);
@@ -111,9 +121,9 @@ int	hashit(t_vars *v, int x, int y)
 
 static void	perform_dda(t_vars *v, t_ray *ray)
 {
-	int		hit;
-	// t_map	*tmp;
+	int	hit;
 
+	// t_map	*tmp;
 	// tmp = v->player.player;
 	hit = 0;
 	while (hit == 0)
@@ -139,7 +149,7 @@ static void	perform_dda(t_vars *v, t_ray *ray)
 			ray->side = 1;
 		}
 		// if (tmp->val == '1')
-			// hit = 1;
+		// hit = 1;
 		hit = hashit(v, ray->map_x, ray->map_y);
 	}
 }
@@ -182,7 +192,6 @@ static void	calculate_line_height(t_ray *ray, t_vars *v)
 // 	}
 // }
 
-
 void	update_texture_pixels(t_vars *v, t_ray *ray, int x)
 {
 	int			y;
@@ -194,40 +203,42 @@ void	update_texture_pixels(t_vars *v, t_ray *ray, int x)
 
 	// get_texture_index(v);
 	texx = (int)(ray->wall_x * 128.0);
-	if ((ray->side == 0 && ray->dir_x > 0)
-		|| (ray->side == 1 && ray->dir_y < 0))
+	if ((ray->side == 0 && ray->dir_x > 0) || (ray->side == 1
+			&& ray->dir_y < 0))
 		texx = 128 - texx - 1;
 	step = 1.0 * 128 / ray->line_height;
-	pos = (ray->draw_start - ray->pitch - v->screen.resh / 2
-			+ ray->line_height / 2) * step;
+	pos = (ray->draw_start - ray->pitch - v->screen.resh / 2 + ray->line_height
+			/ 2) * step;
 	y = ray->draw_start;
 	while (y < ray->draw_end)
 	{
 		texy = (int)pos & (128 - 1);
 		pos += step;
-		color = getcolorpix(v->img[1].addr, (texy * v->img[1].len) + (texx * 4), 0);
+		color = getcolorpix(v->img[ESPACE].addr, (texy * v->img[ESPACE].len)
+				+ (texx * 4), 0);
 		// color = v->tex[0][128 * texy + texx];
 		// texy++;
 		// if (tex->index == NORTH || tex->index == EAST)
 		if (ray->side == 1)
 			color = (color >> 1) & 8355711;
 		if (color > 0)
-		// if (v->img[1].addr[color + 3] == 0)
+			// if (v->img[1].addr[color + 3] == 0)
 			// v->img[0].addr[y*x] = color;
-			img_pix_put(&v->img[COMP_N], (t_point){x, y + v->mouse.yoff, 0, color},//  + v->mouse.yoff
-				v->screen.resw, v->screen.resh);
+			img_pix_put(&v->img[COMP_N], (t_point){x, y + v->mouse.yoff, 0,
+				color}, v->screen.resw, v->screen.resh);
 		y++;
 	}
 }
 
 int	raycasting(t_vars *v)
 {
-	t_ray	ray;
-	int		x;
+	t_ray ray;
+	int x;
 
 	x = 0;
 	ray = v->ray;
 	set_floor_ceiling(v, &ray);
+
 	while (x < v->img[EMAP].width)
 	{
 		// if (x >= v->img[EMAP].width)
@@ -237,7 +248,9 @@ int	raycasting(t_vars *v)
 		perform_dda(v, &ray);
 		calculate_line_height(&ray, v);
 		update_texture_pixels(v, &ray, x);
+
 		x++;
 	}
+
 	return (1);
 }

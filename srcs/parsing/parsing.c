@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/12 17:22:43 by cviegas           #+#    #+#             */
+/*   Updated: 2024/09/12 17:22:44 by cviegas          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cub3D.h"
 
-static bool	isnt_cub_ended(const char *s)
+bool	isnt_cub_ended(const char *s)
 {
 	int	i;
 
@@ -12,109 +24,84 @@ static bool	isnt_cub_ended(const char *s)
 	return (1);
 }
 
-bool	is_everything_set(t_is_set set)
+void	parse_ids(t_vars *v, int fd, size_t *i)
 {
-	return (set.c && set.f && set.ea && set.no && set.so && set.we);
-}
-
-t_is_set	init_is_set(void)
-{
-	t_is_set	is_set;
-
-	is_set.c = 0;
-	is_set.f = 0;
-	is_set.ea = 0;
-	is_set.no = 0;
-	is_set.so = 0;
-	is_set.we = 0;
-	return (is_set);
-}
-
-void	clean_exit(char **l, int fd)
-{
-	close(fd);
-	freeall(l);
-	exit(FAIL);
-}
-
-bool	is_texture(char *s)
-{
-	return (!cmp(s, "NO") || !cmp(s, "SO") || !cmp(s, "WE") || !cmp(s, "EA"));
-}
-
-bool	is_color(char *s)
-{
-	return (!cmp(s, "F") || !cmp(s, "C"));
-}
-
-int	set_texture(t_infos *i, char **l, int ind)
-{
-	if (!cmp(l[0], "NO"))
-	{
-		if (i->is_set.no)
-			return (lerr(ind, "duplicate ID"), -1);
-		// if ()
-		// i->is_set.no = 1;
-	}
-	return (0);
-}
-
-int	set_color(t_infos *i, char **l, int ind)
-{
-	(void)i;
-	(void)l;
-	(void)ind;
-	return (0);
-}
-
-int	set_a_value(t_infos *i, char **l, int ind)
-{
-	if (is_texture(l[0]))
-		return (set_texture(i, l, ind));
-	if (is_color(l[0]))
-		return (set_color(i, l, ind));
-	return (lerr(ind, "Unvalid ID"), -1);
-}
-
-void	parse_file(int fd, t_infos *info)
-{
-	size_t	i;
 	char	*line;
 	char	**l;
 
-	info->is_set = init_is_set();
-	i = 0;
-	while (1)
+	while (++(*i))
 	{
 		line = get_next_line(fd);
 		if (!line)
 			break ;
 		l = ft_split(line, WHITESPACES);
 		free(line);
-		if ((!l || !l[0]) && (freeall(l), i++))
+		if (!l)
+			(perr("Malloc Failed"), clean_exit(l, fd, v, 1));
+		if (!l[0] && (freeall(l), 1))
 			continue ;
 		if (tab_len(l) != 2)
-			(lerr(i + 1, "Invalid line: too much values as all IDs arent set"),
-				clean_exit(l, fd));
-		if (set_a_value(info, l, i) == -1)
-			clean_exit(l, fd);
+			(lerr(*i, "Too much or not enough values"), clean_exit(l, fd, v,
+					1));
+		if (set_a_value(&v->infos, l, *i, v->mlx) == -1)
+			clean_exit(l, fd, v, 1);
 		freeall(l);
-		if (is_everything_set(info->is_set))
+		if (is_everything_set(v->infos))
+			return ;
+	}
+	if (!is_everything_set(v->infos))
+		(lerr(*i, "There are values missing"), clean_exit(l, fd, v, 0));
+}
+
+void	parse_map(t_vars *v, int fd, int i)
+{
+	char	*line;
+	char	**l;
+
+	while (++i)
+	{
+		line = get_next_line(fd);
+		if (!line)
 			break ;
-		i++;
+		l = ft_split(line, WHITESPACES);
+		free(line);
+		if (!l)
+			(perr("Malloc Failed"), clean_exit(l, fd, v, 1));
+		if (!l[0] && (freeall(l), 1))
+			continue ;
+		freeall(l);
+		v->infos.map_index = i;
+		return ;
 	}
 }
 
-void	parsing(char *file, t_infos *i)
+void	parse_file(int fd, t_vars *v)
 {
-	int fd;
+	size_t	i;
 
-	(void)i;
-	if (isnt_cub_ended(file))
-		(merr("file name needs to end with \".cub\""), exit(FAIL));
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
-		(merr("file doesn't exist or open failed"), exit(FAIL));
-	// parse_file(fd, i);
+	v->infos.f = 0;
+	v->infos.c = 0;
+	i = 0;
+	parse_ids(v, fd, &i);
+	parse_map(v, fd, i);
 	close(fd);
+}
+
+void	parsing(int ac, char **av, t_vars *v)
+{
+	int	fd;
+
+	if (ac < 2)
+		(perr(E_ARG), exit(FAIL));
+	if (isnt_cub_ended(av[1]))
+		exit((merr("file name needs to end with \".cub\""), FAIL));
+	v->mapv.filename = av[1];
+	v->mlx = mlx_init();
+	if (!v->mlx)
+		exit((perr("MLX init failed"), FAIL));
+	fd = open(av[1], O_RDONLY);
+	if (fd == -1)
+		exit((merr("file doesn't exist or open failed"), FAIL));
+	init_imgs(v);
+	parse_file(fd, v);
 }

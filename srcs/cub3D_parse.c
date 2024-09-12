@@ -98,9 +98,7 @@ int	parse(t_vars *v, int j, t_map *p)
 	char	*line;
 
 	fd = open(v->mapv.filename, O_RDONLY);
-	if (fd < 0
-		|| ft_strncmp(&v->mapv.filename[ft_strlen(v->mapv.filename) - 4],
-			".cub", 4))
+	if (fd == -1)
 		exit((prterr(v, ERROF, 1, 1), 1));
 	v->mapv.mapw = ft_strlen((line = get_next_line(fd), line)) - 1;
 	while (line)

@@ -81,7 +81,13 @@ SRCS =	srcs/cub3D.c \
 		srcs/movements/cub3D_movements.c \
 		srcs/movements/cub3D_movements2.c \
 		srcs/parsing/parsing.c \
-		srcs/parsing/utils.c
+		srcs/parsing/is_valid_int.c \
+		srcs/parsing/utils.c \
+		srcs/parsing/ids.c \
+		srcs/parsing/ids_utils.c \
+		srcs/parsing/clean_and_imgs.c \
+
+
 # srcs/movements/cub3D_collisions.c
 # srcs/cub3D_pathfinding.c 
 # srcs/animations/cub3D_animations.c 

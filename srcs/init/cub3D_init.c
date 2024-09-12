@@ -32,7 +32,6 @@ void	initmodes(t_vars *v, int argc)
 	v->god = 0;
 	v->game.start = 0;
 	v->game.fps = 64;
-	v->mapv.filename = NULL;
 	v->player.movspeed = 10;
 	v->guard.movspeedguard = 40;
 	v->objs.objs = NULL;
@@ -82,48 +81,33 @@ void	check_map(t_vars *v, int argc, char **argv)
 {
 	int	i;
 
+	(void)argc;
+	(void)argv;
 	i = -1;
-	if (argc > 1)
-	{
-		v->mapv.filename = argv[1];
-		if (!v->mapv.filename)
-			exit((map_clear(v->mapv.map), 1));
-		parse(v, -1, NULL);
-		v->player.x = v->player.player->x;
-		v->player.y = v->player.player->y;
-		printmap2(v);
-		// flood_fill(v, &v->player.player, &v->player.pocket);
-		// if ((!v->mapv.mapvalid) || (v->player.pocket != v->objs.collect))
-		// 	exit((prterr(v, ERRFF, 1, 1), 1));
-		v->player.pocket = 0;
-		// v->objs.objs = (t_point *)malloc(sizeof(t_point) * (v->objs.collect));
-		// if (!v->objs.objs)
-		// 	exit((prterr(v, ERRMALL, 1, 0), 1));
-		// while (++i < v->objs.collect)
-		// 	v->objs.objs[i] = (t_point){0, 0, 0, ECOLLECT};
-	}
+	parse(v, -1, NULL);
+	v->player.x = v->player.player->x;
+	v->player.y = v->player.player->y;
+	printmap2(v);
+	v->player.pocket = 0;
 }
 
 void	init(t_vars *v, int argc, char **argv)
 {
-	v->mlx = mlx_init();
 	v->screen.win = NULL;
 	v->mapv.map = NULL;
 	v->sound.init = 0;
 	v->objs.objs = NULL;
+	v->img = (t_imga *)malloc(sizeof(t_imga) * (COMP_N + 1));
+	if (!v->img)
+		exit((prterr(v, ERRMALL, 1, 1), 1));
 	v->img[EMAP].img = NULL;
-	if (!v->mlx)
-		exit((prterr(v, "MLX init failed\n", 1, 1), 1));
 	mlx_do_key_autorepeaton(v->mlx);
 	initwindow(v, argc, argv);
 	v->img->fontname = FONT1;
 	v->img->fontname2 = FONT2;
 	initmodes(v, argc);
-	inittextures(v, 0);
+	inittextures(v, 4);
 	initsounds(v);
-	// initplayeranim(v, -1);
-	// initobjectsanim(v, 0, ECOLLECT);
-	// initguardanim(v, -1);
 	check_map(v, argc, argv);
 	init_player_dir(v);
 }
