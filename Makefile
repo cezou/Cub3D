@@ -86,6 +86,8 @@ SRCS =	srcs/cub3D.c \
 		srcs/parsing/ids.c \
 		srcs/parsing/ids_utils.c \
 		srcs/parsing/clean_and_imgs.c \
+		srcs/parsing/map.c \
+		srcs/parsing/map_utils.c \
 
 
 # srcs/movements/cub3D_collisions.c

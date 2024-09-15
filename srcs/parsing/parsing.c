@@ -6,23 +6,11 @@
 /*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 17:22:43 by cviegas           #+#    #+#             */
-/*   Updated: 2024/09/12 17:27:37 by cviegas          ###   ########.fr       */
+/*   Updated: 2024/09/15 15:42:12 by cviegas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
-
-bool	isnt_cub_ended(const char *s)
-{
-	int	i;
-
-	if (ft_strlen(s) < 4)
-		return (1);
-	i = ft_strlen(s) - 1;
-	if (s[i] == 'b' && s[i - 1] == 'u' && s[i - 2] == 'c' && s[i - 3] == '.')
-		return (0);
-	return (1);
-}
 
 void	parse_ids(t_vars *v, int fd, size_t *i)
 {
@@ -49,38 +37,18 @@ void	parse_ids(t_vars *v, int fd, size_t *i)
 		if (is_everything_set(v->infos))
 			return ;
 	}
-	if (!is_everything_set(v->infos))
-		(lerr(*i, "There are values missing"), clean_exit(l, fd, v, 0));
+	(lerr(*i, "There are values missing"), clean_exit(l, fd, v, 0));
 }
 
 void	parse_map(t_vars *v, int fd, int i)
 {
-	char	*line;
-	char	**l;
-
-	while (++i)
-	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		l = ft_split(line, WHITESPACES);
-		free(line);
-		if (!l)
-			(perr("Malloc Failed"), clean_exit(l, fd, v, 1));
-		if (!l[0] && (freeall(l), 1))
-			continue ;
-		freeall(l);
-		v->infos.map_index = i - 1;
-		return ;
-	}
+	store_map(skip_whitespaces(v, fd, &i), v, fd, i);
 }
 
 void	parse_file(int fd, t_vars *v)
 {
 	size_t	i;
 
-	v->infos.f = 0;
-	v->infos.c = 0;
 	i = 0;
 	parse_ids(v, fd, &i);
 	parse_map(v, fd, i);

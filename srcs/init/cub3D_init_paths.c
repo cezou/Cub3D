@@ -48,47 +48,47 @@ void	initpathtext(t_vars *v)
 	// v->img[ESPACE3].filename = "resources/textures/Ground3.xpm";
 	// v->img[ECOLLECT].filename = "resources/textures/Star2.xpm";
 	// v->img[ESPAWN].filename = "resources/textures/antihero/Walk/Right.xpm";
-// 	v->img[EEXIT].filename = "resources/textures/Exit.xpm";
-// 	v->img[EGUARD].filename = "resources/textures/CthululuWalk.xpm";
+	// 	v->img[EEXIT].filename = "resources/textures/Exit.xpm";
+	// 	v->img[EGUARD].filename = "resources/textures/CthululuWalk.xpm";
 	v->img[ETITLE].filename = "resources/textures/title.xpm";
 	v->img[EMENUSELECT].filename = "resources/textures/menus/select.xpm";
 	v->img[EMENU].filename = "resources/textures/menus/menu_start.xpm";
 	v->img[EMENUIG].filename = "resources/textures/menus/menu_ingame.xpm";
 	v->img[EMENUOPT].filename = "resources/textures/menus/menu_options.xpm";
-// 	v->img[EPROJ].filename = "resources/textures/attacks/iceball\
-// /hadokenRIGHT.xpm";
+	// 	v->img[EPROJ].filename = "resources/textures/attacks/iceball
+	// /hadokenRIGHT.xpm";
 }
 
 void	initplayerpathanim(t_vars *v)
 {
 	(void)v;
-// 	v->img[ESPAWN].anim[NORTH].filename = "resources/textures\
-// /antihero/Walk/Up.xpm";
-// 	v->img[ESPAWN].anim[SOUTH].filename = "resources/textures\
-// /antihero/Walk/Down.xpm";
-// 	v->img[ESPAWN].anim[EAST].filename = "resources/textures\
-// /antihero/Walk/Right.xpm";
-// 	v->img[ESPAWN].anim[WEST].filename = "resources/textures\
-// /antihero/Walk/Left.xpm";
-// 	v->img[ESPAWN].anim[NORTH + DIR_N].filename = "resources/textures\
-// /antihero/Attack/Up.xpm";
-// 	v->img[ESPAWN].anim[SOUTH + DIR_N].filename = "resources/textures\
-// /antihero/Attack/Down.xpm";
-// 	v->img[ESPAWN].anim[EAST + DIR_N].filename = "resources/textures\
-// /antihero/Attack/Right.xpm";
-// 	v->img[ESPAWN].anim[WEST + DIR_N].filename = "resources/textures\
-// /antihero/Attack/Left.xpm";
+	// 	v->img[ESPAWN].anim[NORTH].filename = "resources/textures
+	// /antihero/Walk/Up.xpm";
+	// 	v->img[ESPAWN].anim[SOUTH].filename = "resources/textures
+	// /antihero/Walk/Down.xpm";
+	// 	v->img[ESPAWN].anim[EAST].filename = "resources/textures
+	// /antihero/Walk/Right.xpm";
+	// 	v->img[ESPAWN].anim[WEST].filename = "resources/textures
+	// /antihero/Walk/Left.xpm";
+	// 	v->img[ESPAWN].anim[NORTH + DIR_N].filename = "resources/textures
+	// /antihero/Attack/Up.xpm";
+	// 	v->img[ESPAWN].anim[SOUTH + DIR_N].filename = "resources/textures
+	// /antihero/Attack/Down.xpm";
+	// 	v->img[ESPAWN].anim[EAST + DIR_N].filename = "resources/textures
+	// /antihero/Attack/Right.xpm";
+	// 	v->img[ESPAWN].anim[WEST + DIR_N].filename = "resources/textures
+	// /antihero/Attack/Left.xpm";
 }
 
 void	initprojectilepathanim(t_vars *v)
 {
 	(void)v;
-// 	v->img[EPROJ].anim[NORTH].filename = "resources/textures\
-// /attacks/iceball/hadokenUP.xpm";
-// 	v->img[EPROJ].anim[SOUTH].filename = "resources/textures\
-// /attacks/iceball/hadokenDOWN.xpm";
-// 	v->img[EPROJ].anim[EAST].filename = "resources/textures\
-// /attacks/iceball/hadokenRIGHT.xpm";
-// 	v->img[EPROJ].anim[WEST].filename = "resources/textures\
-// /attacks/iceball/hadokenLEFT.xpm";
+	// 	v->img[EPROJ].anim[NORTH].filename = "resources/textures
+	// /attacks/iceball/hadokenUP.xpm";
+	// 	v->img[EPROJ].anim[SOUTH].filename = "resources/textures
+	// /attacks/iceball/hadokenDOWN.xpm";
+	// 	v->img[EPROJ].anim[EAST].filename = "resources/textures
+	// /attacks/iceball/hadokenRIGHT.xpm";
+	// 	v->img[EPROJ].anim[WEST].filename = "resources/textures
+	// /attacks/iceball/hadokenLEFT.xpm";
 }

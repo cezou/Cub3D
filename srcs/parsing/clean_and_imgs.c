@@ -22,6 +22,8 @@ void	init_imgs(t_vars *v)
 	v->infos.south.is_set = NULL;
 	v->infos.west.imga.img = NULL;
 	v->infos.west.is_set = NULL;
+	v->infos.f = 0;
+	v->infos.c = 0;
 }
 
 int	init_xpm(t_imga *img, char *path, void *mlx, int i)

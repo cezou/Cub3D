@@ -79,11 +79,8 @@ void	init_player_dir(t_vars *v)
 
 void	check_map(t_vars *v, int argc, char **argv)
 {
-	int	i;
-
 	(void)argc;
 	(void)argv;
-	i = -1;
 	parse(v, -1, NULL);
 	v->player.x = v->player.player->x;
 	v->player.y = v->player.player->y;

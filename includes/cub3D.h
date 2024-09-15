@@ -33,6 +33,7 @@
 # define SUCCESS EXIT_SUCCESS
 # define STDERR STDERR_FILENO
 # define WHITESPACES " \t\n\v\f\r"
+# define VALID " \t\n\v\f\r10NSOE"
 
 // Debug
 
@@ -516,7 +517,9 @@ typedef struct s_boolimage
 
 typedef struct s_infos
 {
+	char				**map;
 	size_t				map_index;
+	size_t				map_height;
 
 	t_boolimage			north;
 	t_boolimage			south;
@@ -525,6 +528,7 @@ typedef struct s_infos
 
 	bool				f;
 	bool				c;
+	bool				player;
 	uint32_t			ceil;
 	uint32_t			floor;
 
@@ -692,6 +696,19 @@ void					iscollected(t_vars *v, int i, int ent, t_point p);
 void					attack(t_vars *v);
 
 /* FUNCTIONS */
+char	*skip_whitespaces(t_vars *v, int fd, int *i)
+;
+void	store_map(char *line, t_vars *v, int fd, int i)
+;
+bool	is_char_valid(char c)
+;
+bool	is_player_char(char c)
+;
+bool	isnt_cub_ended(const char *s)
+;
+bool	there_is_only_whitespaces(const char *s)
+;
+bool					there_is_only_whitespaces(const char *s);
 int						init_xpm(t_imga *img, char *path, void *mlx, int i);
 size_t					nb_occur(const char *s, char c);
 bool					is_color(char *s);
