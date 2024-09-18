@@ -1,35 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   map_floodfill.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/12 17:22:46 by cviegas           #+#    #+#             */
-/*   Updated: 2024/09/12 17:22:47 by cviegas          ###   ########.fr       */
+/*   Created: 2024/09/18 21:51:47 by cviegas           #+#    #+#             */
+/*   Updated: 2024/09/18 21:53:16 by cviegas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
 
-int	cmp(const char *s1, const char *s2)
+bool	needs_to_be_surrounded(char c)
 {
-	size_t	i;
-
-	i = 0;
-	while (s1[i] && s1[i] == s2[i])
-		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	return (c == 'N' || c == 'O' || c == 'S' || c == 'W' || c == '0'
+		|| c == 'D');
 }
 
-size_t	tab_len(char **tab)
+bool	is_surrounded(char **map, int i, int j)
 {
-	int	i;
+	(void)map;
+	(void)i;
+	(void)j;
+	return (1);
+}
 
-	if (!tab)
-		return (0);
+bool	is_map_closed(char **map)
+{
+	int i;
+	int j;
+
 	i = -1;
-	while (tab[++i])
-		;
-	return (i);
+	while (map[++i])
+	{
+		j = -1;
+		while (map[i][++j])
+		{
+			if (needs_to_be_surrounded(map[i][j]))
+			{
+				if (!is_surrounded(map, i, j))
+					return (cerr(i, j), 0);
+			}
+		}
+	}
+	return (1);
 }

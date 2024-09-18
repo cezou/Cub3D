@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_valid_map.c                                     :+:      :+:    :+:   */
+/*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 17:22:37 by cviegas           #+#    #+#             */
-/*   Updated: 2024/09/15 15:41:01 by cviegas          ###   ########.fr       */
+/*   Updated: 2024/09/18 21:53:13 by cviegas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,32 @@ void	calculate_mapsize_checking(char *line, t_vars *v, int fd, int i)
 	}
 	v->infos.map_height = j - 1;
 	close(fd);
+}
+
+void	store_map(t_vars *v)
+{
+	int	fd;
+	int	i;
+
+	fd = open(v->mapv.filename, O_RDONLY);
+	if (fd == -1)
+		(perr("Malloc Failed"), clean_exit(v->infos.map, INT_MAX, v, 0));
+	v->infos.map = malloc((v->infos.map_height + 1) * sizeof(char *));
+	if (!v->infos.map)
+		(perr("Malloc Failed"), clean_exit(v->infos.map, fd, v, 0));
+	i = -1;
+	while (++i < (int)v->infos.map_index - 1)
+	{
+		v->infos.map[0] = get_next_line(fd);
+		free(v->infos.map[0]);
+	}
+	i = -1;
+	while (++i < (int)v->infos.map_height)
+	{
+		v->infos.map[i] = get_next_line(fd);
+		if (!v->infos.map[i])
+			break ;
+		v->infos.map[i][ft_strlen(v->infos.map[i]) - 1] = 0;
+	}
+	(close(fd), v->infos.map[i] = 0);
 }

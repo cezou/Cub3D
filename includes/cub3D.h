@@ -696,6 +696,14 @@ void					iscollected(t_vars *v, int i, int ent, t_point p);
 void					attack(t_vars *v);
 
 /* FUNCTIONS */
+bool	is_surrounded(char **map, int i, int j)
+;
+bool	is_map_closed(char **map)
+;
+void	cerr(int i, int j)
+;
+
+void					store_map(t_vars *v);
 void					s(void);
 void					store_map(t_vars *v);
 void					calculate_mapsize_checking(char *line, t_vars *v,

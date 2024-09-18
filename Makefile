@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+         #
+#    By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 11:28:17 by pmagnero          #+#    #+#              #
-#    Updated: 2024/09/11 17:08:35 by pmagnero         ###   ########.fr        #
+#    Updated: 2024/09/18 21:52:57 by cviegas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,6 +88,8 @@ SRCS =	srcs/cub3D.c \
 		srcs/parsing/clean_and_imgs.c \
 		srcs/parsing/map.c \
 		srcs/parsing/map_utils.c \
+		srcs/parsing/print_utils.c \
+		srcs/parsing/map_floodfill.c
 
 
 # srcs/movements/cub3D_collisions.c
