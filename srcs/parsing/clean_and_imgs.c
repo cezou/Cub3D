@@ -53,7 +53,8 @@ void	pfree_img(t_imga *img, t_vars *v)
 
 void	clean_exit(char **l, int fd, t_vars *v, bool free_line)
 {
-	close(fd);
+	if (fd != 666)
+		close(fd);
 	if (free_line)
 		freeall(l);
 	pfree_img(&v->infos.east.imga, v);

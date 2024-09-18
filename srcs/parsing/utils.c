@@ -50,3 +50,16 @@ size_t	tab_len(char **tab)
 		;
 	return (i);
 }
+
+void	s(void)
+{
+	static int count = 0;
+	static int color_index = 0;
+	const char *colors[] = {"\033[1;31m", "\033[1;32m", "\033[1;33m",
+		"\033[1;34m", "\033[1;35m", "\033[1;36m", "\033[1;37m"};
+	int num_colors = sizeof(colors) / sizeof(colors[0]);
+
+	printf("%sSquid: %d\033[0m\n", colors[color_index], count);
+	count++;
+	color_index = (color_index + 1) % num_colors;
+}

@@ -47,32 +47,34 @@ void	store_map(t_vars *v)
 
 	fd = open(v->mapv.filename, O_RDONLY);
 	if (fd == -1)
-		(perr("Malloc Failed"), clean_exit(v->infos.map, fd, v, 0));
-	v->infos.map = malloc(v->infos.map_height + 1);
+		(perr("Malloc Failed"), clean_exit(v->infos.map, 666, v, 0));
+	v->infos.map = malloc((v->infos.map_height + 1) * sizeof(char *));
 	if (!v->infos.map)
 		(perr("Malloc Failed"), clean_exit(v->infos.map, fd, v, 0));
 	i = -1;
-	while (++i < (int)v->infos.map_index)
+	while (++i < (int)v->infos.map_index - 1)
 	{
 		v->infos.map[0] = get_next_line(fd);
-		if (!v->infos.map[0])
-			break ;
 		free(v->infos.map[0]);
 	}
-	i = 0;
-	while (1)
+	i = -1;
+	while (++i < (int)v->infos.map_height)
 	{
 		v->infos.map[i] = get_next_line(fd);
-		if (!v->infos.map[i++])
+		if (!v->infos.map[i])
 			break ;
+		v->infos.map[i][ft_strlen(v->infos.map[i]) - 1] = 0;
 	}
-	v->infos.map[i] = 0;
+	(close(fd), v->infos.map[i] = 0);
 }
 
 void	parse_map(t_vars *v, int fd, int i)
 {
 	calculate_mapsize_checking(skip_whitespaces(v, fd, &i), v, fd, i);
-	// store_map(v);
+	store_map(v);
+	// if (!is_map_closed(v->infos.map))
+	// 	clean_exit(v->infos.map, 666, v, 1);
+	freeall(v->infos.map);
 }
 
 void	parse_file(int fd, t_vars *v)
