@@ -40,9 +40,39 @@ void	parse_ids(t_vars *v, int fd, size_t *i)
 	(lerr(*i, "There are values missing"), clean_exit(l, fd, v, 0));
 }
 
+void	store_map(t_vars *v)
+{
+	int	fd;
+	int	i;
+
+	fd = open(v->mapv.filename, O_RDONLY);
+	if (fd == -1)
+		(perr("Malloc Failed"), clean_exit(v->infos.map, fd, v, 0));
+	v->infos.map = malloc(v->infos.map_height + 1);
+	if (!v->infos.map)
+		(perr("Malloc Failed"), clean_exit(v->infos.map, fd, v, 0));
+	i = -1;
+	while (++i < (int)v->infos.map_index)
+	{
+		v->infos.map[0] = get_next_line(fd);
+		if (!v->infos.map[0])
+			break ;
+		free(v->infos.map[0]);
+	}
+	i = 0;
+	while (1)
+	{
+		v->infos.map[i] = get_next_line(fd);
+		if (!v->infos.map[i++])
+			break ;
+	}
+	v->infos.map[i] = 0;
+}
+
 void	parse_map(t_vars *v, int fd, int i)
 {
-	store_map(skip_whitespaces(v, fd, &i), v, fd, i);
+	calculate_mapsize_checking(skip_whitespaces(v, fd, &i), v, fd, i);
+	// store_map(v);
 }
 
 void	parse_file(int fd, t_vars *v)
@@ -52,7 +82,6 @@ void	parse_file(int fd, t_vars *v)
 	i = 0;
 	parse_ids(v, fd, &i);
 	parse_map(v, fd, i);
-	close(fd);
 }
 
 void	parsing(int ac, char **av, t_vars *v)
@@ -64,12 +93,12 @@ void	parsing(int ac, char **av, t_vars *v)
 	if (isnt_cub_ended(av[1]))
 		exit((merr("file name needs to end with \".cub\""), FAIL));
 	v->mapv.filename = av[1];
-	v->mlx = mlx_init();
-	if (!v->mlx)
-		exit((perr("MLX init failed"), FAIL));
 	fd = open(av[1], O_RDONLY);
 	if (fd == -1)
 		exit((merr("file doesn't exist or open failed"), FAIL));
+	v->mlx = mlx_init();
+	if (!v->mlx)
+		exit((close(fd), perr("MLX init failed"), FAIL));
 	init_imgs(v);
 	parse_file(fd, v);
 }

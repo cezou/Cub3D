@@ -696,18 +696,15 @@ void					iscollected(t_vars *v, int i, int ent, t_point p);
 void					attack(t_vars *v);
 
 /* FUNCTIONS */
-char	*skip_whitespaces(t_vars *v, int fd, int *i)
+void					store_map(t_vars *v);
+void					calculate_mapsize_checking(char *line, t_vars *v,
+							int fd, int i);
+char					*skip_whitespaces(t_vars *v, int fd, int *i);
 ;
-void	store_map(char *line, t_vars *v, int fd, int i)
-;
-bool	is_char_valid(char c)
-;
-bool	is_player_char(char c)
-;
-bool	isnt_cub_ended(const char *s)
-;
-bool	there_is_only_whitespaces(const char *s)
-;
+bool					is_char_valid(char c);
+bool					is_player_char(char c);
+bool					isnt_cub_ended(const char *s);
+bool					there_is_only_whitespaces(const char *s);
 bool					there_is_only_whitespaces(const char *s);
 int						init_xpm(t_imga *img, char *path, void *mlx, int i);
 size_t					nb_occur(const char *s, char c);

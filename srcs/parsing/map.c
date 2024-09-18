@@ -49,7 +49,7 @@ bool	check_line(char *line, t_vars *v, size_t ind)
 	return (free(line), 1);
 }
 
-void	store_map(char *line, t_vars *v, int fd, int i)
+void	calculate_mapsize_checking(char *line, t_vars *v, int fd, int i)
 {
 	size_t	j;
 
@@ -65,5 +65,6 @@ void	store_map(char *line, t_vars *v, int fd, int i)
 		if (!check_line(line, v, i))
 			clean_exit((char **)j, fd, v, 0);
 	}
-	v->infos.map_height = j;
+	v->infos.map_height = j - 1;
+	close(fd);
 }
