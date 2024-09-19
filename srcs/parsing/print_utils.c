@@ -28,9 +28,11 @@ void	s(void)
 
 void	cerr(int i, int j)
 {
-	ft_printf(STDERR, RED "Error\nMap: " RCOLOR LIL_RED
-		"Char at line %d, column %d isn't surround by walls\n"
-		RCOLOR, i, j);
+	ft_printf(STDERR,
+		RED "Error\nMap: " RCOLOR LIL_RED "Char at line %d, column\
+		%d (± 1) isn't surround by walls\n" RCOLOR,
+		i,
+		j);
 }
 
 void	perr(const char *s)

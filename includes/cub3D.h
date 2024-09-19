@@ -696,12 +696,17 @@ void					iscollected(t_vars *v, int i, int ent, t_point p);
 void					attack(t_vars *v);
 
 /* FUNCTIONS */
-bool	is_surrounded(char **map, int i, int j)
+bool	is_in_string(char c, char *s)
 ;
-bool	is_map_closed(char **map)
-;
-void	cerr(int i, int j)
-;
+bool					is_surrounded(char **map, int i, int j,
+							size_t map_start);
+char					**tab_dup(char **tab);
+void					init_infos(t_vars *v, char *file, int *fd);
+bool					is_map_closed(char **map, size_t map_start);
+bool					is_not_accepted(char **map, int i, int j);
+void					print_map(char **s);
+bool					is_in_string(char c, char *s);
+void					cerr(int i, int j);
 
 void					store_map(t_vars *v);
 void					s(void);

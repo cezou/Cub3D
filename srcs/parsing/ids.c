@@ -66,5 +66,5 @@ int	set_a_value(t_infos *i, char **l, int ind, void *mlx)
 		return (set_texture(i, l, ind, mlx));
 	if (is_color(l[0]))
 		return (set_colors(i, l, ind));
-	return (lerr(ind, "Unvalid ID"), -1);
+	return (lerr(ind, "Unvalid ID or there is map before all IDs are set"), -1);
 }

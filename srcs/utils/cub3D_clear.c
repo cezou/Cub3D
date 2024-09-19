@@ -96,9 +96,9 @@ int	cleardata(t_vars *v, int b)
 	if (v->mapv.map && map_clear(v->mapv.map) < 0)
 		return (ft_printf(2, "ERROR Destroy Map\n"));
 	if (b && v->mlx)
-	{
 		free(v->mlx);
-	}
+	if (v->infos.map)
+		freeall(v->infos.map);
 	if (v->img)
 		free(v->img);
 	if (v->objs.objs)

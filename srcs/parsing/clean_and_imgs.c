@@ -12,8 +12,15 @@
 
 #include "../../includes/cub3D.h"
 
-void	init_imgs(t_vars *v)
+void	init_infos(t_vars *v, char *file, int *fd)
 {
+	v->mapv.filename = file;
+	*fd = open(file, O_RDONLY);
+	if (*fd == -1)
+		exit((merr("file doesn't exist or open failed"), FAIL));
+	v->mlx = mlx_init();
+	if (!v->mlx)
+		exit((close(*fd), perr("MLX init failed"), FAIL));
 	v->infos.north.imga.img = NULL;
 	v->infos.north.is_set = NULL;
 	v->infos.east.imga.img = NULL;

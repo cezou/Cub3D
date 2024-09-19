@@ -66,3 +66,12 @@ bool	is_player_char(char c)
 {
 	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
+
+void	print_map(char **s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+		printf("%s\n", s[i++]);
+}

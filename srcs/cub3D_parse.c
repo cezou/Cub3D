@@ -61,7 +61,8 @@ static void	map_trunc(t_vars *v, t_map **tmp, t_map **left)
 		}
 	}
 	v->mapv.tmpx = 0;
-	(*tmp)->right = NULL;
+	if (*tmp)
+		(*tmp)->right = NULL;
 	v->last = (*tmp);
 }
 
@@ -94,37 +95,14 @@ static t_map	*populate_map(char *tab, t_vars *v, t_map *p, t_map *prev)
 
 int	parse(t_vars *v, int j, t_map *p)
 {
-	int		fd;
-	char	*line;
-	size_t	i;
+	int i;
 
-	fd = open(v->mapv.filename, O_RDONLY);
-	if (fd == -1)
-		exit((prterr(v, ERROF, 1, 1), 1));
-	i = 0;
-	while (1)
+	i = -1;
+	while (v->infos.map[++i])
 	{
-		line = get_next_line(fd);
-		if (i++ == v->infos.map_index)
-			break ;
-		free(line);
-	}
-	v->mapv.mapw = ft_strlen(line) - 1;
-	while (line)
-	{
-		p = populate_map((j++, line), v, p, NULL);
-		(free(line), v->mapv.tmpy += 1);
-		line = get_next_line(fd);
+		p = populate_map((j++, v->infos.map[i]), v, p, NULL);
+		v->mapv.tmpy += 1;
 	}
 	v->mapv.maph = j + 1;
-	// checkcomp(v, v->mapv.map);
-	// if (!v->player.player)
-	// 	exit((prterr(v, "No player on the map\n", 1, 1), 1));
-	// if (!v->exit)
-	// 	exit((prterr(v, "No exit on the map\n", 1, 1), 1));
-	// if (v->mapv.error)
-	// 	exit((prterr(v, ERRDUP, 1, 1), 1));
-	if (close(fd) < 0)
-		exit((prterr(v, ERRCF, 1, 1), 1));
 	return (1);
 }
