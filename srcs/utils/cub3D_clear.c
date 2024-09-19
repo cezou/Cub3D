@@ -12,16 +12,17 @@
 
 #include "../../includes/cub3D.h"
 
-void	freeall(char **tab)
+int	freeall(char **tab)
 {
 	int	i;
 
 	i = -1;
-	if (!tab)
-		return ;
+	if (!tab || !tab[0])
+		return (0);
 	while (tab[++i])
 		free(tab[i]);
 	free(tab);
+	return (0);
 }
 
 int	map_clear(t_map *lst)
@@ -52,8 +53,8 @@ int	clearimgs(t_vars *v)
 		{
 			while (v->img[i].anim && ++j < v->img[i].animnb)
 			{
-				if (v->img[i].anim[j].img && mlx_destroy_image(v->mlx,
-						v->img[i].anim[j].img) < 0)
+				if (v->img[i].anim[j].img
+					&& mlx_destroy_image(v->mlx, v->img[i].anim[j].img) < 0)
 					return (ft_printf(2, "ERROR Destroy Anim Image\n"), -1);
 			}
 			free(v->img[i].anim);
@@ -73,8 +74,8 @@ int	clear_sounds(t_vars *v)
 		return (0);
 	while (++i < SOUND_NB)
 	{
-		v->sound.result = ma_sound_stop_with_fade_in_pcm_frames(&v->sound.sound[i],
-				2);
+		v->sound.result
+			= ma_sound_stop_with_fade_in_pcm_frames(&v->sound.sound[i], 2);
 		if (v->sound.result != MA_SUCCESS)
 			exit((prterr(v, "Clear stop fade sound failed\n", 1, 1), 1));
 		ma_sound_uninit(&v->sound.sound[i]);
@@ -88,20 +89,24 @@ int	clear_sounds(t_vars *v)
 
 int	cleardata(t_vars *v, int b)
 {
+	if (!MANDATORY && system(XSET_0) == -1)
+		perror("xset");
 	clear_sounds(v);
-	if (b && v->mlx && (clearimgs(v) < 0 || (v->screen.win
-				&& mlx_destroy_window(v->mlx, v->screen.win) < 0)
+	if (b && v->mlx && (clearimgs(v) < 0
+			|| (v->screen.win && mlx_destroy_window(v->mlx, v->screen.win) < 0)
 			|| mlx_destroy_display(v->mlx) < 0))
 		return (ft_printf(2, "ERROR Destroy Imgs/Win/Disp\n"), 1);
 	if (v->mapv.map && map_clear(v->mapv.map) < 0)
 		return (ft_printf(2, "ERROR Destroy Map\n"));
 	if (b && v->mlx)
-	{
 		free(v->mlx);
-	}
 	if (v->img)
 		free(v->img);
+	if (v->ray.zbuffer)
+		free(v->ray.zbuffer);
 	if (v->objs.objs)
 		free(v->objs.objs);
+	if (v->door.d)
+		free(v->door.d);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:59:52 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/10 14:23:41 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/13 11:28:25 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	prterr(t_vars *v, char *err, int cleardatab, int init)
 	showparams(v);
 	if (cleardatab)
 		cleardata(v, init);
+	if (!MANDATORY && system(XSET_0) == -1)
+		perror("xset");
 }
 
 void	showparams(t_vars *v)

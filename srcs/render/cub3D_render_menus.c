@@ -29,12 +29,8 @@ static void	puttexturesmenu(t_vars *v, int i, int ph, int pw)
 			{
 				d.x = (p.x + pw) * v->mouse.zoom;
 				d.y = (p.y + ph) * v->mouse.zoom;
-				img_pix_put(&v->img[EMAP],
-					(t_point){d.x - (v->mapv.mapw * v->mouse.zoom / 2)
-					+ v->mouse.xoff,
-					d.y - (v->mapv.maph * v->mouse.zoom / 2) + v->mouse.yoff, 0,
-					getcolorpix(v->img[i].addr, k, v->game.pause)},
-					v->screen.resw, v->screen.resh);
+				img_pix_put(&v->img[EMAP], (t_point){d.x, d.y, 0,
+					getcolorpix(v, v->img[i].addr, k)}, v);
 			}
 		}
 	}

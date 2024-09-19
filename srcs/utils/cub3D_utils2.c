@@ -77,18 +77,14 @@ t_map	*new_point(t_vars *v, char val, t_map **p)
 		v->mapv.error++;
 	if (val == 'N' || val == 'S' || val == 'E' || val == 'W')
 		v->player.player = node;
-	// if (val == GUARD)
-	// 	v->guard.guard = node;
-	// if (val == EXIT)
-	// 	v->exit = node;
-	// if (val == COLLECT)
-	// 	v->objs.collect++;
+	if (val == 'D')
+		v->door.nb++;
 	return (node->val = val, node->rev = 0, node->z = 0, node);
 }
 
-int	getcolorpix(char *addr, size_t k, int pause)
+int	getcolorpix(t_vars *v, char *addr, size_t k)
 {
-	if (pause)
+	if (v->game.pause)
 		return ((addr[k] << 0) + (addr[k + 1] << 8)
 			+ (0 << 16) + (addr[k + 3] << 24));
 	else
@@ -96,11 +92,15 @@ int	getcolorpix(char *addr, size_t k, int pause)
 			+ (addr[k + 2] << 16) + (addr[k + 3] << 24));
 }
 
-void	img_pix_put(t_imga *img, t_point p, int width, int height)
+void	img_pix_put(t_imga *img, t_point p, t_vars *v)
 {
 	char	*pixel;
 	int		i;
+	int		width;
+	int		height;
 
+	width = v->screen.resw;
+	height = v->screen.resh;
 	if (p.x >= 0 && p.x < width && p.y >= 0 && p.y < height)
 	{
 		i = img->bpp - 8;

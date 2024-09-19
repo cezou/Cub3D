@@ -74,17 +74,19 @@ int	getindex(t_vars *v, int *i, t_map *tmp)
 
 void	displaytext(t_vars *v, char *str, char *str2)
 {
-	str = (char *)malloc(sizeof(char) * (20));
-	if (!str)
-		exit((cleardata(v, 1), showparams(v), 1));
-	ft_bzero(str, 20);
-	str2 = ft_itoa(v->player.pocket);
-	ft_strlcat(str, str2, 20);
-	free(str2);
-	ft_strlcat(str, " / ", 20);
-	str2 = ft_itoa(v->objs.collect);
-	ft_strlcat(str, str2, 20);
-	if (v->god)
+	(void)str;
+	(void)str2;
+	// str = (char *)malloc(sizeof(char) * (20));
+	// if (!str)
+	// 	exit((cleardata(v, 1), showparams(v), 1));
+	// ft_bzero(str, 20);
+	// str2 = ft_itoa(v->player.pocket);
+	// ft_strlcat(str, str2, 20);
+	// free(str2);
+	// ft_strlcat(str, " / ", 20);
+	// str2 = ft_itoa(v->objs.collect);
+	// ft_strlcat(str, str2, 20);
+	if (v->game.god)
 	{
 		mlx_string_put(v->mlx, v->screen.win, 50, 50, W_P, "[ESC] Exit");
 		mlx_string_put(v->mlx, v->screen.win, 50, 70, W_P, "Zoom: Mouse wheel");
@@ -93,12 +95,12 @@ void	displaytext(t_vars *v, char *str, char *str2)
 		mlx_string_put(v->mlx, v->screen.win, 50, 170, W_P, "[F5] Hotreload");
 		mlx_string_put(v->mlx, v->screen.win, 50, 190, W_P, "[F1] GOD mode");
 	}
-	mlx_string_put(v->mlx, v->screen.win, v->screen.resw * 0.90, 110, W_P, str);
-	free(str2);
-	str2 = ft_itoa(v->player.nbmove);
-	mlx_string_put(v->mlx, v->screen.win, v->screen.resw * 0.80, 110,
-		W_P, str2);
-	free((free(str2), str));
+	// mlx_string_put(v->mlx, v->screen.win, v->screen.resw * 0.90, 110, W_P, str);
+	// free(str2);
+	// str2 = ft_itoa(v->player.nbmove);
+	// mlx_string_put(v->mlx, v->screen.win, v->screen.resw * 0.80, 110,
+	// 	W_P, str2);
+	// free((free(str2), str));
 }
 
 void	guardmovements(t_vars *v)
@@ -109,22 +111,6 @@ void	guardmovements(t_vars *v)
 	{
 		v->guard.timerguarddir = timestamp_in_ms(v);
 		v->guard.guarddir = NORTH + myrand(4);
-		// if (v->guard.guarddir == NORTH)
-		// 	movesvert((v->img[EGUARD].ydelta -= v->guard.movspeedguard,
-		// 			v->guard.movingguard = 1, v), v->guard.guard->up,
-		// 		(t_point){v->guard.movspeedguard, 0, 40, NORTH}, EGUARD);
-		// if (v->guard.guarddir == SOUTH)
-		// 	movesvert((v->img[EGUARD].ydelta += v->guard.movspeedguard,
-		// 			v->guard.movingguard = 1, v), v->guard.guard->down,
-		// 		(t_point){-v->guard.movspeedguard, 0, 40, SOUTH}, EGUARD);
-		// if (v->guard.guarddir == WEST)
-		// 	moveshor((v->img[EGUARD].xdelta -= v->guard.movspeedguard,
-		// 			v->guard.movingguard = 1, v), v->guard.guard->left,
-		// 		(t_point){v->guard.movspeedguard, 1, 80, WEST}, EGUARD);
-		// if (v->guard.guarddir == EAST)
-		// 	moveshor((v->img[EGUARD].xdelta += v->guard.movspeedguard,
-		// 			v->guard.movingguard = 1, v), v->guard.guard->right,
-		// 		(t_point){-v->guard.movspeedguard, 1, 40, EAST}, EGUARD);
 		if (v->guard.guarddir == DIR_N)
 			v->guard.movingguard = 0;
 	}
@@ -149,13 +135,12 @@ int	render(t_vars *v)
 	}
 	if (v->game.start > 2)
 		v->game.refreshmap = 0;
-	if (v->game.refreshmap)
-		ft_bzero((mlx_clear_window(v->mlx, v->screen.win), v->img[COMP_N].addr),
-			v->screen.resw * v->screen.resh * (v->img[COMP_N].bpp / 8));
+	// if (v->game.refreshmap)
+	// 	ft_bzero((mlx_clear_window(v->mlx, v->screen.win), v->img[EMAP].addr),
+	// 		v->screen.resw * v->screen.resh * (v->img[EMAP].bpp / 8));
+	// ft_bzero(v->img[EMAP].addr, v->screen.resw * v->screen.resh * (v->img[EMAP].bpp / 8));
 	raycasting(v);
-	// displaytopdown((topdown((guardmovements(v), v), v->mapv.map, 7, 7), v));
-	displaytopdown(v);
+	rendermenu(v);
 	mlx_put_image_to_window(v->mlx, v->screen.win, v->img[EMAP].img, 0, 0);
 	return (displaytext(v, NULL, NULL), v->game.start++, 0);
 }
-// ft_bzero(v->img[EMAP].addr, v->resw * v->resh * (v->img[EMAP].bpp / 8));

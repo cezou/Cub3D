@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/11 15:37:58 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/18 22:31:02 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	initwallspath(t_vars *v)
 {
+	// (void)v;
 	v->img[EWALL].filename = "resources/textures/Wall.xpm";
 	// v->img[EWALL2].filename = "resources/textures/Wall2.xpm";
 	// v->img[EWALL3].filename = "resources/textures/Wall3.xpm";
@@ -44,6 +45,12 @@ void	initpathtext(t_vars *v)
 	// v->img[EOBST1V2].filename = "resources/textures/CoffinEmpty.xpm";
 	// v->img[EOBST2V2].filename = "resources/textures/CoffinClosed.xpm";
 	v->img[ESPACE].filename = "resources/textures/Ground.xpm";
+	v->img[ESPACE].id = ESPACE;
+	v->img[EDOOR].filename = "resources/textures/Door.xpm";
+	v->img[EDOOR].id = EDOOR;
+	v->img[EWEAPON].filename = "resources/textures/knife.xpm";
+	v->img[EGUARD].filename = "resources/textures/general.xpm";
+	v->img[ESKYBOX].filename = "resources/textures/skybox.xpm";
 	// v->img[ESPACE2].filename = "resources/textures/Ground2.xpm";
 	// v->img[ESPACE3].filename = "resources/textures/Ground3.xpm";
 	// v->img[ECOLLECT].filename = "resources/textures/Star2.xpm";

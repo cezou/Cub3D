@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/06/11 14:28:52 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/16 11:26:45 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,20 @@ void	initmainimage(t_vars *v)
 	v->img[EMAP].anim = NULL;
 	v->img[EMAP].animnb = 0;
 	v->img[COMP_N].animnb = 0;
+}
+
+void	init_mouse_sens(t_vars *v)
+{
+	if (!MANDATORY && (v->screen.resw > W_W || v->screen.resh > W_H))
+	{
+		if (system(XSET_1) == -1)
+			perror("xset");
+	}
+	else if (!MANDATORY)
+	{
+		if (system(XSET_2) == -1)
+			perror("xset");
+	}
 }
 
 void	initwindow(t_vars *v, int argc, char **argv)
@@ -48,6 +62,7 @@ void	initwindow(t_vars *v, int argc, char **argv)
 			|| v->screen.resh > v->screen.screenh || v->screen.resh <= 0)
 			exit((prterr(v, ERRRES, 1, 1), 1));
 	}
+	init_mouse_sens(v);
 	initmainimage(v);
 	v->screen.win = mlx_new_window(v->mlx, (int)v->screen.resw,
 			(int)v->screen.resh, "CUB3D");

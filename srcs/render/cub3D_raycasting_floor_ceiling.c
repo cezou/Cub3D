@@ -6,130 +6,185 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:38:17 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/11 17:35:35 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/19 17:27:55 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
 
-static void	init_ray_floor(t_ray *ray, t_vars *v)
-{
-	ray->dir_x = v->player.dir_x - v->player.plane_x;
-	ray->dir_y = v->player.dir_y - v->player.plane_y;
-	ray->dir_x1 = v->player.dir_x + v->player.plane_x;
-	ray->dir_y1 = v->player.dir_y + v->player.plane_y;
-}
+/*HORIZONTAL METHOD*/
 
-static void	update_texture_pixels(t_vars *v, t_ray *ray, int y)
-{
-	int			p;
-	double		posz;
-	double		rowdist;
-	double		fstepx;
-	double		fstepy;
-	double		fx;
-	double		fy;
-	int			x;
-	int			tx;
-	int			ty;
-	uint32_t	color;
+// static void	init_ray_floor(t_vars *v)
+// {
+// 	v->ray.dir_x = v->player.dir_x - v->player.plane_x;
+// 	v->ray.dir_y = v->player.dir_y - v->player.plane_y;
+// 	v->ray.dir_x1 = v->player.dir_x + v->player.plane_x;
+// 	v->ray.dir_y1 = v->player.dir_y + v->player.plane_y;
+// }
 
-	x = 0;
-	p = y - v->screen.resh / 2;
-	posz = 0.5 * v->screen.resh;
-	rowdist = posz / p;
-	fstepx = rowdist * (ray->dir_x1 - ray->dir_x) / v->screen.resw;
-	fstepy = rowdist * (ray->dir_y1 - ray->dir_y) / v->screen.resw;
-	fx = v->player.x + rowdist * ray->dir_x;
-	fy = v->player.y + rowdist * ray->dir_y;
-	while (x < v->screen.resw)
+// static void	update_texture_pixels(t_vars *v, int y)
+// {
+// 	int			p;
+// 	double		posz;
+// 	double		rowdist;
+// 	double		fstepx;
+// 	double		fstepy;
+// 	double		fx;
+// 	double		fy;
+// 	int			x;
+// 	int			tx;
+// 	int			ty;
+// 	uint32_t	color;
+
+// 	x = 0;
+// 	p = y - v->screen.resh / 2;
+// 	posz = 0.5 * v->screen.resh;
+// 	rowdist = posz / p;
+// 	fstepx = rowdist * (v->ray.dir_x1 - v->ray.dir_x) / v->screen.resw;
+// 	fstepy = rowdist * (v->ray.dir_y1 - v->ray.dir_y) / v->screen.resw;
+// 	fx = v->player.x + rowdist * v->ray.dir_x;
+// 	fy = v->player.y + rowdist * v->ray.dir_y;
+// 	while (x < v->screen.resw)
+// 	{
+// 		int cx = (int)(fx);
+// 		int cy = (int)(fy);
+// 		tx = (int)(64 * (fx - cx)) & (64 - 1);
+// 		ty = (int)(64 * (fy - cy)) & (64 - 1);
+// 		fx += fstepx;
+// 		fy += fstepy;
+// 		// FLOOR
+// 		// color = getcolorpix(v->img[1].addr,
+// 					(ty * v->img[1].len) + (tx * 4), 0);
+// 		color = v->tex[4][64 * ty + tx];
+// 		color = (color >> 1) & 8355711;
+// 		img_pix_put(&v->img[COMP_N], (t_point){x,
+// 				y + v->mouse.yoff, 0, color},//  + v->mouse.yoff
+// 			v->screen.resw, v->screen.resh);
+// 		// CEILING
+// 		// color = getcolorpix(v->img[1].addr,
+// 					(ty * v->img[1].len) + (tx * 4), 0);
+// 		color = v->tex[5][64 * ty + tx];
+// 		color = (color >> 1) & 8355711;
+// 		img_pix_put(&v->img[COMP_N], (t_point){x,
+// 			v->screen.resh - y / 2 - 1 + v->mouse.yoff, 0, color},
+// 			v->screen.resw, v->screen.resh);
+// 		x++;
+// 	}
+// }
+
+// void	set_floor_ceiling_horiz(t_vars *v)
+// {
+// 	int		y;
+
+// 	y = 0;
+// 	while (y < v->img[COMP_N].height)
+// 	{
+// 		init_ray_floor(v);
+// 		update_texture_pixels(v, y);
+// 		y++;
+// 	}
+// }
+
+/*VERTICAL METHOD*/
+
+void	set_wall_dir(t_vars *v)
+{
+	if (v->ray.side == 0 && v->ray.dir_x > 0)
 	{
-		tx = (int)(64 * (fx - (int)(fx))) & (64 - 1);
-		ty = (int)(64 * (fy - (int)(fy))) & (64 - 1);
-		fx += fstepx;
-		fy += fstepy;
-		// color = getcolorpix(v->img[1].addr, (texy * v->img[1].len) + (texx * 4), 0);
-		color = v->tex[5][64 * ty + tx];
-		color = (color >> 1) & 8355711;
-		img_pix_put(&v->img[COMP_N], (t_point){x, v->screen.resh - y - 1, 0, color},//  + v->mouse.yoff
-			v->screen.resw, v->screen.resh);
-		x++;
+		v->ray.dir_x1 = v->ray.map_x;
+		v->ray.dir_y1 = v->ray.map_y + v->ray.wall_x;
+	}
+	else if (v->ray.side == 0 && v->ray.dir_x < 0)
+	{
+		v->ray.dir_x1 = v->ray.map_x + 1.0;
+		v->ray.dir_y1 = v->ray.map_y + v->ray.wall_x;
+	}
+	else if (v->ray.side == 1 && v->ray.dir_y > 0)
+	{
+		v->ray.dir_x1 = v->ray.map_x + v->ray.wall_x;
+		v->ray.dir_y1 = v->ray.map_y;
+	}
+	else
+	{
+		v->ray.dir_x1 = v->ray.map_x + v->ray.wall_x;
+		v->ray.dir_y1 = v->ray.map_y + 1.0;
 	}
 }
 
-void	set_floor_ceiling(t_vars *v, t_ray *ray)
+// p.color = v->tex[5][64 * ty + tx];
+void	draw_ceiling(t_vars *v, t_point p, int tx, int ty)
 {
-	int		y;
+	double		currfx;
+	double		currfy;
+	double		weight;
+	double		currdist;
+	double		distplay;
 
-	y = 0;
-	while (y < v->img[EMAP].height)
+	distplay = 0.0;
+	while (p.y < v->ray.draw_start)
 	{
-		// if (x >= v->img[EMAP].width)
-		// 	return (0);
-		init_ray_floor(ray, v);
-		update_texture_pixels(v, ray, y);
-		// set_dda(&ray, v);
-		// perform_dda(v, &ray);
-		// calculate_line_height(&ray, v);
-		// update_texture_pixels(v, &ray, x);
-		y++;
+		currdist = (v->screen.resh - (2.0 * v->player.z))
+			/ (v->screen.resh - 2.0 * (p.y - v->ray.pitch));
+		weight = (currdist - distplay) / (v->ray.wall_dist - distplay);
+		currfx = weight * v->ray.dir_x1 + (1.0 - weight) * v->player.x;
+		currfy = weight * v->ray.dir_y1 + (1.0 - weight) * v->player.y;
+		if ((int)currfx > 10 && (int)currfx < 16)
+		{
+			p.y++;
+			continue ;
+		}
+		tx = (int)(currfx * v->img[1].width) & (v->img[1].width - 1);
+		ty = (int)(currfy * v->img[1].height) & (v->img[1].height - 1);
+		p.color = getcolorpix(v, v->img[1].addr,
+				(ty * v->img[1].len) + (tx * 4));
+		p.color = (p.color >> 1) & 8355711;
+		img_pix_put(&v->img[EMAP], p, v);
+		p.y++;
 	}
 }
 
-    // //FLOOR CASTING
-    // for(int y = 0; y < h; y++)
-    // {
-    //   // rayDir for leftmost ray (x = 0) and rightmost ray (x = w)
-    //   float rayDirX0 = dirX - planeX;
-    //   float rayDirY0 = dirY - planeY;
-    //   float rayDirX1 = dirX + planeX;
-    //   float rayDirY1 = dirY + planeY;
+void	draw_floor(t_vars *v, t_point p, int tx, int ty)
+{
+	double		currfx;
+	double		currfy;
+	double		weight;
+	double		currdist;
+	double		distplay;
 
-    //   // Current y position compared to the center of the screen (the horizon)
-    //   int p = y - screenHeight / 2;
+	distplay = 0.0;
+	// if (v->ray.img.id == EDOOR && v->ray.side == 1)
+	// 	v->ray.wall_dist -= v->ray.sidedist_y - v->ray.deltadist_y * 0.5;
+	// else if (v->ray.img.id == EDOOR && v->ray.side == 0)
+	// 	v->ray.wall_dist -= v->ray.sidedist_x - v->ray.deltadist_x * 0.5;
+	while (p.y < v->screen.resh)
+	{
+		currdist = (v->screen.resh + (2.0 * v->player.z))
+			/ (2.0 * (p.y - v->ray.pitch) - v->screen.resh);
+		weight = (currdist - distplay) / (v->ray.wall_dist - distplay);
+		if (v->ray.img.id == EDOOR)
+		{
+			weight = (currdist - distplay) / (v->ray.wall_dist - v->ray.deltadist_y * 0.5 - distplay);
+		}
+		currfx = weight * v->ray.dir_x1 + (1.0 - weight) * v->player.x;
+		currfy = weight * v->ray.dir_y1 + (1.0 - weight) * v->player.y;
+		tx = (int)(currfx * v->img[1].width) & (v->img[1].width - 1);
+		ty = (int)(currfy * v->img[1].height) & (v->img[1].height - 1);
+		p.color = getcolorpix(v, v->img[1].addr,
+				(ty * v->img[1].len) + (tx * 4));
+		p.color = (p.color >> 1) & 8355711;
+		img_pix_put(&v->img[EMAP], p, v);
+		p.y++;
+	}
+}
 
-    //   // Vertical position of the camera.
-    //   float posZ = 0.5 * screenHeight;
-
-    //   // Horizontal distance from the camera to the floor for the current row.
-    //   // 0.5 is the z position exactly in the middle between floor and ceiling.
-    //   float rowDistance = posZ / p;
-
-    //   // calculate the real world step vector we have to add for each x (parallel to camera plane)
-    //   // adding step by step avoids multiplications with a weight in the inner loop
-    //   float floorStepX = rowDistance * (rayDirX1 - rayDirX0) / screenWidth;
-    //   float floorStepY = rowDistance * (rayDirY1 - rayDirY0) / screenWidth;
-
-    //   // real world coordinates of the leftmost column. This will be updated as we step to the right.
-    //   float floorX = posX + rowDistance * rayDirX0;
-    //   float floorY = posY + rowDistance * rayDirY0;
-
-    //   for(int x = 0; x < screenWidth; ++x)
-    //   {
-    //     // the cell coord is simply got from the integer parts of floorX and floorY
-    //     int cellX = (int)(floorX);
-    //     int cellY = (int)(floorY);
-
-    //     // get the texture coordinate from the fractional part
-    //     int tx = (int)(texWidth * (floorX - cellX)) & (texWidth - 1);
-    //     int ty = (int)(texHeight * (floorY - cellY)) & (texHeight - 1);
-
-    //     floorX += floorStepX;
-    //     floorY += floorStepY;
-
-    //     // choose texture and draw the pixel
-    //     int floorTexture = 3;
-    //     int ceilingTexture = 6;
-    //     Uint32 color;
-
-    //     // floor
-    //     color = texture[floorTexture][texWidth * ty + tx];
-    //     color = (color >> 1) & 8355711; // make a bit darker
-    //     buffer[y][x] = color;
-
-    //     //ceiling (symmetrical, at screenHeight - y - 1 instead of y)
-    //     color = texture[ceilingTexture][texWidth * ty + tx];
-    //     color = (color >> 1) & 8355711; // make a bit darker
-    //     buffer[screenHeight - y - 1][x] = color;
-    //   }
-    // }
+void	set_floor_ceiling_vert(t_vars *v, t_point p)
+{
+	set_wall_dir(v);
+	if (v->ray.draw_end < 0)
+		v->ray.draw_end = v->screen.resh;
+	draw_ceiling(v, p, 0, 0);
+	p.color = 0;
+	p.z = 0;
+	p.y = v->ray.draw_end;
+	draw_floor(v, p, 0, 0);
+}

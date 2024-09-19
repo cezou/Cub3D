@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 09:51:53 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/11 17:54:13 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/19 17:38:37 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	inittextures(t_vars *v, int i)
 	initimage(v, EMAP);
 	while (++i < COMP_N)
 	{
-		TRACE("img: %d", i);
 		v->img[i].img = mlx_xpm_file_to_image(v->mlx, v->img[i].filename,
 				&v->img[i].width, &v->img[i].height);
 		if (!v->img[i].img)
@@ -26,14 +25,14 @@ void	inittextures(t_vars *v, int i)
 				&v->img[i].len, &v->img[i].endian);
 		if (!v->img[i].addr)
 			exit((prterr(v, "Error mlx texture image address\n", 1, 1), 1));
-		v->img[i].xdelta = 0;
-		v->img[i].ydelta = 0;
-		v->img[i].posx = 0;
-		v->img[i].posy = 0;
-		v->img[i].animx = 0;
-		v->img[i].animy = 0;
-		v->img[i].anim = NULL;
-		v->img[i].animnb = 0;
+		// v->img[i].xdelta = 0;
+		// v->img[i].ydelta = 0;
+		// v->img[i].posx = 0;
+		// v->img[i].posy = 0;
+		// v->img[i].animx = 0;
+		// v->img[i].animy = 0;
+		// v->img[i].anim = NULL;
+		// v->img[i].animnb = 0;
 	}
 	initimage(v, COMP_N);
 }
@@ -45,11 +44,12 @@ int	main(int ac, char **av)
 	int		ycolor;
 	int		xycolor;
 	t_infos	i;
+	long	k = 2147483649;
 
+	k++;
 	if (ac < 2)
 		return (perr(E_ARG), FAIL);
 	parsing(av[1], &i);
-	// return (0);
 	v.img = (t_imga *)malloc(sizeof(t_imga) * (COMP_N + 1));
 	if (!v.img)
 		exit((prterr(&v, ERRMALL, 1, 1), 1));
