@@ -100,6 +100,8 @@ int	cleardata(t_vars *v, int b)
 		return (ft_printf(2, "ERROR Destroy Map\n"));
 	if (b && v->mlx)
 		free(v->mlx);
+	if (v->infos.map)
+		freeall(v->infos.map);
 	if (v->img)
 		free(v->img);
 	if (v->ray.zbuffer)

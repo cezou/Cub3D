@@ -16,24 +16,24 @@ int	printmap(t_vars *v, int i)
 {
 	t_map	*tmp;
 
-	ft_printf((tmp = v->mapv.map, 1), "MAP: %d, %d\n",
-		v->mapv.mapw, v->mapv.maph);
+	ft_printf((tmp = v->mapv.map, 1), "MAP: %d, %d\n", v->mapv.mapw,
+		v->mapv.maph);
 	while (tmp)
 	{
-		ft_printf(1, "point %d x: %d y: %d z: %d val: %c ", i++,
-			tmp->x, tmp->y, tmp->z, tmp->val);
+		ft_printf(1, "point %d x: %d y: %d z: %d val: %c ", i++, tmp->x, tmp->y,
+			tmp->z, tmp->val);
 		if (tmp->right)
 			ft_printf(1, "rightval: %c rightx: %d righty: %d, ",
 				tmp->right->val, tmp->right->x, tmp->right->y);
 		if (tmp->left)
-			ft_printf(1, "leftval: %c leftx: %d lefty: %d, ",
-				tmp->left->val, tmp->left->x, tmp->left->y);
+			ft_printf(1, "leftval: %c leftx: %d lefty: %d, ", tmp->left->val,
+				tmp->left->x, tmp->left->y);
 		if (tmp->up)
-			ft_printf(1, "upval: %c upx: %d upy: %d, ",
-				tmp->up->val, tmp->up->x, tmp->up->y);
+			ft_printf(1, "upval: %c upx: %d upy: %d, ", tmp->up->val,
+				tmp->up->x, tmp->up->y);
 		if (tmp->down)
-			ft_printf(1, "downval: %c downx: %d downy: %d",
-				tmp->down->val, tmp->down->x, tmp->down->y);
+			ft_printf(1, "downval: %c downx: %d downy: %d", tmp->down->val,
+				tmp->down->x, tmp->down->y);
 		ft_printf((tmp = tmp->right, 1), "\n");
 	}
 	ft_printf(1, "player pos: %d %d\n", v->player.player->x,
@@ -88,8 +88,8 @@ int	getcolorpix(t_vars *v, char *addr, size_t k)
 		return ((addr[k] << 0) + (addr[k + 1] << 8)
 			+ (0 << 16) + (addr[k + 3] << 24));
 	else
-		return ((addr[k] << 0) + (addr[k + 1] << 8)
-			+ (addr[k + 2] << 16) + (addr[k + 3] << 24));
+		return ((addr[k] << 0) + (addr[k + 1] << 8) + (addr[k + 2] << 16)
+			+ (addr[k + 3] << 24));
 }
 
 void	img_pix_put(t_imga *img, t_point p, t_vars *v)

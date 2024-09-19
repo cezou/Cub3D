@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 18:24:52 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/18 16:11:20 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/19 19:46:57 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static bool	is_valid_pos(t_vars *v, t_map *pos, t_point p)
 	else if (pos->val != '1')
 		o = 1;
 	return (o && pos->x == p.z && pos->y == p.color
-		&& pos->x >= 0 && pos->y >= 0 && pos->x < p.x && pos->y < p.y);
+		&& pos->x >= 0 && pos->y >= 0);//  && pos->x < p.x && pos->y < p.y
 }
 
 // Function to update the player's position

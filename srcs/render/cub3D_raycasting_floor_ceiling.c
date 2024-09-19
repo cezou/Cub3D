@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:38:17 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/19 17:27:55 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/19 19:23:35 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,16 @@
 // 		fx += fstepx;
 // 		fy += fstepy;
 // 		// FLOOR
-// 		// color = getcolorpix(v->img[1].addr,
-// 					(ty * v->img[1].len) + (tx * 4), 0);
+// 		// color = getcolorpix(v->img[ESPACE].addr,
+// 					(ty * v->img[ESPACE].len) + (tx * 4), 0);
 // 		color = v->tex[4][64 * ty + tx];
 // 		color = (color >> 1) & 8355711;
 // 		img_pix_put(&v->img[COMP_N], (t_point){x,
 // 				y + v->mouse.yoff, 0, color},//  + v->mouse.yoff
 // 			v->screen.resw, v->screen.resh);
 // 		// CEILING
-// 		// color = getcolorpix(v->img[1].addr,
-// 					(ty * v->img[1].len) + (tx * 4), 0);
+// 		// color = getcolorpix(v->img[ESPACE].addr,
+// 					(ty * v->img[ESPACE].len) + (tx * 4), 0);
 // 		color = v->tex[5][64 * ty + tx];
 // 		color = (color >> 1) & 8355711;
 // 		img_pix_put(&v->img[COMP_N], (t_point){x,
@@ -133,10 +133,10 @@ void	draw_ceiling(t_vars *v, t_point p, int tx, int ty)
 			p.y++;
 			continue ;
 		}
-		tx = (int)(currfx * v->img[1].width) & (v->img[1].width - 1);
-		ty = (int)(currfy * v->img[1].height) & (v->img[1].height - 1);
-		p.color = getcolorpix(v, v->img[1].addr,
-				(ty * v->img[1].len) + (tx * 4));
+		tx = (int)(currfx * v->img[ESPACE].width) & (v->img[ESPACE].width - 1);
+		ty = (int)(currfy * v->img[ESPACE].height) & (v->img[ESPACE].height - 1);
+		p.color = getcolorpix(v, v->img[ESPACE].addr,
+				(ty * v->img[ESPACE].len) + (tx * 4));
 		p.color = (p.color >> 1) & 8355711;
 		img_pix_put(&v->img[EMAP], p, v);
 		p.y++;
@@ -167,10 +167,10 @@ void	draw_floor(t_vars *v, t_point p, int tx, int ty)
 		}
 		currfx = weight * v->ray.dir_x1 + (1.0 - weight) * v->player.x;
 		currfy = weight * v->ray.dir_y1 + (1.0 - weight) * v->player.y;
-		tx = (int)(currfx * v->img[1].width) & (v->img[1].width - 1);
-		ty = (int)(currfy * v->img[1].height) & (v->img[1].height - 1);
-		p.color = getcolorpix(v, v->img[1].addr,
-				(ty * v->img[1].len) + (tx * 4));
+		tx = (int)(currfx * v->img[ESPACE].width) & (v->img[ESPACE].width - 1);
+		ty = (int)(currfy * v->img[ESPACE].height) & (v->img[ESPACE].height - 1);
+		p.color = getcolorpix(v, v->img[ESPACE].addr,
+				(ty * v->img[ESPACE].len) + (tx * 4));
 		p.color = (p.color >> 1) & 8355711;
 		img_pix_put(&v->img[EMAP], p, v);
 		p.y++;

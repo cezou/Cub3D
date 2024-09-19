@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 14:32:25 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/16 13:02:32 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/19 19:39:40 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ static void	map_trunc(t_vars *v, t_map **tmp, t_map **left)
 		}
 	}
 	v->mapv.tmpx = 0;
-	(*tmp)->right = NULL;
+	if (*tmp)
+		(*tmp)->right = NULL;
 	v->last = (*tmp);
 }
 
@@ -94,30 +95,14 @@ static t_map	*populate_map(char *tab, t_vars *v, t_map *p, t_map *prev)
 
 int	parse(t_vars *v, int j, t_map *p)
 {
-	int		fd;
-	char	*line;
+	int	i;
 
-	fd = open(v->mapv.filename, O_RDONLY);
-	if (fd < 0
-		|| ft_strncmp(&v->mapv.filename[ft_strlen(v->mapv.filename) - 4],
-			".cub", 4))
-		exit((prterr(v, ERROF, 1, 1), 1));
-	v->mapv.mapw = ft_strlen((line = get_next_line(fd), line)) - 1;
-	while (line)
+	i = -1;
+	while (v->infos.map[++i])
 	{
-		p = populate_map((j++, line), v, p, NULL);
-		(free(line), v->mapv.tmpy += 1);
-		line = get_next_line(fd);
+		p = populate_map((j++, v->infos.map[i]), v, p, NULL);
+		v->mapv.tmpy += 1;
 	}
 	v->mapv.maph = j + 1;
-	// checkcomp(v, v->mapv.map);
-	// if (!v->player.player)
-	// 	exit((prterr(v, "No player on the map\n", 1, 1), 1));
-	// if (!v->exit)
-	// 	exit((prterr(v, "No exit on the map\n", 1, 1), 1));
-	// if (v->mapv.error)
-	// 	exit((prterr(v, ERRDUP, 1, 1), 1));
-	if (close(fd) < 0)
-		exit((prterr(v, ERRCF, 1, 1), 1));
 	return (1);
 }

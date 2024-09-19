@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/19 14:45:32 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/19 19:22:56 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@
 # define STDERR STDERR_FILENO
 
 # define M_PI 3.14159265358979323846	/* pi */
+# define VALID " \t\n\v\f\r10NSOED"
+# define WHITESPACES " \t\n\v\f\r"
 
 // Debug
 
@@ -264,6 +266,10 @@ typedef enum s_door_state
 typedef enum s_components
 {
 	EMAP,
+	ESOUTH,
+	ENORTH,
+	EWEST,
+	EEAST,
 	ESPACE,
 	EWALL,
 	EDOOR,
@@ -520,15 +526,29 @@ typedef struct s_game
 // couleur: entre 0 et 255
 
 // Map: - Ne peut pas avoir de
+
+typedef struct s_boolimage
+{
+	bool				is_set;
+	t_imga				imga;
+}						t_boolimage;
+
 typedef struct s_infos
 {
-	char				*north_path;
-	char				*south_path;
-	char				*east_path;
-	char				*west_path;
+	char				**map;
+	size_t				map_index;
+	size_t				map_height;
 
-	int					ceil;
-	int					floor;
+	t_boolimage			north;
+	t_boolimage			south;
+	t_boolimage			east;
+	t_boolimage			west;
+
+	bool				f;
+	bool				c;
+	bool				player;
+	uint32_t			ceil;
+	uint32_t			floor;
 
 }						t_infos;
 
@@ -557,7 +577,8 @@ typedef struct s_vars
 }						t_vars;
 
 // Parsing
-void				parsing(char *file, t_infos *v);
+int						cmp(const char *s1, const char *s2);
+
 // Utils
 void				showparams(t_vars *v);
 int					parse(t_vars *vars, int j, t_map *p);
@@ -673,10 +694,66 @@ int					maintitleanim(t_vars *v);
 
 // Movements
 
+void					arrows(t_vars *v, t_map *dir, int d);
+int						keys_release(int keycode, t_vars *v);
+void					moveshor(t_vars *v, t_map *dir, t_point d, int ent);
+void					movesvert(t_vars *v, t_map *dir, t_point d, int ent);
+void					iscollected(t_vars *v, int i, int ent, t_point p);
+void					attack(t_vars *v);
+
+/* FUNCTIONS */
+bool	is_in_string(char c, char *s)
+;
+bool					is_surrounded(char **map, int i, int j,
+							size_t map_start);
+char					**tab_dup(char **tab);
+void					init_infos(t_vars *v, char *file, int *fd);
+bool					is_map_closed(char **map, size_t map_start);
+bool					is_not_accepted(char **map, int i, int j);
+void					print_map(char **s);
+bool					is_in_string(char c, char *s);
+void					cerr(int i, int j);
+
+void					store_map(t_vars *v);
+void					s(void);
+void					store_map(t_vars *v);
+void					calculate_mapsize_checking(char *line, t_vars *v,
+							int fd, int i);
+char					*skip_whitespaces(t_vars *v, int fd, int *i);
+;
+bool					is_char_valid(char c);
+bool					is_player_char(char c);
+bool					isnt_cub_ended(const char *s);
+bool					there_is_only_whitespaces(const char *s);
+bool					there_is_only_whitespaces(const char *s);
+int						init_xpm(t_imga *img, char *path, void *mlx, int i);
+size_t					nb_occur(const char *s, char c);
+bool					is_color(char *s);
+bool					is_texture(char *s);
+bool					is_everything_set(t_infos i);
+int						set_value(t_boolimage *bimg, char *file, void *mlx,
+							int i);
+int						set_texture(t_infos *i, char **l, int ind, void *mlx);
+int						set_a_color(int i, char *values, uint32_t *color,
+							bool *is_set);
+int						set_colors(t_infos *i, char **l, int ind);
+int						set_a_value(t_infos *i, char **l, int ind, void *mlx);
+void					init_imgs(t_vars *v);
+void					clean_exit(char **l, int fd, t_vars *v, bool free_line);
+void					pfree_img(t_imga *img, t_vars *v);
+char					*strrev(char *s);
+bool					is_valid_int(const char *s);
+bool					is_valid_int(const char *s);
+void					parsing(int ac, char **av, t_vars *v);
+bool					isnt_cub_ended(const char *s);
+
+void					lerr(size_t i, const char *s);
+size_t					tab_len(char **tab);
+int						cmp(const char *s1, const char *s2);
+
 void				move(t_vars *v, int d);
 void				rotatecamx(t_vars *v, int d, double speed);
 void				rotatecamy(t_vars *v, int d, double speed, int mul);
 void				set_pos(t_vars *v, t_point2 k);
-// void				attack(t_vars *v);
 
 #endif

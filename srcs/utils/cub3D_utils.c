@@ -53,10 +53,16 @@ void	showparams(t_vars *v)
 	ft_printf(1, "\t\t(default): 1024 768\n");
 	ft_printf(1, "%s", RCOLOR);
 	ft_printf(1, "\n%s", POTATO);
-	ft_printf(1, "\n%s\t\t\t\t\t\t\tBy CESAIRE VIEGAS <cviegas@student.42.fr>%s\
-", GREEN, RCOLOR);
-	ft_printf(1, "\n%s\t\t\t\t\t\t\t+ PIERRE MAGNERON <pmagnero@student.42.fr>%s\
-\n\n\n", GREEN, RCOLOR);
+	ft_printf(1,
+				"\n%s\t\t\t\t\t\t\tBy CESAIRE VIEGAS <cviegas@student.42.fr>%s\
+",
+				GREEN,
+				RCOLOR);
+	ft_printf(1,
+				"\n%s\t\t\t\t\t\t\t+ PIERRE MAGNERON <pmagnero@student.42.fr>%s\
+\n\n\n",
+				GREEN,
+				RCOLOR);
 }
 
 int	myrand(int nb)

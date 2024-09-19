@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/19 16:23:39 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/19 19:32:03 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,35 +83,32 @@ void	init_player_dir(t_vars *v)
 
 void	check_map(t_vars *v, int argc, char **argv)
 {
+	(void)argc;
+	(void)argv;
 	int		i;
 	t_map	*tmp;
 
 	i = -1;
-	if (argc > 1)
+	parse(v, -1, NULL);
+	v->player.x = v->player.player->x;
+	v->player.y = v->player.player->y;
+	v->door.d = (t_point *)malloc(sizeof(t_point) * (v->door.nb));
+	if (!v->door.d)
+		exit((prterr(v, ERRMALL, 1, 0), 1));
+	tmp = v->mapv.map;
+	// ft_printf(1, "door nb: %d\n", v->door.nb);
+	while (tmp)
 	{
-		v->mapv.filename = argv[1];
-		if (!v->mapv.filename)
-			exit((map_clear(v->mapv.map), 1));
-		parse(v, -1, NULL);
-		v->player.x = v->player.player->x;
-		v->player.y = v->player.player->y;
-		v->door.d = (t_point *)malloc(sizeof(t_point) * (v->door.nb));
-		if (!v->door.d)
-			exit((prterr(v, ERRMALL, 1, 0), 1));
-		tmp = v->mapv.map;
-		// ft_printf(1, "door nb: %d\n", v->door.nb);
-		while (tmp)
+		if (tmp->val == 'D')
 		{
-			if (tmp->val == 'D')
-			{
-				v->door.d[++i] = (t_point){tmp->x, tmp->y, 0, ECLOSE};
-				// ft_printf(1, "x: %d y: %d\n", v->door.d[i].x, v->door.d[i].y);
-			}
-			tmp = tmp->right;
+			v->door.d[++i] = (t_point){tmp->x, tmp->y, 0, ECLOSE};
+			// ft_printf(1, "x: %d y: %d\n", v->door.d[i].x, v->door.d[i].y);
 		}
+		tmp = tmp->right;
+	}
 		v->img[EDOOR].xdelta = v->img[EDOOR].width;
 		// v->img[ESPACE].xdelta = v->img[ESPACE].width;
-	}
+	v->player.pocket = 0;
 }
 
 void	init(t_vars *v, int argc, char **argv)
@@ -119,22 +116,22 @@ void	init(t_vars *v, int argc, char **argv)
 	int	i;
 
 	i = -1;
-	v->mlx = mlx_init();
 	v->screen.win = NULL;
 	v->mapv.map = NULL;
 	v->sound.init = 0;
 	v->objs.objs = NULL;
+	v->img = (t_imga *)malloc(sizeof(t_imga) * (COMP_N + 1));
+	if (!v->img)
+		exit((prterr(v, ERRMALL, 1, 1), 1));
 	while (v->img && ++i <= COMP_N)
 		v->img[i] = (t_imga){0};
-	if (!v->mlx)
-		exit((prterr(v, "MLX init failed\n", 1, 1), 1));
 	mlx_do_key_autorepeaton(v->mlx);
 	initwindow(v, argc, argv);
 	mlx_mouse_hide(v->mlx, v->screen.win);
 	v->img->fontname = FONT1;
 	v->img->fontname2 = FONT2;
 	initmodes(v, argc);
-	inittextures(v, 0);
+	inittextures(v, 4);
 	initsounds(v);
 	initguardanim(v, -1);
 	check_map(v, argc, argv);

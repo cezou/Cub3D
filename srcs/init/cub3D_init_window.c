@@ -57,9 +57,9 @@ void	initwindow(t_vars *v, int argc, char **argv)
 		v->screen.resh = ft_atol(argv[3]);
 		if (v->screen.resw > INT_MAX || v->screen.resw < INT_MIN
 			|| v->screen.resw > v->screen.screenw || v->screen.resw <= 0
-			|| ft_strlen(argv[4]) > 10
-			|| v->screen.resh > INT_MAX || v->screen.resh < INT_MIN
-			|| v->screen.resh > v->screen.screenh || v->screen.resh <= 0)
+			|| ft_strlen(argv[4]) > 10 || v->screen.resh > INT_MAX
+			|| v->screen.resh < INT_MIN || v->screen.resh > v->screen.screenh
+			|| v->screen.resh <= 0)
 			exit((prterr(v, ERRRES, 1, 1), 1));
 	}
 	init_mouse_sens(v);
@@ -67,5 +67,5 @@ void	initwindow(t_vars *v, int argc, char **argv)
 	v->screen.win = mlx_new_window(v->mlx, (int)v->screen.resw,
 			(int)v->screen.resh, "CUB3D");
 	if (!v->screen.win)
-		exit((prterr(v, ERRMALL, 1, 0), free(v->screen.win), 1));
+		exit((prterr(v, ERRMALL, 1, 0), 1));
 }

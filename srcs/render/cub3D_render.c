@@ -68,7 +68,7 @@ int	getindex(t_vars *v, int *i, t_map *tmp)
 	// 	&& tmp->right->val != WALL && tmp->up->val == WALL && tmp->up->y == 0)
 	// 	*i = EOBST1V1W;
 	// else
-		*i = EWALL;
+	*i = EWALL;
 	return (1);
 }
 
@@ -119,8 +119,8 @@ void	guardmovements(t_vars *v)
 int	render(t_vars *v)
 {
 	if (!v->screen.win || v->game.won > 0 || !v->game.start
-		|| timestamp_in_ms(v) - v->game.updated_at
-		< (uint64_t)(1000 / v->game.fps))
+		|| timestamp_in_ms(v) - v->game.updated_at < (uint64_t)(1000
+			/ v->game.fps))
 		return (1);
 	v->game.updated_at = timestamp_in_ms(v);
 	if (v->game.start == 2 && ACTIVATE_SOUND
@@ -128,8 +128,8 @@ int	render(t_vars *v)
 	{
 		ma_sound_stop(&v->sound.sound[0]);
 		ma_sound_set_looping(&v->sound.sound[2], MA_TRUE);
-		ma_sound_set_fade_start_in_milliseconds(&v->sound.sound[2],
-			0.0f, 0.8f, 3000, 3000);
+		ma_sound_set_fade_start_in_milliseconds(&v->sound.sound[2], 0.0f, 0.8f,
+			3000, 3000);
 		ma_sound_start(&v->sound.sound[2]);
 		mlx_loop_end(v->mlx);
 	}

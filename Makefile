@@ -6,7 +6,7 @@
 #    By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 11:28:17 by pmagnero          #+#    #+#              #
-#    Updated: 2024/09/19 14:37:20 by pmagnero         ###   ########.fr        #
+#    Updated: 2024/09/19 18:45:46 by pmagnero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ HEADER_MINIAUDIO = ./includes/miniaudio
 OBJS_DIR	= objs/
 OBJS_DIR_B	= objs_b/
 
-FLAG = -Wall -Wextra -Werror -O3
+FLAG = -Wall -Wextra -Werror -g -O3
 
 MLX_FLAG = -lXext -lX11 -lz -lm -pthread -ldl -lpthread -lXfixes -lasound
 
@@ -89,7 +89,17 @@ SRCS =	srcs/cub3D.c \
 		srcs/movements/cub3D_movements.c \
 		srcs/movements/cub3D_movements2.c \
 		srcs/parsing/parsing.c \
-		srcs/parsing/utils.c
+		srcs/parsing/is_valid_int.c \
+		srcs/parsing/utils.c \
+		srcs/parsing/ids.c \
+		srcs/parsing/ids_utils.c \
+		srcs/parsing/clean_and_imgs.c \
+		srcs/parsing/map.c \
+		srcs/parsing/map_utils.c \
+		srcs/parsing/print_utils.c \
+		srcs/parsing/map_floodfill.c
+
+
 # srcs/movements/cub3D_collisions.c
 # srcs/cub3D_pathfinding.c 
 # srcs/animations/cub3D_animations.c 
