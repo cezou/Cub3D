@@ -6,12 +6,15 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 09:51:53 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/06/10 10:16:29 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/20 18:41:22 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
 
+/// @brief Win loop/screen to display when the player win
+/// @param v Vars
+/// @return 
 int	win(t_vars *v)
 {
 	if (!v->screen.win || timestamp_in_ms(v) - v->game.updated_at
@@ -35,6 +38,9 @@ int	win(t_vars *v)
 	return (0);
 }
 
+/// @brief Lose loop/screen to dsiplay when the player lose
+/// @param v Vars
+/// @return 
 int	lose(t_vars *v)
 {
 	if (!v->screen.win || timestamp_in_ms(v) - v->game.updated_at
@@ -58,6 +64,9 @@ int	lose(t_vars *v)
 	return (0);
 }
 
+/// @brief Credits loop/screen to display at the end of the game
+/// @param v Vars
+/// @return 
 int	credits(t_vars *v)
 {
 	static float	h = 0;
@@ -87,6 +96,8 @@ int	credits(t_vars *v)
 	return (scrolling(v, &h, "STAFF", (t_point2){0.45f, rh, 1, R_P}), 0);
 }
 
+/// @brief Loading screen to display
+/// @param v Vars
 void	loading(t_vars *v)
 {
 	mlx_clear_window(v->mlx, v->screen.win);
@@ -99,6 +110,9 @@ void	loading(t_vars *v)
 	mlx_do_sync(v->mlx);
 }
 
+/// @brief Main title loop/screen displayed at the begining of the game
+/// @param v Vars
+/// @return 
 int	maintitleanim(t_vars *v)
 {
 	if (!v->screen.win || timestamp_in_ms(v) - v->game.updated_at

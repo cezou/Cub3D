@@ -6,12 +6,14 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:58:10 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/19 16:57:10 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/20 19:14:17 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
 
+/// @brief Set DDA (Digital Differential Analysis) datas
+/// @param v Vars
 void	set_dda(t_vars *v)
 {
 	if (v->ray.dir_x < 0)
@@ -38,20 +40,33 @@ void	set_dda(t_vars *v)
 	}
 }
 
+/// @brief Check if the ray at x,y position hit a wall or a door
+/// @param v Vars
+/// @param x X coordinate
+/// @param y Y coordinate
+/// @param d 
+/// @return 0 did not hit a wall/door, 1 hit a wall/door
 int	hashit(t_vars *v, int x, int y, int d)
 {
 	t_map	*tmp;
+	int		i;
 
+	i = -1;
 	tmp = v->mapv.map;
 	while (tmp)
 	{
-		// if (tmp->x == x && tmp->y == y && (tmp->val == 'D'))
-		// {
-		// 	v->ray.hit = tmp;
-		// 	return (1);
-		// }
-		if (tmp->x == x && tmp->y == y && (tmp->val == '1' || (d && tmp->val == 'D')))
+		if (tmp->x == x && tmp->y == y
+			&& (tmp->val == '1' || (d && tmp->val == 'D')))
 		{
+			if (tmp->val == 'D')
+			{
+				v->ray.img = v->img[EDOOR];/* FINDOOR() Door encountered */
+				i = find_door(v, tmp->x, tmp->y);
+				if (i > -1)
+					v->ray.door = v->door[i];
+			}
+			else
+				v->ray.img = v->img[ESPACE];
 			v->ray.hit = tmp;
 			return (1);
 		}
@@ -60,10 +75,44 @@ int	hashit(t_vars *v, int x, int y, int d)
 	return (0);
 }
 
+/// @brief If the ray hit a door then we need to extend the ray until it hit
+///	a wall so the if the door is open or opening we can render what is behind it
+/// @param v Vars
+static void	check_door(t_vars *v)
+{
+	double	dist;
+
+	if (v->ray.side == 0)
+	{
+		dist = v->ray.sidedist_x - v->ray.deltadist_x * 0.5;
+		if (v->ray.sidedist_y < dist)
+		{
+			v->ray.hit = NULL;
+			perform_dda(v, 1);
+			return ;
+		}
+		v->ray.wall_dist = dist;
+	}
+	else
+	{
+		dist = v->ray.sidedist_y - v->ray.deltadist_y * 0.5;
+		if (v->ray.sidedist_x < dist)
+		{
+			v->ray.hit = NULL;
+			perform_dda(v, 1);
+			return ;
+		}
+		v->ray.wall_dist = dist;
+	}
+}
+
+/// @brief Perform the DDA (Digital Differential Analysis) to get
+///	the square position in the map from the coordinates of the line
+/// @param v Vars
+/// @param d 
 void	perform_dda(t_vars *v, int d)
 {
 	int		hit;
-	double	dist;
 
 	hit = 0;
 	while (hit == 0)
@@ -82,98 +131,10 @@ void	perform_dda(t_vars *v, int d)
 		}
 		hit = hashit(v, v->ray.map_x, v->ray.map_y, d);
 	}
-	if (v->ray.hit->val == 'D')
-		v->ray.img = v->img[EDOOR];
+	if (v->ray.side == 0)
+		v->ray.wall_dist = (v->ray.sidedist_x - v->ray.deltadist_x);
 	else
-		v->ray.img = v->img[ESPACE];
-	// v->ray.img = loadtexture(v);
-	// if(texNum == 8)
-	// 	door = findDoor(mapX, mapY); /* Door encountered */
+		v->ray.wall_dist = (v->ray.sidedist_y - v->ray.deltadist_y);
 	if (v->ray.img.id == EDOOR)
-	{
-		if (v->ray.side == 0)
-		{
-			dist = v->ray.sidedist_x - v->ray.deltadist_x * 0.5;
-			if (v->ray.sidedist_y < dist)
-			{
-				v->ray.hit = NULL;
-				perform_dda(v, 1);
-				return ;
-			}
-			v->ray.wall_dist = dist;
-		}
-		else
-		{
-			dist = v->ray.sidedist_y - v->ray.deltadist_y * 0.5;
-			if (v->ray.sidedist_x < dist)
-			{
-				v->ray.hit = NULL;
-				perform_dda(v, 1);
-				return ;
-			}
-			v->ray.wall_dist = dist;
-		}
-	}
-	else
-	{
-		if (v->ray.side == 0)
-			v->ray.wall_dist = (v->ray.sidedist_x - v->ray.deltadist_x);
-		else
-			v->ray.wall_dist = (v->ray.sidedist_y - v->ray.deltadist_y);
-	}
+		check_door(v);
 }
-
-// int	hashit(t_vars *v, int x, int y)
-// {
-// 	t_map	*tmp;
-
-// 	tmp = v->mapv.map;
-// 	while (tmp)
-// 	{
-// 		if (tmp->x == x && tmp->y == y && tmp->val == '1')
-// 		{
-// 			// v->player.x = x;
-// 			// v->player.y = y;
-// 			// v->player.player = tmp;
-// 			// break ;
-// 			return (1);
-// 		}
-// 		tmp = tmp->right;
-// 	}
-// 	return (0);
-// }
-
-// void	perform_dda(t_vars *v)
-// {
-// 	int		hit;
-// 	// t_map	*tmp;
-
-// 	// tmp = v->player.player;
-// 	hit = 0;
-// 	while (hit == 0)
-// 	{
-// 		if (v->ray.sidedist_x < v->ray.sidedist_y)
-// 		{
-// 			v->ray.sidedist_x += v->ray.deltadist_x;
-// 			// if (v->ray.step_x > 0)
-// 			// 	tmp = tmp->right;
-// 			// else
-// 			// 	tmp = tmp->left;
-// 			v->ray.map_x += v->ray.step_x;
-// 			v->ray.side = 0;
-// 		}
-// 		else
-// 		{
-// 			v->ray.sidedist_y += v->ray.deltadist_y;
-// 			// if (v->ray.step_y > 0)
-// 			// 	tmp = tmp->down;
-// 			// else
-// 			// 	tmp = tmp->up;
-// 			v->ray.map_y += v->ray.step_y;
-// 			v->ray.side = 1;
-// 		}
-// 		// if (tmp->val == '1')
-// 			// hit = 1;
-// 		hit = hashit(v, v->ray.map_x, v->ray.map_y);
-// 	}
-// }

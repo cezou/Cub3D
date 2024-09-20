@@ -6,12 +6,15 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:59:52 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/13 11:28:25 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:26:14 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
 
+/// @brief Print the map as it is in the file if we are in debug
+/// @param v Vars
+/// @return 
 int	printmap2(t_vars *v)
 {
 	t_map	*tmp;
@@ -30,6 +33,12 @@ int	printmap2(t_vars *v)
 	return (0);
 }
 
+/// @brief Print an error in red + show the usage + clear datas of the program +
+///	reset xset keyboard input delay
+/// @param v Vars
+/// @param err Error string to print
+/// @param cleardatab Boolean to clear the datas
+/// @param init Boolean to check if we are previous init or not
 void	prterr(t_vars *v, char *err, int cleardatab, int init)
 {
 	ft_printf(2, "\n%s%s\n%s\n%s", RED, ERROR, err, RCOLOR);
@@ -40,6 +49,8 @@ void	prterr(t_vars *v, char *err, int cleardatab, int init)
 		perror("xset");
 }
 
+/// @brief Print usage and informations about the program in the console
+/// @param v Vars
 void	showparams(t_vars *v)
 {
 	(void)v;
@@ -53,18 +64,15 @@ void	showparams(t_vars *v)
 	ft_printf(1, "\t\t(default): 1024 768\n");
 	ft_printf(1, "%s", RCOLOR);
 	ft_printf(1, "\n%s", POTATO);
-	ft_printf(1,
-				"\n%s\t\t\t\t\t\t\tBy CESAIRE VIEGAS <cviegas@student.42.fr>%s\
-",
-				GREEN,
-				RCOLOR);
-	ft_printf(1,
-				"\n%s\t\t\t\t\t\t\t+ PIERRE MAGNERON <pmagnero@student.42.fr>%s\
-\n\n\n",
-				GREEN,
-				RCOLOR);
+	ft_printf(1, "\n%s\t\t\t\t\t\t\tBy CESAIRE VIEGAS <cviegas@student.42.fr>%s\
+", GREEN, RCOLOR);
+	ft_printf(1, "\n%s\t\t\t\t\t\t\t+ PIERRE MAGNERON <pmagnero@student.42.fr>%s\
+\n\n\n", GREEN, RCOLOR);
 }
 
+/// @brief Generate a random number(int) between 0 and n
+/// @param nb Number max
+/// @return The random number generated
 int	myrand(int nb)
 {
 	if (!MANDATORY)
@@ -73,6 +81,9 @@ int	myrand(int nb)
 		return (0);
 }
 
+/// @brief Create and init an MLX image at the specified index in the img table
+/// @param v Vars
+/// @param index Index
 void	initimage(t_vars *v, int index)
 {
 	v->img[index].img = mlx_new_image(v->mlx, v->screen.resw, v->screen.resh);

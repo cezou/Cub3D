@@ -12,6 +12,9 @@
 
 #include "../../includes/cub3D.h"
 
+/// @brief Clear an array of strings
+/// @param tab Array of strings to clear
+/// @return 
 int	freeall(char **tab)
 {
 	int	i;
@@ -25,6 +28,9 @@ int	freeall(char **tab)
 	return (0);
 }
 
+/// @brief Clear the linked list
+/// @param lst Linked list
+/// @return 
 int	map_clear(t_map *lst)
 {
 	t_map	*temp;
@@ -40,6 +46,9 @@ int	map_clear(t_map *lst)
 	return (1);
 }
 
+/// @brief Clear all the images from the program
+/// @param v Vars
+/// @return -1 if an error occured or 0
 int	clearimgs(t_vars *v)
 {
 	int	i;
@@ -65,6 +74,9 @@ int	clearimgs(t_vars *v)
 	return (1);
 }
 
+/// @brief Clear all the sounds datas from the program
+/// @param v Vars
+/// @return 
 int	clear_sounds(t_vars *v)
 {
 	int	i;
@@ -87,6 +99,12 @@ int	clear_sounds(t_vars *v)
 	return (1);
 }
 
+/// @brief Clear all the datas from the program
+/// and reset the xset keyboard input delay
+/// @param v Vars
+/// @param b Boolean to clear the datas 
+///	depending on the state of the initialisation
+/// @return 
 int	cleardata(t_vars *v, int b)
 {
 	if (!MANDATORY && system(XSET_0) == -1)
@@ -108,7 +126,7 @@ int	cleardata(t_vars *v, int b)
 		free(v->ray.zbuffer);
 	if (v->objs.objs)
 		free(v->objs.objs);
-	if (v->door.d)
-		free(v->door.d);
+	if (v->door)
+		free(v->door);
 	return (0);
 }

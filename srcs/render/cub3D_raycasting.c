@@ -6,12 +6,15 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/19 19:05:47 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/20 19:13:55 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
 
+/// @brief Init the datas needed for the raycasting algorithm
+/// @param x X pixel position
+/// @param v Vars
 void	init_raycasting_info(int x, t_vars *v)
 {
 	v->ray.camera_x = 2 * x / (double)v->screen.resw - 1;
@@ -23,10 +26,11 @@ void	init_raycasting_info(int x, t_vars *v)
 	v->ray.deltadist_y = fabs(1 / v->ray.dir_y);
 }
 
+/// @brief Calculate the distance and height of the wall
+///	from the player position
+/// @param v Vars
 void	calculate_line_height(t_vars *v)
 {
-	// if (v->ray.hit->val == 'D')
-	// 	v->ray.wall_dist += 0.5;
 	v->ray.line_height = (int)(v->screen.resh / v->ray.wall_dist);
 	v->ray.draw_start = -(v->ray.line_height) / 2
 		+ v->screen.resh / 2 + v->ray.pitch + (v->player.z / v->ray.wall_dist);
@@ -61,36 +65,46 @@ void	calculate_line_height(t_vars *v)
 // 	}
 // }
 
+/// @brief Update doors animation
+/// @param v Vars
 void	loadtexture(t_vars *v)
 {
-	// if (v->ray.hit->val == 'D')
-	// {
-	if (v->door.d[0].color == EOPENING
-		&& timestamp_in_ms(v) - v->door.d[0].z
-		>= (uint64_t)(5000 / v->game.fps))
+	int	i;
+
+	i = -1;
+	// i = find_door(v, v->ray.hit->x, v->ray.hit->y);
+	while (++i < v->game.nb_door)
 	{
-		v->img[EDOOR].xdelta -= 2;
-		v->door.d[0].z = timestamp_in_ms(v);
+		if (v->door[i].state == EOPENING
+			&& timestamp_in_ms(v) -v->door[i].time
+			>= (uint64_t)(5000 / v->game.fps))
+		{
+			v->door[i].xdelta -= 3;
+			v->door[i].time = timestamp_in_ms(v);
+		}
+		else if (v->door[i].state == ECLOSING
+			&& timestamp_in_ms(v) - v->door[i].time
+			>= (uint64_t)(5000 / v->game.fps))
+		{
+			v->door[i].xdelta += 3;
+			v->door[i].time = timestamp_in_ms(v);
+		}
+		if (v->door[i].state == EOPENING
+			&& v->door[i].xdelta <= 0)
+			v->door[i].state = EOPEN;
+		else if (v->door[i].state == ECLOSING
+			&& v->door[i].xdelta >= v->img[EDOOR].width)
+			v->door[i].state = ECLOSE;
 	}
-	else if (v->door.d[0].color == ECLOSING
-		&& timestamp_in_ms(v) - v->door.d[0].z
-		>= (uint64_t)(5000 / v->game.fps))
-	{
-		v->img[EDOOR].xdelta += 2;
-		v->door.d[0].z = timestamp_in_ms(v);
-	}
-	if (v->door.d[0].color == EOPENING
-		&& v->img[EDOOR].xdelta == 0)
-		v->door.d[0].color = EOPEN;
-	else if (v->door.d[0].color == ECLOSING
-		&& v->img[EDOOR].xdelta == v->img[EDOOR].width)
-		v->door.d[0].color = ECLOSE;
-	// return (v->img[EDOOR]);
-	// }
-	// return (v->img[ESPACE]);
 }
 
-// color = v->tex[2][128 * texy + texx];
+/// @brief Transform the wall/door distance into pixels coordinate
+///	from the texture to add to the buffer
+/// @param v Vars
+/// @param p Pixel to add in the buffer: {x, y, 0, color}
+/// @param texx Texture x coordinate
+/// @param texy Texture y coordinate
+/// color = v->tex[2][128 * texy + texx];
 void	update_texture_pixels(t_vars *v, t_point p, int texx, int texy)
 {
 	double		step;
@@ -99,10 +113,9 @@ void	update_texture_pixels(t_vars *v, t_point p, int texx, int texy)
 	texx = (int)(v->ray.wall_x * v->ray.img.width);
 	if (v->ray.img.id == EDOOR)
 	{
-		texx -= v->ray.img.width - v->ray.img.xdelta;
+		texx -= v->ray.img.width - v->ray.door.xdelta;
 		if (texx < 0)
 		{
-			// texx = (int)(v->ray.wall_x * v->ray.img.width);
 			v->ray.hit = NULL;
 			perform_dda(v, 1);
 			calculate_line_height(v);
@@ -112,7 +125,7 @@ void	update_texture_pixels(t_vars *v, t_point p, int texx, int texy)
 	}
 	if ((v->ray.side == 0 && v->ray.dir_x > 0)
 		|| (v->ray.side == 1 && v->ray.dir_y < 0))
-		texx = v->ray.img.width - texx - 1;// + v->ray.img.xdelta
+		texx = v->ray.img.width - texx - 1;
 	step = 1.0 * v->ray.img.width / v->ray.line_height;
 	pos = (v->ray.draw_start - v->ray.pitch - (v->player.z / v->ray.wall_dist)
 			- v->screen.resh / 2 + v->ray.line_height / 2) * step;
@@ -133,7 +146,14 @@ void	update_texture_pixels(t_vars *v, t_point p, int texx, int texy)
 	}
 }
 
-// set_floor_ceiling_horiz(v, &ray);
+/// @brief Raycasting algorithm
+/// @note We draw the skybox
+/// @note We draw the floor and the ceiling with the horizontal method
+/// @note We then draw the walls and doors with the raycasting algorithm
+/// @note We draw the sprites
+/// @note And finally we update the states of all the animations
+/// @param v Vars
+/// @return 
 int	raycasting(t_vars *v)
 {
 	int		x;
@@ -142,6 +162,7 @@ int	raycasting(t_vars *v)
 	x = 0;
 	y = -1;
 	draw_skybox(v, (t_point){-1, -1, 0, 0}, 0, 0);
+	draw_floor_ceiling(v);
 	while (x < v->screen.resw)
 	{
 		init_raycasting_info(x, v);
@@ -150,11 +171,10 @@ int	raycasting(t_vars *v)
 		calculate_line_height(v);
 		update_texture_pixels(v, (t_point){x, 0, 0, 0}, 0, 0);
 		v->ray.zbuffer[x] = v->ray.wall_dist;
-		set_floor_ceiling_vert(v, (t_point){x, 0, 0, 0});
 		x++;
 	}
-	animations(v);
 	draw_sprites(v, &v->sprite, (t_point){0, 0, 0, 0});
+	animations(v);
 	loadtexture(v);
 	return (1);
 }

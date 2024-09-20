@@ -6,12 +6,15 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 13:09:37 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/17 17:33:35 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:37:54 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
 
+/// @brief Convert radian to degre
+/// @param rad Radian angle
+/// @return Angle in degre
 float	rad_to_deg(float rad)
 {
 	float	deg;
@@ -22,11 +25,19 @@ float	rad_to_deg(float rad)
 	return (deg);
 }
 
+/// @brief Convert degre to radian
+/// @param deg Degre angle
+/// @return Angle in radian
 float	deg_to_rad(float deg)
 {
 	return (deg * (M_PI / 180));
 }
 
+/// @brief Add a 90 degre angle to the coordinates x,y with the direction
+/// @param dir Direction of the vector
+/// @param x 
+/// @param y 
+/// @return Transformed coordinates
 t_point2	get_90_angle(int dir, double x, double y)
 {
 	double		deg;

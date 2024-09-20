@@ -12,11 +12,15 @@
 
 #include "../../includes/cub3D.h"
 
+/// @brief Put the textures of the menus in the image buffer
+/// @param v Vars
+/// @param i Index of the texture
+/// @param ph Offset positon x
+/// @param pw Offset position y
 static void	puttexturesmenu(t_vars *v, int i, int ph, int pw)
 {
 	size_t	k;
 	t_point	p;
-	t_point	d;
 
 	p.y = -1;
 	while (++(p.y) < v->img[i].height)
@@ -26,16 +30,14 @@ static void	puttexturesmenu(t_vars *v, int i, int ph, int pw)
 		{
 			k = (p.y * v->img[i].len) + (p.x * 4);
 			if (v->img[i].addr[k + 3] == 0)
-			{
-				d.x = (p.x + pw) * v->mouse.zoom;
-				d.y = (p.y + ph) * v->mouse.zoom;
-				img_pix_put(&v->img[EMAP], (t_point){d.x, d.y, 0,
-					getcolorpix(v, v->img[i].addr, k)}, v);
-			}
+				add_pix_to_buffer(v, v->img[i],
+					(t_point){(p.x + pw), (p.y + ph), k, 0});
 		}
 	}
 }
 
+/// @brief Render the menu on the screen
+/// @param v Vars
 void	rendermenu(t_vars *v)
 {
 	if (v->menu.menu == 1)

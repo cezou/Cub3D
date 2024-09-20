@@ -28,7 +28,6 @@ int	mouse_down(int button, int x, int y, t_vars *p)
 		zoom(button, p);
 		p->mouse.prevx = x;
 		p->mouse.prevy = y;
-		p->game.refreshmap = 1;
 		p->game.start = 2;
 		render(p);
 	}
@@ -37,7 +36,6 @@ int	mouse_down(int button, int x, int y, t_vars *p)
 		p->mouse.button = button;
 		p->mouse.prevx = x;
 		p->mouse.prevy = y;
-		p->game.refreshmap = 1;
 		p->game.start = 2;
 	}
 	return (0);
@@ -49,7 +47,6 @@ int	mouse_up(int button, int x, int y, t_vars *p)
 	(void)y;
 	if (p->game.start > 1 && p->game.god && (button == 1 || button == 3))
 	{
-		p->game.refreshmap = 1;
 		p->game.start = 2;
 		p->mouse.button = 0;
 	}

@@ -6,52 +6,18 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/19 16:24:40 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/20 16:27:00 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
-
-
-
-// static void	update_texture_pixels(t_vars *v, t_point p, int texx, int texy)
-// {
-// 	double		step;
-// 	double		pos;
-
-// 	texx = (int)(v->ray.wall_x * v->img[1].width);
-// 	if ((v->ray.side == 0 && v->ray.dir_x > 0)
-// 		|| (v->ray.side == 1 && v->ray.dir_y < 0))
-// 		texx = v->img[1].width - texx - 1;
-// 	step = 1.0 * v->img[1].width / v->ray.line_height;
-// 	pos = (v->ray.draw_start - v->ray.pitch - (v->player.z / v->ray.wall_dist)
-// 			- v->screen.resh / 2 + v->ray.line_height / 2) * step;
-// 	p.y = v->ray.draw_start;
-// 	while (p.y < v->ray.draw_end)
-// 	{
-// 		texy = (int)pos & (v->img[1].width - 1);
-// 		pos += step;
-// 		p.color = getcolorpix(v->img[1].addr, (texy * v->img[1].len)
-// 				+ (texx * 4), 0);
-// 		if (v->ray.side == 1)
-// 			p.color = (p.color >> 1) & 8355711;
-// 		if (p.color > 0)
-// 			img_pix_put(&v->img[EMAP], p, v->screen.resw, v->screen.resh);
-// 		p.y++;
-// 	}
-// }
-
-// void	calculate_sprite_dimension(t_vars *v, )
-// {
-	
-// }
 
 void	animations(t_vars *v)
 {
 	if (timestamp_in_ms(v) - v->guard.timerguard
 		>= (uint64_t)(10000 / v->game.fps))
 	{
-		v->img[EGUARD].anim[0].animx += v->img[EGUARD].height;  // g
+		v->img[EGUARD].anim[0].animx += v->img[EGUARD].height;
 		v->guard.timerguard = timestamp_in_ms(v);
 	}
 	if (v->img[EGUARD].anim[0].animx > v->img[EGUARD].anim[0].width)

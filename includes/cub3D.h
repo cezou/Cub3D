@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/19 19:22:56 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/20 19:46:04 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,8 @@
 
 # define TOOLBAR_LINUX_H 70
 
-#define LOOKUP_MAX 500
+# define LOOKUP_MAX 500
+# define SKYBOX_REPEATS 4
 
 # define SPACE 48
 # define WALL 49
@@ -300,7 +301,6 @@ typedef struct s_point2
 	int					t;
 }						t_point2;
 
-
 typedef struct s_map
 {
 	int					x;
@@ -337,6 +337,15 @@ typedef struct s_imga
 	int					id;
 }						t_imga;
 
+typedef struct s_door
+{
+	int					x;
+	int					y;
+	t_door_state		state;
+	uint64_t			time;
+	int					xdelta;
+}						t_door;
+
 typedef struct s_ray
 {
 	double				camera_x;
@@ -367,6 +376,7 @@ typedef struct s_ray
 	int					ty0;
 	t_map				*hit;
 	t_imga				img;
+	t_door				door;
 	int					*zbuffer;
 }						t_ray;
 
@@ -383,13 +393,16 @@ typedef struct s_sprite
 	double				transformy;
 }						t_sprite;
 
-
-
-typedef struct s_door
+typedef struct s_floor
 {
-	t_point				*d;
-	int					nb;
-}						t_door;
+	double				fstepx;
+	double				fstepy;
+	double				fx;
+	double				fy;
+	int					tx;
+	int					ty;
+	bool				isfloor;
+}						t_floor;
 
 typedef struct s_trig
 {
@@ -517,8 +530,9 @@ typedef struct s_game
 	uint64_t			created_at;
 	uint64_t			updated_at;
 	int					won;
-	int					refreshmap;
 	int					god;
+	t_imga				skybox;
+	int					nb_door;
 }						t_game;
 
 // images: verifier que le path finit bien par .xpm, que le fichier existe,
@@ -566,18 +580,19 @@ typedef struct s_vars
 	t_screen			screen;
 	t_menu				menu;
 	t_proj				proj;
-	t_door				door;
+	t_door				*door;
 	t_objs				objs;
 	t_mapv				mapv;
 	t_guard				guard;
 	t_player			player;
 	t_ray				ray;
 	t_sprite			sprite;
+	t_floor				floor;
 	uint32_t			tex[8][4160];
 }						t_vars;
 
 // Parsing
-int						cmp(const char *s1, const char *s2);
+int					cmp(const char *s1, const char *s2);
 
 // Utils
 void				showparams(t_vars *v);
@@ -595,6 +610,7 @@ int					myrand(int nb);
 t_point2			get_90_angle(int dir, double x, double y);
 float				deg_to_rad(float deg);
 float				rad_to_deg(float rad);
+int					find_door(t_vars *v, int x, int y);
 
 // Time
 
@@ -644,40 +660,36 @@ void				menuexit(t_vars *v);
 void				menuarrow(t_vars *v, int d);
 void				menuoptions(t_vars *v);
 
+// Controls
+
+void				move(t_vars *v, int d);
+void				rotatecamx(t_vars *v, int d, double speed);
+void				rotatecamy(t_vars *v, int d, double speed, int mul);
+t_map				*set_pos(t_vars *v, t_point2 k, int d);
+void				open_door(t_vars *v, int d);
+
 // Rendering
 
 int					raycasting(t_vars *v);
 void				set_dda(t_vars *v);
 void				perform_dda(t_vars *v, int d);
+void				calculate_line_height(t_vars *v);
 void				loadtexture(t_vars *v);
-// int					hashit(t_vars *v, int x, int y);
-void				set_floor_ceiling_horiz(t_vars *v);
-void				set_floor_ceiling_vert(t_vars *v, t_point p);
+void				draw_floor_ceiling(t_vars *v);
+// void				set_floor_ceiling_vert(t_vars *v, t_point p);
 void				draw_sprites(t_vars *v, t_sprite *sp, t_point p);
 void				draw_skybox(t_vars *v, t_point p, int tx, int ty);
 
 int					render(t_vars *data);
 void				img_pix_put(t_imga *img, t_point p, t_vars *v);
-
-void				convertpoint(t_vars *vars, t_point *b, t_point a);
-void				inittrigo(t_vars *vars);
-
+void				add_pix_to_buffer(t_vars *v, t_imga img, t_point p);
+void				create_textures(t_vars *v, t_point c);
 int					getcolorpix(t_vars *v, char *addr, size_t k);
-int					getindex(t_vars *v, int *i, t_map *tmp);
-
-void				topdown(t_vars *v, t_map *tmp, int prevw, int prevh);
-void				displaytopdown(t_vars *v);
-// void		isometric(t_vars *v, t_map *tmp);
 
 void				rendermenu(t_vars *v);
 
 // Animations
 void				animations(t_vars *v);
-// void				playeranim(t_vars *v, int i);
-// void				guardanim(t_vars *v, t_point p);
-// void				objanim(t_vars *v, int i);
-// void				puttexturesanim(t_vars *v, t_point i, t_point p,
-// 						t_point d);
 
 // Scenes
 
@@ -687,73 +699,53 @@ void				loading(t_vars *v);
 int					credits(t_vars *v);
 int					maintitleanim(t_vars *v);
 
-// Collisions
-// int					checkcollisionsprojectiles(t_vars *v, t_point dir);
-// int					checkhitmonster(t_vars *v, t_point p);
-// void				iscollected(t_vars *v, int i, int ent, t_point p);
-
-// Movements
-
-void					arrows(t_vars *v, t_map *dir, int d);
-int						keys_release(int keycode, t_vars *v);
-void					moveshor(t_vars *v, t_map *dir, t_point d, int ent);
-void					movesvert(t_vars *v, t_map *dir, t_point d, int ent);
-void					iscollected(t_vars *v, int i, int ent, t_point p);
-void					attack(t_vars *v);
-
 /* FUNCTIONS */
-bool	is_in_string(char c, char *s)
-;
-bool					is_surrounded(char **map, int i, int j,
-							size_t map_start);
-char					**tab_dup(char **tab);
-void					init_infos(t_vars *v, char *file, int *fd);
-bool					is_map_closed(char **map, size_t map_start);
-bool					is_not_accepted(char **map, int i, int j);
-void					print_map(char **s);
-bool					is_in_string(char c, char *s);
-void					cerr(int i, int j);
+bool				is_in_string(char c, char *s);
+bool				is_surrounded(char **map, int i, int j,
+						size_t map_start);
+char				**tab_dup(char **tab);
+void				init_infos(t_vars *v, char *file, int *fd);
+bool				is_map_closed(char **map, size_t map_start);
+bool				is_not_accepted(char **map, int i, int j);
+void				print_map(char **s);
+bool				is_in_string(char c, char *s);
+void				cerr(int i, int j);
 
-void					store_map(t_vars *v);
-void					s(void);
-void					store_map(t_vars *v);
-void					calculate_mapsize_checking(char *line, t_vars *v,
-							int fd, int i);
-char					*skip_whitespaces(t_vars *v, int fd, int *i);
-;
-bool					is_char_valid(char c);
-bool					is_player_char(char c);
-bool					isnt_cub_ended(const char *s);
-bool					there_is_only_whitespaces(const char *s);
-bool					there_is_only_whitespaces(const char *s);
-int						init_xpm(t_imga *img, char *path, void *mlx, int i);
-size_t					nb_occur(const char *s, char c);
-bool					is_color(char *s);
-bool					is_texture(char *s);
-bool					is_everything_set(t_infos i);
-int						set_value(t_boolimage *bimg, char *file, void *mlx,
-							int i);
-int						set_texture(t_infos *i, char **l, int ind, void *mlx);
-int						set_a_color(int i, char *values, uint32_t *color,
-							bool *is_set);
-int						set_colors(t_infos *i, char **l, int ind);
-int						set_a_value(t_infos *i, char **l, int ind, void *mlx);
-void					init_imgs(t_vars *v);
-void					clean_exit(char **l, int fd, t_vars *v, bool free_line);
-void					pfree_img(t_imga *img, t_vars *v);
-char					*strrev(char *s);
-bool					is_valid_int(const char *s);
-bool					is_valid_int(const char *s);
-void					parsing(int ac, char **av, t_vars *v);
-bool					isnt_cub_ended(const char *s);
+void				store_map(t_vars *v);
+void				s(void);
+void				store_map(t_vars *v);
+void				calculate_mapsize_checking(char *line, t_vars *v,
+						int fd, int i);
+char				*skip_whitespaces(t_vars *v, int fd, int *i);
 
-void					lerr(size_t i, const char *s);
-size_t					tab_len(char **tab);
-int						cmp(const char *s1, const char *s2);
+bool				is_char_valid(char c);
+bool				is_player_char(char c);
+bool				isnt_cub_ended(const char *s);
+bool				there_is_only_whitespaces(const char *s);
+bool				there_is_only_whitespaces(const char *s);
+int					init_xpm(t_imga *img, char *path, void *mlx, int i);
+size_t				nb_occur(const char *s, char c);
+bool				is_color(char *s);
+bool				is_texture(char *s);
+bool				is_everything_set(t_infos i);
+int					set_value(t_boolimage *bimg, char *file, void *mlx,
+						int i);
+int					set_texture(t_infos *i, char **l, int ind, void *mlx);
+int					set_a_color(int i, char *values, uint32_t *color,
+						bool *is_set);
+int					set_colors(t_infos *i, char **l, int ind);
+int					set_a_value(t_infos *i, char **l, int ind, void *mlx);
+void				init_imgs(t_vars *v);
+void				clean_exit(char **l, int fd, t_vars *v, bool free_line);
+void				pfree_img(t_imga *img, t_vars *v);
+char				*strrev(char *s);
+bool				is_valid_int(const char *s);
+bool				is_valid_int(const char *s);
+void				parsing(int ac, char **av, t_vars *v);
+bool				isnt_cub_ended(const char *s);
 
-void				move(t_vars *v, int d);
-void				rotatecamx(t_vars *v, int d, double speed);
-void				rotatecamy(t_vars *v, int d, double speed, int mul);
-void				set_pos(t_vars *v, t_point2 k);
+void				lerr(size_t i, const char *s);
+size_t				tab_len(char **tab);
+int					cmp(const char *s1, const char *s2);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 09:51:53 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/19 18:48:28 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/20 17:02:10 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,54 +29,14 @@ void	inittextures(t_vars *v, int i)
 				&v->img[i].len, &v->img[i].endian);
 		if (!v->img[i].addr)
 			exit((prterr(v, "Error mlx texture image address\n", 1, 1), 1));
-		// v->img[i].xdelta = 0;
-		// v->img[i].ydelta = 0;
-		// v->img[i].posx = 0;
-		// v->img[i].posy = 0;
-		// v->img[i].animx = 0;
-		// v->img[i].animy = 0;
-		// v->img[i].anim = NULL;
-		// v->img[i].animnb = 0;
 	}
-	initimage(v, COMP_N);
 }
 
 int	main(int ac, char **av)
 {
 	t_vars	v;
-	int		xorcolor;
-	int		ycolor;
-	int		xycolor;
 
-	parsing(ac, av, &v);
 	init(&v, ac, av);
-	init_cam(&v);
-	for (int x = 0; x < 64; x++)
-	{
-		for (int y = 0; y < 64; y++)
-		{
-			xorcolor = (x * 256 / 64) ^ (y * 256 / 64);
-			// int xcolor = x * 256 / texWidth;
-			ycolor = y * 256 / 64;
-			xycolor = y * 128 / 64 + x * 128 / 64;
-			v.tex[0][64 * y + x] = 65536 * 254 * (x != y && x != 64 - y);
-			// flat red texture with black cross
-			v.tex[1][64 * y + x] = xycolor + 256 * xycolor + 65536 * xycolor;
-			// sloped greyscale
-			v.tex[2][64 * y + x] = 256 * xycolor + 65536 * xycolor;
-			// sloped yellow gradient
-			v.tex[3][64 * y + x] = xorcolor + 256 * xorcolor + 65536 * xorcolor;
-			// xor greyscale
-			v.tex[4][64 * y + x] = 256 * xorcolor;
-			// xor green
-			v.tex[5][64 * y + x] = 65536 * 192 * (x % 16 && y % 16);
-			// red bricks
-			v.tex[6][64 * y + x] = 65536 * ycolor;
-			// red gradient
-			v.tex[7][64 * y + x] = 128 + 256 * 128 + 65536 * 128;
-			// flat grey texture
-		}
-	}
 	while (1)
 	{
 		v.game.updated_at = 0;

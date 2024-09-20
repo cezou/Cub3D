@@ -6,7 +6,7 @@
 #    By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 11:28:17 by pmagnero          #+#    #+#              #
-#    Updated: 2024/09/19 18:45:46 by pmagnero         ###   ########.fr        #
+#    Updated: 2024/09/20 16:48:38 by pmagnero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,7 +67,6 @@ SRCS =	srcs/cub3D.c \
 		srcs/controls/cub3D_mouse.c \
 		srcs/render/cub3D_render_menus.c \
 		srcs/render/cub3D_render.c \
-		srcs/render/cub3D_topdown.c \
 		srcs/render/cub3D_scenes.c \
 		srcs/render/cub3D_raycasting.c \
 		srcs/render/cub3D_raycasting_sprites.c \
@@ -79,15 +78,16 @@ SRCS =	srcs/cub3D.c \
 		srcs/utils/cub3D_math.c \
 		srcs/utils/cub3D_utils.c \
 		srcs/utils/cub3D_utils2.c \
+		srcs/utils/cub3D_utils3.c \
 		srcs/utils/cub3D_clear.c \
 		srcs/init/cub3D_init.c \
 		srcs/init/cub3D_init_anim.c \
 		srcs/init/cub3D_init_paths.c \
 		srcs/init/cub3D_init_sounds.c \
 		srcs/init/cub3D_init_window.c \
-		srcs/cub3D_parse.c \
 		srcs/movements/cub3D_movements.c \
 		srcs/movements/cub3D_movements2.c \
+		srcs/parsing/cub3D_parse.c \
 		srcs/parsing/parsing.c \
 		srcs/parsing/is_valid_int.c \
 		srcs/parsing/utils.c \

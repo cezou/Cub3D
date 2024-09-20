@@ -72,6 +72,10 @@ int	getindex(t_vars *v, int *i, t_map *tmp)
 	return (1);
 }
 
+/// @brief Display strings on the screen
+/// @param v Vars
+/// @param str String
+/// @param str2 String
 void	displaytext(t_vars *v, char *str, char *str2)
 {
 	(void)str;
@@ -103,6 +107,8 @@ void	displaytext(t_vars *v, char *str, char *str2)
 	// free((free(str2), str));
 }
 
+/// @brief Simple movement AI for the ennemies based on random
+/// @param v Vars
 void	guardmovements(t_vars *v)
 {
 	if (!MANDATORY && !v->game.pause && !v->game.won && v->guard.guard
@@ -116,11 +122,14 @@ void	guardmovements(t_vars *v)
 	}
 }
 
+/// @brief Game loop that render the game on the screen at fps rate
+/// @param v Vars
+/// @return 
 int	render(t_vars *v)
 {
 	if (!v->screen.win || v->game.won > 0 || !v->game.start
 		|| timestamp_in_ms(v) - v->game.updated_at < (uint64_t)(1000
-			/ v->game.fps))
+		/ v->game.fps))
 		return (1);
 	v->game.updated_at = timestamp_in_ms(v);
 	if (v->game.start == 2 && ACTIVATE_SOUND
@@ -133,12 +142,8 @@ int	render(t_vars *v)
 		ma_sound_start(&v->sound.sound[2]);
 		mlx_loop_end(v->mlx);
 	}
-	if (v->game.start > 2)
-		v->game.refreshmap = 0;
-	// if (v->game.refreshmap)
-	// 	ft_bzero((mlx_clear_window(v->mlx, v->screen.win), v->img[EMAP].addr),
-	// 		v->screen.resw * v->screen.resh * (v->img[EMAP].bpp / 8));
-	// ft_bzero(v->img[EMAP].addr, v->screen.resw * v->screen.resh * (v->img[EMAP].bpp / 8));
+	ft_bzero(v->img[EMAP].addr,
+		v->screen.resw * v->screen.resh * (v->img[EMAP].bpp / 8));
 	raycasting(v);
 	rendermenu(v);
 	mlx_put_image_to_window(v->mlx, v->screen.win, v->img[EMAP].img, 0, 0);

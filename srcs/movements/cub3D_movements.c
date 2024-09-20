@@ -6,12 +6,17 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 18:24:52 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/19 19:44:47 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/20 19:43:35 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
 
+/// @brief Rotate the camera on the x axis if the key pressed are LEFT/RIGHT
+/// @param v Vars
+/// @param d Key input pressed
+/// @param rotspeed Rotation speed
+/// @param mul Rotation speed factor
 void	rotatecamx(t_vars *v, int d, double rotspeed)
 {
 	double	oldir;
@@ -34,6 +39,11 @@ void	rotatecamx(t_vars *v, int d, double rotspeed)
 		* cos(rotspeed);
 }
 
+/// @brief Rotate the camera on the y axis if the key pressed are UP/DOWN
+/// @param v Vars
+/// @param d Key input pressed
+/// @param rotspeed Rotation speed
+/// @param mul Rotation speed factor
 void	rotatecamy(t_vars *v, int d, double rotspeed, int mul)
 {
 	if (d == UP)
@@ -50,6 +60,9 @@ void	rotatecamy(t_vars *v, int d, double rotspeed, int mul)
 	}
 }
 
+/// @brief Move the player on the y axis if the key pressed are W/S
+/// @param v Vars
+/// @param d Key input pressed
 static void	moveplayery(t_vars *v, int d)
 {
 	t_point2	k;
@@ -67,9 +80,12 @@ static void	moveplayery(t_vars *v, int d)
 	}
 	k.z = (int)k.x;
 	k.t = (int)k.y;
-	set_pos(v, k);
+	v->player.player = set_pos(v, k, 0);
 }
 
+/// @brief Move the player on the x axis if the key pressed are A/D
+/// @param v Vars
+/// @param d Key Input pressed
 static void	moveplayerx(t_vars *v, int d)
 {
 	t_point2	k;
@@ -91,9 +107,12 @@ static void	moveplayerx(t_vars *v, int d)
 	}
 	k.z = (int)k.x;
 	k.t = (int)k.y;
-	set_pos(v, k);
+	v->player.player = set_pos(v, k, 0);
 }
 
+/// @brief Action to do when a movement key is pressed
+/// @param v Vars
+/// @param d Key input pressed
 void	move(t_vars *v, int d)
 {
 	if (v->game.pause)
@@ -110,16 +129,10 @@ void	move(t_vars *v, int d)
 	rotatecamy(v, d, v->player.rotspeed, 500);
 	moveplayerx(v, d);
 	moveplayery(v, d);
+	open_door(v, d);
+	render(v);
+}
 	// if (d == 8)
 		// v->player.z = 200;
-	if (d == 8)
-	{
-		if (v->door.d[0].color == EOPEN)
-			v->door.d[0].color = ECLOSING;
-		else if (v->door.d[0].color == ECLOSE)
-			v->door.d[0].color = EOPENING;
-	}
 	// ft_bzero((mlx_clear_window(v->mlx, v->screen.win), v->img[EMAP].addr),
 	// 	v->screen.resw * v->screen.resh * (v->img[EMAP].bpp / 8));
-	render((v->game.refreshmap = 1, v));
-}
