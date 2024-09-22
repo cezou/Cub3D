@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/20 19:13:55 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/22 14:24:55 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,13 +135,10 @@ void	update_texture_pixels(t_vars *v, t_point p, int texx, int texy)
 		texy = (int)pos & (v->ray.img.width - 1);
 		pos += step;
 		p.z = (texy * v->ray.img.len) + (texx * 4);
-		if (v->ray.img.addr[p.z + 3] == 0)
-		{
-			p.color = getcolorpix(v, v->ray.img.addr, p.z);
-			if (v->ray.side == 0)
-				p.color = (p.color >> 1) & 8355711;
-			img_pix_put(&v->img[EMAP], p, v);
-		}
+		if (v->ray.side == 0)
+			p.color = 1;
+		add_pix_to_buffer(v, v->ray.img, p,
+			(t_point2){1, v->ray.wall_dist, FOG_COLOR, FOG_LEVEL});
 		p.y++;
 	}
 }

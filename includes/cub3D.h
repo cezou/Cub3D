@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/20 19:46:04 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/22 14:25:23 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,9 @@
 
 # define LOOKUP_MAX 500
 # define SKYBOX_REPEATS 4
+
+# define FOG_LEVEL 8
+# define FOG_COLOR 0x000000
 
 # define SPACE 48
 # define WALL 49
@@ -341,6 +344,7 @@ typedef struct s_door
 {
 	int					x;
 	int					y;
+	int					img_i;
 	t_door_state		state;
 	uint64_t			time;
 	int					xdelta;
@@ -399,6 +403,7 @@ typedef struct s_floor
 	double				fstepy;
 	double				fx;
 	double				fy;
+	double				rowdist;
 	int					tx;
 	int					ty;
 	bool				isfloor;
@@ -682,9 +687,11 @@ void				draw_skybox(t_vars *v, t_point p, int tx, int ty);
 
 int					render(t_vars *data);
 void				img_pix_put(t_imga *img, t_point p, t_vars *v);
-void				add_pix_to_buffer(t_vars *v, t_imga img, t_point p);
+void				add_pix_to_buffer(t_vars *v, t_imga img, t_point p,
+						t_point2 fog);
 void				create_textures(t_vars *v, t_point c);
 int					getcolorpix(t_vars *v, char *addr, size_t k);
+uint32_t			color_lerp(uint32_t color1, uint32_t color2, double t);
 
 void				rendermenu(t_vars *v);
 

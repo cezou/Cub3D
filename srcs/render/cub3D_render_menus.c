@@ -29,9 +29,8 @@ static void	puttexturesmenu(t_vars *v, int i, int ph, int pw)
 		while (++(p.x) < v->img[i].width)
 		{
 			k = (p.y * v->img[i].len) + (p.x * 4);
-			if (v->img[i].addr[k + 3] == 0)
-				add_pix_to_buffer(v, v->img[i],
-					(t_point){(p.x + pw), (p.y + ph), k, 0});
+			add_pix_to_buffer(v, v->img[i],
+				(t_point){(p.x + pw), (p.y + ph), k, 0}, (t_point2){0});
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:38:17 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/20 16:45:01 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/22 14:24:49 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static void	init_data_floor(t_vars *v, t_floor *f, int y)
 {
 	int		d;
 	double	posz;
-	double	rowdist;
 
 	v->ray.dir_x = v->player.dir_x - v->player.plane_x;
 	v->ray.dir_y = v->player.dir_y - v->player.plane_y;
@@ -36,11 +35,11 @@ static void	init_data_floor(t_vars *v, t_floor *f, int y)
 		d = y - v->screen.resh / 2 - v->ray.pitch;
 		posz = 0.5 * v->screen.resh + v->player.z;
 	}
-	rowdist = posz / d;
-	f->fstepx = rowdist * (v->ray.dir_x1 - v->ray.dir_x) / v->screen.resw;
-	f->fstepy = rowdist * (v->ray.dir_y1 - v->ray.dir_y) / v->screen.resw;
-	f->fx = v->player.x + rowdist * v->ray.dir_x;
-	f->fy = v->player.y + rowdist * v->ray.dir_y;
+	f->rowdist = posz / d;
+	f->fstepx = f->rowdist * (v->ray.dir_x1 - v->ray.dir_x) / v->screen.resw;
+	f->fstepy = f->rowdist * (v->ray.dir_y1 - v->ray.dir_y) / v->screen.resw;
+	f->fx = v->player.x + f->rowdist * v->ray.dir_x;
+	f->fy = v->player.y + f->rowdist * v->ray.dir_y;
 }
 
 // color = v->tex[4][64 * ty + tx];
@@ -64,18 +63,14 @@ static void	update_texture_pixels(t_vars *v, t_floor *f, t_point p, t_imga img)
 		f->ty = (int)(img.width * (f->fy - cy)) & (img.width - 1);
 		f->fx += f->fstepx;
 		f->fy += f->fstepy;
+		p.z = (f->ty * img.len) + (f->tx * 4);
+		p.color = 1;
 		if (f->isfloor)
-		{
-			p.color = getcolorpix(v, img.addr, (f->ty * img.len) + (f->tx * 4));
-			p.color = (p.color >> 1) & 8355711;
-			img_pix_put(&v->img[EMAP], p, v);
-		}
+			add_pix_to_buffer(v, img, p,
+				(t_point2){1, f->rowdist, FOG_COLOR, FOG_LEVEL});
 		else if (cx < 10 || cx > 16)
-		{
-			p.color = getcolorpix(v, img.addr, (f->ty * img.len) + (f->tx * 4));
-			p.color = (p.color >> 1) & 8355711;
-			img_pix_put(&v->img[EMAP], p, v);
-		}
+			add_pix_to_buffer(v, img, p,
+				(t_point2){1, f->rowdist, FOG_COLOR, FOG_LEVEL});
 		p.x++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 18:24:52 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/20 19:50:18 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/22 13:24:46 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,10 @@ static bool	is_valid_pos(t_vars *v, t_map *pos, t_point p, int d)
 				o = 1;
 				break ;
 			}
-			else if (d && v->door[i].state == ECLOSE && v->door[i].x == pos->x
-				&& v->door[i].y == pos->y)
-			{
-				o = 1;
+			else if (d && v->door[i].state == ECLOSE && v->door[i].x == p.z
+				&& p.z == pos->x && v->door[i].y == p.color
+				&& p.color == pos->y)
 				return (1);
-			}
 		}
 	}
 	else if (pos->val != '1')
@@ -55,11 +53,10 @@ static bool	is_valid_pos(t_vars *v, t_map *pos, t_point p, int d)
 /// @param k New position coordinates
 static t_map	*update_player_pos(t_vars *v, t_map *pos, t_point2 k, int d)
 {
-	if (!d)
-	{
-		v->player.x = k.x;
-		v->player.y = k.y;
-	}
+	if (d)
+		return (pos);
+	v->player.x = k.x;
+	v->player.y = k.y;
 	return (pos);
 }
 
@@ -73,7 +70,7 @@ t_map	*set_pos(t_vars *v, t_point2 k, int d)
 
 	m = v->player.player;
 	p = (t_point){v->mapv.mapw, v->mapv.maph, k.z, k.t};
-	if (!d && is_valid_pos(v, m, p, d))
+	if (is_valid_pos(v, m, p, d))
 		return (update_player_pos(v, m, k, d));
 	else if (is_valid_pos(v, m->up, p, d))
 		return (update_player_pos(v, m->up, k, d));
@@ -94,8 +91,6 @@ t_map	*set_pos(t_vars *v, t_point2 k, int d)
 	return (v->player.player);
 }
 
-// TODO Always choose the door in front of the player when opening a door
-
 /// @brief Set the door state to opening of the door around the player
 /// @param v Vars
 /// @param d Key input pressed
@@ -107,8 +102,8 @@ void	open_door(t_vars *v, int d)
 	if (d == 8)
 	{
 		pd = set_pos(v, (t_point2){0, 0,
-				(int)(v->player.player->x + v->player.dir_x),
-				(int)(v->player.player->y + v->player.dir_y)}, 1);
+				(int)(v->player.x + v->player.dir_x),
+				(int)(v->player.y + v->player.dir_y)}, 1);
 		i = find_door(v, pd->x, pd->y);
 		if (i < 0)
 			return ;
