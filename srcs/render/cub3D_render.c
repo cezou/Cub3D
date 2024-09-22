@@ -99,7 +99,8 @@ void	displaytext(t_vars *v, char *str, char *str2)
 		mlx_string_put(v->mlx, v->screen.win, 50, 170, W_P, "[F5] Hotreload");
 		mlx_string_put(v->mlx, v->screen.win, 50, 190, W_P, "[F1] GOD mode");
 	}
-	// mlx_string_put(v->mlx, v->screen.win, v->screen.resw * 0.90, 110, W_P, str);
+	// mlx_string_put(v->mlx, v->screen.win, v->screen.resw * 0.90, 110, W_P,
+	// str);
 	// free(str2);
 	// str2 = ft_itoa(v->player.nbmove);
 	// mlx_string_put(v->mlx, v->screen.win, v->screen.resw * 0.80, 110,
@@ -125,12 +126,12 @@ void	guardmovements(t_vars *v)
 
 /// @brief Game loop that render the game on the screen at fps rate
 /// @param v Vars
-/// @return 
+/// @return
 int	render(t_vars *v)
 {
 	if (!v->screen.win || v->game.won > 0 || !v->game.start
 		|| timestamp_in_ms(v) - v->game.updated_at < (uint64_t)(1000
-		/ v->game.fps))
+			/ v->game.fps))
 		return (1);
 	v->game.updated_at = timestamp_in_ms(v);
 	if (v->game.start == 2 && ACTIVATE_SOUND
@@ -143,8 +144,9 @@ int	render(t_vars *v)
 		ma_sound_start(&v->sound.sound[2]);
 		mlx_loop_end(v->mlx);
 	}
-	ft_bzero(v->img[EMAP].addr,
-		v->screen.resw * v->screen.resh * (v->img[EMAP].bpp / 8));
+	ft_bzero(v->img[EMAP].addr, v->screen.resw * v->screen.resh
+		* (v->img[EMAP].bpp / 8));
+	key_management(v);
 	raycasting(v);
 	rendermenu(v);
 	mlx_put_image_to_window(v->mlx, v->screen.win, v->img[EMAP].img, 0, 0);

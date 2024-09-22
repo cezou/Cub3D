@@ -88,6 +88,7 @@ SRCS =	srcs/cub3D.c \
 		srcs/init/cub3D_init_window.c \
 		srcs/movements/cub3D_movements.c \
 		srcs/movements/cub3D_movements2.c \
+		srcs/movements/key_management.c \
 		srcs/parsing/cub3D_parse.c \
 		srcs/parsing/parsing.c \
 		srcs/parsing/is_valid_int.c \
