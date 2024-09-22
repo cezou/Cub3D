@@ -33,9 +33,10 @@
 # define SUCCESS EXIT_SUCCESS
 # define STDERR STDERR_FILENO
 
-# define M_PI 3.14159265358979323846	/* pi */
+# define M_PI 3.14159265358979323846 /* pi */
 # define VALID " \t\n\v\f\r10NSOED"
 # define WHITESPACES " \t\n\v\f\r"
+# define MAX_KEYS 65535
 
 // Debug
 
@@ -114,11 +115,15 @@
 
 // Resolutions
 
-# define XSET_0 "xset r rate 500 33"
-# define XSET_1 "xset r rate 100 12"
-# define XSET_2 "xset r rate 100 33"
-# define XSET_3 "xset r rate 500 12"
-# define K_2 "xset r rate 100 15"
+// # define XSET_0 "xset r rate 500 33"
+// # define XSET_1 "xset r rate 100 12"
+// # define XSET_2 "xset r rate 100 33"
+// # define XSET_3 "xset r rate 500 12"
+# define XSET_0 ""
+# define XSET_1 ""
+# define XSET_2 ""
+# define XSET_3 ""
+# define K_2 ""
 # define W_H 600
 # define W_W 800
 // # define W_H		1080
@@ -150,7 +155,8 @@
 // # define FONT2 "-sun-open look glyph-----19-190-75-75-p-154-sunolglyph-1"
 
 // Mr. Potato-Head by Joan Stark
-# define POTATO "\
+# define POTATO \
+	"\
 \t\t\t\t\t\t\t              .-\"'\"-.\n\
 \t\t\t\t\t\t\t             |       |  \n\
 \t\t\t\t\t\t\t           (`-._____.-')\n\
@@ -170,7 +176,8 @@
 \t\t\t\t\t\t\t\\|||    (`.___.')-(`.___.')    |||/ \n\
 \t\t\t\t\t\t\t '\"'     `-----'   `-----'     '\"' \n"
 
-# define CUB3D "\
+# define CUB3D \
+	"\
  _____  _   _ ______  _____ ______ \n\
 /  __ \\| | | || ___ \\|____ ||  _  \\ \n\
 | /  \\/| | | || |_/ /    / /| | | |\n\
@@ -178,7 +185,8 @@
 | \\__/\\| |_| || |_/ /.___/ /| |/ / \n\
  \\____/ \\___/ \\____/ \\____/ |___/  \n"
 
-# define BONUS "\
+# define BONUS \
+	"\
 \t\t\t\t          )      )         (     \n\
 \t\t\t\t   (   ( /(   ( /(         )\\ )  \n\
 \t\t\t\t ( )\\  )\\())  )\\())    (  (()/(  \n\
@@ -192,25 +200,35 @@
 // # define M_PI 3.14
 
 # define SOUND_GENERIC "resources/sounds/kek.mp3"
-# define SOUND_FOOTSTEPWALK "resources/sounds/Horror\
+# define SOUND_FOOTSTEPWALK \
+	"resources/sounds/Horror\
 /Character/Footsteps_walking.wav"
-# define SOUND_AMBIENT "resources/sounds/Horror\
+# define SOUND_AMBIENT \
+	"resources/sounds/Horror\
 /Ambient/Crying_moaning_ambience_2.wav"
-# define SOUND_BABYLAUGH1 "resources/sounds/Horror\
+# define SOUND_BABYLAUGH1 \
+	"resources/sounds/Horror\
 /Monsters & Ghosts/Child laugh_6.wav"
-# define SOUND_BABYLAUGH2 "resources/sounds/Horror\
+# define SOUND_BABYLAUGH2 \
+	"resources/sounds/Horror\
 /Monsters & Ghosts/Child laugh.wav"
-# define SOUND_BABYLAUGH3 "resources/sounds/Horror\
+# define SOUND_BABYLAUGH3 \
+	"resources/sounds/Horror\
 /Monsters & Ghosts/Child laugh_7.wav"
-# define SOUND_BUTTONCLICK1 "resources/sounds/Horror\
+# define SOUND_BUTTONCLICK1 \
+	"resources/sounds/Horror\
 /House & Office/Can_clink_4.wav"
-# define SOUND_BUTTONCLICK2 "resources/sounds/Horror\
+# define SOUND_BUTTONCLICK2 \
+	"resources/sounds/Horror\
 /House & Office/switch3.wav"
-# define SOUND_GUARDINJURED "resources/sounds/Horror\
+# define SOUND_GUARDINJURED \
+	"resources/sounds/Horror\
 /Monsters & Ghosts/Zombie.wav"
-# define SOUND_GUARDDEATH "resources/sounds/Horror\
+# define SOUND_GUARDDEATH \
+	"resources/sounds/Horror\
 /Monsters & Ghosts/Zombie_8.wav"
-# define SOUND_ATTACK "resources/sounds/Horror\
+# define SOUND_ATTACK \
+	"resources/sounds/Horror\
 /Monsters & Ghosts/Injured.wav"
 # define SOUND_CREDITS "resources/sounds/musics/wav/Ambient 2.wav"
 # define SOUND_GAMEOVER "resources/sounds/musics/wav/Fx 3.wav"
@@ -575,6 +593,7 @@ typedef struct s_vars
 {
 	t_infos				infos;
 	t_xvar				*mlx;
+	bool				keys[MAX_KEYS];
 	t_imga				*img;
 	t_mouse				mouse;
 	t_map				*exit;
@@ -597,162 +616,165 @@ typedef struct s_vars
 }						t_vars;
 
 // Parsing
-int					cmp(const char *s1, const char *s2);
+int						cmp(const char *s1, const char *s2);
 
 // Utils
-void				showparams(t_vars *v);
-int					parse(t_vars *vars, int j, t_map *p);
-int					flood_fill(t_vars *v, t_map **tmp, int *i);
-t_map				*new_point(t_vars *v, char val, t_map **p);
-void				add_element(t_map **vars, t_map **node, t_map **tmp,
-						t_map **left);
-int					printmap(t_vars *vars, int i);
-int					printmap2(t_vars *v);
-void				prterr(t_vars *v, char *err, int cleardatab, int init);
-void				perr(const char *s);
-void				merr(const char *s);
-int					myrand(int nb);
-t_point2			get_90_angle(int dir, double x, double y);
-float				deg_to_rad(float deg);
-float				rad_to_deg(float rad);
-int					find_door(t_vars *v, int x, int y);
+void					showparams(t_vars *v);
+int						parse(t_vars *vars, int j, t_map *p);
+t_map					*new_point(t_vars *v, char val, t_map **p);
+void					add_element(t_map **vars, t_map **node, t_map **tmp,
+							t_map **left);
+int						printmap(t_vars *vars, int i);
+int						printmap2(t_vars *v);
+void					prterr(t_vars *v, char *err, int cleardatab, int init);
+void					perr(const char *s);
+void					merr(const char *s);
+int						myrand(int nb);
+t_point2				get_90_angle(int dir, double x, double y);
+float					deg_to_rad(float deg);
+float					rad_to_deg(float rad);
+int						find_door(t_vars *v, int x, int y);
 
 // Time
 
-uint64_t			timestamp_in_ms(t_vars *v);
-void				scrolling(t_vars *v, float *h, char *str, t_point2 p);
+uint64_t				timestamp_in_ms(t_vars *v);
+void					scrolling(t_vars *v, float *h, char *str, t_point2 p);
 // int			timer(int delay);
 
 // Clear
-int					clearimgs(t_vars *v);
-int					freeall(char **tab);
-int					cleardata(t_vars *vars, int b);
-int					map_clear(t_map *lst);
+int						clearimgs(t_vars *v);
+int						freeall(char **tab);
+int						cleardata(t_vars *vars, int b);
+int						map_clear(t_map *lst);
 
 // Init
-void				init(t_vars *v, int argc, char **argv);
-void				inittextures(t_vars *v, int i);
-void				initplayeranim(t_vars *v, int d);
-void				initobjectsanim(t_vars *v, int i, int obj);
-void				initguardanim(t_vars *v, int i);
-void				init_cam(t_vars *vars);
-void				initmodes(t_vars *v, int argc);
-void				initsounds(t_vars *v);
-void				initimage(t_vars *v, int index);
-void				initvars(t_vars *v);
-void				initwindow(t_vars *v, int argc, char **argv);
-void				initpathtext(t_vars *v);
-void				initplayerpathanim(t_vars *v);
-void				initprojectilepathanim(t_vars *v);
-void				init_player_dir(t_vars *v);
+void					init(t_vars *v, int argc, char **argv);
+void					inittextures(t_vars *v, int i);
+void					initplayeranim(t_vars *v, int d);
+void					initobjectsanim(t_vars *v, int i, int obj);
+void					initguardanim(t_vars *v, int i);
+void					init_cam(t_vars *vars);
+void					initmodes(t_vars *v, int argc);
+void					initsounds(t_vars *v);
+void					initimage(t_vars *v, int index);
+void					initvars(t_vars *v);
+void					initwindow(t_vars *v, int argc, char **argv);
+void					initpathtext(t_vars *v);
+void					initplayerpathanim(t_vars *v);
+void					initprojectilepathanim(t_vars *v);
+void					init_player_dir(t_vars *v);
 
 // Mouse
 
-int					mouse_up(int button, int x, int y, t_vars *p);
-int					mouse_down(int button, int x, int y, t_vars *p);
-void				zoom(int button, t_vars *vars);
-int					mouse_move(int x, int y, t_vars *p);
+int						mouse_up(int button, int x, int y, t_vars *p);
+int						mouse_down(int button, int x, int y, t_vars *p);
+void					zoom(int button, t_vars *vars);
+int						mouse_move(int x, int y, t_vars *p);
 
 // Closing / Hooks
 
-int					keys(int keycode, t_vars *vars);
-int					closecross(t_vars *vars);
-void				hooks(t_vars *vars);
-void				resetpos(t_vars *v, int renderb);
-void				hotreload(t_vars *vars);
-int					keys_release(int keycode, t_vars *v);
-void				menuexit(t_vars *v);
-void				menuarrow(t_vars *v, int d);
-void				menuoptions(t_vars *v);
+int						keys(int keycode, t_vars *vars);
+int						closecross(t_vars *vars);
+void					hooks(t_vars *vars);
+void					resetpos(t_vars *v, int renderb);
+void					hotreload(t_vars *vars);
+int						keys_release(int keycode, t_vars *v);
+void					menuexit(t_vars *v);
+void					menuarrow(t_vars *v, int d);
+void					menuoptions(t_vars *v);
 
 // Controls
 
-void				move(t_vars *v, int d);
-void				rotatecamx(t_vars *v, int d, double speed);
-void				rotatecamy(t_vars *v, int d, double speed, int mul);
-t_map				*set_pos(t_vars *v, t_point2 k, int d);
-void				open_door(t_vars *v, int d);
+void					move(t_vars *v, int d);
+void					rotatecamx(t_vars *v, int d, double speed);
+void					rotatecamy(t_vars *v, int d, double speed, int mul);
+t_map					*set_pos(t_vars *v, t_point2 k, int d);
+void					open_door(t_vars *v, int d);
 
 // Rendering
 
-int					raycasting(t_vars *v);
-void				set_dda(t_vars *v);
-void				perform_dda(t_vars *v, int d);
-void				calculate_line_height(t_vars *v);
-void				loadtexture(t_vars *v);
-void				draw_floor_ceiling(t_vars *v);
+int						raycasting(t_vars *v);
+void					set_dda(t_vars *v);
+void					perform_dda(t_vars *v, int d);
+void					calculate_line_height(t_vars *v);
+void					loadtexture(t_vars *v);
+void					draw_floor_ceiling(t_vars *v);
 // void				set_floor_ceiling_vert(t_vars *v, t_point p);
-void				draw_sprites(t_vars *v, t_sprite *sp, t_point p);
-void				draw_skybox(t_vars *v, t_point p, int tx, int ty);
+void					draw_sprites(t_vars *v, t_sprite *sp, t_point p);
+void					draw_skybox(t_vars *v, t_point p, int tx, int ty);
 
-int					render(t_vars *data);
-void				img_pix_put(t_imga *img, t_point p, t_vars *v);
-void				add_pix_to_buffer(t_vars *v, t_imga img, t_point p,
-						t_point2 fog);
-void				create_textures(t_vars *v, t_point c);
-int					getcolorpix(t_vars *v, char *addr, size_t k);
-uint32_t			color_lerp(uint32_t color1, uint32_t color2, double t);
+int						render(t_vars *data);
+void					img_pix_put(t_imga *img, t_point p, t_vars *v);
+void					add_pix_to_buffer(t_vars *v, t_imga img, t_point p,
+							t_point2 fog);
+void					create_textures(t_vars *v, t_point c);
+int						getcolorpix(t_vars *v, char *addr, size_t k);
+uint32_t				color_lerp(uint32_t color1, uint32_t color2, double t);
 
-void				rendermenu(t_vars *v);
+void					rendermenu(t_vars *v);
 
 // Animations
-void				animations(t_vars *v);
+void					animations(t_vars *v);
 
 // Scenes
 
-int					win(t_vars *v);
-int					lose(t_vars *v);
-void				loading(t_vars *v);
-int					credits(t_vars *v);
-int					maintitleanim(t_vars *v);
+int						win(t_vars *v);
+int						lose(t_vars *v);
+void					loading(t_vars *v);
+int						credits(t_vars *v);
+int						maintitleanim(t_vars *v);
 
 /* FUNCTIONS */
-bool				is_in_string(char c, char *s);
-bool				is_surrounded(char **map, int i, int j,
-						size_t map_start);
-char				**tab_dup(char **tab);
-void				init_infos(t_vars *v, char *file, int *fd);
-bool				is_map_closed(char **map, size_t map_start);
-bool				is_not_accepted(char **map, int i, int j);
-void				print_map(char **s);
-bool				is_in_string(char c, char *s);
-void				cerr(int i, int j);
+void					key_management(t_vars *v);
+int						returnkey(t_vars *v);
+void					handle_movement(t_vars *v);
+bool					is_pressed(int key, t_vars *v);
+bool					is_in_string(char c, char *s);
+bool					is_surrounded(char **map, int i, int j,
+							size_t map_start);
+char					**tab_dup(char **tab);
+void					init_infos(t_vars *v, char *file, int *fd);
+bool					is_map_closed(char **map, size_t map_start);
+bool					is_not_accepted(char **map, int i, int j);
+void					print_map(char **s);
+bool					is_in_string(char c, char *s);
+void					cerr(int i, int j);
 
-void				store_map(t_vars *v);
-void				s(void);
-void				store_map(t_vars *v);
-void				calculate_mapsize_checking(char *line, t_vars *v,
-						int fd, int i);
-char				*skip_whitespaces(t_vars *v, int fd, int *i);
+void					store_map(t_vars *v);
+void					s(void);
+void					store_map(t_vars *v);
+void					calculate_mapsize_checking(char *line, t_vars *v,
+							int fd, int i);
+char					*skip_whitespaces(t_vars *v, int fd, int *i);
 
-bool				is_char_valid(char c);
-bool				is_player_char(char c);
-bool				isnt_cub_ended(const char *s);
-bool				there_is_only_whitespaces(const char *s);
-bool				there_is_only_whitespaces(const char *s);
-int					init_xpm(t_imga *img, char *path, void *mlx, int i);
-size_t				nb_occur(const char *s, char c);
-bool				is_color(char *s);
-bool				is_texture(char *s);
-bool				is_everything_set(t_infos i);
-int					set_value(t_boolimage *bimg, char *file, void *mlx,
-						int i);
-int					set_texture(t_infos *i, char **l, int ind, void *mlx);
-int					set_a_color(int i, char *values, uint32_t *color,
-						bool *is_set);
-int					set_colors(t_infos *i, char **l, int ind);
-int					set_a_value(t_infos *i, char **l, int ind, void *mlx);
-void				init_imgs(t_vars *v);
-void				clean_exit(char **l, int fd, t_vars *v, bool free_line);
-void				pfree_img(t_imga *img, t_vars *v);
-char				*strrev(char *s);
-bool				is_valid_int(const char *s);
-bool				is_valid_int(const char *s);
-void				parsing(int ac, char **av, t_vars *v);
-bool				isnt_cub_ended(const char *s);
+bool					is_char_valid(char c);
+bool					is_player_char(char c);
+bool					isnt_cub_ended(const char *s);
+bool					there_is_only_whitespaces(const char *s);
+bool					there_is_only_whitespaces(const char *s);
+int						init_xpm(t_imga *img, char *path, void *mlx, int i);
+size_t					nb_occur(const char *s, char c);
+bool					is_color(char *s);
+bool					is_texture(char *s);
+bool					is_everything_set(t_infos i);
+int						set_value(t_boolimage *bimg, char *file, void *mlx,
+							int i);
+int						set_texture(t_infos *i, char **l, int ind, void *mlx);
+int						set_a_color(int i, char *values, uint32_t *color,
+							bool *is_set);
+int						set_colors(t_infos *i, char **l, int ind);
+int						set_a_value(t_infos *i, char **l, int ind, void *mlx);
+void					init_imgs(t_vars *v);
+void					clean_exit(char **l, int fd, t_vars *v, bool free_line);
+void					pfree_img(t_imga *img, t_vars *v);
+char					*strrev(char *s);
+bool					is_valid_int(const char *s);
+bool					is_valid_int(const char *s);
+void					parsing(int ac, char **av, t_vars *v);
+bool					isnt_cub_ended(const char *s);
 
-void				lerr(size_t i, const char *s);
-size_t				tab_len(char **tab);
-int					cmp(const char *s1, const char *s2);
+void					lerr(size_t i, const char *s);
+size_t					tab_len(char **tab);
+int						cmp(const char *s1, const char *s2);
 
 #endif

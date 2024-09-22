@@ -29,8 +29,8 @@ void	initvars(t_vars *v)
 	v->sprite = (t_sprite){0};
 	v->floor = (t_floor){0};
 	v->game.fps = 64;
-	v->player.movespeedy = 0.11;
-	v->player.movespeedx = 0.09;
+	v->player.movespeedy = 0.04;
+	v->player.movespeedx = 0.04;
 	v->player.rotspeed = 0.05;
 	v->player.mouserotspeed = 0.04;
 }
@@ -126,8 +126,7 @@ void	init(t_vars *v, int argc, char **argv)
 		exit((prterr(v, ERRMALL, 1, 1), 1));
 	while (v->img && ++i <= COMP_N)
 		v->img[i] = (t_imga){0};
-	mlx_do_key_autorepeaton(v->mlx);
-	initwindow(v, argc, argv);
+	(ft_bzero(v->keys, MAX_KEYS), initwindow(v, argc, argv));
 	mlx_mouse_hide(v->mlx, v->screen.win);
 	v->img->fontname = FONT1;
 	v->img->fontname2 = FONT2;
@@ -138,4 +137,5 @@ void	init(t_vars *v, int argc, char **argv)
 	initguardanim(v, -1);
 	check_map(v);
 	init_player_dir(v);
+	mlx_do_key_autorepeatoff(v->mlx);
 }
