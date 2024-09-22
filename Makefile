@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+         #
+#    By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 11:28:17 by pmagnero          #+#    #+#              #
-#    Updated: 2024/09/18 21:52:57 by cviegas          ###   ########.fr        #
+#    Updated: 2024/09/20 16:48:38 by pmagnero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,10 @@ MINIAUDIO = includes/miniaudio/libminiaudio.a
 
 MLX = includes/mlx_linux/minilibx-linux/libmlx_Linux.a
 
+# debug
 d	=	0
+# no comment error in norme
+c 	=	0
 
 ifeq ($(d),1)
 	DEBUG	=	-ggdb
@@ -59,27 +62,32 @@ COLOR_OK	=	32
 
 SRCS =	srcs/cub3D.c \
 		srcs/controls/cub3D_hooks.c \
+		srcs/controls/cub3D_hooks_utils.c \
 		srcs/controls/cub3D_controls.c \
 		srcs/controls/cub3D_mouse.c \
 		srcs/render/cub3D_render_menus.c \
 		srcs/render/cub3D_render.c \
-		srcs/render/cub3D_topdown.c \
 		srcs/render/cub3D_scenes.c \
 		srcs/render/cub3D_raycasting.c \
+		srcs/render/cub3D_raycasting_sprites.c \
+		srcs/render/cub3D_raycasting_dda.c \
 		srcs/render/cub3D_raycasting_floor_ceiling.c \
+		srcs/render/cub3D_raycasting_skybox.c \
 		srcs/menus/cub3D_menus_naviguation.c \
 		srcs/utils/cub3D_time.c \
+		srcs/utils/cub3D_math.c \
 		srcs/utils/cub3D_utils.c \
 		srcs/utils/cub3D_utils2.c \
+		srcs/utils/cub3D_utils3.c \
 		srcs/utils/cub3D_clear.c \
 		srcs/init/cub3D_init.c \
 		srcs/init/cub3D_init_anim.c \
 		srcs/init/cub3D_init_paths.c \
 		srcs/init/cub3D_init_sounds.c \
 		srcs/init/cub3D_init_window.c \
-		srcs/cub3D_parse.c \
 		srcs/movements/cub3D_movements.c \
 		srcs/movements/cub3D_movements2.c \
+		srcs/parsing/cub3D_parse.c \
 		srcs/parsing/parsing.c \
 		srcs/parsing/is_valid_int.c \
 		srcs/parsing/utils.c \
@@ -189,7 +197,11 @@ norme:
 	@echo "\n\033[$(COLOR_TITLE)m########################################"
 	@echo "#############  NORMINETTE  #############"
 	@echo "########################################\033[0m\n"
+ifeq ($(c), 1)
+	@norminette $(NORME) | sed 's,OK!,\x1b[$(COLOR_OK)m&\x1b[0m,;s,Error.*,\x1b[$(COLOR_KO)m&\x1b[0m,' | sed '/WRONG_SCOPE_COMMENT/d'
+else
 	@norminette $(NORME) | sed 's,OK!,\x1b[$(COLOR_OK)m&\x1b[0m,;s,Error.*,\x1b[$(COLOR_KO)m&\x1b[0m,'
+endif
 
 valgrind:
 	@echo "\n\033[$(COLOR_TITLE)m########################################"

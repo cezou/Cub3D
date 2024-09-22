@@ -12,6 +12,8 @@
 
 #include "../../includes/cub3D.h"
 
+/// @brief Action when Down arrow key is pressed
+/// @param v Vars
 void	menuarrowdown(t_vars *v)
 {
 	v->menu.menui++;
@@ -21,6 +23,8 @@ void	menuarrowdown(t_vars *v)
 		v->menu.menui = 0;
 }
 
+/// @brief Action when Up arrow key is pressed
+/// @param v Vars
 void	menuarrowup(t_vars *v)
 {
 	v->menu.menui--;
@@ -30,6 +34,8 @@ void	menuarrowup(t_vars *v)
 		v->menu.menui = 3;
 }
 
+/// @brief Action when Left arrow key is pressed
+/// @param v Vars
 void	menuarrowleft(t_vars *v)
 {
 	if (ACTIVATE_SOUND)
@@ -44,6 +50,8 @@ void	menuarrowleft(t_vars *v)
 	}
 }
 
+/// @brief Action when Right arrow key is pressed
+/// @param v Vars
 void	menuarrowright(t_vars *v)
 {
 	if (ACTIVATE_SOUND)
@@ -58,6 +66,9 @@ void	menuarrowright(t_vars *v)
 	}
 }
 
+/// @brief Naviguate in the menus when an arrow key is pressed
+/// @param v Vars
+/// @param d Arrow key pressed
 void	menuarrow(t_vars *v, int d)
 {
 	if (v->menu.menu != 3 && d == SOUTH)
@@ -76,6 +87,5 @@ void	menuarrow(t_vars *v, int d)
 		ma_sound_stop(&v->sound.sound[EBUTTC2]);
 		ma_sound_start(&v->sound.sound[EBUTTC2]);
 	}
-	v->game.refreshmap = 0;
 	render(v);
 }

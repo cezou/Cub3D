@@ -22,22 +22,20 @@ void	zoom(int button, t_vars *vars)
 
 int	mouse_down(int button, int x, int y, t_vars *p)
 {
-	if (p->game.start > 1 && p->god && (button == 4 || button == 5))
+	if (p->game.start > 1 && p->game.god && (button == 4 || button == 5))
 	{
 		p->mouse.button = button;
 		zoom(button, p);
 		p->mouse.prevx = x;
 		p->mouse.prevy = y;
-		p->game.refreshmap = 1;
 		p->game.start = 2;
 		render(p);
 	}
-	else if (p->game.start > 1 && p->god && (button == 1 || button == 3))
+	else if (p->game.start > 1 && p->game.god && (button == 1 || button == 3))
 	{
 		p->mouse.button = button;
 		p->mouse.prevx = x;
 		p->mouse.prevy = y;
-		p->game.refreshmap = 1;
 		p->game.start = 2;
 	}
 	return (0);
@@ -47,9 +45,8 @@ int	mouse_up(int button, int x, int y, t_vars *p)
 {
 	(void)x;
 	(void)y;
-	if (p->game.start > 1 && p->god && (button == 1 || button == 3))
+	if (p->game.start > 1 && p->game.god && (button == 1 || button == 3))
 	{
-		p->game.refreshmap = 1;
 		p->game.start = 2;
 		p->mouse.button = 0;
 	}
@@ -59,12 +56,18 @@ int	mouse_up(int button, int x, int y, t_vars *p)
 int	mouse_move(int x, int y, t_vars *p)
 {
 	p->mouse.renderrate = 0;
-	if (ft_abs(p->mouse.prevy - y) == 3 || ft_abs(p->mouse.prevx - x) == 3)
+	if (ft_abs(p->mouse.prevy - y) == 4 || ft_abs(p->mouse.prevx - x) == 4)
 		p->mouse.renderrate = 1;
-	if (p->game.start > 1 && p->god && p->mouse.button == 1)
+	if (p->game.start > 1 && p->game.god)
 	{
-		p->mouse.xoff += (x - p->mouse.prevx);
-		p->mouse.yoff += (y - p->mouse.prevy);
+		if (x < p->mouse.prevx)
+			rotatecamx(p, RIGHT, p->player.mouserotspeed);
+		else if (x > p->mouse.prevx)
+			rotatecamx(p, LEFT, p->player.mouserotspeed);
+		if (y < p->mouse.prevy)
+			rotatecamy(p, UP, p->player.mouserotspeed, 400);
+		else if (y > p->mouse.prevy)
+			rotatecamy(p, DOWN, p->player.mouserotspeed, 400);
 		p->mouse.prevx = x;
 		p->mouse.prevy = y;
 		if (p->mouse.renderrate == 1)

@@ -12,6 +12,10 @@
 
 #include "../../includes/cub3D.h"
 
+/// @brief Print the linked list and the content of each node for debug purpose
+/// @param v Vars
+/// @param i Increment variable
+/// @return 
 int	printmap(t_vars *v, int i)
 {
 	t_map	*tmp;
@@ -41,6 +45,11 @@ int	printmap(t_vars *v, int i)
 	return (ft_printf(1, "exit pos: %d %d\n", v->exit->x, v->exit->y), 0);
 }
 
+/// @brief Add a new element to the linked list
+/// @param map The pointer to the first element of the linked list
+/// @param node New node to add to linked list
+/// @param tmp Temporary variable to go through the linked list
+/// @param left Left node
 void	add_element(t_map **map, t_map **node, t_map **tmp, t_map **left)
 {
 	if (!(*map))
@@ -57,6 +66,11 @@ void	add_element(t_map **map, t_map **node, t_map **tmp, t_map **left)
 	}
 }
 
+/// @brief Create a new node in the linked list
+/// @param v Vars
+/// @param val Value of the character read from the file
+/// @param p Pointer of the current node
+/// @return The new node to add to the linked list
 t_map	*new_point(t_vars *v, char val, t_map **p)
 {
 	t_map	*node;
@@ -77,41 +91,25 @@ t_map	*new_point(t_vars *v, char val, t_map **p)
 		v->mapv.error++;
 	if (val == 'N' || val == 'S' || val == 'E' || val == 'W')
 		v->player.player = node;
-	// if (val == GUARD)
-	// 	v->guard.guard = node;
-	// if (val == EXIT)
-	// 	v->exit = node;
-	// if (val == COLLECT)
-	// 	v->objs.collect++;
+	if (val == 'D')
+		v->game.nb_door++;
 	return (node->val = val, node->rev = 0, node->z = 0, node);
 }
 
-int	getcolorpix(char *addr, size_t k, int pause)
+/// @brief Find door in the door array with its coordinates
+/// @param v Vars
+/// @param x X coordinate
+/// @param y Y coordinate
+/// @return Index of the door in the door array
+int	find_door(t_vars *v, int x, int y)
 {
-	if (pause)
-		return ((addr[k] << 0) + (addr[k + 1] << 8) + (0 << 16) + (addr[k
-				+ 3] << 24));
-	else
-		return ((addr[k] << 0) + (addr[k + 1] << 8) + (addr[k + 2] << 16)
-			+ (addr[k + 3] << 24));
-}
-
-void	img_pix_put(t_imga *img, t_point p, int width, int height)
-{
-	char	*pixel;
 	int		i;
 
-	if (p.x >= 0 && p.x < width && p.y >= 0 && p.y < height)
+	i = -1;
+	while (++i < v->game.nb_door)
 	{
-		i = img->bpp - 8;
-		pixel = img->addr + (p.y * img->len + p.x * (img->bpp / 8));
-		while (i >= 0)
-		{
-			if (img->endian != 0)
-				*pixel++ = (p.color >> i) & 0xFF;
-			else
-				*pixel++ = (p.color >> (img->bpp - 8 - i)) & 0xFF;
-			i -= 8;
-		}
+		if (v->door[i].x == x && v->door[i].y == y)
+			return (i);
 	}
+	return (-1);
 }

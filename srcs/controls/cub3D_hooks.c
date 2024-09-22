@@ -14,10 +14,10 @@
 
 void	tooglegod(t_vars *v)
 {
-	if (v->god == 0)
-		v->god = 1;
-	else if (v->god == 1)
-		v->god = 0;
+	if (v->game.god == 0)
+		v->game.god = 1;
+	else if (v->game.god == 1)
+		v->game.god = 0;
 }
 
 int	returnkey(t_vars *v)
@@ -45,41 +45,45 @@ int	returnkey(t_vars *v)
 	return (0);
 }
 
-int	keys(int keycode, t_vars *v)
+void	handle_movement(int kd, t_vars *v)
 {
-	if (keycode == XK_Escape)
-		menuexit(v);
-	else if (!v->game.pause && v->game.start > 1 && v->god && keycode == XK_r)
-		resetpos((v->mouse.renderrate = 0, v), 1);
-	else if (!v->game.won && v->game.start > 1 && keycode == XK_w)
-		arrows(v, v->player.player->up, NORTH);
-	else if (!v->game.won && v->game.start > 1 && keycode == XK_s)
-		arrows(v, v->player.player->down, SOUTH);
-	else if (!v->game.won && v->game.start > 1 && keycode == XK_a)
-		arrows(v, v->player.player->left, WEST);
-	else if (!v->game.won && v->game.start > 1 && keycode == XK_d)
-		arrows(v, v->player.player->right, EAST);
-	else if (!v->game.won && v->game.start > 1 && keycode == XK_Left)
-		arrows(v, v->player.player->right, 4);
-	else if (!v->game.won && v->game.start > 1 && keycode == XK_Right)
-		arrows(v, v->player.player->left, 5);
-	else if (v->game.start > 1 && v->god && keycode == XK_m)
-		hotreload(v);
-	else if (((v->game.start > 1 && v->god) || v->game.won) && keycode == XK_F5)
-		hotreload(v);
-	else if (!v->game.pause && !v->game.won && v->game.start > 1
-		&& keycode == XK_F1)
-		tooglegod(v);
-	else if (keycode == XK_Return)
-		returnkey(v);
-	// else if (!v->game.pause && v->game.start > 1 && keycode == XK_space)
-	// 	attack(v);
-	return (0);
+	if (kd == XK_w)
+		move(v, NORTH);
+	else if (kd == XK_s)
+		move(v, SOUTH);
+	else if (kd == XK_a)
+		move(v, WEST);
+	else if (kd == XK_d)
+		move(v, EAST);
+	else if (kd == XK_Left)
+		move(v, RIGHT);
+	else if (kd == XK_Right)
+		move(v, LEFT);
+	else if (kd == XK_Up)
+		move(v, UP);
+	else if (kd == XK_Down)
+		move(v, DOWN);
+	else if (kd == XK_space)
+		move(v, 8);
 }
 
-int	closecross(t_vars *v)
+int	keys(int kd, t_vars *v)
 {
-	exit((cleardata(v, 1), 0));
+	if (kd == XK_Escape)
+		menuexit(v);
+	else if (!v->game.pause && v->game.start > 1 && v->game.god && kd == XK_r)
+		resetpos((v->mouse.renderrate = 0, v), 1);
+	else if (v->game.start > 1 && v->game.god && kd == XK_m)
+		hotreload(v);
+	else if (((v->game.start > 1 && v->game.god) || v->game.won) && kd == XK_F5)
+		hotreload(v);
+	else if (!v->game.pause && !v->game.won && v->game.start > 1
+		&& kd == XK_F1)
+		tooglegod(v);
+	else if (kd == XK_Return)
+		returnkey(v);
+	else if (!v->game.won && v->game.start > 1)
+		handle_movement(kd, v);
 	return (0);
 }
 

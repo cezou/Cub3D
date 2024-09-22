@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/11 17:25:09 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/20 19:22:35 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,33 @@
 
 void	initvars(t_vars *v)
 {
-	v->mapv = (t_mapv){NULL, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, v->mapv.filename};
-	v->player = (t_player){NULL, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
-		v->player.movspeed, 0, 0};
-	v->guard = (t_guard){NULL, 0, 1, 0, 5, 0, v->guard.movspeedguard, 0, 0};
+	v->mapv = (t_mapv){0};
+	v->player = (t_player){0};
+	v->guard = (t_guard){NULL, 0, 1, 0, 5, 0, 0, 0};
 	v->proj = (t_proj){0};
 	v->menu = (t_menu){0};
-	v->objs = (t_objs){v->objs.objs, 0, 0, 0};
-	v->game = (t_game){0, v->game.start, v->game.fps, 0, 0, 0, 1};
+	v->objs = (t_objs){0};
+	v->door = NULL;
+	v->game = (t_game){0};
+	v->mouse = (t_mouse){0};
 	v->last = NULL;
 	v->exit = NULL;
 	v->ray = (t_ray){0};
+	v->sprite = (t_sprite){0};
+	v->floor = (t_floor){0};
+	v->game.fps = 64;
+	v->player.movespeedy = 0.11;
+	v->player.movespeedx = 0.09;
+	v->player.rotspeed = 0.05;
+	v->player.mouserotspeed = 0.04;
 }
 
 void	initmodes(t_vars *v, int argc)
 {
-	v->god = 0;
-	v->game.start = 0;
-	v->game.fps = 64;
-	v->player.movspeed = 10;
-	v->guard.movspeedguard = 40;
-	v->objs.objs = NULL;
 	initvars(v);
+	v->ray.zbuffer = (int *)malloc(sizeof(int) * v->screen.resw);
+	if (!v->ray.zbuffer)
+		exit((prterr(v, ERRMALL, 1, 1), 1));
 	initpathtext(v);
 	if (argc < 2 || argc > 4)
 		exit((prterr(v, "Too many/few arguments\n", 1, 1), 1));
@@ -77,19 +82,41 @@ void	init_player_dir(t_vars *v)
 	}
 }
 
-void	check_map(t_vars *v, int argc, char **argv)
+void	check_map(t_vars *v)
 {
-	(void)argc;
-	(void)argv;
+	int		i;
+	t_map	*tmp;
+
+	i = -1;
 	parse(v, -1, NULL);
 	v->player.x = v->player.player->x;
 	v->player.y = v->player.player->y;
-	printmap2(v);
-	v->player.pocket = 0;
+	v->door = (t_door *)malloc(sizeof(t_door) * (v->game.nb_door));
+	if (!v->door)
+		exit((prterr(v, ERRMALL, 1, 0), 1));
+	tmp = v->mapv.map;
+	ft_printf(1, "door nb: %d\n", v->game.nb_door);
+	while (tmp)
+	{
+		if (tmp->val == 'D')
+		{
+			v->door[++i].x = tmp->x;
+			v->door[i].y = tmp->y;
+			v->door[i].time = 0;
+			v->door[i].state = ECLOSE;
+			v->door[i].xdelta = v->img[EDOOR].width;
+			ft_printf(1, "x: %d y: %d\n", v->door[i].x, v->door[i].y);
+		}
+		tmp = tmp->right;
+	}
 }
 
 void	init(t_vars *v, int argc, char **argv)
 {
+	int	i;
+
+	i = -1;
+	parsing(argc, argv, v);
 	v->screen.win = NULL;
 	v->mapv.map = NULL;
 	v->sound.init = 0;
@@ -97,38 +124,18 @@ void	init(t_vars *v, int argc, char **argv)
 	v->img = (t_imga *)malloc(sizeof(t_imga) * (COMP_N + 1));
 	if (!v->img)
 		exit((prterr(v, ERRMALL, 1, 1), 1));
-	v->img[EMAP].img = NULL;
+	while (v->img && ++i <= COMP_N)
+		v->img[i] = (t_imga){0};
 	mlx_do_key_autorepeaton(v->mlx);
 	initwindow(v, argc, argv);
+	mlx_mouse_hide(v->mlx, v->screen.win);
 	v->img->fontname = FONT1;
 	v->img->fontname2 = FONT2;
 	initmodes(v, argc);
 	inittextures(v, 4);
+	v->game.skybox = v->img[ESKYBOX];
 	initsounds(v);
-	check_map(v, argc, argv);
+	initguardanim(v, -1);
+	check_map(v);
 	init_player_dir(v);
 }
-
-void	init_cam(t_vars *v)
-{
-	v->mouse.button = 0;
-	v->mouse.xoff = 0.0;
-	v->mouse.yoff = 0.0;
-	v->mouse.prevx = 1.0;
-	v->mouse.prevy = 1.0;
-	v->mouse.zoom = 1;
-	v->mouse.xangle = -0.615472907;
-	v->mouse.yangle = -0.523599;
-	v->mouse.zangle = 0.615472907;
-	v->mouse.zheight = 1;
-	// v->mapv.shiftx = -(v->player.player->x * v->img[EWALL].width
-	// 		/ v->screen.resw) * v->screen.resw;
-	// v->mapv.resdeltax = (v->player.player->x * v->img[EWALL].width
-	// 		/ v->screen.resw) + 1;
-	// v->mapv.shifty = -(v->player.player->y * v->img[EWALL].height
-	// 		/ v->screen.resh) * v->screen.resh;
-	// v->mapv.resdeltay = (v->player.player->y * v->img[EWALL].height
-	// 		/ v->screen.resh) + 1;
-}
-//(long double)(long double)v->resh
-//	/ ((long double)v->maph * (long double)v->img[1].height);

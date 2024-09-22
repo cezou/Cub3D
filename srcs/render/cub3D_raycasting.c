@@ -6,172 +6,45 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/11 17:38:39 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/22 14:24:55 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
 
-static void	init_raycasting_info(int x, t_ray *ray, t_vars *v)
+/// @brief Init the datas needed for the raycasting algorithm
+/// @param x X pixel position
+/// @param v Vars
+void	init_raycasting_info(int x, t_vars *v)
 {
-	// init_ray(ray);
-	ray->camera_x = 2 * x / (double)v->screen.resw - 1;
-	ray->dir_x = v->player.dir_x + v->player.plane_x * ray->camera_x;
-	ray->dir_y = v->player.dir_y + v->player.plane_y * ray->camera_x;
-	ray->map_x = v->player.x;
-	ray->map_y = v->player.y;
-	ray->deltadist_x = fabs(1 / ray->dir_x);
-	ray->deltadist_y = fabs(1 / ray->dir_y);
-	ray->pitch = 100;
+	v->ray.camera_x = 2 * x / (double)v->screen.resw - 1;
+	v->ray.dir_x = v->player.dir_x + v->player.plane_x * v->ray.camera_x;
+	v->ray.dir_y = v->player.dir_y + v->player.plane_y * v->ray.camera_x;
+	v->ray.map_x = v->player.x;
+	v->ray.map_y = v->player.y;
+	v->ray.deltadist_x = fabs(1 / v->ray.dir_x);
+	v->ray.deltadist_y = fabs(1 / v->ray.dir_y);
 }
 
-static void	set_dda(t_ray *ray, t_vars *v)
+/// @brief Calculate the distance and height of the wall
+///	from the player position
+/// @param v Vars
+void	calculate_line_height(t_vars *v)
 {
-	if (ray->dir_x < 0)
-	{
-		ray->step_x = -1;
-		ray->sidedist_x = (v->player.x - ray->map_x) * ray->deltadist_x;
-	}
+	v->ray.line_height = (int)(v->screen.resh / v->ray.wall_dist);
+	v->ray.draw_start = -(v->ray.line_height) / 2
+		+ v->screen.resh / 2 + v->ray.pitch + (v->player.z / v->ray.wall_dist);
+	if (v->ray.draw_start < 0)
+		v->ray.draw_start = 0;
+	v->ray.draw_end = v->ray.line_height / 2
+		+ v->screen.resh / 2 + v->ray.pitch + (v->player.z / v->ray.wall_dist);
+	if (v->ray.draw_end >= v->screen.resh)
+		v->ray.draw_end = v->screen.resh - 1;
+	if (v->ray.side == 0)
+		v->ray.wall_x = v->player.y + v->ray.wall_dist * v->ray.dir_y;
 	else
-	{
-		ray->step_x = 1;
-		ray->sidedist_x = (ray->map_x + 1.0 - v->player.x) * ray->deltadist_x;
-	}
-	if (ray->dir_y < 0)
-	{
-		ray->step_y = -1;
-		ray->sidedist_y = (v->player.y - ray->map_y) * ray->deltadist_y;
-	}
-	else
-	{
-		ray->step_y = 1;
-		ray->sidedist_y = (ray->map_y + 1.0 - v->player.y) * ray->deltadist_y;
-	}
-}
-
-int	hashit(t_vars *v, int x, int y)
-{
-	t_map	*tmp;
-
-	tmp = v->mapv.map;
-	while (tmp)
-	{
-		if (tmp->x == x && tmp->y == y && tmp->val == '1')
-		{
-			// v->player.x = x;
-			// v->player.y = y;
-			// v->player.player = tmp;
-			// break ;
-			return (1);
-		}
-		tmp = tmp->right;
-	}
-	// if ((*tmp)->up->y != 0 && (*tmp)->up->x == x && (*tmp)->up->y == y)
-	// {
-	// 	if ((*tmp)->up->val == '1')
-	// 		return (1);
-	// }
-	// // else if ((*tmp)->up->left->y != 0 && (*tmp)->up->left->x != 0
-	// 	&& (*tmp)->up->left->x == x && (*tmp)->up->left->y == y)
-	// // {
-	// // 	if ((*tmp)->up->left->val == '1')
-	// // 		return (1);
-	// // }
-	// // else if ((*tmp)->up->right->y != 0
-	// 	&& (*tmp)->up->right->x != v->mapv.mapw - 1 && (*tmp)->up->right->x == x
-	// 	&& (*tmp)->up->right->y == y)
-	// // {
-	// // 	if ((*tmp)->up->right->val == '1')
-	// // 		return (1);
-	// // }
-	// // else if ((*tmp)->down->y != v->mapv.maph - 1 && (*tmp)->down->x == x
-	// 	&& (*tmp)->down->y == y)
-	// // {
-	// // 	if ((*tmp)->down->val == '1')
-	// // 		return (1);
-	// // }
-	// // else if ((*tmp)->down->left->y != v->mapv.maph - 1
-	// 	&& (*tmp)->down->left->x != 0 && (*tmp)->down->left->x == x
-	// 	&& (*tmp)->down->left->y == y)
-	// // {
-	// // 	if ((*tmp)->down->left->val == '1')
-	// // 		return (1);
-	// // }
-	// // else if ((*tmp)->down->right->y != v->mapv.maph - 1
-	// 	&& (*tmp)->down->right->x != v->mapv.mapw && (*tmp)->down->right->x == x
-	// 	&& (*tmp)->down->right->y == y)
-	// // {
-	// // 	if ((*tmp)->down->right->val == '1')
-	// // 		return (1);
-	// // }
-	// // else if ((*tmp)->left->x != 0 && (*tmp)->left->x == x
-	// 	&& (*tmp)->left->y == y)
-	// // {
-	// // 	if ((*tmp)->left->val == '1')
-	// // 		return (1);
-	// // }
-	// // else if ((*tmp)->right->x != v->mapv.mapw - 1 && (*tmp)->right->x == x
-	// 	&& (*tmp)->right->y == y)
-	// {
-	// 	if ((*tmp)->right->val == '1')
-	// 		return (1);
-	// }
-	return (0);
-}
-
-static void	perform_dda(t_vars *v, t_ray *ray)
-{
-	int	hit;
-
-	// t_map	*tmp;
-	// tmp = v->player.player;
-	hit = 0;
-	while (hit == 0)
-	{
-		if (ray->sidedist_x < ray->sidedist_y)
-		{
-			ray->sidedist_x += ray->deltadist_x;
-			// if (ray->step_x > 0)
-			// 	tmp = tmp->right;
-			// else
-			// 	tmp = tmp->left;
-			ray->map_x += ray->step_x;
-			ray->side = 0;
-		}
-		else
-		{
-			ray->sidedist_y += ray->deltadist_y;
-			// if (ray->step_y > 0)
-			// 	tmp = tmp->down;
-			// else
-			// 	tmp = tmp->up;
-			ray->map_y += ray->step_y;
-			ray->side = 1;
-		}
-		// if (tmp->val == '1')
-		// hit = 1;
-		hit = hashit(v, ray->map_x, ray->map_y);
-	}
-}
-
-static void	calculate_line_height(t_ray *ray, t_vars *v)
-{
-	if (ray->side == 0)
-		ray->wall_dist = (ray->sidedist_x - ray->deltadist_x);
-	else
-		ray->wall_dist = (ray->sidedist_y - ray->deltadist_y);
-	ray->line_height = (int)(v->screen.resh / ray->wall_dist);
-	ray->draw_start = -(ray->line_height) / 2 + v->screen.resh / 2 + ray->pitch;
-	if (ray->draw_start < 0)
-		ray->draw_start = 0;
-	ray->draw_end = ray->line_height / 2 + v->screen.resh / 2 + ray->pitch;
-	if (ray->draw_end > v->screen.resh)
-		ray->draw_end = v->screen.resh - 1;
-	if (ray->side == 0)
-		ray->wall_x = v->player.y + ray->wall_dist * ray->dir_y;
-	else
-		ray->wall_x = v->player.x + ray->wall_dist * ray->dir_x;
-	ray->wall_x -= floor(ray->wall_x);
+		v->ray.wall_x = v->player.x + v->ray.wall_dist * v->ray.dir_x;
+	v->ray.wall_x -= floor(v->ray.wall_x);
 }
 
 // static void	get_texture_index(t_vars *v)
@@ -192,65 +65,113 @@ static void	calculate_line_height(t_ray *ray, t_vars *v)
 // 	}
 // }
 
-void	update_texture_pixels(t_vars *v, t_ray *ray, int x)
+/// @brief Update doors animation
+/// @param v Vars
+void	loadtexture(t_vars *v)
 {
-	int			y;
-	uint32_t	color;
-	int			texx;
-	int			texy;
-	double		step;
-	double		pos;
+	int	i;
 
-	// get_texture_index(v);
-	texx = (int)(ray->wall_x * 128.0);
-	if ((ray->side == 0 && ray->dir_x > 0) || (ray->side == 1
-			&& ray->dir_y < 0))
-		texx = 128 - texx - 1;
-	step = 1.0 * 128 / ray->line_height;
-	pos = (ray->draw_start - ray->pitch - v->screen.resh / 2 + ray->line_height
-			/ 2) * step;
-	y = ray->draw_start;
-	while (y < ray->draw_end)
+	i = -1;
+	// i = find_door(v, v->ray.hit->x, v->ray.hit->y);
+	while (++i < v->game.nb_door)
 	{
-		texy = (int)pos & (128 - 1);
-		pos += step;
-		color = getcolorpix(v->img[ESPACE].addr, (texy * v->img[ESPACE].len)
-				+ (texx * 4), 0);
-		// color = v->tex[0][128 * texy + texx];
-		// texy++;
-		// if (tex->index == NORTH || tex->index == EAST)
-		if (ray->side == 1)
-			color = (color >> 1) & 8355711;
-		if (color > 0)
-			// if (v->img[1].addr[color + 3] == 0)
-			// v->img[0].addr[y*x] = color;
-			img_pix_put(&v->img[COMP_N], (t_point){x, y + v->mouse.yoff, 0,
-				color}, v->screen.resw, v->screen.resh);
-		y++;
+		if (v->door[i].state == EOPENING
+			&& timestamp_in_ms(v) -v->door[i].time
+			>= (uint64_t)(5000 / v->game.fps))
+		{
+			v->door[i].xdelta -= 3;
+			v->door[i].time = timestamp_in_ms(v);
+		}
+		else if (v->door[i].state == ECLOSING
+			&& timestamp_in_ms(v) - v->door[i].time
+			>= (uint64_t)(5000 / v->game.fps))
+		{
+			v->door[i].xdelta += 3;
+			v->door[i].time = timestamp_in_ms(v);
+		}
+		if (v->door[i].state == EOPENING
+			&& v->door[i].xdelta <= 0)
+			v->door[i].state = EOPEN;
+		else if (v->door[i].state == ECLOSING
+			&& v->door[i].xdelta >= v->img[EDOOR].width)
+			v->door[i].state = ECLOSE;
 	}
 }
 
+/// @brief Transform the wall/door distance into pixels coordinate
+///	from the texture to add to the buffer
+/// @param v Vars
+/// @param p Pixel to add in the buffer: {x, y, 0, color}
+/// @param texx Texture x coordinate
+/// @param texy Texture y coordinate
+/// color = v->tex[2][128 * texy + texx];
+void	update_texture_pixels(t_vars *v, t_point p, int texx, int texy)
+{
+	double		step;
+	double		pos;
+
+	texx = (int)(v->ray.wall_x * v->ray.img.width);
+	if (v->ray.img.id == EDOOR)
+	{
+		texx -= v->ray.img.width - v->ray.door.xdelta;
+		if (texx < 0)
+		{
+			v->ray.hit = NULL;
+			perform_dda(v, 1);
+			calculate_line_height(v);
+			update_texture_pixels(v, p, 0, 0);
+			return ;
+		}
+	}
+	if ((v->ray.side == 0 && v->ray.dir_x > 0)
+		|| (v->ray.side == 1 && v->ray.dir_y < 0))
+		texx = v->ray.img.width - texx - 1;
+	step = 1.0 * v->ray.img.width / v->ray.line_height;
+	pos = (v->ray.draw_start - v->ray.pitch - (v->player.z / v->ray.wall_dist)
+			- v->screen.resh / 2 + v->ray.line_height / 2) * step;
+	p.y = v->ray.draw_start;
+	while (p.y < v->ray.draw_end)
+	{
+		texy = (int)pos & (v->ray.img.width - 1);
+		pos += step;
+		p.z = (texy * v->ray.img.len) + (texx * 4);
+		if (v->ray.side == 0)
+			p.color = 1;
+		add_pix_to_buffer(v, v->ray.img, p,
+			(t_point2){1, v->ray.wall_dist, FOG_COLOR, FOG_LEVEL});
+		p.y++;
+	}
+}
+
+/// @brief Raycasting algorithm
+/// @note We draw the skybox
+/// @note We draw the floor and the ceiling with the horizontal method
+/// @note We then draw the walls and doors with the raycasting algorithm
+/// @note We draw the sprites
+/// @note And finally we update the states of all the animations
+/// @param v Vars
+/// @return 
 int	raycasting(t_vars *v)
 {
-	t_ray ray;
-	int x;
+	int		x;
+	int		y;
 
 	x = 0;
-	ray = v->ray;
-	set_floor_ceiling(v, &ray);
-
-	while (x < v->img[EMAP].width)
+	y = -1;
+	draw_skybox(v, (t_point){-1, -1, 0, 0}, 0, 0);
+	draw_floor_ceiling(v);
+	while (x < v->screen.resw)
 	{
-		// if (x >= v->img[EMAP].width)
-		// 	return (0);
-		init_raycasting_info(x, &ray, v);
-		set_dda(&ray, v);
-		perform_dda(v, &ray);
-		calculate_line_height(&ray, v);
-		update_texture_pixels(v, &ray, x);
-
+		init_raycasting_info(x, v);
+		set_dda(v);
+		perform_dda(v, 1);
+		calculate_line_height(v);
+		update_texture_pixels(v, (t_point){x, 0, 0, 0}, 0, 0);
+		v->ray.zbuffer[x] = v->ray.wall_dist;
 		x++;
 	}
-
+	draw_sprites(v, &v->sprite, (t_point){0, 0, 0, 0});
+	animations(v);
+	loadtexture(v);
 	return (1);
 }

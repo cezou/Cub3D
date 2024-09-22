@@ -12,6 +12,9 @@
 
 #include "../../includes/cub3D.h"
 
+/// @brief Get the time of the day in ms
+/// @param  void
+/// @return Time of the day in ms
 static uint64_t	gettimeofday_ms(void)
 {
 	static struct timeval	tv;
@@ -20,17 +23,26 @@ static uint64_t	gettimeofday_ms(void)
 	return ((tv.tv_sec * (uint64_t)1000) + (tv.tv_usec / 1000));
 }
 
+// static int	frames = -1;
+
+// if (MANDATORY)
+// 	return (++frames);
+
+/// @brief Get the time spend since the start of the game
+/// @param v Vars
+/// @return Time
 uint64_t	timestamp_in_ms(t_vars *v)
 {
-	// static int	frames = -1;
-
-	// if (MANDATORY)
-	// 	return (++frames);
 	if (v->game.created_at == 0)
 		v->game.created_at = gettimeofday_ms();
 	return (gettimeofday_ms() - v->game.created_at);
 }
 
+/// @brief Scrolling function used to scroll strings on the screen
+/// @param v Vars
+/// @param h Delta height
+/// @param str String to print
+/// @param p Coordinates of the string on the screen: {x, y, bfont, color}
 void	scrolling(t_vars *v, float *h, char *str, t_point2 p)
 {
 	if (*h >= 2000)
@@ -45,7 +57,7 @@ void	scrolling(t_vars *v, float *h, char *str, t_point2 p)
 	if (p.z)
 		mlx_set_font(v->mlx, v->screen.win, v->img->fontname2);
 	mlx_string_put(v->mlx, v->screen.win,
-		v->screen.resw * p.x, p.y - (*h), p.color, str);
+		v->screen.resw * p.x, p.y - (*h), p.t, str);
 	*h += 0.05f;
 	mlx_set_font(v->mlx, v->screen.win, v->img->fontname);
 }

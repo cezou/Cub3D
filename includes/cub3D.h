@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/11 17:48:16 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/22 14:25:23 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,22 +32,24 @@
 # define FAIL EXIT_FAILURE
 # define SUCCESS EXIT_SUCCESS
 # define STDERR STDERR_FILENO
+
+# define M_PI 3.14159265358979323846	/* pi */
+# define VALID " \t\n\v\f\r10NSOED"
 # define WHITESPACES " \t\n\v\f\r"
-# define VALID " \t\n\v\f\r10NSOE"
 
 // Debug
 
 # ifndef DEBUG
-#  define TRACE(...)
-#  define INFO(...)
-#  define WARN(...)
-#  define ERR(...)
+// #  define TRACE(...)
+// #  define INFO(...)
+// #  define WARN(...)
+// #  define ERR(...)
 #  define DEBUG 0
 # else
-#  define TRACE(...) printf("[\x1B[36mTRACE\x1B[0m] " __VA_ARGS__)
-#  define INFO(...) printf("[\x1B[33mINFO\x1B[0m] " __VA_ARGS__)
-#  define WARN(...) printf("[\x1B[35mWARN\x1B[0m] " __VA_ARGS__)
-#  define ERR(...) printf("[\x1B[31mERR\x1B[0m] " __VA_ARGS__)
+// #  define TRACE(...) printf("[\x1B[36mTRACE\x1B[0m] " __VA_ARGS__)
+// #  define INFO(...) printf("[\x1B[33mINFO\x1B[0m] " __VA_ARGS__)
+// #  define WARN(...) printf("[\x1B[35mWARN\x1B[0m] " __VA_ARGS__)
+// #  define ERR(...) printf("[\x1B[31mERR\x1B[0m] " __VA_ARGS__)
 #  define DEBUG 1
 # endif
 
@@ -112,12 +114,23 @@
 
 // Resolutions
 
-# define W_H 900
-# define W_W 1600
+# define XSET_0 "xset r rate 500 33"
+# define XSET_1 "xset r rate 100 12"
+# define XSET_2 "xset r rate 100 33"
+# define XSET_3 "xset r rate 500 12"
+# define K_2 "xset r rate 100 15"
+# define W_H 600
+# define W_W 800
 // # define W_H		1080
 // # define W_W		1920
 
 # define TOOLBAR_LINUX_H 70
+
+# define LOOKUP_MAX 500
+# define SKYBOX_REPEATS 4
+
+# define FOG_LEVEL 8
+# define FOG_COLOR 0x000000
 
 # define SPACE 48
 # define WALL 49
@@ -137,8 +150,7 @@
 // # define FONT2 "-sun-open look glyph-----19-190-75-75-p-154-sunolglyph-1"
 
 // Mr. Potato-Head by Joan Stark
-# define POTATO \
-	"\
+# define POTATO "\
 \t\t\t\t\t\t\t              .-\"'\"-.\n\
 \t\t\t\t\t\t\t             |       |  \n\
 \t\t\t\t\t\t\t           (`-._____.-')\n\
@@ -158,8 +170,7 @@
 \t\t\t\t\t\t\t\\|||    (`.___.')-(`.___.')    |||/ \n\
 \t\t\t\t\t\t\t '\"'     `-----'   `-----'     '\"' \n"
 
-# define CUB3D \
-	"\
+# define CUB3D "\
  _____  _   _ ______  _____ ______ \n\
 /  __ \\| | | || ___ \\|____ ||  _  \\ \n\
 | /  \\/| | | || |_/ /    / /| | | |\n\
@@ -167,8 +178,7 @@
 | \\__/\\| |_| || |_/ /.___/ /| |/ / \n\
  \\____/ \\___/ \\____/ \\____/ |___/  \n"
 
-# define BONUS \
-	"\
+# define BONUS "\
 \t\t\t\t          )      )         (     \n\
 \t\t\t\t   (   ( /(   ( /(         )\\ )  \n\
 \t\t\t\t ( )\\  )\\())  )\\())    (  (()/(  \n\
@@ -182,35 +192,25 @@
 // # define M_PI 3.14
 
 # define SOUND_GENERIC "resources/sounds/kek.mp3"
-# define SOUND_FOOTSTEPWALK \
-	"resources/sounds/Horror\
+# define SOUND_FOOTSTEPWALK "resources/sounds/Horror\
 /Character/Footsteps_walking.wav"
-# define SOUND_AMBIENT \
-	"resources/sounds/Horror\
+# define SOUND_AMBIENT "resources/sounds/Horror\
 /Ambient/Crying_moaning_ambience_2.wav"
-# define SOUND_BABYLAUGH1 \
-	"resources/sounds/Horror\
+# define SOUND_BABYLAUGH1 "resources/sounds/Horror\
 /Monsters & Ghosts/Child laugh_6.wav"
-# define SOUND_BABYLAUGH2 \
-	"resources/sounds/Horror\
+# define SOUND_BABYLAUGH2 "resources/sounds/Horror\
 /Monsters & Ghosts/Child laugh.wav"
-# define SOUND_BABYLAUGH3 \
-	"resources/sounds/Horror\
+# define SOUND_BABYLAUGH3 "resources/sounds/Horror\
 /Monsters & Ghosts/Child laugh_7.wav"
-# define SOUND_BUTTONCLICK1 \
-	"resources/sounds/Horror\
+# define SOUND_BUTTONCLICK1 "resources/sounds/Horror\
 /House & Office/Can_clink_4.wav"
-# define SOUND_BUTTONCLICK2 \
-	"resources/sounds/Horror\
+# define SOUND_BUTTONCLICK2 "resources/sounds/Horror\
 /House & Office/switch3.wav"
-# define SOUND_GUARDINJURED \
-	"resources/sounds/Horror\
+# define SOUND_GUARDINJURED "resources/sounds/Horror\
 /Monsters & Ghosts/Zombie.wav"
-# define SOUND_GUARDDEATH \
-	"resources/sounds/Horror\
+# define SOUND_GUARDDEATH "resources/sounds/Horror\
 /Monsters & Ghosts/Zombie_8.wav"
-# define SOUND_ATTACK \
-	"resources/sounds/Horror\
+# define SOUND_ATTACK "resources/sounds/Horror\
 /Monsters & Ghosts/Injured.wav"
 # define SOUND_CREDITS "resources/sounds/musics/wav/Ambient 2.wav"
 # define SOUND_GAMEOVER "resources/sounds/musics/wav/Fx 3.wav"
@@ -241,6 +241,10 @@ typedef enum s_dir
 	SOUTH,
 	EAST,
 	WEST,
+	UP,
+	DOWN,
+	RIGHT,
+	LEFT,
 	DIR_N
 }						t_dir;
 
@@ -255,6 +259,14 @@ typedef enum s_anim
 	ANIM_N
 }						t_anim;
 
+typedef enum s_door_state
+{
+	EOPEN,
+	ECLOSE,
+	EOPENING,
+	ECLOSING
+}						t_door_state;
+
 typedef enum s_components
 {
 	EMAP,
@@ -263,44 +275,80 @@ typedef enum s_components
 	EWEST,
 	EEAST,
 	ESPACE,
-	// ESPACE2,
-	// ESPACE3,
 	EWALL,
-	// EWALL2,
-	// EWALL3,
-	// EWALL4,
-	// EWALLD,
-	// EWALLD2,
-	// EWALLD3,
-	// EWALLD4,
-	// EWALLL,
-	// EWALLL2,
-	// EWALLL3,
-	// EWALLL4,
-	// EWALLR,
-	// EWALLR2,
-	// EWALLR3,
-	// EWALLR4,
-	// EWALLCUL,
-	// EWALLCUR,
-	// EWALLCDR,
-	// EWALLCDL,
-	// EOBST1V1,
-	// EOBST1V1W,
-	// EOBST1V2,
-	// EOBST2V2,
-	// ECOLLECT,
-	// EEXIT,
-	// ESPAWN,
-	// EGUARD,
+	EDOOR,
+	EWEAPON,
+	EGUARD,
+	ESKYBOX,
 	ETITLE,
 	EMENUSELECT,
 	EMENU,
 	EMENUIG,
 	EMENUOPT,
-	// EPROJ,
 	COMP_N
 }						t_comp;
+
+typedef struct s_point
+{
+	int					x;
+	int					y;
+	int					z;
+	int					color;
+}						t_point;
+
+typedef struct s_point2
+{
+	double				x;
+	double				y;
+	int					z;
+	int					t;
+}						t_point2;
+
+typedef struct s_map
+{
+	int					x;
+	int					y;
+	int					z;
+	char				val;
+	int					rev;
+	struct s_map		*right;
+	struct s_map		*left;
+	struct s_map		*up;
+	struct s_map		*down;
+}						t_map;
+
+typedef struct s_imga
+{
+	void				*img;
+	struct s_imga		*anim;
+	int					animnb;
+	char				*addr;
+	int					bpp;
+	int					len;
+	int					endian;
+	int					width;
+	int					height;
+	char				*filename;
+	char				*fontname;
+	char				*fontname2;
+	double				posx;
+	double				posy;
+	int					xdelta;
+	int					ydelta;
+	int					animx;
+	int					animy;
+	int					id;
+}						t_imga;
+
+typedef struct s_door
+{
+	int					x;
+	int					y;
+	int					img_i;
+	t_door_state		state;
+	uint64_t			time;
+	int					xdelta;
+}						t_door;
 
 typedef struct s_ray
 {
@@ -324,23 +372,42 @@ typedef struct s_ray
 	int					draw_start;
 	int					draw_end;
 	int					pitch;
+	int					tx0;
+	int					tx1;
+	int					dtx;
+	int					dy;
+	int					dty;
+	int					ty0;
+	t_map				*hit;
+	t_imga				img;
+	t_door				door;
+	int					*zbuffer;
 }						t_ray;
 
-typedef struct s_point
+typedef struct s_sprite
 {
-	int					x;
-	int					y;
-	int					z;
-	int					color;
-}						t_point;
+	int					drawstartx;
+	int					drawstarty;
+	int					drawendx;
+	int					drawendy;
+	int					spritescreenx;
+	int					vmovescreen;
+	int					spritewidth;
+	int					spriteheight;
+	double				transformy;
+}						t_sprite;
 
-typedef struct s_point2
+typedef struct s_floor
 {
-	double				x;
-	double				y;
-	int					z;
-	int					color;
-}						t_point2;
+	double				fstepx;
+	double				fstepy;
+	double				fx;
+	double				fy;
+	double				rowdist;
+	int					tx;
+	int					ty;
+	bool				isfloor;
+}						t_floor;
 
 typedef struct s_trig
 {
@@ -351,28 +418,6 @@ typedef struct s_trig
 	double				cosz;
 	double				sinz;
 }						t_trig;
-
-typedef struct s_imga
-{
-	void				*img;
-	struct s_imga		*anim;
-	int					animnb;
-	char				*addr;
-	int					bpp;
-	int					len;
-	int					endian;
-	int					width;
-	int					height;
-	char				*filename;
-	char				*fontname;
-	char				*fontname2;
-	int					posx;
-	int					posy;
-	int					xdelta;
-	int					ydelta;
-	int					animx;
-	int					animy;
-}						t_imga;
 
 typedef struct s_mouse
 {
@@ -388,19 +433,6 @@ typedef struct s_mouse
 	double				zangle;
 	float				zheight;
 }						t_mouse;
-
-typedef struct s_map
-{
-	int					x;
-	int					y;
-	int					z;
-	char				val;
-	int					rev;
-	struct s_map		*right;
-	struct s_map		*left;
-	struct s_map		*up;
-	struct s_map		*down;
-}						t_map;
 
 typedef struct s_sound
 {
@@ -423,12 +455,16 @@ typedef struct s_player
 	int					dir;
 	double				x;
 	double				y;
+	double				z;
 	double				dir_x;
 	double				dir_y;
 	double				plane_x;
 	double				plane_y;
 	double				angle;
-	int					movspeed;
+	double				movespeedx;
+	double				movespeedy;
+	double				rotspeed;
+	double				mouserotspeed;
 	uint64_t			timerplayer;
 	int					pocket;
 }						t_player;
@@ -441,7 +477,6 @@ typedef struct s_guard
 	int					guarddeath;
 	int					guardhp;
 	int					guardhit;
-	int					movspeedguard;
 	uint64_t			timerguarddir;
 	uint64_t			timerguard;
 }						t_guard;
@@ -500,7 +535,9 @@ typedef struct s_game
 	uint64_t			created_at;
 	uint64_t			updated_at;
 	int					won;
-	int					refreshmap;
+	int					god;
+	t_imga				skybox;
+	int					nb_door;
 }						t_game;
 
 // images: verifier que le path finit bien par .xpm, que le fichier existe,
@@ -534,31 +571,6 @@ typedef struct s_infos
 
 }						t_infos;
 
-typedef __uint8_t		t_hexa;
-
-typedef union u_color	t_color;
-
-union					u_color
-{
-	__uint32_t			integer;
-	struct
-	{
-		__uint8_t		r;
-		__uint8_t		g;
-		__uint8_t		b;
-		__uint8_t		a;
-	};
-};
-
-typedef struct s_imgc
-{
-	void				*img;
-	void				*address;
-	t_color				*pixels;
-	size_t				height;
-	size_t				width;
-}						t_imgc;
-
 typedef struct s_vars
 {
 	t_infos				infos;
@@ -571,178 +583,176 @@ typedef struct s_vars
 	t_sound				sound;
 	t_game				game;
 	t_screen			screen;
-	int					god;
 	t_menu				menu;
 	t_proj				proj;
+	t_door				*door;
 	t_objs				objs;
 	t_mapv				mapv;
 	t_guard				guard;
 	t_player			player;
 	t_ray				ray;
+	t_sprite			sprite;
+	t_floor				floor;
 	uint32_t			tex[8][4160];
 }						t_vars;
 
 // Parsing
-int						cmp(const char *s1, const char *s2);
+int					cmp(const char *s1, const char *s2);
 
 // Utils
-void					showparams(t_vars *v);
-int						parse(t_vars *vars, int j, t_map *p);
-int						flood_fill(t_vars *v, t_map **tmp, int *i);
-t_map					*new_point(t_vars *v, char val, t_map **p);
-void					add_element(t_map **vars, t_map **node, t_map **tmp,
-							t_map **left);
-int						printmap(t_vars *vars, int i);
-int						printmap2(t_vars *v);
-void					prterr(t_vars *v, char *err, int cleardatab, int init);
-void					perr(const char *s);
-void					merr(const char *s);
-int						myrand(int nb);
+void				showparams(t_vars *v);
+int					parse(t_vars *vars, int j, t_map *p);
+int					flood_fill(t_vars *v, t_map **tmp, int *i);
+t_map				*new_point(t_vars *v, char val, t_map **p);
+void				add_element(t_map **vars, t_map **node, t_map **tmp,
+						t_map **left);
+int					printmap(t_vars *vars, int i);
+int					printmap2(t_vars *v);
+void				prterr(t_vars *v, char *err, int cleardatab, int init);
+void				perr(const char *s);
+void				merr(const char *s);
+int					myrand(int nb);
+t_point2			get_90_angle(int dir, double x, double y);
+float				deg_to_rad(float deg);
+float				rad_to_deg(float rad);
+int					find_door(t_vars *v, int x, int y);
 
 // Time
 
-uint64_t				timestamp_in_ms(t_vars *v);
-void					scrolling(t_vars *v, float *h, char *str, t_point2 p);
+uint64_t			timestamp_in_ms(t_vars *v);
+void				scrolling(t_vars *v, float *h, char *str, t_point2 p);
 // int			timer(int delay);
 
 // Clear
-int						clearimgs(t_vars *v);
-void					freeall(char **tab);
-int						cleardata(t_vars *vars, int b);
-int						map_clear(t_map *lst);
+int					clearimgs(t_vars *v);
+int					freeall(char **tab);
+int					cleardata(t_vars *vars, int b);
+int					map_clear(t_map *lst);
 
 // Init
-void					init(t_vars *v, int argc, char **argv);
-void					inittextures(t_vars *v, int i);
-void					initplayeranim(t_vars *v, int d);
-void					initobjectsanim(t_vars *v, int i, int obj);
-void					initguardanim(t_vars *v, int i);
-void					init_cam(t_vars *vars);
-void					initmodes(t_vars *v, int argc);
-void					initsounds(t_vars *v);
-void					initimage(t_vars *v, int index);
-void					initvars(t_vars *v);
-void					initwindow(t_vars *v, int argc, char **argv);
-void					initpathtext(t_vars *v);
-void					initplayerpathanim(t_vars *v);
-void					initprojectilepathanim(t_vars *v);
-void					init_player_dir(t_vars *v);
+void				init(t_vars *v, int argc, char **argv);
+void				inittextures(t_vars *v, int i);
+void				initplayeranim(t_vars *v, int d);
+void				initobjectsanim(t_vars *v, int i, int obj);
+void				initguardanim(t_vars *v, int i);
+void				init_cam(t_vars *vars);
+void				initmodes(t_vars *v, int argc);
+void				initsounds(t_vars *v);
+void				initimage(t_vars *v, int index);
+void				initvars(t_vars *v);
+void				initwindow(t_vars *v, int argc, char **argv);
+void				initpathtext(t_vars *v);
+void				initplayerpathanim(t_vars *v);
+void				initprojectilepathanim(t_vars *v);
+void				init_player_dir(t_vars *v);
 
 // Mouse
 
-int						mouse_up(int button, int x, int y, t_vars *p);
-int						mouse_down(int button, int x, int y, t_vars *p);
-void					zoom(int button, t_vars *vars);
-int						mouse_move(int x, int y, t_vars *p);
+int					mouse_up(int button, int x, int y, t_vars *p);
+int					mouse_down(int button, int x, int y, t_vars *p);
+void				zoom(int button, t_vars *vars);
+int					mouse_move(int x, int y, t_vars *p);
 
 // Closing / Hooks
 
-int						keys(int keycode, t_vars *vars);
-int						closecross(t_vars *vars);
-void					hooks(t_vars *vars);
-void					resetpos(t_vars *v, int renderb);
-void					hotreload(t_vars *vars);
-void					menuexit(t_vars *v);
-void					menuarrow(t_vars *v, int d);
-void					menuoptions(t_vars *v);
+int					keys(int keycode, t_vars *vars);
+int					closecross(t_vars *vars);
+void				hooks(t_vars *vars);
+void				resetpos(t_vars *v, int renderb);
+void				hotreload(t_vars *vars);
+int					keys_release(int keycode, t_vars *v);
+void				menuexit(t_vars *v);
+void				menuarrow(t_vars *v, int d);
+void				menuoptions(t_vars *v);
+
+// Controls
+
+void				move(t_vars *v, int d);
+void				rotatecamx(t_vars *v, int d, double speed);
+void				rotatecamy(t_vars *v, int d, double speed, int mul);
+t_map				*set_pos(t_vars *v, t_point2 k, int d);
+void				open_door(t_vars *v, int d);
 
 // Rendering
 
-int						raycasting(t_vars *v);
-void					set_floor_ceiling(t_vars *v, t_ray *ray);
+int					raycasting(t_vars *v);
+void				set_dda(t_vars *v);
+void				perform_dda(t_vars *v, int d);
+void				calculate_line_height(t_vars *v);
+void				loadtexture(t_vars *v);
+void				draw_floor_ceiling(t_vars *v);
+// void				set_floor_ceiling_vert(t_vars *v, t_point p);
+void				draw_sprites(t_vars *v, t_sprite *sp, t_point p);
+void				draw_skybox(t_vars *v, t_point p, int tx, int ty);
 
-int						render(t_vars *data);
-void	img_pix_put(t_imga *img, t_point p, int width, int height); // kek
+int					render(t_vars *data);
+void				img_pix_put(t_imga *img, t_point p, t_vars *v);
+void				add_pix_to_buffer(t_vars *v, t_imga img, t_point p,
+						t_point2 fog);
+void				create_textures(t_vars *v, t_point c);
+int					getcolorpix(t_vars *v, char *addr, size_t k);
+uint32_t			color_lerp(uint32_t color1, uint32_t color2, double t);
 
-void					convertpoint(t_vars *vars, t_point *b, t_point a);
-void					inittrigo(t_vars *vars);
-
-int						getcolorpix(char *addr, size_t k, int pause);
-int						getindex(t_vars *v, int *i, t_map *tmp);
-
-void					topdown(t_vars *v, t_map *tmp, int prevw, int prevh);
-void					displaytopdown(t_vars *v);
-// void		isometric(t_vars *v, t_map *tmp);
-
-void					rendermenu(t_vars *v);
+void				rendermenu(t_vars *v);
 
 // Animations
-void					playeranim(t_vars *v, int i);
-void					guardanim(t_vars *v, t_point p);
-void					objanim(t_vars *v, int i);
-void					puttexturesanim(t_vars *v, t_point i, t_point p,
-							t_point d);
+void				animations(t_vars *v);
 
 // Scenes
 
-int						win(t_vars *v);
-int						lose(t_vars *v);
-void					loading(t_vars *v);
-int						credits(t_vars *v);
-int						maintitleanim(t_vars *v);
-// void		unloading(t_vars *v);
-
-// Collisions
-int						checkcollisionsprojectiles(t_vars *v, t_point dir);
-int						checkhitmonster(t_vars *v, t_point p);
-
-// Movements
-
-void					arrows(t_vars *v, t_map *dir, int d);
-int						keys_release(int keycode, t_vars *v);
-void					moveshor(t_vars *v, t_map *dir, t_point d, int ent);
-void					movesvert(t_vars *v, t_map *dir, t_point d, int ent);
-void					iscollected(t_vars *v, int i, int ent, t_point p);
-void					attack(t_vars *v);
+int					win(t_vars *v);
+int					lose(t_vars *v);
+void				loading(t_vars *v);
+int					credits(t_vars *v);
+int					maintitleanim(t_vars *v);
 
 /* FUNCTIONS */
-bool	is_in_string(char c, char *s)
-;
-bool					is_surrounded(char **map, int i, int j,
-							size_t map_start);
-char					**tab_dup(char **tab);
-void					init_infos(t_vars *v, char *file, int *fd);
-bool					is_map_closed(char **map, size_t map_start);
-bool					is_not_accepted(char **map, int i, int j);
-void					print_map(char **s);
-bool					is_in_string(char c, char *s);
-void					cerr(int i, int j);
+bool				is_in_string(char c, char *s);
+bool				is_surrounded(char **map, int i, int j,
+						size_t map_start);
+char				**tab_dup(char **tab);
+void				init_infos(t_vars *v, char *file, int *fd);
+bool				is_map_closed(char **map, size_t map_start);
+bool				is_not_accepted(char **map, int i, int j);
+void				print_map(char **s);
+bool				is_in_string(char c, char *s);
+void				cerr(int i, int j);
 
-void					store_map(t_vars *v);
-void					s(void);
-void					store_map(t_vars *v);
-void					calculate_mapsize_checking(char *line, t_vars *v,
-							int fd, int i);
-char					*skip_whitespaces(t_vars *v, int fd, int *i);
-;
-bool					is_char_valid(char c);
-bool					is_player_char(char c);
-bool					isnt_cub_ended(const char *s);
-bool					there_is_only_whitespaces(const char *s);
-bool					there_is_only_whitespaces(const char *s);
-int						init_xpm(t_imga *img, char *path, void *mlx, int i);
-size_t					nb_occur(const char *s, char c);
-bool					is_color(char *s);
-bool					is_texture(char *s);
-bool					is_everything_set(t_infos i);
-int						set_value(t_boolimage *bimg, char *file, void *mlx,
-							int i);
-int						set_texture(t_infos *i, char **l, int ind, void *mlx);
-int						set_a_color(int i, char *values, uint32_t *color,
-							bool *is_set);
-int						set_colors(t_infos *i, char **l, int ind);
-int						set_a_value(t_infos *i, char **l, int ind, void *mlx);
-void					init_imgs(t_vars *v);
-void					clean_exit(char **l, int fd, t_vars *v, bool free_line);
-void					pfree_img(t_imga *img, t_vars *v);
-char					*strrev(char *s);
-bool					is_valid_int(const char *s);
-bool					is_valid_int(const char *s);
-void					parsing(int ac, char **av, t_vars *v);
-bool					isnt_cub_ended(const char *s);
+void				store_map(t_vars *v);
+void				s(void);
+void				store_map(t_vars *v);
+void				calculate_mapsize_checking(char *line, t_vars *v,
+						int fd, int i);
+char				*skip_whitespaces(t_vars *v, int fd, int *i);
 
-void					lerr(size_t i, const char *s);
-size_t					tab_len(char **tab);
-int						cmp(const char *s1, const char *s2);
+bool				is_char_valid(char c);
+bool				is_player_char(char c);
+bool				isnt_cub_ended(const char *s);
+bool				there_is_only_whitespaces(const char *s);
+bool				there_is_only_whitespaces(const char *s);
+int					init_xpm(t_imga *img, char *path, void *mlx, int i);
+size_t				nb_occur(const char *s, char c);
+bool				is_color(char *s);
+bool				is_texture(char *s);
+bool				is_everything_set(t_infos i);
+int					set_value(t_boolimage *bimg, char *file, void *mlx,
+						int i);
+int					set_texture(t_infos *i, char **l, int ind, void *mlx);
+int					set_a_color(int i, char *values, uint32_t *color,
+						bool *is_set);
+int					set_colors(t_infos *i, char **l, int ind);
+int					set_a_value(t_infos *i, char **l, int ind, void *mlx);
+void				init_imgs(t_vars *v);
+void				clean_exit(char **l, int fd, t_vars *v, bool free_line);
+void				pfree_img(t_imga *img, t_vars *v);
+char				*strrev(char *s);
+bool				is_valid_int(const char *s);
+bool				is_valid_int(const char *s);
+void				parsing(int ac, char **av, t_vars *v);
+bool				isnt_cub_ended(const char *s);
+
+void				lerr(size_t i, const char *s);
+size_t				tab_len(char **tab);
+int					cmp(const char *s1, const char *s2);
 
 #endif
