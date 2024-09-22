@@ -20,6 +20,7 @@ int	closecross(t_vars *v)
 
 int	keys_release(int keycode, t_vars *v)
 {
+	v->keys[keycode] = false;
 	if (v->game.start > 1 && ACTIVATE_SOUND && (keycode == XK_w
 			|| keycode == XK_a || keycode == XK_s || keycode == XK_d))
 		ma_sound_stop(&v->sound.sound[1]);

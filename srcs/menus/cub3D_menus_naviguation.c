@@ -40,10 +40,10 @@ void	menuarrowleft(t_vars *v)
 {
 	if (ACTIVATE_SOUND)
 	{
-		v->sound.volume += 0.2f;
-		if (v->sound.volume >= 5.0f)
+		v->sound.volume -= 0.2f;
+		if (v->sound.volume <= 0)
 		{
-			v->sound.volume = 5.0f;
+			v->sound.volume = 0;
 			return ;
 		}
 		ma_engine_set_volume(&v->sound.engine, v->sound.volume);
@@ -56,10 +56,10 @@ void	menuarrowright(t_vars *v)
 {
 	if (ACTIVATE_SOUND)
 	{
-		v->sound.volume -= 0.2f;
-		if (v->sound.volume <= 0)
+		v->sound.volume += 0.2f;
+		if (v->sound.volume >= 5.0f)
 		{
-			v->sound.volume = 0;
+			v->sound.volume = 5.0f;
 			return ;
 		}
 		ma_engine_set_volume(&v->sound.engine, v->sound.volume);
@@ -71,13 +71,13 @@ void	menuarrowright(t_vars *v)
 /// @param d Arrow key pressed
 void	menuarrow(t_vars *v, int d)
 {
-	if (v->menu.menu != 3 && d == SOUTH)
+	if (v->menu.menu != 3 && (d == XK_Down || d == XK_s))
 		menuarrowdown(v);
-	else if (v->menu.menu != 3 && d == NORTH)
+	else if (v->menu.menu != 3 && (d == XK_Up || d == XK_w))
 		menuarrowup(v);
-	else if (v->menu.menu == 3 && d == EAST)
+	else if (v->menu.menu == 3 && (d == XK_Left || d == XK_a))
 		menuarrowleft(v);
-	else if (v->menu.menu == 3 && d == WEST)
+	else if (v->menu.menu == 3 && (d == XK_Right || d == XK_d))
 		menuarrowright(v);
 	else
 		return ;

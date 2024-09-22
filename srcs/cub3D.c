@@ -6,12 +6,15 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 09:51:53 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/20 17:02:10 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/22 14:58:19 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3D.h"
 
+/// @brief Init textures
+/// @param v Vars
+/// @param i Texture index to start from in the image array
 void	inittextures(t_vars *v, int i)
 {
 	initimage(v, EMAP);

@@ -30,11 +30,10 @@ void	rotatecamx(t_vars *v, int d, double rotspeed)
 	oldir = v->player.dir_x;
 	v->player.dir_x = v->player.dir_x * cos(rotspeed) - v->player.dir_y
 		* sin(rotspeed);
-	v->player.dir_y = oldir * sin(rotspeed) + v->player.dir_y
-		* cos(rotspeed);
+	v->player.dir_y = oldir * sin(rotspeed) + v->player.dir_y * cos(rotspeed);
 	oldplane = v->player.plane_x;
-	v->player.plane_x = v->player.plane_x * cos(rotspeed)
-		- v->player.plane_y * sin(rotspeed);
+	v->player.plane_x = v->player.plane_x * cos(rotspeed) - v->player.plane_y
+		* sin(rotspeed);
 	v->player.plane_y = oldplane * sin(rotspeed) + v->player.plane_y
 		* cos(rotspeed);
 }
@@ -116,7 +115,7 @@ static void	moveplayerx(t_vars *v, int d)
 void	move(t_vars *v, int d)
 {
 	if (v->game.pause)
-		return (menuarrow(v, d));
+		return ;
 	printmap2(v);
 	if (ACTIVATE_SOUND && (d < UP))
 	{
@@ -132,7 +131,7 @@ void	move(t_vars *v, int d)
 	open_door(v, d);
 	render(v);
 }
-	// if (d == 8)
-		// v->player.z = 200;
-	// ft_bzero((mlx_clear_window(v->mlx, v->screen.win), v->img[EMAP].addr),
-	// 	v->screen.resw * v->screen.resh * (v->img[EMAP].bpp / 8));
+// if (d == 8)
+// v->player.z = 200;
+// ft_bzero((mlx_clear_window(v->mlx, v->screen.win), v->img[EMAP].addr),
+// 	v->screen.resw * v->screen.resh * (v->img[EMAP].bpp / 8));

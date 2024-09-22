@@ -6,7 +6,7 @@
 #    By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 11:28:17 by pmagnero          #+#    #+#              #
-#    Updated: 2024/09/20 16:48:38 by pmagnero         ###   ########.fr        #
+#    Updated: 2024/09/22 15:32:40 by pmagnero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -87,6 +87,7 @@ SRCS =	srcs/cub3D.c \
 		srcs/init/cub3D_init_window.c \
 		srcs/movements/cub3D_movements.c \
 		srcs/movements/cub3D_movements2.c \
+		srcs/movements/key_management.c \
 		srcs/parsing/cub3D_parse.c \
 		srcs/parsing/parsing.c \
 		srcs/parsing/is_valid_int.c \
