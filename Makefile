@@ -6,7 +6,7 @@
 #    By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 11:28:17 by pmagnero          #+#    #+#              #
-#    Updated: 2024/09/22 17:14:24 by pmagnero         ###   ########.fr        #
+#    Updated: 2024/10/04 12:33:36 by pmagnero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,15 +38,25 @@ d	=	0
 # no comment error in norme
 c 	=	0
 
+b	=	0
+
 ifeq ($(d),1)
 	DEBUG	=	-ggdb
+	PG		=	-pg
 else
     DEBUG	=	
+    PG		=	
+endif
+
+ifdef WSL_DISTRO_NAME
+	WSL		=	-DWSL=1
+else
+	WSL		=	
 endif
 
 CC	=	cc
 
-VALGRIND_F	=	--leak-check=full --show-leak-kinds=all --track-fds=yes #--show-leak-kinds=all --log-fd=1 --trace-children=yes
+VALGRIND_F	=	--leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes --suppressions=ignore.txt#--show-leak-kinds=all --log-fd=1 --trace-children=yes
 
 NORME	=	srcs/**/*.c includes/*.h includes/printf/*.c includes/printf/*.h includes/printf/**/*.c includes/printf/**/*.h
 
@@ -66,22 +76,33 @@ SRCS =	srcs/cub3D.c \
 		srcs/controls/cub3D_controls.c \
 		srcs/controls/cub3D_mouse.c \
 		srcs/render/cub3D_render_menus.c \
+		srcs/render/cub3D_render_player.c \
 		srcs/render/cub3D_render.c \
 		srcs/render/cub3D_scenes.c \
 		srcs/render/cub3D_raycasting.c \
 		srcs/render/cub3D_raycasting_sprites.c \
+		srcs/render/cub3D_raycasting_sprites_utils.c \
 		srcs/render/cub3D_raycasting_dda.c \
+		srcs/render/cub3D_raycasting_dda_utils.c \
 		srcs/render/cub3D_raycasting_floor_ceiling.c \
 		srcs/render/cub3D_raycasting_skybox.c \
 		srcs/render/cub3D_animations.c \
+		srcs/render/hud/cub3D_hud.c \
+		srcs/render/hud/cub3D_hud_ammun.c \
+		srcs/render/hud/cub3D_hud_arms.c \
+		srcs/render/hud/cub3D_hud_cards.c \
+		srcs/render/hud/cub3D_hud_health_armor.c \
 		srcs/menus/cub3D_menus_naviguation.c \
 		srcs/utils/cub3D_time.c \
 		srcs/utils/cub3D_math.c \
 		srcs/utils/cub3D_utils.c \
 		srcs/utils/cub3D_utils2.c \
 		srcs/utils/cub3D_utils3.c \
+		srcs/utils/cub3D_utils4.c \
 		srcs/utils/cub3D_clear.c \
+		srcs/utils/cub3D_random.c \
 		srcs/init/cub3D_init.c \
+		srcs/init/cub3D_init_player.c \
 		srcs/init/cub3D_init_anim.c \
 		srcs/init/cub3D_init_paths.c \
 		srcs/init/cub3D_init_sounds.c \
@@ -101,15 +122,6 @@ SRCS =	srcs/cub3D.c \
 		srcs/parsing/print_utils.c \
 		srcs/parsing/map_floodfill.c
 
-
-# srcs/movements/cub3D_collisions.c
-# srcs/cub3D_pathfinding.c 
-# srcs/animations/cub3D_animations.c 
-# srcs/animations/cub3D_animations2.c 
-	
-# cub3D_isometric.c
-# cub3D_projection_bonus.c \
-
 OBJS			 = $(SRCS:.c=.o)
 OBJS_B			 = $(SRCS:.c=.o)
 OBJECTS_PREFIXED = $(addprefix $(OBJS_DIR), $(OBJS))
@@ -120,15 +132,16 @@ $(OBJS_DIR)%.o : %.c includes/cub3D.h
 	@mkdir -p $(OBJS_DIR)srcs/controls
 	@mkdir -p $(OBJS_DIR)srcs/init
 	@mkdir -p $(OBJS_DIR)srcs/render
+	@mkdir -p $(OBJS_DIR)srcs/render/hud
 	@mkdir -p $(OBJS_DIR)srcs/menus
 	@mkdir -p $(OBJS_DIR)srcs/animations
 	@mkdir -p $(OBJS_DIR)srcs/movements
 	@mkdir -p $(OBJS_DIR)srcs/utils
 	@mkdir -p $(OBJS_DIR)srcs/parsing
 ifeq ($(d),1)
-	@$(CC) -DDEBUG=1 -DMANDATORY=1 $(DEBUG) $(FLAG) -c $< -o $@
+	@$(CC) -DDEBUG=1 -DMANDATORY=1 $(DEBUG) $(WSL) $(PG) $(FLAG) -c $< -o $@
 else
-	$(CC) -DMANDATORY=1 $(FLAG) -c $< -o $@
+	$(CC) -DMANDATORY=1 $(FLAG) $(WSL) -c $< -o $@
 endif
 
 $(OBJS_DIR_B)%.o : %.c includes/cub3D.h
@@ -136,34 +149,27 @@ $(OBJS_DIR_B)%.o : %.c includes/cub3D.h
 	@mkdir -p $(OBJS_DIR_B)srcs/controls
 	@mkdir -p $(OBJS_DIR_B)srcs/init
 	@mkdir -p $(OBJS_DIR_B)srcs/render
+	@mkdir -p $(OBJS_DIR_B)srcs/render/hud
 	@mkdir -p $(OBJS_DIR_B)srcs/menus
 	@mkdir -p $(OBJS_DIR_B)srcs/animations
 	@mkdir -p $(OBJS_DIR_B)srcs/movements
 	@mkdir -p $(OBJS_DIR_B)srcs/parsing
 	@mkdir -p $(OBJS_DIR_B)srcs/utils
 ifeq ($(d),1)
-	@$(CC) -D_POSIX_C_SOURCE=199309L -DDEBUG=1 $(DEBUG) $(FLAG) -c $< -o $@
+	@$(CC) -D_POSIX_C_SOURCE=199309L -DDEBUG=1 $(DEBUG) $(WSL) $(PG) $(FLAG) -c $< -o $@
 else
-	$(CC) -D_POSIX_C_SOURCE=199309L $(FLAG) -c $< -o $@
+	$(CC) -D_POSIX_C_SOURCE=199309L $(FLAG) $(WSL) -c $< -o $@
 endif
-
-#$(ARGS)
-# @valgrind $(VALGRIND_F) ./$(NAME) $(ARGS) | grep -aE "total heap usage:|ERROR SUMMARY:" | awk '{if ($$5 == $$7 && NR==1) printf "%s \033[$(COLOR_OK)mOK!\033[0m\n", $$0; else if ($$5 != $$7 && NR==1) printf "%s \033[$(COLOR_KO)mERROR!\033[0m\n", $$0;if ($$4 == 0 && NR==2) printf "%s \033[$(COLOR_OK)mOK!\033[0m\n", $$0; else if ($$4 > 0 && NR==2) printf "%s \033[$(COLOR_KO)mERROR!\033[0m\n", $$0}'
-# test:
-# 	@echo "\n\033[$(COLOR_TITLE)m########################################"
-# 	@echo "################  TESTS  ###############"
-# 	@echo "########################################\033[0m\n"
-# 	@echo "\n\033[$(COLOR_TITLE)m################  TEST 0 ################\033[0m\n\n"
-# 	@cd Leopst && bash basic_test.sh --yes -d && cd .. && rm -rf stderr stdout
-# 	@echo "\n\033[$(COLOR_TITLE)m################  TEST 1 ################\033[0m\n\n"
-# 	@make --no-print-directory -C push_swap_tester
-# 	@./push_swap_tester/complexity 100 100 700 checker_linux ; echo $$? | awk '{if ($$0 == '1') {printf "\n\033[$(COLOR_KO)mERROR!\nHmm, it seems that your algo dont work DUMBASS.\033[0m\n\n"} else {printf "\n\033[$(COLOR_OK)m\nWELL DONE ! let'\''s see the last test.\033[0m\n\n"}}'
-# 	@./push_swap_tester/complexity 500 100 5500 checker_linux && echo $$? | awk '{if ($$0 == '1') {printf "\n\033[$(COLOR_KO)mERROR!\nHmm, it seems that your algo dont work DUMBASS.\033[0m\n\n"} else {printf "\n\033[$(COLOR_OK)m\nWELL DONE ! You are good to go.\033[0m\n\n"}}'
 
 $(NAME): $(OBJECTS_PREFIXED)
 	@echo "\n\033[$(COLOR_TITLE)m########################################"
 	@echo "################  MAKE  ################"
 	@echo "########################################\033[0m\n"
+ifdef WSL_DISTRO_NAME
+	@echo "WSL DETECTED"
+	@echo "Adding the DISPLAY variable to the environment to use Xming"
+	@export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0
+endif
 ifeq ($(d),1)
 	@make --no-print-directory -sC includes/printf
 else
@@ -173,8 +179,13 @@ endif
 
 $(NAME_BONUS): $(OBJECTS_PREFIXED_B)
 	@echo "\n\033[$(COLOR_TITLE)m########################################"
-	@echo "################  MAKE BONUS ################"
+	@echo "############ MAKE BONUS ################"
 	@echo "########################################\033[0m\n"
+ifdef WSL_DISTRO_NAME
+	@echo "WSL DETECTED"
+	@echo "Adding the DISPLAY variable to the environment to use Xming"
+	@export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0
+endif
 ifeq ($(d),1)
 	@make --no-print-directory -sC includes/printf
 else
@@ -186,15 +197,21 @@ all: $(NAME)
 
 bonus: $(NAME_BONUS)
 
+ifeq ($(b), 0)
 kek: $(NAME) norme extfunc valgrind
+else
+kek: $(NAME_BONUS) norme extfunc valgrind
+endif
 
 extfunc:
 	@echo "\n\033[$(COLOR_TITLE)m########################################"
 	@echo "#########  EXTERNAL FUNCTION  ##########"
 	@echo "########################################\033[0m\n"
-	@nm -gu $(NAME)
-#| awk '!/malloc|exit|free|__|write|memcpy/ {++n;sub(/[ \t]+/, ""); printf "%s", $$0; if ($$0) printf "\t\033[$(COLOR_KO)mERROR!\033[0m\n\n"} END{if (n > 0) {printf "\033[$(COLOR_KO)mYou Fucking DONKEY, what are those forbidden functions !!!\033[0m\n\n";} else {printf "\033[$(COLOR_OK)mOK!, No forbidden functions in use !\033[0m\n\n"}}'
-
+ifeq ($(b), 0)
+	@nm -gu $(NAME_BONUS) | awk '!/malloc|exit|free|__|write|memcpy|X|pthread/ {++n;sub(/[ \t]+/, ""); printf "%s", $$0; if ($$0) printf "\t\033[$(COLOR_KO)mERROR!\033[0m\n\n"} END{if (n > 0) {printf "\033[$(COLOR_KO)mYou Fucking DONKEY, what are those forbidden functions !!!\033[0m\n\n";} else {printf "\033[$(COLOR_OK)mOK!, No forbidden functions in use !\033[0m\n\n"}}'
+else
+	@nm -gu $(NAME) | awk '!/malloc|exit|free|__|write|memcpy|X|pthread/ {++n;sub(/[ \t]+/, ""); printf "%s", $$0; if ($$0) printf "\t\033[$(COLOR_KO)mERROR!\033[0m\n\n"} END{if (n > 0) {printf "\033[$(COLOR_KO)mYou Fucking DONKEY, what are those forbidden functions !!!\033[0m\n\n";} else {printf "\033[$(COLOR_OK)mOK!, No forbidden functions in use !\033[0m\n\n"}}'
+endif
 norme:
 	@echo "\n\033[$(COLOR_TITLE)m########################################"
 	@echo "#############  NORMINETTE  #############"
@@ -209,7 +226,11 @@ valgrind:
 	@echo "\n\033[$(COLOR_TITLE)m########################################"
 	@echo "##############  VALGRIND  ##############"
 	@echo "########################################\033[0m\n"
-	@valgrind $(VALGRIND_F) ./$(NAME) resources/maps/map.ber
+ifeq ($(b), 0)
+	@valgrind $(VALGRIND_F) --log-file=valgrind.log ./$(NAME) resources/maps/test.cub 800 600
+else
+	@valgrind $(VALGRIND_F) --log-file=valgrind_bonus.log ./$(NAME_BONUS) resources/maps/subject.cub 800 600
+endif
 
 clean:
 	@echo "\n\033[$(COLOR_TITLE)m########################################"

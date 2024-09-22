@@ -12,49 +12,70 @@
 
 #include "../../includes/cub3D.h"
 
-void	hotreload(t_vars *v)
+void	hotreload_clear(t_vars *v, char *filename)
 {
-	char	*path;
-	int		start;
-
-	loading(v);
 	if (v->mapv.map)
 		map_clear(v->mapv.map);
+	if (v->infos.map)
+		freeall(v->infos.map);
+	if (v->objs.objs)
+		free(v->objs.objs);
+	if (v->door)
+		free(v->door);
+	if (v->sprites)
+		free(v->sprites);
+	if (v->rand)
+		free(v->rand);
+	v->infos = (t_infos){0};
+	v->mapv = (t_mapv){0};
+	parsing(4, filename, v);
+	v->door = NULL;
+	v->exit = NULL;
+	v->sprites = NULL;
+	v->last = NULL;
+	v->rand = NULL;
+	v->sp = (t_sprite_data){0};
+	v->game = (t_game){0};
 	v->game.start = 2;
-	path = v->mapv.filename;
-	start = v->game.start;
-	initvars(v);
-	v->mapv.filename = path;
-	v->game.start = start;
+	m_clearrandom(v);
 	clearimgs(v);
-	inittextures(v, 0);
-	parse(v, -1, NULL);
-	v->player.x = v->player.player->x;
-	v->player.y = v->player.player->y;
-	init_player_dir(v);
-	ft_printf(1, "hotreload\n");
-	mlx_loop_end((v->game.won = 0, v->mlx));
 }
 
-void	resetpos(t_vars *v, int renderb)
+void	hotreload(t_vars *v)
 {
-	v->mouse.xoff = 0;
-	v->mouse.yoff = 0;
-	v->mouse.xangle = -0.1515472907;
-	v->mouse.yangle = -0.523599;
-	v->mouse.zangle = 0.1515472907;
-	v->mouse.zheight = 1;
-	v->mouse.zoom = 1;
-	v->game.start = 2;
-	renderb++;
-	(ft_printf(1, "Reset View\n"));
-	render(v);
+	char	*filename;
+
+	filename = v->mapv.filename;
+	hotreload_clear(v, filename);
+	initvars(v);
+	initpathtext(v);
+	inittextures(v, 4);
+	v->game.skybox = v->img[ESKYBOX];
+	inithud(v);
+	initplayeranim(v);
+	initguardanim(v);
+	check_map(v);
+	init_player_dir(v);
+	ma_sound_stop(&v->sound.sound[ECRED]);
+	if (ACTIVATE_SOUND && !ma_sound_is_playing(&v->sound.sound[2]))
+	{
+		ma_sound_set_looping(&v->sound.sound[2], 1);
+		ma_sound_start(&v->sound.sound[2]);
+	}
+	mlx_loop_end((ft_printf(1, "hotreload\n"), v->game.won = 0, v->mlx));
 }
 
 void	menuexit(t_vars *v)
 {
-	if (MANDATORY || v->game.won > 0)
+	if (v->game.won < 4 && (MANDATORY || v->game.won > 0))
 		exit((mlx_do_key_autorepeaton(v->mlx), cleardata(v, 1), 0));
+	v->hud.refreshammo = 1;
+	v->hud.refreshcards = 1;
+	v->hud.refreshammun = 1;
+	v->hud.refresharmor = 1;
+	v->hud.refreshhealth = 1;
+	v->hud.refreshdh = 1;
+	v->hud.refreshweapon = 1;
 	if (v->menu.menu == 2)
 	{
 		v->menu.menu = 0;

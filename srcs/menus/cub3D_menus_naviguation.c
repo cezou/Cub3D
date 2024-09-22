@@ -87,5 +87,4 @@ void	menuarrow(t_vars *v, int d)
 		ma_sound_stop(&v->sound.sound[EBUTTC2]);
 		ma_sound_start(&v->sound.sound[EBUTTC2]);
 	}
-	render(v);
 }

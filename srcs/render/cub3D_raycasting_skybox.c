@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/22 14:07:43 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/01 11:29:25 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ static void	set_skybox(t_vars *v)
 		v->ray.tx1 += v->game.skybox.width;
 	}
 	v->ray.dtx = v->ray.tx1 - v->ray.tx0;
-	v->ray.dy = v->screen.resh / 2 + v->ray.pitch;
-	v->ray.dty = v->game.skybox.height * (v->screen.resh / 2 + v->ray.pitch)
-		/ (v->screen.resh / 2 + LOOKUP_MAX) - 1;
+	v->ray.dy = v->screen.gameh / 2 + v->ray.pitch;
+	v->ray.dty = v->game.skybox.height * (v->screen.gameh / 2 + v->ray.pitch)
+		/ (v->screen.gameh / 2 + v->screen.gameh / 2) - 1;
 	v->ray.ty0 = v->game.skybox.height - 1 - v->ray.dty;
 }
 
@@ -43,19 +43,21 @@ static void	set_skybox(t_vars *v)
 /// @param p Pixel to add to the buffer
 /// @param tx Texture x coordinate
 /// @param ty Texture y coordinate
-static void	surf_rows(t_vars *v, t_point p, int tx, int ty)
+static void	surf_rows(t_vars *v, t_point p, int *t)
 {
 	int	cy;
 
 	cy = 0;
 	while (++p.y < v->ray.dy)
 	{
-		p.z = (ty * v->game.skybox.len) + (tx * 4);
-		add_pix_to_buffer(v, v->game.skybox, p, (t_point2){0});
+		p.z = (t[1] * v->game.skybox.len) + (t[0] * 4);
+		if (p.z < v->ray.lim && p.z >= 0 && p.x >= 0 && p.x < v->screen.gamew
+			&& p.y >= 0)
+			add_pix(v, p, (t_point2){0}, (t_point){0});
 		cy += v->ray.dty;
 		while (cy > v->ray.dy)
 		{
-			ty += 1;
+			t[1] += 1;
 			cy -= v->ray.dy;
 		}
 	}
@@ -67,17 +69,19 @@ static void	surf_rows(t_vars *v, t_point p, int tx, int ty)
 /// @param tx Texture x coordinate
 /// @param ty Texture y coordinate
 ///	@note 
-void	draw_skybox(t_vars *v, t_point p, int tx, int ty)
+void	draw_skybox(t_vars *v, t_point p, int *t)
 {
+	v->ray.lim = ((v->game.skybox.height - 1) * v->game.skybox.len)
+		+ ((v->game.skybox.width - 1) * 4);
 	set_skybox(v);
 	while (++p.x < v->screen.resw)
 	{
-		tx = v->ray.tx0;
+		t[0] = v->ray.tx0;
 		if (v->ray.tx0 >= v->game.skybox.width)
-			tx = v->ray.tx0 - v->game.skybox.width;
+			t[0] = v->ray.tx0 - v->game.skybox.width;
 		p.y = -1;
-		ty = v->ray.ty0;
-		surf_rows(v, p, tx, ty);
+		t[1] = v->ray.ty0;
+		surf_rows(v, p, t);
 		p.z += v->ray.dtx;
 		while (p.z > v->screen.resw)
 		{

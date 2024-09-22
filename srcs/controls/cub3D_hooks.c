@@ -12,6 +12,24 @@
 
 #include "../../includes/cub3D.h"
 
+/// @brief Attack action. Change animations offset in the sprite sheet.
+/// @param v Vars
+void	attack(t_vars *v)
+{
+	v->player.pattack = 1;
+	v->hud.refreshammo = 1;
+	v->player.ammo[0] -= 1;
+	v->player.animoff = v->player.img.animx;
+	if (v->player.ammo[0] < 0)
+	{
+		v->player.ammo[0] = 0;
+		v->player.pattack = 0;
+		v->player.animoff = 0;
+	}
+}
+
+/// @brief Movement switch case
+/// @param v Vars
 void	handle_movement(t_vars *v)
 {
 	if (is_pressed(XK_w, v))
@@ -32,20 +50,70 @@ void	handle_movement(t_vars *v)
 		move(v, DOWN);
 	if (is_pressed(XK_space, v))
 		move(v, 8);
+	if (is_pressed(XK_Page_Down, v))
+	{
+		v->player.hp -= 1;
+		v->hud.refreshhealth = 1;
+	}
+	if (is_pressed(XK_Page_Up, v))
+	{
+		v->player.armor += 1;
+		v->hud.refresharmor = 1;
+		v->player.ammo[0] += 1;
+		v->hud.refreshammo = 1;
+	}
 }
 
+/// @brief Toggle god/debug mode
+/// @param v Vars
+void	tooglegod(t_vars *v)
+{
+	if (v->game.god == 0)
+		v->game.god = 1;
+	else if (v->game.god == 1)
+		v->game.god = 0;
+}
+
+/// @brief Hooks function when a key is pressed.
+/// @param kd Keyboard key pressed
+/// @param v Vars
+/// @return 0
 int	keys(int kd, t_vars *v)
 {
 	v->keys[kd] = true;
+	if (v->game.won < 4 && kd == XK_x)
+		attack(v);
+	if (v->game.won < 4 && kd == XK_Shift_L && !v->player.injump)
+		v->player.jumping = 1;
+	if (v->game.won < 4 && kd == 38 && v->player.animoff == 0)
+		(v->player.img = v->img[EFIST]);
+	if (v->game.won < 4 && kd == 233 && v->player.animoff == 0)
+		(v->player.img = v->img[EGUN]);
+	// if (v->game.won < 4 && kd == 34)
+		// (v->player.img = v->img[EGUN]);// OTHER WEAPONS
+	// if (v->game.won < 4 && kd == 39)
+		// (v->player.img = v->img[EGUN]);// OTHER WEAPONS
+	// if (v->game.won < 4 && kd == 40)
+		// (v->player.img = v->img[EGUN]);// OTHER WEAPONS
+	// if (v->game.won < 4 && kd == 45)
+		// (v->player.img = v->img[EGUN]);// OTHER WEAPONS
 	if (kd == XK_Escape)
 		menuexit(v);
-	if (kd == XK_Return)
+	if (v->game.won < 4 && kd == XK_Return)
 		returnkey(v);
 	if (v->game.pause)
 		menuarrow(v, kd);
+	if (!v->game.pause && !v->game.won && v->game.start > 1
+		&& is_pressed(XK_F1, v))
+		tooglegod(v);
+	if (((v->game.start > 1 && v->game.god && v->game.won < 4))
+		&& is_pressed(XK_F5, v))
+		hotreload(v);
 	return (0);
 }
 
+/// @brief Hooks function to catch events like mouse move, key pressed/released.
+/// @param v Vars
 void	hooks(t_vars *v)
 {
 	if (mlx_hook(v->screen.win, 4, 1L << 2, mouse_down, v) < 0)

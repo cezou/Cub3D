@@ -6,41 +6,58 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/23 05:16:24 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/04 11:25:33 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
 
+/// @brief Array of objects
+///	{x, y, sprite ID, scale factor, vertical position}
+const t_point3	g_objs[2] = {
+{14.0, 8.0, EPARMOR, 5.0, 128.0},
+{15.0, 8.0, EPARMOR, 1.0, 0}
+};
+
 void	initvars(t_vars *v)
 {
-	v->mapv = (t_mapv){0};
-	v->player = (t_player){0};
-	v->proj = (t_proj){0};
-	v->menu = (t_menu){0};
-	v->objs = (t_objs){0};
-	v->door = NULL;
-	v->guard = NULL;
-	v->game = (t_game){0};
-	v->mouse = (t_mouse){0};
-	v->last = NULL;
-	v->exit = NULL;
-	v->ray = (t_ray){0};
-	v->sprite = (t_sprite){0};
-	v->floor = (t_floor){0};
-	v->game.fps = 64;
-	// v->player.movespeedy = 0.04;
-	v->player.movespeedy = 3.0;
-	// v->player.movespeedx = 0.04;
+	v->game.fps = 60;
+	v->hud.refresh = 1;
+	v->hud.refreshhealth = 1;
+	v->hud.refresharmor = 1;
+	v->hud.refreshammo = 1;
+	v->hud.refreshammun = 1;
+	v->hud.refreshweapon = 1;
+	v->hud.refreshcards = 1;
+	v->hud.refreshdh = 1;
 	v->player.movespeedx = 3.0;
-	// v->player.rotspeed = 0.05;
 	v->player.rotspeed = 2.0;
-	v->player.mouserotspeed = 0.04;
-	// v->player.mouserotspeed = 2.0;
+	v->player.mouserotspeed = 0.1;
+	v->player.accx = 5.0;
+	v->player.accy = 0.08;
+	v->player.maxspeedx = 0.1;
+	v->player.maxspeedy = 5.0;
+	v->player.deccx = 0.1;
+	v->player.deccy = 0.2;
+	v->mouse.sensx = 20.0;
+	v->mouse.sensy = 10.0;
+	v->player.hp = 100;
+	v->player.maxammo[0] = 200;
+	v->player.maxammo[1] = 50;
+	v->player.maxammo[2] = 50;
+	v->player.maxammo[3] = 300;
+	v->player.weapons[0] = 1;
+	v->player.weapons[1] = 1;
+	v->player.ammo[0] = 50;
+	v->player.cards[0] = 2;
+	v->player.cards[1] = 2;
+	v->player.cards[2] = 1;
 }
 
 void	initmodes(t_vars *v, int argc)
 {
+	v->img->fontname = FONT1;
+	v->img->fontname2 = FONT2;
 	initvars(v);
 	v->ray.zbuffer = (int *)malloc(sizeof(int) * v->screen.resw);
 	if (!v->ray.zbuffer)
@@ -50,60 +67,16 @@ void	initmodes(t_vars *v, int argc)
 		exit((prterr(v, "Too many/few arguments\n", 1, 1), 1));
 }
 
-void	set_player_dir(t_vars *v, double x, double y)
-{
-	v->player.dir_x = x;
-	v->player.dir_y = y;
-}
-
-void	set_player_plane(t_vars *v, double px, double py)
-{
-	v->player.plane_x = px;
-	v->player.plane_y = py;
-}
-
-void	init_player_dir(t_vars *v)
-{
-	if (v->player.player->val == 'N')
-	{
-		set_player_dir(v, 0, -1);
-		set_player_plane(v, 0.66, 0);
-	}
-	else if (v->player.player->val == 'S')
-	{
-		set_player_dir(v, 0, 1);
-		set_player_plane(v, -0.66, 0);
-	}
-	else if (v->player.player->val == 'E')
-	{
-		set_player_dir(v, -1, 0);
-		set_player_plane(v, 0, -0.66);
-	}
-	else if (v->player.player->val == 'W')
-	{
-		set_player_dir(v, 1, 0);
-		set_player_plane(v, 0, 0.66);
-	}
-}
-
-void	check_map(t_vars *v)
+void	init_doors(t_vars *v)
 {
 	int		i;
-	int		j;
 	t_map	*tmp;
 
 	i = -1;
-	j = -1;
-	parse(v, -1, NULL);
-	v->player.x = v->player.player->x;
-	v->player.y = v->player.player->y;
+	tmp = v->mapv.map;
 	v->door = (t_door *)malloc(sizeof(t_door) * (v->game.nb_door));
 	if (!v->door)
 		exit((prterr(v, ERRMALL, 1, 0), 1));
-	v->guard = (t_guard *)malloc(sizeof(t_guard) * (v->game.nb_guard));
-	if (!v->guard)
-		exit((prterr(v, ERRMALL, 1, 0), 1));
-	tmp = v->mapv.map;
 	while (tmp)
 	{
 		if (tmp->val == 'D')
@@ -115,21 +88,53 @@ void	check_map(t_vars *v)
 			v->door[i].img_i = EDOOR;
 			v->door[i].xdelta = v->img[v->door[i].img_i].width;
 		}
+		tmp = tmp->right;
+	}
+}
+
+void	init_guard(t_vars *v, int j, t_map *tmp, int i)
+{
+	while (tmp)
+	{
 		if (tmp->val == 'G')
 		{
-			v->guard[++j].x = tmp->x;
-			v->guard[j].y = tmp->y;
-			v->guard[j].time = 0;
-			v->guard[j].img_i = EGUARD;
-			v->guard[j].xdelta = 0;
-			v->guard[j].vdiv = 1.0;
-			v->guard[j].udiv = 1.0;
-			v->guard[j].vmove = 0;
-			v->guard[j].dist = 0;
-			v->guard[j].animoff = v->img[v->guard[j].img_i].height;
+			v->sprites[++j] = (t_sprite){0};
+			v->sprites[j].x = tmp->x;
+			v->sprites[j].y = tmp->y;
+			v->sprites[j].hp = 100;
+			v->sprites[j].img_i = EGUARDW;
+			v->sprites[j].vdiv = 1.0;
+			v->sprites[j].udiv = 1.0;
+			v->sprites[j].isguard = 1;
 		}
 		tmp = tmp->right;
 	}
+	while (++j < v->game.nb_sprites)
+	{
+		v->sprites[j] = (t_sprite){0};
+		v->sprites[j].x = g_objs[++i].x;
+		v->sprites[j].y = g_objs[i].y;
+		v->sprites[j].img_i = g_objs[i].z;
+		v->sprites[j].vdiv = g_objs[i].uv;
+		v->sprites[j].udiv = g_objs[i].uv;
+		v->sprites[j].vmove = g_objs[i].v;
+	}
+}
+
+void	check_map(t_vars *v)
+{
+	init_random_melting_array(v);
+	parse(v, -1, NULL);
+	v->player.x = v->player.player->x + 0.5;
+	v->player.y = v->player.player->y + 0.5;
+	v->player.animp = EFIST;
+	v->player.animoff = 0;
+	v->game.nb_sprites = v->game.nb_guard + 2;
+	init_doors(v);
+	v->sprites = (t_sprite *)malloc(sizeof(t_sprite) * (v->game.nb_sprites));
+	if (!v->sprites)
+		exit((prterr(v, ERRMALL, 1, 0), 1));
+	init_guard(v, -1, v->mapv.map, -1);
 }
 
 void	init(t_vars *v, int argc, char **argv)
@@ -137,11 +142,11 @@ void	init(t_vars *v, int argc, char **argv)
 	int	i;
 
 	i = -1;
-	parsing(argc, argv, v);
-	v->screen.win = NULL;
-	v->mapv.map = NULL;
-	v->sound.init = 0;
-	v->objs.objs = NULL;
+	ft_memset(v, 0, sizeof(t_vars));
+	v->mlx = mlx_init();
+	if (!v->mlx)
+		exit((perr("MLX init failed"), FAIL));
+	parsing(argc, argv[1], v);
 	v->img = (t_imga *)malloc(sizeof(t_imga) * (COMP_N + 1));
 	if (!v->img)
 		exit((prterr(v, ERRMALL, 1, 1), 1));
@@ -149,13 +154,13 @@ void	init(t_vars *v, int argc, char **argv)
 		v->img[i] = (t_imga){0};
 	(ft_bzero(v->keys, MAX_KEYS), initwindow(v, argc, argv));
 	mlx_mouse_hide(v->mlx, v->screen.win);
-	v->img->fontname = FONT1;
-	v->img->fontname2 = FONT2;
 	initmodes(v, argc);
 	inittextures(v, 4);
 	v->game.skybox = v->img[ESKYBOX];
 	initsounds(v);
-	initguardanim(v, -1);
+	inithud(v);
+	initplayeranim(v);
+	initguardanim(v);
 	check_map(v);
 	init_player_dir(v);
 	mlx_do_key_autorepeatoff(v->mlx);

@@ -101,8 +101,8 @@ int	clear_sounds(t_vars *v)
 		return (0);
 	while (++i < SOUND_NB)
 	{
-		v->sound.result = ma_sound_stop_with_fade_in_pcm_frames(&v->sound.sound[i],
-				2);
+		v->sound.result = ma_sound_stop_with_fade_in_pcm_frames(
+				&v->sound.sound[i], 2);
 		if (v->sound.result != MA_SUCCESS)
 			exit((prterr(v, "Clear stop fade sound failed\n", 1, 1), 1));
 		ma_sound_uninit(&v->sound.sound[i]);
@@ -142,7 +142,9 @@ int	cleardata(t_vars *v, int b)
 		free(v->objs.objs);
 	if (b && v->door)
 		free(v->door);
-	if (b && v->guard)
-		free(v->guard);
+	if (b && v->sprites)
+		free(v->sprites);
+	if (v->rand)
+		free(v->rand);
 	return (0);
 }

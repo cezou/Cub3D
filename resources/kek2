@@ -47,8 +47,8 @@ g++ *.cpp -lSDL
 #define SKYBOX_HEIGHT   200
 #define SKYBOX_REPEATS  4
 
-#define FOG_LEVEL 2
-#define FOG_COLOR 0xA09EE7
+#define FOGL 2
+#define FOGC 0xA09EE7
 #define FOG_CONSTANT ((mapWidth + mapHeight)/2)
 
 int worldMap[mapWidth][mapHeight] =
@@ -183,7 +183,7 @@ void updateDoors() {
 }
 
 
-#if FOG_LEVEL
+#if FOGL
 Uint32 color_lerp(Uint32 color1, Uint32 color2, double t) {
 
   if(t < 0)
@@ -345,8 +345,8 @@ int main(int /*argc*/, char */*argv*/[])
       float floorX = posX + rowDistance * rayDirX0;
       float floorY = posY + rowDistance * rayDirY0;
 
-#if FOG_LEVEL
-      double fog = rowDistance / FOG_CONSTANT * FOG_LEVEL;
+#if FOGL
+      double fog = rowDistance / FOG_CONSTANT * FOGL;
 #endif
 
       for(int x = 0; x < screenWidth; ++x)
@@ -375,8 +375,8 @@ int main(int /*argc*/, char */*argv*/[])
         // floor
         color = texture[floorTexture][texWidth * ty + tx];
         color = (color >> 1) & 8355711; // make a bit darker
-#if FOG_LEVEL
-        color = color_lerp(color, FOG_COLOR, fog);
+#if FOGL
+        color = color_lerp(color, FOGC, fog);
 #endif
         buffer[y][x] = color;
 
@@ -384,8 +384,8 @@ int main(int /*argc*/, char */*argv*/[])
         //ceiling (symmetrical, at screenHeight - y - 1 instead of y)
         color = texture[ceilingTexture][texWidth * ty + tx];
         color = (color >> 1) & 8355711; // make a bit darker
-#if FOG_LEVEL
-        color = color_lerp(color, FOG_COLOR, fog);
+#if FOGL
+        color = color_lerp(color, FOGC, fog);
 #endif
         buffer[screenHeight - y - 1][x] = color;
 #endif
@@ -534,8 +534,8 @@ rayscan:
       if(drawEnd >= h)
         drawEnd = (h-1);
 
-#if FOG_LEVEL
-      double fog = perpWallDist / FOG_CONSTANT * FOG_LEVEL;
+#if FOGL
+      double fog = perpWallDist / FOG_CONSTANT * FOGL;
 #endif
 
       for(int y = drawStart; y < drawEnd; y++) {
@@ -544,8 +544,8 @@ rayscan:
         //make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
         if(side == 1) color = (color >> 1) & 8355711;
 
-#if FOG_LEVEL
-        color = color_lerp(color, FOG_COLOR, fog);
+#if FOGL
+        color = color_lerp(color, FOGC, fog);
 #endif
         buffer[y][x] = color;
 
@@ -637,8 +637,8 @@ rayscan:
       }
       if(drawEndX > w) drawEndX = w;
 
-#if FOG_LEVEL
-      double fog = transformY / FOG_CONSTANT * FOG_LEVEL;
+#if FOGL
+      double fog = transformY / FOG_CONSTANT * FOGL;
 #endif
 
       for(int stripe = drawStartX; stripe < drawEndX; stripe++) {
@@ -649,8 +649,8 @@ rayscan:
 
             Uint32 color = texture[sprite[spriteOrder[i]].texture][texWidth * texY + texX]; //get current color from the texture
             if((color & 0x00FFFFFF) != 0) {
-#if FOG_LEVEL
-              color = color_lerp(color, FOG_COLOR, fog);
+#if FOGL
+              color = color_lerp(color, FOGC, fog);
 #endif
               buffer[y][stripe] = color; //paint pixel if it isn't black, black is the invisible color
             }

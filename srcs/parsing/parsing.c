@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: borgir <borgir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 17:22:43 by cviegas           #+#    #+#             */
-/*   Updated: 2024/09/19 19:03:21 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/27 22:43:47 by borgir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,16 @@ void	parse_map(t_vars *v, int fd, int i)
 		clean_exit(v->infos.map, INT_MAX, v, 1);
 }
 
-void	parsing(int ac, char **av, t_vars *v)
+void	parsing(int ac, char *filename, t_vars *v)
 {
 	int		fd;
 	size_t	i;
 
 	if (ac < 2)
 		(perr(E_ARG), exit(FAIL));
-	if (isnt_cub_ended(av[1]))
+	if (isnt_cub_ended(filename))
 		exit((merr("file name needs to end with \".cub\""), FAIL));
-	init_infos(v, av[1], &fd);
+	init_infos(v, filename, &fd);
 	i = 0;
 	parse_ids(v, fd, &i);
 	parse_map(v, fd, i);

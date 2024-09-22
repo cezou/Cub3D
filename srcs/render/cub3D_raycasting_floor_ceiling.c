@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:38:17 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/23 02:06:06 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/02 14:45:26 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ static void	init_data_floor(t_vars *v, t_floor *f, int y)
 	v->ray.dir_y = v->player.dir_y - v->player.plane_y;
 	v->ray.dir_x1 = v->player.dir_x + v->player.plane_x;
 	v->ray.dir_y1 = v->player.dir_y + v->player.plane_y;
-	f->isfloor = y > v->screen.resh / 2 + v->ray.pitch;
-	d = v->screen.resh / 2 - y + v->ray.pitch;
-	posz = 0.5 * v->screen.resh - v->player.z;
+	f->isfloor = y > v->screen.gameh / 2 + v->ray.pitch;
+	d = v->screen.gameh / 2 - y + v->ray.pitch;
+	posz = 0.5 * v->screen.gameh - v->player.z;
 	if (f->isfloor)
 	{
-		d = y - v->screen.resh / 2 - v->ray.pitch;
-		posz = 0.5 * v->screen.resh + v->player.z;
+		d = y - v->screen.gameh / 2 - v->ray.pitch;
+		posz = 0.5 * v->screen.gameh + v->player.z;
 	}
 	f->rowdist = posz / d;
 	f->fstepx = f->rowdist * (v->ray.dir_x1 - v->ray.dir_x) / v->screen.resw;
@@ -43,35 +43,37 @@ static void	init_data_floor(t_vars *v, t_floor *f, int y)
 }
 
 // color = v->tex[4][64 * ty + tx];
-// color = (color >> 1) & 8355711;
 
 /// @brief Add the pixel from the texture to the buffer
 /// @param v Vars
 /// @param f Floor structure
 /// @param p Pixel coordinate to add to the buffer
 /// @param img Texture to use
-static void	update_floor_ceil_texture_pixels(t_vars *v, t_floor *f,
-	t_point p, t_imga img)
+static void	update_floor_ceil_texture_pixels(t_vars *v, t_floor *f, t_point p)
 {
-	int	cx;
-	int	cy;
-
 	while (p.x < v->screen.resw)
 	{
-		cx = (int)(f->fx);
-		cy = (int)(f->fy);
-		f->tx = (int)(img.width * (f->fx - cx)) & (img.width - 1);
-		f->ty = (int)(img.width * (f->fy - cy)) & (img.width - 1);
+		f->cx = (int)(f->fx);
+		f->cy = (int)(f->fy);
+		f->tx = (int)(v->tmp[0].width * (f->fx - f->cx))
+			& (v->tmp[0].width - 1);
+		f->ty = (int)(v->tmp[0].width * (f->fy - f->cy))
+			& (v->tmp[0].width - 1);
 		f->fx += f->fstepx;
 		f->fy += f->fstepy;
-		p.z = (f->ty * img.len) + (f->tx * 4);
-		p.color = 1;
+		p.z = (f->ty * v->tmp[0].len) + (f->tx * 4);
+		if (MANDATORY)
+			p.color = v->infos.floor;
 		if (f->isfloor)
-			add_pix_to_buffer(v, img, p,
-				(t_point2){1, f->rowdist, FOG_COLOR, FOG_LEVEL});
-		else if (cx < 10 || cx > 16)
-			add_pix_to_buffer(v, img, p,
-				(t_point2){1, f->rowdist, FOG_COLOR, FOG_LEVEL});
+			add_pix(v, p, (t_point2){1, f->rowdist, FOGC, FOGL},
+				(t_point){0, p.color, 0, 0});
+		else if (f->cx < 10 || f->cx > 16)
+		{
+			if (MANDATORY)
+				p.color = v->infos.ceil;
+			add_pix(v, p, (t_point2){1, f->rowdist, FOGC, FOGL},
+				(t_point){0, p.color, 0, 0});
+		}
 		p.x++;
 	}
 }
@@ -83,11 +85,12 @@ void	draw_floor_ceiling(t_vars *v)
 	int		y;
 
 	y = 0;
-	while (y < v->screen.resh)
+	v->tmp[0] = v->img[ESPACE];
+	while (y < v->screen.gameh)
 	{
 		init_data_floor(v, &v->floor, y);
 		update_floor_ceil_texture_pixels(v, &v->floor,
-			(t_point){0, y, 0, 0}, v->img[ESPACE]);
+			(t_point){0, y, 0, 0});
 		y++;
 	}
 }

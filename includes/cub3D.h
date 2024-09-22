@@ -6,13 +6,14 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/23 03:21:34 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/04 12:35:06 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
+# define _XOPEN_SOURCE 600
 # include <limits.h>
 # include <stdarg.h>
 # include <stdlib.h>
@@ -34,7 +35,6 @@
 # define STDERR STDERR_FILENO
 
 # define M_PI 3.14159265358979323846 /* pi */
-# define VALID " \t\n\v\f\r10NSOEDG"
 # define WHITESPACES " \t\n\v\f\r"
 # define MAX_KEYS 65535
 
@@ -57,11 +57,13 @@
 // Sounds
 
 # ifndef MANDATORY
-#  define ACTIVATE_SOUND 1
+#  define ACTIVATE_SOUND 0
 #  define MANDATORY 0
+#  define VALID " \t\n\v\f\r10NSWEDG"
 # else
 #  define ACTIVATE_SOUND 0
 #  define MANDATORY 1
+#  define VALID " \t\n\v\f\r10NSWE"
 # endif
 
 # ifndef MINIAUDIO_IMPLEMENTATION
@@ -131,11 +133,10 @@
 
 # define TOOLBAR_LINUX_H 70
 
-# define LOOKUP_MAX 500
 # define SKYBOX_REPEATS 4
 
-# define FOG_LEVEL 4
-# define FOG_COLOR 0x000000
+# define FOGL 4
+# define FOGC 0x000000
 
 # define SPACE 48
 # define WALL 49
@@ -148,15 +149,21 @@
 # define E 69
 # define W 87
 
-// # define FONT1 "-sony-fixed-medium-r-normal--17-120-100-100-c-0-iso8859-1"
-// # define FONT2 "-sony-fixed-medium-r-normal--24-230-75-75-c-0-iso8859-1"
-# define FONT1 "-misc-fixed-medium-r-semicondensed--13-120-75-75-c-60-iso8859-1"
-# define FONT2 "-misc-fixed-medium-r-semicondensed--13-120-75-75-c-60-iso8859-1"
+# ifndef WSL
+#  define WSL 0
+#  define FONT1 "-sony-fixed-medium-r-normal--17-120-100-100-c-0-iso8859-1"
+#  define FONT2 "-sony-fixed-medium-r-normal--24-230-75-75-c-0-iso8859-1"
+# else
+#  define WSL 1
+#  define FONT1 "-misc-fixed-medium-r-semicondensed\
+--13-120-75-75-c-60-iso8859-1"
+#  define FONT2 "-misc-fixed-medium-r-semicondensed\
+--13-120-75-75-c-60-iso8859-1"
+# endif
 // # define FONT2 "-sun-open look glyph-----19-190-75-75-p-154-sunolglyph-1"
 
 // Mr. Potato-Head by Joan Stark
-# define POTATO \
-	"\
+# define POTATO	"\
 \t\t\t\t\t\t\t              .-\"'\"-.\n\
 \t\t\t\t\t\t\t             |       |  \n\
 \t\t\t\t\t\t\t           (`-._____.-')\n\
@@ -176,8 +183,7 @@
 \t\t\t\t\t\t\t\\|||    (`.___.')-(`.___.')    |||/ \n\
 \t\t\t\t\t\t\t '\"'     `-----'   `-----'     '\"' \n"
 
-# define CUB3D \
-	"\
+# define CUB3D "\
  _____  _   _ ______  _____ ______ \n\
 /  __ \\| | | || ___ \\|____ ||  _  \\ \n\
 | /  \\/| | | || |_/ /    / /| | | |\n\
@@ -185,8 +191,7 @@
 | \\__/\\| |_| || |_/ /.___/ /| |/ / \n\
  \\____/ \\___/ \\____/ \\____/ |___/  \n"
 
-# define BONUS \
-	"\
+# define BONUS "\
 \t\t\t\t          )      )         (     \n\
 \t\t\t\t   (   ( /(   ( /(         )\\ )  \n\
 \t\t\t\t ( )\\  )\\())  )\\())    (  (()/(  \n\
@@ -200,35 +205,25 @@
 // # define M_PI 3.14
 
 # define SOUND_GENERIC "resources/sounds/kek.mp3"
-# define SOUND_FOOTSTEPWALK \
-	"resources/sounds/Horror\
+# define SOUND_FOOTSTEPWALK "resources/sounds/Horror\
 /Character/Footsteps_walking.wav"
-# define SOUND_AMBIENT \
-	"resources/sounds/Horror\
+# define SOUND_AMBIENT "resources/sounds/Horror\
 /Ambient/Crying_moaning_ambience_2.wav"
-# define SOUND_BABYLAUGH1 \
-	"resources/sounds/Horror\
+# define SOUND_BABYLAUGH1 "resources/sounds/Horror\
 /Monsters & Ghosts/Child laugh_6.wav"
-# define SOUND_BABYLAUGH2 \
-	"resources/sounds/Horror\
+# define SOUND_BABYLAUGH2 "resources/sounds/Horror\
 /Monsters & Ghosts/Child laugh.wav"
-# define SOUND_BABYLAUGH3 \
-	"resources/sounds/Horror\
+# define SOUND_BABYLAUGH3 "resources/sounds/Horror\
 /Monsters & Ghosts/Child laugh_7.wav"
-# define SOUND_BUTTONCLICK1 \
-	"resources/sounds/Horror\
+# define SOUND_BUTTONCLICK1	"resources/sounds/Horror\
 /House & Office/Can_clink_4.wav"
-# define SOUND_BUTTONCLICK2 \
-	"resources/sounds/Horror\
+# define SOUND_BUTTONCLICK2	"resources/sounds/Horror\
 /House & Office/switch3.wav"
-# define SOUND_GUARDINJURED \
-	"resources/sounds/Horror\
+# define SOUND_GUARDINJURED	"resources/sounds/Horror\
 /Monsters & Ghosts/Zombie.wav"
-# define SOUND_GUARDDEATH \
-	"resources/sounds/Horror\
+# define SOUND_GUARDDEATH "resources/sounds/Horror\
 /Monsters & Ghosts/Zombie_8.wav"
-# define SOUND_ATTACK \
-	"resources/sounds/Horror\
+# define SOUND_ATTACK "resources/sounds/Horror\
 /Monsters & Ghosts/Injured.wav"
 # define SOUND_CREDITS "resources/sounds/musics/wav/Ambient 2.wav"
 # define SOUND_GAMEOVER "resources/sounds/musics/wav/Fx 3.wav"
@@ -293,16 +288,44 @@ typedef enum s_components
 	EWEST,
 	EEAST,
 	ESPACE,
-	EWALL,
 	EDOOR,
-	EWEAPON,
-	EGUARD,
+	EGUARDW,
+	EGUARDDEATH,
 	ESKYBOX,
+	EHUDIMG,
 	ETITLE,
+	EKEK,
+	EDOOMH,
+	EBIGNUMBERSTMP,
+	ESMALLNUMBERSTMP,
+	EHEALTHTMP,
+	EARMORTMP,
+	EAMMOTMP,
+	EWEAPONTMP,
+	EAMMUNTMP,
+	ECARDSLOTTMP,
+	ECARDSTMP,
+	EPARMOR,
 	EMENUSELECT,
 	EMENU,
 	EMENUIG,
 	EMENUOPT,
+	EBUFF,
+	EHUD,
+	EFIST,
+	EGUN,
+	EBIGNUMBERS,
+	ESMALLNUMBERS,
+	EHEALTH,
+	EARMOR,
+	EAMMO,
+	EWEAPON,
+	EAMMUN,
+	ECARDSLOT,
+	ECARDS,
+	EDOOMHTMP,
+	EHUDTMP,
+	ETMP,
 	COMP_N
 }						t_comp;
 
@@ -321,6 +344,15 @@ typedef struct s_point2
 	int					z;
 	int					t;
 }						t_point2;
+
+typedef struct s_point3
+{
+	double				x;
+	double				y;
+	int					z;
+	double				uv;
+	double				v;
+}						t_point3;
 
 typedef struct s_map
 {
@@ -349,13 +381,11 @@ typedef struct s_imga
 	char				*filename;
 	char				*fontname;
 	char				*fontname2;
-	double				posx;
-	double				posy;
-	int					xdelta;
-	int					ydelta;
 	int					animx;
 	int					animy;
 	int					id;
+	double				ratiox;
+	double				ratioy;
 }						t_imga;
 
 typedef struct s_door
@@ -370,6 +400,8 @@ typedef struct s_door
 
 typedef struct s_ray
 {
+	int					x;
+	int					hitguard;
 	double				camera_x;
 	double				dir_x;
 	double				dir_y;
@@ -379,6 +411,8 @@ typedef struct s_ray
 	int					map_y;
 	int					step_x;
 	int					step_y;
+	double				pos;
+	double				step;
 	double				sidedist_x;
 	double				sidedist_y;
 	double				deltadist_x;
@@ -399,10 +433,11 @@ typedef struct s_ray
 	t_map				*hit;
 	t_imga				img;
 	t_door				door;
+	int					lim;
 	int					*zbuffer;
 }						t_ray;
 
-typedef struct s_sprite
+typedef struct s_sprite_data
 {
 	int					drawstartx;
 	int					drawstarty;
@@ -413,7 +448,7 @@ typedef struct s_sprite
 	int					spritewidth;
 	int					spriteheight;
 	double				transformy;
-}						t_sprite;
+}						t_sprite_data;
 
 typedef struct s_floor
 {
@@ -424,6 +459,8 @@ typedef struct s_floor
 	double				rowdist;
 	int					tx;
 	int					ty;
+	int					cx;
+	int					cy;
 	bool				isfloor;
 }						t_floor;
 
@@ -450,6 +487,8 @@ typedef struct s_mouse
 	double				yangle;
 	double				zangle;
 	float				zheight;
+	double				sensx;
+	double				sensy;
 }						t_mouse;
 
 typedef struct s_sound
@@ -468,9 +507,18 @@ typedef struct s_player
 	t_map				*player;
 	int					pattack;
 	int					animp;
-	int					nbmove;
+	int					animoff;
 	int					moving;
+	int					movingy;
+	int					jumping;
+	int					injump;
 	int					dir;
+	int					hp;
+	int					armor;
+	int					ammo[4];
+	int					maxammo[4];
+	int					weapons[7];
+	int					cards[3];
 	double				x;
 	double				y;
 	double				z;
@@ -479,18 +527,46 @@ typedef struct s_player
 	double				plane_x;
 	double				plane_y;
 	double				angle;
+	double				motionx;
+	double				motiony;
+	double				accx;
+	double				accy;
+	double				deccx;
+	double				deccy;
+	double				maxspeedx;
+	double				maxspeedy;
 	double				movespeedx;
 	double				movespeedy;
 	double				rotspeed;
 	double				mouserotspeed;
 	uint64_t			timerplayer;
-	int					pocket;
+	t_imga				img;
 }						t_player;
 
-typedef struct s_guard
+typedef struct s_hud
 {
-	int					x;
-	int					y;
+	bool				refresh;
+	bool				refreshdh;
+	bool				refreshhealth;
+	bool				refresharmor;
+	bool				refreshammo;
+	bool				refreshammun;
+	bool				refreshweapon;
+	bool				refreshcards;
+	t_imga				img;
+	t_imga				head;
+	int					headid;
+	int					animoff;
+	uint64_t			time;
+}						t_hud;
+
+typedef struct s_sprtie
+{
+	double				x;
+	double				y;
+	int					hp;
+	int					isguard;
+	int					stop;
 	int					img_i;
 	int					xdelta;
 	int					animoff;
@@ -499,7 +575,7 @@ typedef struct s_guard
 	double				vmove;
 	double				dist;
 	uint64_t			time;
-}						t_guard;
+}						t_sprite;
 
 typedef struct s_mapv
 {
@@ -545,6 +621,11 @@ typedef struct s_screen
 	long				resh;
 	int					screenw;
 	int					screenh;
+	int					gamew;
+	int					gameh;
+	int					hudw;
+	int					hudh;
+	double				ratio;
 }						t_screen;
 
 typedef struct s_game
@@ -554,6 +635,8 @@ typedef struct s_game
 	int					fps;
 	uint64_t			created_at;
 	uint64_t			updated_at;
+	double				cambobtime;
+	double				playbobtime;
 	double				frametime;
 	uint64_t			time;
 	uint64_t			oldtime;
@@ -563,6 +646,8 @@ typedef struct s_game
 	t_imga				skybox;
 	int					nb_door;
 	int					nb_guard;
+	int					nb_sprites;
+	int					canhit;
 }						t_game;
 
 // images: verifier que le path finit bien par .xpm, que le fichier existe,
@@ -612,13 +697,17 @@ typedef struct s_vars
 	t_menu				menu;
 	t_proj				proj;
 	t_door				*door;
-	t_guard				*guard;
+	t_sprite			*sprites;
 	t_objs				objs;
 	t_mapv				mapv;
 	t_player			player;
 	t_ray				ray;
-	t_sprite			sprite;
+	t_sprite_data		sp;
 	t_floor				floor;
+	t_hud				hud;
+	t_imga				tmp[2];
+	int					*rand;
+	int					rndindex;
 	uint32_t			tex[8][4160];
 }						t_vars;
 
@@ -641,8 +730,13 @@ int						myrand(int nb);
 t_point2				get_90_angle(int dir, double x, double y);
 float					deg_to_rad(float deg);
 float					rad_to_deg(float rad);
-void					ft_swaps(t_guard *a, t_guard *b);
+void					ft_swaps(t_sprite *a, t_sprite *b);
 int						find_door(t_vars *v, int x, int y);
+int						find_guard(t_vars *v, int x, int y);
+int						m_random(t_vars *v);
+void					m_clearrandom(t_vars *v);
+void					save_screen_to_buffer(t_imga dest, t_imga src,
+							size_t offset);
 
 // Time
 
@@ -658,20 +752,26 @@ int						map_clear(t_map *lst);
 
 // Init
 void					init(t_vars *v, int argc, char **argv);
+void					check_map(t_vars *v);
 void					inittextures(t_vars *v, int i);
-void					initplayeranim(t_vars *v, int d);
+void					inittexture(t_vars *v, t_imga *img, int i);
+void					initplayeranim(t_vars *v);
 void					initobjectsanim(t_vars *v, int i, int obj);
-void					initguardanim(t_vars *v, int i);
+void					initguardanim(t_vars *v);
 void					init_cam(t_vars *vars);
 void					initmodes(t_vars *v, int argc);
 void					initsounds(t_vars *v);
-void					initimage(t_vars *v, int index);
+void					initimage(t_vars *v, int index, int width, int height);
 void					initvars(t_vars *v);
 void					initwindow(t_vars *v, int argc, char **argv);
 void					initpathtext(t_vars *v);
 void					initplayerpathanim(t_vars *v);
+void					initguardpathanim(t_vars *v);
 void					initprojectilepathanim(t_vars *v);
+void					inithud(t_vars *v);
 void					init_player_dir(t_vars *v);
+void					init_random_melting_array(t_vars *v);
+void					initanim(t_vars *v, int index, int b, int animnb);
 
 // Mouse
 
@@ -685,7 +785,6 @@ int						mouse_move(int x, int y, t_vars *p);
 int						keys(int keycode, t_vars *vars);
 int						closecross(t_vars *vars);
 void					hooks(t_vars *vars);
-void					resetpos(t_vars *v, int renderb);
 void					hotreload(t_vars *vars);
 int						keys_release(int keycode, t_vars *v);
 void					menuexit(t_vars *v);
@@ -695,6 +794,8 @@ void					menuoptions(t_vars *v);
 // Controls
 
 void					move(t_vars *v, int d);
+void					moveplayerx(t_vars *v, int d);
+void					moveplayery(t_vars *v, int d);
 void					rotatecamx(t_vars *v, int d, double speed);
 void					rotatecamy(t_vars *v, int d, double speed, int mul);
 t_map					*set_pos(t_vars *v, t_point2 k, int d);
@@ -702,29 +803,47 @@ void					open_door(t_vars *v, int d);
 
 // Rendering
 
-int						raycasting(t_vars *v);
+int						raycasting(t_vars *v, t_imga dest);
 void					set_dda(t_vars *v);
-void					perform_dda(t_vars *v, int d);
+void					perform_dda(t_vars *v, t_map *tmp, int hit);
+void					dda_utils(t_vars *v);
 void					calculate_line_height(t_vars *v);
-int						door_extend_ray(t_vars *v, t_point p, int texx);
-void					update_texture_pixels(t_vars *v, t_point p, int texx,
-							int texy);
+
+void					check_door(t_vars *v);
+int						door_extend_ray(t_vars *v, t_point p, int *t);
+void					update_texture_pixels(t_vars *v, t_point p, int *t);
 void					update_door_animations(t_vars *v, int i);
+
 void					draw_floor_ceiling(t_vars *v);
-// void			set_floor_ceiling_vert(t_vars *v, t_point p);
+// void					set_floor_ceiling_vert(t_vars *v, t_point p);
+
 void					draw_sprites(t_vars *v);
-void					draw_sprite(t_vars *v, t_sprite *sp, t_point p,
-							t_guard g);
-void					transform_sprite(t_vars *v, t_sprite *sp, t_guard g);
-void					set_sprite_boundaries(t_vars *v, t_sprite *sp,
-							t_guard g);
+void					draw_sprite(t_vars *v, t_sprite_data *sp, t_sprite g);
+void					transform_sprite(t_vars *v, t_sprite_data *sp,
+							t_sprite g);
+void					set_sprite_boundaries(t_vars *v, t_sprite_data *sp,
+							t_sprite g);
 void					sort_sprites(t_vars *v, int i, int sort);
-void					draw_skybox(t_vars *v, t_point p, int tx, int ty);
+
+void					draw_skybox(t_vars *v, t_point p, int *t);
+
+// HUD
+
+void					renderhud(t_vars *v, t_imga dest);
+void					renderelement(t_vars *v, int xoff, int nb, int percent);
+void					number_to_digits(t_vars *v, int n, int res[4], int *i);
+void					renderarmsdigits(t_vars *v, int xoff);
+void					renderammun(t_vars *v, int xoff, int arr[4]);
+void					rendercards(t_vars *v, int xoff, int yoff, int *arr);
+
+void					render_player(t_vars *v, t_point c);
+
+void					scale_img(t_point p, t_imga *src, t_imga *dest);
 
 int						render(t_vars *data);
 void					img_pix_put(t_imga *img, t_point p, t_vars *v);
-void					add_pix_to_buffer(t_vars *v, t_imga img, t_point p,
-							t_point2 fog);
+void					add_pix(t_vars *v, t_point p, t_point2 fog,
+							t_point opt);
 void					create_textures(t_vars *v, t_point c);
 int						getcolorpix(t_vars *v, char *addr, size_t k);
 uint32_t				color_lerp(uint32_t color1, uint32_t color2, double t);
@@ -738,9 +857,10 @@ void					update_animations(t_vars *v);
 
 int						win(t_vars *v);
 int						lose(t_vars *v);
-void					loading(t_vars *v);
+int						transition_melt_screen(t_vars *v);
 int						credits(t_vars *v);
 int						maintitleanim(t_vars *v);
+void					melting(t_vars *v, bool *done, int x);
 
 /* FUNCTIONS */
 // void					freeall(void **tab);
@@ -789,8 +909,10 @@ void					pfree_img(t_imga *img, t_vars *v);
 char					*strrev(char *s);
 bool					is_valid_int(const char *s);
 bool					is_valid_int(const char *s);
-void					parsing(int ac, char **av, t_vars *v);
+void					parsing(int ac, char *filename, t_vars *v);
 bool					isnt_cub_ended(const char *s);
+void					parse_ids(t_vars *v, int fd, size_t *i);
+void					parse_map(t_vars *v, int fd, int i);
 
 void					lerr(size_t i, const char *s);
 size_t					tab_len(char **tab);

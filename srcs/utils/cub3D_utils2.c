@@ -112,3 +112,13 @@ int	find_door(t_vars *v, int x, int y)
 	}
 	return (-1);
 }
+
+/// @brief Save img to another image with an offset
+/// @param dest Image destination
+/// @param src Image source
+/// @param offset Offset of the src image
+void	save_screen_to_buffer(t_imga dest, t_imga src, size_t offset)
+{
+	ft_memcpy(dest.addr + offset, src.addr,
+		src.width * src.height * (src.bpp / 8));
+}

@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/23 05:16:51 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/27 12:44:30 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,17 @@
 
 void	initmainimage(t_vars *v)
 {
-	v->img[EMAP].width = v->screen.resw;
-	v->img[EMAP].height = v->screen.resh;
+	v->screen.gamew = v->screen.resw;
+	v->screen.gameh = v->screen.resh - v->screen.resh / 5;
+	v->screen.hudw = v->screen.resw;
+	v->screen.hudh = v->screen.resh / 5;
+	v->screen.ratio = v->screen.resw / v->screen.resh;
+	v->img[EMAP].width = v->screen.gamew;
+	v->img[EMAP].height = v->screen.gameh;
+	v->img[EBUFF].height = v->screen.resw;
+	v->img[EBUFF].height = v->screen.resh;
 	v->img[COMP_N].width = v->screen.resw;
 	v->img[COMP_N].height = v->screen.resh;
-	v->img[EMAP].animx = 0;
-	v->img[EMAP].animy = 0;
-	v->img[COMP_N].animx = 0;
-	v->img[COMP_N].animy = 0;
 	v->img[COMP_N].anim = NULL;
 	v->img[EMAP].anim = NULL;
 	v->img[EMAP].animnb = 0;
@@ -30,8 +33,6 @@ void	initmainimage(t_vars *v)
 
 void	initwindow(t_vars *v, int argc, char **argv)
 {
-	v->screen.screenh = 0;
-	v->screen.screenw = 0;
 	mlx_get_screen_size(v->mlx, &v->screen.screenw, &v->screen.screenh);
 	v->screen.screenw--;
 	v->screen.screenh -= TOOLBAR_LINUX_H;

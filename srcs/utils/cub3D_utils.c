@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:59:52 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/23 02:09:24 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/03 14:53:20 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	printmap2(t_vars *v)
 	t_map	*tmp;
 
 	tmp = v->mapv.map;
-	if (!DEBUG)
+	if (DEBUG || !DEBUG)
 		return (0);
 	while (tmp)
 	{
@@ -62,16 +62,10 @@ void	showparams(t_vars *v)
 	ft_printf(1, "\t\t(default): 1024 768\n");
 	ft_printf(1, "%s", RCOLOR);
 	ft_printf(1, "\n%s", POTATO);
-	ft_printf(1,
-				"\n%s\t\t\t\t\t\t\tBy PIERRE MAGNERON <pmagnero@student.42.fr>%s\
-\n",
-				GREEN,
-				RCOLOR);
-	ft_printf(1,
-				"\n%s\t\t\t\t\t\t\t  & CESAIRE VIEGAS <cviegas@student.42.fr>%s\n\n\
-				\n",
-				GREEN,
-				RCOLOR);
+	ft_printf(1, "\n%s\t\t\t\t\t\t\tBy PIERRE MAGNERON <pmagnero@student.42.fr>%s\
+\n", GREEN, RCOLOR);
+	ft_printf(1, "\n%s\t\t\t\t\t\t\t  & CESAIRE VIEGAS <cviegas@student.42.fr>%s\n\n\
+\n", GREEN, RCOLOR);
 }
 
 /// @brief Generate a random number(int) between 0 and n
@@ -88,9 +82,10 @@ int	myrand(int nb)
 /// @brief Create and init an MLX image at the specified index in the img table
 /// @param v Vars
 /// @param index Index
-void	initimage(t_vars *v, int index)
+void	initimage(t_vars *v, int index, int width, int height)
 {
-	v->img[index].img = mlx_new_image(v->mlx, v->screen.resw, v->screen.resh);
+	v->img[index].img = mlx_new_image(v->mlx, width, height);
+	v->img[index].id = index;
 	if (!v->img[index].img)
 		exit((prterr(v, "Error mlx map image\n", 1, 1), 1));
 	v->img[index].addr = mlx_get_data_addr(v->img[index].img,
