@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:58:10 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/20 19:14:17 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/22 22:31:55 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,15 @@ int	hashit(t_vars *v, int x, int y, int d)
 		{
 			if (tmp->val == 'D')
 			{
-				v->ray.img = v->img[EDOOR];/* FINDOOR() Door encountered */
 				i = find_door(v, tmp->x, tmp->y);
-				if (i > -1)
-					v->ray.door = v->door[i];
+				if (i < 0)
+					return ((v->ray.img = v->img[ESPACE], 0));
+				v->ray.img = v->img[v->door[i].img_i];
+				v->ray.door = v->door[i];
 			}
 			else
 				v->ray.img = v->img[ESPACE];
-			v->ray.hit = tmp;
-			return (1);
+			return (v->ray.hit = tmp, 1);
 		}
 		tmp = tmp->right;
 	}

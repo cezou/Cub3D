@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/22 14:25:23 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/22 22:26:27 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # define STDERR STDERR_FILENO
 
 # define M_PI 3.14159265358979323846	/* pi */
-# define VALID " \t\n\v\f\r10NSOED"
+# define VALID " \t\n\v\f\r10NSOEDG"
 # define WHITESPACES " \t\n\v\f\r"
 
 // Debug
@@ -129,7 +129,7 @@
 # define LOOKUP_MAX 500
 # define SKYBOX_REPEATS 4
 
-# define FOG_LEVEL 8
+# define FOG_LEVEL 4
 # define FOG_COLOR 0x000000
 
 # define SPACE 48
@@ -471,14 +471,16 @@ typedef struct s_player
 
 typedef struct s_guard
 {
-	t_map				*guard;
-	int					movingguard;
-	int					guarddir;
-	int					guarddeath;
-	int					guardhp;
-	int					guardhit;
-	uint64_t			timerguarddir;
-	uint64_t			timerguard;
+	int					x;
+	int					y;
+	int					img_i;
+	int					xdelta;
+	int					animoff;
+	double				vdiv;
+	double				udiv;
+	double				vmove;
+	double				dist;
+	uint64_t			time;
 }						t_guard;
 
 typedef struct s_mapv
@@ -538,6 +540,7 @@ typedef struct s_game
 	int					god;
 	t_imga				skybox;
 	int					nb_door;
+	int					nb_guard;
 }						t_game;
 
 // images: verifier que le path finit bien par .xpm, que le fichier existe,
@@ -586,9 +589,9 @@ typedef struct s_vars
 	t_menu				menu;
 	t_proj				proj;
 	t_door				*door;
+	t_guard				*guard;
 	t_objs				objs;
 	t_mapv				mapv;
-	t_guard				guard;
 	t_player			player;
 	t_ray				ray;
 	t_sprite			sprite;
@@ -615,6 +618,7 @@ int					myrand(int nb);
 t_point2			get_90_angle(int dir, double x, double y);
 float				deg_to_rad(float deg);
 float				rad_to_deg(float rad);
+void				ft_swaps(t_guard *a, t_guard *b);
 int					find_door(t_vars *v, int x, int y);
 
 // Time
@@ -679,10 +683,15 @@ int					raycasting(t_vars *v);
 void				set_dda(t_vars *v);
 void				perform_dda(t_vars *v, int d);
 void				calculate_line_height(t_vars *v);
-void				loadtexture(t_vars *v);
+int					door_extend_ray(t_vars *v, t_point p, int texx);
+void				update_door_animations(t_vars *v, int i);
 void				draw_floor_ceiling(t_vars *v);
 // void				set_floor_ceiling_vert(t_vars *v, t_point p);
-void				draw_sprites(t_vars *v, t_sprite *sp, t_point p);
+void				draw_sprites(t_vars *v);
+void				draw_sprite(t_vars *v, t_sprite *sp, t_point p, t_guard g);
+void				transform_sprite(t_vars *v, t_sprite *sp, t_guard g);
+void				set_sprite_boundaries(t_vars *v, t_sprite *sp, t_guard g);
+void				sort_sprites(t_vars *v, int i, int sort);
 void				draw_skybox(t_vars *v, t_point p, int tx, int ty);
 
 int					render(t_vars *data);
@@ -696,7 +705,7 @@ uint32_t			color_lerp(uint32_t color1, uint32_t color2, double t);
 void				rendermenu(t_vars *v);
 
 // Animations
-void				animations(t_vars *v);
+void				update_animations(t_vars *v);
 
 // Scenes
 

@@ -86,13 +86,12 @@ t_map	*new_point(t_vars *v, char val, t_map **p)
 	node->up = *p;
 	if (*p)
 		*p = (*p)->right;
-	if ((val == SPAWN && v->player.player) || (val == EXIT && v->exit)
-		|| (val == GUARD && v->guard.guard))
-		v->mapv.error++;
 	if (val == 'N' || val == 'S' || val == 'E' || val == 'W')
 		v->player.player = node;
 	if (val == 'D')
 		v->game.nb_door++;
+	if (val == 'G')
+		v->game.nb_guard++;
 	return (node->val = val, node->rev = 0, node->z = 0, node);
 }
 

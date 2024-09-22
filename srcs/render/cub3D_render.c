@@ -111,15 +111,16 @@ void	displaytext(t_vars *v, char *str, char *str2)
 /// @param v Vars
 void	guardmovements(t_vars *v)
 {
-	if (!MANDATORY && !v->game.pause && !v->game.won && v->guard.guard
-		&& !v->guard.guardhit && !v->guard.guarddeath && timestamp_in_ms(v)
-		- v->guard.timerguarddir >= (uint64_t)(50000 / v->game.fps))
-	{
-		v->guard.timerguarddir = timestamp_in_ms(v);
-		v->guard.guarddir = NORTH + myrand(4);
-		if (v->guard.guarddir == DIR_N)
-			v->guard.movingguard = 0;
-	}
+	(void)v;
+	// if (!MANDATORY && !v->game.pause && !v->game.won && v->guard.guard
+	// 	&& !v->guard.guardhit && !v->guard.guarddeath && timestamp_in_ms(v)
+	// 	- v->guard.timerguarddir >= (uint64_t)(50000 / v->game.fps))
+	// {
+	// 	v->guard.timerguarddir = timestamp_in_ms(v);
+	// 	v->guard.guarddir = NORTH + myrand(4);
+	// 	if (v->guard.guarddir == DIR_N)
+	// 		v->guard.movingguard = 0;
+	// }
 }
 
 /// @brief Game loop that render the game on the screen at fps rate

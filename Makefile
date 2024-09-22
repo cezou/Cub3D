@@ -6,7 +6,7 @@
 #    By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 11:28:17 by pmagnero          #+#    #+#              #
-#    Updated: 2024/09/22 15:32:40 by pmagnero         ###   ########.fr        #
+#    Updated: 2024/09/22 17:14:24 by pmagnero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,6 +73,7 @@ SRCS =	srcs/cub3D.c \
 		srcs/render/cub3D_raycasting_dda.c \
 		srcs/render/cub3D_raycasting_floor_ceiling.c \
 		srcs/render/cub3D_raycasting_skybox.c \
+		srcs/render/cub3D_animations.c \
 		srcs/menus/cub3D_menus_naviguation.c \
 		srcs/utils/cub3D_time.c \
 		srcs/utils/cub3D_math.c \
