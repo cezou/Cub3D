@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/23 04:43:15 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/23 05:21:00 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,12 +116,8 @@ void	update_texture_pixels(t_vars *v, t_point p, int texx, int texy)
 int	raycasting(t_vars *v)
 {
 	int		x;
-	int		y;
-	int		i;
 
 	x = 0;
-	y = -1;
-	i = -1;
 	draw_skybox(v, (t_point){-1, -1, 0, 0}, 0, 0);
 	draw_floor_ceiling(v);
 	while (x < v->screen.resw)
