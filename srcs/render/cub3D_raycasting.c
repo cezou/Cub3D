@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/22 22:23:38 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/23 04:43:15 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,23 +47,27 @@ void	calculate_line_height(t_vars *v)
 	v->ray.wall_x -= floor(v->ray.wall_x);
 }
 
-// static void	get_texture_index(t_vars *v)
-// {
-// 	if (v->ray.side == 0)
-// 	{
-// 		if (v->ray.dir_x < 0)
-// 			v->texinfo.index = WEST;
-// 		else
-// 			v->texinfo.index = EAST;
-// 	}
-// 	else
-// 	{
-// 		if (v->ray.dir_y > 0)
-// 			v->texinfo.index = SOUTH;
-// 		else
-// 			v->texinfo.index = NORTH;
-// 	}
-// }
+/// @brief Get texture from paths in file
+/// @param v Vars
+static void	get_texture_index(t_vars *v)
+{
+	if (v->ray.img.id != ESPACE)
+		return ;
+	if (v->ray.side == 0)
+	{
+		if (v->ray.dir_x < 0)
+			v->ray.img = v->infos.west.imga;
+		else
+			v->ray.img = v->infos.east.imga;
+	}
+	else
+	{
+		if (v->ray.dir_y > 0)
+			v->ray.img = v->infos.south.imga;
+		else
+			v->ray.img = v->infos.north.imga;
+	}
+}
 
 /// @brief Transform the wall/door distance into pixels coordinate
 ///	from the texture to add to the buffer
@@ -77,6 +81,7 @@ void	update_texture_pixels(t_vars *v, t_point p, int texx, int texy)
 	double		step;
 	double		pos;
 
+	get_texture_index(v);
 	texx = (int)(v->ray.wall_x * v->ray.img.width);
 	texx = door_extend_ray(v, p, texx);
 	if (texx < 0)
@@ -87,8 +92,8 @@ void	update_texture_pixels(t_vars *v, t_point p, int texx, int texy)
 	step = 1.0 * v->ray.img.width / v->ray.line_height;
 	pos = (v->ray.draw_start - v->ray.pitch - (v->player.z / v->ray.wall_dist)
 			- v->screen.resh / 2 + v->ray.line_height / 2) * step;
-	p.y = v->ray.draw_start;
-	while (p.y < v->ray.draw_end)
+	p.y = v->ray.draw_start - 1;
+	while (++p.y < v->ray.draw_end)
 	{
 		texy = (int)pos & (v->ray.img.width - 1);
 		pos += step;
@@ -97,25 +102,7 @@ void	update_texture_pixels(t_vars *v, t_point p, int texx, int texy)
 			p.color = 1;
 		add_pix_to_buffer(v, v->ray.img, p,
 			(t_point2){1, v->ray.wall_dist, FOG_COLOR, FOG_LEVEL});
-		p.y++;
 	}
-}
-
-int	door_extend_ray(t_vars *v, t_point p, int texx)
-{
-	if (v->ray.img.id == EDOOR)
-	{
-		texx -= v->ray.img.width - v->ray.door.xdelta;
-		if (texx < 0)
-		{
-			v->ray.hit = NULL;
-			perform_dda(v, 1);
-			calculate_line_height(v);
-			update_texture_pixels(v, p, 0, 0);
-			return (-1);
-		}
-	}
-	return (texx);
 }
 
 /// @brief Raycasting algorithm

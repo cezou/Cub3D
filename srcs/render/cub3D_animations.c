@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/22 22:26:33 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/23 03:24:56 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,23 @@
 /// @param i Incremental variable =-1
 void	update_door_animations(t_vars *v, int i)
 {
-	while (++i < v->game.nb_door)
+	v->game.doortime += v->game.frametime;
+	if (v->game.doortime > (1.0 / v->img[EDOOR].width))
 	{
-		if (v->door[i].state == EOPENING
-			&& timestamp_in_ms(v) - v->door[i].time
-			>= (uint64_t)(5000 / v->game.fps))
+		while (++i < v->game.nb_door)
 		{
-			v->door[i].xdelta -= 3;
-			v->door[i].time = timestamp_in_ms(v);
+			if (v->door[i].state == EOPENING)
+				v->door[i].xdelta -= 4;
+			else if (v->door[i].state == ECLOSING)
+				v->door[i].xdelta += 4;
+			if (v->door[i].state == EOPENING
+				&& v->door[i].xdelta <= 0)
+				v->door[i].state = EOPEN;
+			else if (v->door[i].state == ECLOSING
+				&& v->door[i].xdelta >= v->img[EDOOR].width)
+				v->door[i].state = ECLOSE;
 		}
-		else if (v->door[i].state == ECLOSING
-			&& timestamp_in_ms(v) - v->door[i].time
-			>= (uint64_t)(5000 / v->game.fps))
-		{
-			v->door[i].xdelta += 3;
-			v->door[i].time = timestamp_in_ms(v);
-		}
-		if (v->door[i].state == EOPENING
-			&& v->door[i].xdelta <= 0)
-			v->door[i].state = EOPEN;
-		else if (v->door[i].state == ECLOSING
-			&& v->door[i].xdelta >= v->img[v->door[i].img_i].width)
-			v->door[i].state = ECLOSE;
+		v->game.doortime -= 1.0 / v->img[EDOOR].width;
 	}
 }
 

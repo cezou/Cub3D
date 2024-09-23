@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/22 22:39:45 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/23 02:49:17 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,12 @@ void	initvars(t_vars *v)
 	v->sprite = (t_sprite){0};
 	v->floor = (t_floor){0};
 	v->game.fps = 64;
-	v->player.movespeedy = 0.04;
-	v->player.movespeedx = 0.04;
-	v->player.rotspeed = 0.05;
+	// v->player.movespeedy = 0.04;
+	v->player.movespeedy = 3.0;
+	// v->player.movespeedx = 0.04;
+	v->player.movespeedx = 3.0;
+	// v->player.rotspeed = 0.05;
+	v->player.rotspeed = 2.0;
 	v->player.mouserotspeed = 0.04;
 }
 

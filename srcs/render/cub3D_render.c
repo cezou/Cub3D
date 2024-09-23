@@ -131,7 +131,7 @@ int	render(t_vars *v)
 {
 	if (!v->screen.win || v->game.won > 0 || !v->game.start
 		|| timestamp_in_ms(v) - v->game.updated_at < (uint64_t)(1000
-			/ v->game.fps))
+		/ v->game.fps))
 		return (1);
 	v->game.updated_at = timestamp_in_ms(v);
 	if (v->game.start == 2 && ACTIVATE_SOUND
@@ -150,5 +150,9 @@ int	render(t_vars *v)
 	raycasting(v);
 	rendermenu(v);
 	mlx_put_image_to_window(v->mlx, v->screen.win, v->img[EMAP].img, 0, 0);
+	v->game.oldtime = v->game.time;
+	v->game.time = timestamp_in_ms(v);
+	v->game.frametime = (v->game.time - v->game.oldtime) / 1000.0;
+	// printf("%f\n", 1.0 / v->game.frametime);
 	return (displaytext(v, NULL, NULL), v->game.start++, 0);
 }

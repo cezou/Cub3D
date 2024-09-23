@@ -107,8 +107,6 @@ int	clear_sounds(t_vars *v)
 /// @return 
 int	cleardata(t_vars *v, int b)
 {
-	if (!MANDATORY && system(XSET_0) == -1)
-		perror("xset");
 	clear_sounds(v);
 	if (b && v->mlx && (clearimgs(v) < 0
 			|| (v->screen.win && mlx_destroy_window(v->mlx, v->screen.win) < 0)

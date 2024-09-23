@@ -54,22 +54,12 @@ void	resetpos(t_vars *v, int renderb)
 void	menuexit(t_vars *v)
 {
 	if (MANDATORY || v->game.won > 0)
-		exit((cleardata(v, 1), 0));
-	if (!MANDATORY && system(XSET_3) == -1)
-		perror("xset");
+		exit((mlx_do_key_autorepeaton(v->mlx), cleardata(v, 1), 0));
 	if (v->menu.menu == 2)
 	{
 		v->menu.menu = 0;
 		v->game.pause = 0;
 		v->menu.menui = 0;
-		if (!MANDATORY && (v->screen.resw > W_W || v->screen.resh > W_H))
-		{
-			if (system(XSET_1) == -1)
-				perror("xset");
-		}
-		else if (!MANDATORY)
-			if (system(XSET_2) == -1)
-				perror("xset");
 		return ;
 	}
 	if (v->game.start > 2)
