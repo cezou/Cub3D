@@ -107,8 +107,6 @@ int	clear_sounds(t_vars *v)
 /// @return 
 int	cleardata(t_vars *v, int b)
 {
-	if (!MANDATORY && system(XSET_0) == -1)
-		perror("xset");
 	clear_sounds(v);
 	if (b && v->mlx && (clearimgs(v) < 0
 			|| (v->screen.win && mlx_destroy_window(v->mlx, v->screen.win) < 0)
@@ -122,11 +120,11 @@ int	cleardata(t_vars *v, int b)
 		freeall(v->infos.map);
 	if (v->img)
 		free(v->img);
-	if (v->ray.zbuffer)
+	if (b && v->ray.zbuffer)
 		free(v->ray.zbuffer);
-	if (v->objs.objs)
+	if (b && v->objs.objs)
 		free(v->objs.objs);
-	if (v->door)
+	if (b && v->door)
 		free(v->door);
 	return (0);
 }

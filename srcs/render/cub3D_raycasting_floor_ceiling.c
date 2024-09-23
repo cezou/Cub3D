@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:38:17 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/22 14:24:49 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/23 02:06:06 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ static void	init_data_floor(t_vars *v, t_floor *f, int y)
 /// @param f Floor structure
 /// @param p Pixel coordinate to add to the buffer
 /// @param img Texture to use
-static void	update_texture_pixels(t_vars *v, t_floor *f, t_point p, t_imga img)
+static void	update_floor_ceil_texture_pixels(t_vars *v, t_floor *f,
+	t_point p, t_imga img)
 {
 	int	cx;
 	int	cy;
@@ -85,7 +86,7 @@ void	draw_floor_ceiling(t_vars *v)
 	while (y < v->screen.resh)
 	{
 		init_data_floor(v, &v->floor, y);
-		update_texture_pixels(v, &v->floor,
+		update_floor_ceil_texture_pixels(v, &v->floor,
 			(t_point){0, y, 0, 0}, v->img[ESPACE]);
 		y++;
 	}

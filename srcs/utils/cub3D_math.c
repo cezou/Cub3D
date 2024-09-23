@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 13:09:37 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/20 15:37:54 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/22 21:44:50 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,16 @@ t_point2	get_90_angle(int dir, double x, double y)
 	p.y += y;
 	deg = (atan2(p.y - y, p.x - x));
 	return ((t_point2){cos(deg), sin(deg), 0, 0});
+}
+
+/// @brief Swap two sprite
+/// @param a Sprite 1
+/// @param b Sprite 2
+void	ft_swaps(t_guard *a, t_guard *b)
+{
+	t_guard	tmp;
+
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
 }

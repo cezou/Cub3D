@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/20 19:22:35 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/23 05:16:24 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ void	initvars(t_vars *v)
 {
 	v->mapv = (t_mapv){0};
 	v->player = (t_player){0};
-	v->guard = (t_guard){NULL, 0, 1, 0, 5, 0, 0, 0};
 	v->proj = (t_proj){0};
 	v->menu = (t_menu){0};
 	v->objs = (t_objs){0};
 	v->door = NULL;
+	v->guard = NULL;
 	v->game = (t_game){0};
 	v->mouse = (t_mouse){0};
 	v->last = NULL;
@@ -29,10 +29,14 @@ void	initvars(t_vars *v)
 	v->sprite = (t_sprite){0};
 	v->floor = (t_floor){0};
 	v->game.fps = 64;
-	v->player.movespeedy = 0.04;
-	v->player.movespeedx = 0.04;
-	v->player.rotspeed = 0.05;
+	// v->player.movespeedy = 0.04;
+	v->player.movespeedy = 3.0;
+	// v->player.movespeedx = 0.04;
+	v->player.movespeedx = 3.0;
+	// v->player.rotspeed = 0.05;
+	v->player.rotspeed = 2.0;
 	v->player.mouserotspeed = 0.04;
+	// v->player.mouserotspeed = 2.0;
 }
 
 void	initmodes(t_vars *v, int argc)
@@ -85,17 +89,21 @@ void	init_player_dir(t_vars *v)
 void	check_map(t_vars *v)
 {
 	int		i;
+	int		j;
 	t_map	*tmp;
 
 	i = -1;
+	j = -1;
 	parse(v, -1, NULL);
 	v->player.x = v->player.player->x;
 	v->player.y = v->player.player->y;
 	v->door = (t_door *)malloc(sizeof(t_door) * (v->game.nb_door));
 	if (!v->door)
 		exit((prterr(v, ERRMALL, 1, 0), 1));
+	v->guard = (t_guard *)malloc(sizeof(t_guard) * (v->game.nb_guard));
+	if (!v->guard)
+		exit((prterr(v, ERRMALL, 1, 0), 1));
 	tmp = v->mapv.map;
-	ft_printf(1, "door nb: %d\n", v->game.nb_door);
 	while (tmp)
 	{
 		if (tmp->val == 'D')
@@ -104,8 +112,21 @@ void	check_map(t_vars *v)
 			v->door[i].y = tmp->y;
 			v->door[i].time = 0;
 			v->door[i].state = ECLOSE;
-			v->door[i].xdelta = v->img[EDOOR].width;
-			ft_printf(1, "x: %d y: %d\n", v->door[i].x, v->door[i].y);
+			v->door[i].img_i = EDOOR;
+			v->door[i].xdelta = v->img[v->door[i].img_i].width;
+		}
+		if (tmp->val == 'G')
+		{
+			v->guard[++j].x = tmp->x;
+			v->guard[j].y = tmp->y;
+			v->guard[j].time = 0;
+			v->guard[j].img_i = EGUARD;
+			v->guard[j].xdelta = 0;
+			v->guard[j].vdiv = 1.0;
+			v->guard[j].udiv = 1.0;
+			v->guard[j].vmove = 0;
+			v->guard[j].dist = 0;
+			v->guard[j].animoff = v->img[v->guard[j].img_i].height;
 		}
 		tmp = tmp->right;
 	}

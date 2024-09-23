@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:58:10 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/20 19:14:17 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/23 02:44:07 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,15 @@ int	hashit(t_vars *v, int x, int y, int d)
 		{
 			if (tmp->val == 'D')
 			{
-				v->ray.img = v->img[EDOOR];/* FINDOOR() Door encountered */
 				i = find_door(v, tmp->x, tmp->y);
-				if (i > -1)
-					v->ray.door = v->door[i];
+				if (i < 0)
+					return ((v->ray.img = v->img[ESPACE], 0));
+				v->ray.img = v->img[v->door[i].img_i];
+				v->ray.door = v->door[i];
 			}
 			else
 				v->ray.img = v->img[ESPACE];
-			v->ray.hit = tmp;
-			return (1);
+			return (v->ray.hit = tmp, 1);
 		}
 		tmp = tmp->right;
 	}
@@ -104,6 +104,28 @@ static void	check_door(t_vars *v)
 		}
 		v->ray.wall_dist = dist;
 	}
+}
+
+/// @brief Extend ray to hit what it is behind the door
+/// @param v Vars
+/// @param p Pixels informations
+/// @param texx Texture x coordinate
+/// @return Texture x coordinate
+int	door_extend_ray(t_vars *v, t_point p, int texx)
+{
+	if (v->ray.hit->val == 'D')
+	{
+		texx -= v->ray.img.width - v->ray.door.xdelta;
+		if (texx < 0)
+		{
+			v->ray.hit = NULL;
+			perform_dda(v, 1);
+			calculate_line_height(v);
+			update_texture_pixels(v, p, 0, 0);
+			return (-1);
+		}
+	}
+	return (texx);
 }
 
 /// @brief Perform the DDA (Digital Differential Analysis) to get

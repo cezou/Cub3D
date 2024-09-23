@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 18:24:52 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/22 13:13:18 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/23 02:51:24 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,9 @@ void	move(t_vars *v, int d)
 	}
 	v->player.moving = 1;
 	v->player.animp = EWALK;
+	v->player.movespeedx = 3.0 * v->game.frametime;
+	v->player.movespeedy = 3.0 * v->game.frametime;
+	v->player.rotspeed = 2.0 * v->game.frametime;
 	rotatecamx(v, d, v->player.rotspeed);
 	rotatecamy(v, d, v->player.rotspeed, 500);
 	moveplayerx(v, d);
