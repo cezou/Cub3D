@@ -120,11 +120,11 @@ int	cleardata(t_vars *v, int b)
 		freeall(v->infos.map);
 	if (v->img)
 		free(v->img);
-	if (v->ray.zbuffer)
+	if (b && v->ray.zbuffer)
 		free(v->ray.zbuffer);
-	if (v->objs.objs)
+	if (b && v->objs.objs)
 		free(v->objs.objs);
-	if (v->door)
+	if (b && v->door)
 		free(v->door);
 	return (0);
 }

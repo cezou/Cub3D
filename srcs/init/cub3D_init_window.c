@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/23 02:09:02 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/23 05:16:51 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	initwindow(t_vars *v, int argc, char **argv)
 			|| ft_strlen(argv[4]) > 10 || v->screen.resh > INT_MAX
 			|| v->screen.resh < INT_MIN || v->screen.resh > v->screen.screenh
 			|| v->screen.resh <= 0)
-			exit((prterr(v, ERRRES, 1, 1), 1));
+			exit((prterr(v, ERRRES, 1, 0), 1));
 	}
 	initmainimage(v);
 	v->screen.win = mlx_new_window(v->mlx, (int)v->screen.resw,

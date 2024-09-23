@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/23 02:49:17 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/23 05:16:24 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	initvars(t_vars *v)
 {
 	v->mapv = (t_mapv){0};
 	v->player = (t_player){0};
-	// v->guard = (t_guard){NULL, 0, 1, 0, 5, 0, 0, 0};
 	v->proj = (t_proj){0};
 	v->menu = (t_menu){0};
 	v->objs = (t_objs){0};
@@ -37,6 +36,7 @@ void	initvars(t_vars *v)
 	// v->player.rotspeed = 0.05;
 	v->player.rotspeed = 2.0;
 	v->player.mouserotspeed = 0.04;
+	// v->player.mouserotspeed = 2.0;
 }
 
 void	initmodes(t_vars *v, int argc)
