@@ -14,7 +14,7 @@
 
 /// @brief Print the map as it is in the file if we are in debug
 /// @param v Vars
-/// @return 
+/// @return
 int	printmap2(t_vars *v)
 {
 	t_map	*tmp;
@@ -62,10 +62,16 @@ void	showparams(t_vars *v)
 	ft_printf(1, "\t\t(default): 1024 768\n");
 	ft_printf(1, "%s", RCOLOR);
 	ft_printf(1, "\n%s", POTATO);
-	ft_printf(1, "\n%s\t\t\t\t\t\t\tBy CESAIRE VIEGAS <cviegas@student.42.fr>%s\
-", GREEN, RCOLOR);
-	ft_printf(1, "\n%s\t\t\t\t\t\t\t+ PIERRE MAGNERON <pmagnero@student.42.fr>%s\
-\n\n\n", GREEN, RCOLOR);
+	ft_printf(1,
+				"\n%s\t\t\t\t\t\t\tBy PIERRE MAGNERON <pmagnero@student.42.fr>%s\
+\n",
+				GREEN,
+				RCOLOR);
+	ft_printf(1,
+				"\n%s\t\t\t\t\t\t\t  & CESAIRE VIEGAS <cviegas@student.42.fr>%s\n\n\
+				\n",
+				GREEN,
+				RCOLOR);
 }
 
 /// @brief Generate a random number(int) between 0 and n

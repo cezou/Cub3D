@@ -70,5 +70,6 @@ void	clean_exit(char **l, int fd, t_vars *v, bool free_line)
 	pfree_img(&v->infos.north.imga, v);
 	mlx_destroy_display(v->mlx);
 	free(v->mlx);
+	freeall(v->infos.map);
 	exit(FAIL);
 }
