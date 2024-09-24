@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/24 06:46:58 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/24 07:18:08 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,8 +134,8 @@
 # define LOOKUP_MAX 500
 # define SKYBOX_REPEATS 4
 
-# define FOG_LEVEL 4
-# define FOG_COLOR 0x000000
+# define FOGL 4
+# define FOGC 0x000000
 
 # define SPACE 48
 # define WALL 49

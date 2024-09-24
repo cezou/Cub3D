@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/23 20:55:54 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/24 07:18:08 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,9 @@ void	update_texture_pixels(t_vars *v, t_point p, int texx, int texy)
 		pos += step;
 		p.z = (texy * v->ray.img.len) + (texx * 4);
 		if (v->ray.side == 0)
-			p.color = 1;
+			p.color = -1;
 		add_pix_to_buffer(v, v->ray.img, p,
-			(t_point2){1, v->ray.wall_dist, FOG_COLOR, FOG_LEVEL});
+			(t_point2){1, v->ray.wall_dist, FOGC, FOGL});
 	}
 }
 

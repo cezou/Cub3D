@@ -61,11 +61,17 @@ void	add_pix_to_buffer(t_vars *v, t_imga img, t_point p, t_point2 fog)
 	int	b;
 
 	b = p.color;
-	if (img.addr[p.z + 3] == 0)
+	if (b <= 0 && img.addr[p.z + 3] == 0)
 	{
 		p.color = getcolorpix(v, img.addr, p.z);
 		if (b)
 			p.color = (p.color >> 1) & 8355711;
+		if (fog.x)
+			p.color = color_lerp(p.color, fog.z, fog.y / 29 * fog.t);
+		img_pix_put(&v->img[EMAP], p, v);
+	}
+	else if (b > 0)
+	{
 		if (fog.x)
 			p.color = color_lerp(p.color, fog.z, fog.y / 29 * fog.t);
 		img_pix_put(&v->img[EMAP], p, v);

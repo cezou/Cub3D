@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/23 20:55:45 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/24 07:18:08 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	draw_sprite(t_vars *v, t_sprite *sp, t_point p, t_guard g)
 				ty = ((p.z * v->img[g.img_i].height) / sp->spriteheight) / 256;
 				p.z = (ty * v->img[g.img_i].len) + (tx * 4);
 				add_pix_to_buffer(v, v->img[g.img_i], p,
-					(t_point2){1, sp->transformy, FOG_COLOR, FOG_LEVEL});
+					(t_point2){1, sp->transformy, FOGC, FOGL});
 			}
 		}
 	}

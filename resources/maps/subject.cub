@@ -4,8 +4,8 @@ SO ./resources/textures/Door.xpm
 WE ./resources/textures/Star.xpm
 EA ./resources/textures/Exit.xpm
 
-C 0,0,33
-F 220,100,0
+C 255,100,100
+F 100,255,100
 
 1111111111111111111111
 1111111111111111111111

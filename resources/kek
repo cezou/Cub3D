@@ -47,8 +47,8 @@ g++ *.cpp -lSDL
 #define SKYBOX_HEIGHT   200
 #define SKYBOX_REPEATS  4
 
-#define FOG_LEVEL 2
-#define FOG_COLOR 0xA09EE7
+#define FOGL 2
+#define FOGC 0xA09EE7
 #define FOG_CONSTANT ((mapWidth + mapHeight)/2)
 
 int worldMap[mapWidth][mapHeight] =
@@ -255,7 +255,7 @@ void updateMap() {
   }
 }
 
-#if FOG_LEVEL
+#if FOGL
 Uint32 color_lerp(Uint32 color1, Uint32 color2, double t) {
 
   if(t < 0)
@@ -331,8 +331,8 @@ void drawStrip(Strip &strip) {
       if(strip.side > 1) color = (color >> 1) & 8355711;
       if(strip.side == 1) color = (color >> 2) & 0x3F3F3F;
 
-#if FOG_LEVEL
-      color = color_lerp(color, FOG_COLOR, strip.fog);
+#if FOGL
+      color = color_lerp(color, FOGC, strip.fog);
 #endif
       if(strip.seeThrough)
         color = ((color & 0xFEFEFE) >> 1) + ((buffer[y][strip.x] & 0xFEFEFE) >> 1);
@@ -441,8 +441,8 @@ void prepareSprites() {
     }
     if(prep.drawEndX > w) prep.drawEndX = w;
 
-#if FOG_LEVEL
-    prep.fog = prep.transformY / FOG_CONSTANT * FOG_LEVEL;
+#if FOGL
+    prep.fog = prep.transformY / FOG_CONSTANT * FOGL;
 #endif
 
     prep.texNum = sprite[i].texture;
@@ -473,8 +473,8 @@ void drawSpriteStrip(SpritePrepare &prep, int stripe) {
 
     Uint32 color = texture[prep.texNum][texWidth * texY + prep.texX]; //get current color from the texture
     if((color & 0x00FFFFFF) != 0) {
-#if FOG_LEVEL
-      color = color_lerp(color, FOG_COLOR, prep.fog);
+#if FOGL
+      color = color_lerp(color, FOGC, prep.fog);
 #endif
       buffer[y][stripe] = color; //paint pixel if it isn't black, black is the invisible color
     }
@@ -633,8 +633,8 @@ int main(int /*argc*/, char */*argv*/[])
       float floorX = posX + rowDistance * rayDirX0;
       float floorY = posY + rowDistance * rayDirY0;
 
-#if FOG_LEVEL
-      double fog = rowDistance / FOG_CONSTANT * FOG_LEVEL;
+#if FOGL
+      double fog = rowDistance / FOG_CONSTANT * FOGL;
 #endif
 
       for(int x = 0; x < screenWidth; ++x)
@@ -658,8 +658,8 @@ int main(int /*argc*/, char */*argv*/[])
 
         Uint32 color = texture[floorTexture][texWidth * ty + tx];
         color = (color >> 1) & 8355711; // make a bit darker
-#if FOG_LEVEL
-        color = color_lerp(color, FOG_COLOR, fog);
+#if FOGL
+        color = color_lerp(color, FOGC, fog);
 #endif
         buffer[y][x] = color;
       }
@@ -691,8 +691,8 @@ int main(int /*argc*/, char */*argv*/[])
       float floorX = posX + rowDistance * rayDirX0;
       float floorY = posY + rowDistance * rayDirY0;
 
-#if FOG_LEVEL
-      double fog = rowDistance / FOG_CONSTANT * FOG_LEVEL;
+#if FOGL
+      double fog = rowDistance / FOG_CONSTANT * FOGL;
 #endif
       for(int x = 0; x < screenWidth; ++x)
       {
@@ -711,8 +711,8 @@ int main(int /*argc*/, char */*argv*/[])
         int ceilingTexture = 6;
         Uint32 color = texture[ceilingTexture][texWidth * ty + tx];
         color = (color >> 1) & 8355711; // make a bit darker
-#if FOG_LEVEL
-        color = color_lerp(color, FOG_COLOR, fog);
+#if FOGL
+        color = color_lerp(color, FOGC, fog);
 #endif
         buffer[y][x] = color;
       }
@@ -903,8 +903,8 @@ rayscan:
       if(side == 0 && rayDirX > 0) texX = texWidth - texX - 1;
       if(side == 1 && rayDirY < 0) texX = texWidth - texX - 1;
 
-#if FOG_LEVEL
-      double fog = perpWallDist / FOG_CONSTANT * FOG_LEVEL;
+#if FOGL
+      double fog = perpWallDist / FOG_CONSTANT * FOGL;
 #endif
 
       Strip strip = {

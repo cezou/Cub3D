@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:38:17 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/23 20:55:19 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/24 07:18:21 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,17 @@ static void	update_floor_ceil_texture_pixels(t_vars *v, t_floor *f,
 		f->fx += f->fstepx;
 		f->fy += f->fstepy;
 		p.z = (f->ty * img.len) + (f->tx * 4);
-		p.color = 1;
+		p.color = -1;
+		if (MANDATORY)
+			p.color = v->infos.floor;
 		if (f->isfloor)
-			add_pix_to_buffer(v, img, p,
-				(t_point2){1, f->rowdist, FOG_COLOR, FOG_LEVEL});
+			add_pix_to_buffer(v, img, p, (t_point2){1, f->rowdist, FOGC, FOGL});
 		else if (cx < 10 || cx > 16)
-			add_pix_to_buffer(v, img, p,
-				(t_point2){1, f->rowdist, FOG_COLOR, FOG_LEVEL});
+		{
+			if (MANDATORY)
+				p.color = v->infos.ceil;
+			add_pix_to_buffer(v, img, p, (t_point2){1, f->rowdist, FOGC, FOGL});
+		}
 		p.x++;
 	}
 }
