@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/22 22:04:09 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/23 20:55:45 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	transform_sprite(t_vars *v, t_sprite *sp, t_guard g)
 			* (1 + transformx / sp->transformy));
 	sp->vmovescreen = (int)(g.vmove / sp->transformy)
 		+ v->ray.pitch + v->player.z / sp->transformy;
-	sp->spriteheight = abs((int)(v->screen.resh / sp->transformy)) / g.vdiv;
+	sp->spriteheight = abs((int)(v->screen.gameh / sp->transformy)) / g.vdiv;
 }
 
 /// @brief Set dimensions of the sprite
@@ -46,13 +46,13 @@ void	transform_sprite(t_vars *v, t_sprite *sp, t_guard g)
 void	set_sprite_boundaries(t_vars *v, t_sprite *sp, t_guard g)
 {
 	sp->drawstarty = -sp->spriteheight / 2
-		+ v->screen.resh / 2 + sp->vmovescreen;
+		+ v->screen.gameh / 2 + sp->vmovescreen;
 	if (sp->drawstarty < 0)
 		sp->drawstarty = 0;
-	sp->drawendy = sp->spriteheight / 2 + v->screen.resh / 2 + sp->vmovescreen;
-	if (sp->drawendy >= v->screen.resh)
-		sp->drawendy = v->screen.resh - 1;
-	sp->spritewidth = abs((int)(v->screen.resh / sp->transformy)) / g.udiv;
+	sp->drawendy = sp->spriteheight / 2 + v->screen.gameh / 2 + sp->vmovescreen;
+	if (sp->drawendy >= v->screen.gameh)
+		sp->drawendy = v->screen.gameh - 1;
+	sp->spritewidth = abs((int)(v->screen.gameh / sp->transformy)) / g.udiv;
 	sp->drawstartx = -sp->spritewidth / 2 + sp->spritescreenx;
 	if (sp->drawstartx < 0)
 		sp->drawstartx = 0;
@@ -112,7 +112,7 @@ void	draw_sprite(t_vars *v, t_sprite *sp, t_point p, t_guard g)
 		{
 			while (++p.y < sp->drawendy)
 			{
-				p.z = (p.y - sp->vmovescreen) * 256 - v->screen.resh * 128
+				p.z = (p.y - sp->vmovescreen) * 256 - v->screen.gameh * 128
 					+ sp->spriteheight * 128;
 				ty = ((p.z * v->img[g.img_i].height) / sp->spriteheight) / 256;
 				p.z = (ty * v->img[g.img_i].len) + (tx * 4);

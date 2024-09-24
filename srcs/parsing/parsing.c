@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 17:22:43 by cviegas           #+#    #+#             */
-/*   Updated: 2024/09/19 19:03:21 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/23 23:57:04 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	parse_ids(t_vars *v, int fd, size_t *i)
 	char	*line;
 	char	**l;
 
+	l = NULL;
 	while (++(*i))
 	{
 		line = get_next_line(fd);

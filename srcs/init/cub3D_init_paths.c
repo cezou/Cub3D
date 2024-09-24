@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/18 22:31:02 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/24 05:47:43 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	initpathtext(t_vars *v)
 	v->img[EWEAPON].filename = "resources/textures/knife.xpm";
 	v->img[EGUARD].filename = "resources/textures/general.xpm";
 	v->img[ESKYBOX].filename = "resources/textures/skybox.xpm";
+	v->img[EHUDIMG].filename = "resources/textures/HUD.xpm";
 	// v->img[ESPACE2].filename = "resources/textures/Ground2.xpm";
 	// v->img[ESPACE3].filename = "resources/textures/Ground3.xpm";
 	// v->img[ECOLLECT].filename = "resources/textures/Star2.xpm";

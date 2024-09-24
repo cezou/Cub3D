@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/23 05:16:24 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/24 06:44:31 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,16 @@ void	initvars(t_vars *v)
 	v->sprite = (t_sprite){0};
 	v->floor = (t_floor){0};
 	v->game.fps = 64;
-	// v->player.movespeedy = 0.04;
 	v->player.movespeedy = 3.0;
-	// v->player.movespeedx = 0.04;
 	v->player.movespeedx = 3.0;
-	// v->player.rotspeed = 0.05;
 	v->player.rotspeed = 2.0;
 	v->player.mouserotspeed = 0.04;
-	// v->player.mouserotspeed = 2.0;
 }
 
 void	initmodes(t_vars *v, int argc)
 {
+	v->img->fontname = FONT1;
+	v->img->fontname2 = FONT2;
 	initvars(v);
 	v->ray.zbuffer = (int *)malloc(sizeof(int) * v->screen.resw);
 	if (!v->ray.zbuffer)
@@ -147,12 +145,11 @@ void	init(t_vars *v, int argc, char **argv)
 		exit((prterr(v, ERRMALL, 1, 1), 1));
 	while (v->img && ++i <= COMP_N)
 		v->img[i] = (t_imga){0};
+	v->screen = (t_screen){0};
 	(ft_bzero(v->keys, MAX_KEYS), initwindow(v, argc, argv));
 	mlx_mouse_hide(v->mlx, v->screen.win);
-	v->img->fontname = FONT1;
-	v->img->fontname2 = FONT2;
 	initmodes(v, argc);
-	inittextures(v, 4);
+	inittextures(v, 5);
 	v->game.skybox = v->img[ESKYBOX];
 	initsounds(v);
 	initguardanim(v, -1);

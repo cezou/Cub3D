@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 09:51:53 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/22 22:01:10 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/24 05:48:18 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 /// @param i Texture index to start from in the image array
 void	inittextures(t_vars *v, int i)
 {
-	initimage(v, EMAP);
+	initimage(v, EMAP, v->screen.gamew, v->screen.gameh);
+	initimage(v, EHUD, v->screen.hudw, v->screen.hudh);
 	v->img[ESOUTH] = v->infos.south.imga;
 	v->img[EEAST] = v->infos.east.imga;
 	v->img[EWEST] = v->infos.west.imga;

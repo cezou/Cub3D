@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:38:17 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/23 02:06:06 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/23 20:55:19 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ static void	init_data_floor(t_vars *v, t_floor *f, int y)
 	v->ray.dir_y = v->player.dir_y - v->player.plane_y;
 	v->ray.dir_x1 = v->player.dir_x + v->player.plane_x;
 	v->ray.dir_y1 = v->player.dir_y + v->player.plane_y;
-	f->isfloor = y > v->screen.resh / 2 + v->ray.pitch;
-	d = v->screen.resh / 2 - y + v->ray.pitch;
-	posz = 0.5 * v->screen.resh - v->player.z;
+	f->isfloor = y > v->screen.gameh / 2 + v->ray.pitch;
+	d = v->screen.gameh / 2 - y + v->ray.pitch;
+	posz = 0.5 * v->screen.gameh - v->player.z;
 	if (f->isfloor)
 	{
-		d = y - v->screen.resh / 2 - v->ray.pitch;
-		posz = 0.5 * v->screen.resh + v->player.z;
+		d = y - v->screen.gameh / 2 - v->ray.pitch;
+		posz = 0.5 * v->screen.gameh + v->player.z;
 	}
 	f->rowdist = posz / d;
 	f->fstepx = f->rowdist * (v->ray.dir_x1 - v->ray.dir_x) / v->screen.resw;
@@ -83,7 +83,7 @@ void	draw_floor_ceiling(t_vars *v)
 	int		y;
 
 	y = 0;
-	while (y < v->screen.resh)
+	while (y < v->screen.gameh)
 	{
 		init_data_floor(v, &v->floor, y);
 		update_floor_ceil_texture_pixels(v, &v->floor,

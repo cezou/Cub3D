@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:59:52 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/23 02:09:24 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/24 05:32:47 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@ int	myrand(int nb)
 /// @brief Create and init an MLX image at the specified index in the img table
 /// @param v Vars
 /// @param index Index
-void	initimage(t_vars *v, int index)
+void	initimage(t_vars *v, int index, int width, int height)
 {
-	v->img[index].img = mlx_new_image(v->mlx, v->screen.resw, v->screen.resh);
+	v->img[index].img = mlx_new_image(v->mlx, width, height);
 	if (!v->img[index].img)
 		exit((prterr(v, "Error mlx map image\n", 1, 1), 1));
 	v->img[index].addr = mlx_get_data_addr(v->img[index].img,

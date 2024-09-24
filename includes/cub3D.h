@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/23 03:21:34 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/24 06:41:05 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,10 +148,12 @@
 # define E 69
 # define W 87
 
-// # define FONT1 "-sony-fixed-medium-r-normal--17-120-100-100-c-0-iso8859-1"
-// # define FONT2 "-sony-fixed-medium-r-normal--24-230-75-75-c-0-iso8859-1"
-# define FONT1 "-misc-fixed-medium-r-semicondensed--13-120-75-75-c-60-iso8859-1"
-# define FONT2 "-misc-fixed-medium-r-semicondensed--13-120-75-75-c-60-iso8859-1"
+# define FONT1 "-sony-fixed-medium-r-normal--17-120-100-100-c-0-iso8859-1"
+# define FONT2 "-sony-fixed-medium-r-normal--24-230-75-75-c-0-iso8859-1"
+// # define FONT1 "-misc-fixed-medium-r-semicondensed
+//--13-120-75-75-c-60-iso8859-1"
+// # define FONT2 "-misc-fixed-medium-r-semicondensed
+//--13-120-75-75-c-60-iso8859-1"
 // # define FONT2 "-sun-open look glyph-----19-190-75-75-p-154-sunolglyph-1"
 
 // Mr. Potato-Head by Joan Stark
@@ -275,6 +277,7 @@ typedef enum s_door_state
 typedef enum s_components
 {
 	EMAP,
+	EHUD,
 	ESOUTH,
 	ENORTH,
 	EWEST,
@@ -285,6 +288,7 @@ typedef enum s_components
 	EWEAPON,
 	EGUARD,
 	ESKYBOX,
+	EHUDIMG,
 	ETITLE,
 	EMENUSELECT,
 	EMENU,
@@ -532,6 +536,10 @@ typedef struct s_screen
 	long				resh;
 	int					screenw;
 	int					screenh;
+	int					gamew;
+	int					gameh;
+	int					hudw;
+	int					hudh;
 }						t_screen;
 
 typedef struct s_game
@@ -652,7 +660,7 @@ void			initguardanim(t_vars *v, int i);
 void			init_cam(t_vars *vars);
 void			initmodes(t_vars *v, int argc);
 void			initsounds(t_vars *v);
-void			initimage(t_vars *v, int index);
+void			initimage(t_vars *v, int index, int width, int height);
 void			initvars(t_vars *v);
 void			initwindow(t_vars *v, int argc, char **argv);
 void			initpathtext(t_vars *v);
@@ -704,6 +712,7 @@ void			transform_sprite(t_vars *v, t_sprite *sp, t_guard g);
 void			set_sprite_boundaries(t_vars *v, t_sprite *sp, t_guard g);
 void			sort_sprites(t_vars *v, int i, int sort);
 void			draw_skybox(t_vars *v, t_point p, int tx, int ty);
+void			renderhud(t_vars *v);
 
 int				render(t_vars *data);
 void			img_pix_put(t_imga *img, t_point p, t_vars *v);

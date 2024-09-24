@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/23 05:21:00 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/23 20:55:54 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,15 @@ void	init_raycasting_info(int x, t_vars *v)
 /// @param v Vars
 void	calculate_line_height(t_vars *v)
 {
-	v->ray.line_height = (int)(v->screen.resh / v->ray.wall_dist);
+	v->ray.line_height = (int)(v->screen.gameh / v->ray.wall_dist);
 	v->ray.draw_start = -(v->ray.line_height) / 2
-		+ v->screen.resh / 2 + v->ray.pitch + (v->player.z / v->ray.wall_dist);
+		+ v->screen.gameh / 2 + v->ray.pitch + (v->player.z / v->ray.wall_dist);
 	if (v->ray.draw_start < 0)
 		v->ray.draw_start = 0;
 	v->ray.draw_end = v->ray.line_height / 2
-		+ v->screen.resh / 2 + v->ray.pitch + (v->player.z / v->ray.wall_dist);
-	if (v->ray.draw_end >= v->screen.resh)
-		v->ray.draw_end = v->screen.resh - 1;
+		+ v->screen.gameh / 2 + v->ray.pitch + (v->player.z / v->ray.wall_dist);
+	if (v->ray.draw_end >= v->screen.gameh)
+		v->ray.draw_end = v->screen.gameh - 1;
 	if (v->ray.side == 0)
 		v->ray.wall_x = v->player.y + v->ray.wall_dist * v->ray.dir_y;
 	else
@@ -91,7 +91,7 @@ void	update_texture_pixels(t_vars *v, t_point p, int texx, int texy)
 		texx = v->ray.img.width - texx - 1;
 	step = 1.0 * v->ray.img.width / v->ray.line_height;
 	pos = (v->ray.draw_start - v->ray.pitch - (v->player.z / v->ray.wall_dist)
-			- v->screen.resh / 2 + v->ray.line_height / 2) * step;
+			- v->screen.gameh / 2 + v->ray.line_height / 2) * step;
 	p.y = v->ray.draw_start - 1;
 	while (++p.y < v->ray.draw_end)
 	{

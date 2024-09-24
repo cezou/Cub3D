@@ -60,7 +60,6 @@ int	mouse_move(int x, int y, t_vars *p)
 		p->mouse.renderrate = 1;
 	if (p->game.start > 1 && p->game.god)
 	{
-		// p->player.mouserotspeed = 0.4 * p->game.frametime;
 		if (x < p->mouse.prevx)
 			rotatecamx(p, RIGHT, p->player.mouserotspeed);
 		else if (x > p->mouse.prevx)

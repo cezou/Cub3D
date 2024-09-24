@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/23 03:24:56 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/23 20:43:55 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	update_door_animations(t_vars *v, int i)
 	}
 }
 
+/// @brief Update sprites animations
+/// @param v Vars
 void	update_sprites_animations(t_vars *v)
 {
 	int	i;
@@ -55,6 +57,8 @@ void	update_sprites_animations(t_vars *v)
 	}
 }
 
+/// @brief Update animations
+/// @param v Vars
 void	update_animations(t_vars *v)
 {
 	update_sprites_animations(v);

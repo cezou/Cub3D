@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/22 14:07:43 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/23 20:55:33 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ static void	set_skybox(t_vars *v)
 		v->ray.tx1 += v->game.skybox.width;
 	}
 	v->ray.dtx = v->ray.tx1 - v->ray.tx0;
-	v->ray.dy = v->screen.resh / 2 + v->ray.pitch;
-	v->ray.dty = v->game.skybox.height * (v->screen.resh / 2 + v->ray.pitch)
-		/ (v->screen.resh / 2 + LOOKUP_MAX) - 1;
+	v->ray.dy = v->screen.gameh / 2 + v->ray.pitch;
+	v->ray.dty = v->game.skybox.height * (v->screen.gameh / 2 + v->ray.pitch)
+		/ (v->screen.gameh / 2 + LOOKUP_MAX) - 1;
 	v->ray.ty0 = v->game.skybox.height - 1 - v->ray.dty;
 }
 
