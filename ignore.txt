@@ -1,0 +1,41 @@
+{
+    leak mlx_mouse_hide
+    Memcheck:Leak
+    ...
+    fun:mlx_mouse_hide
+}
+
+{
+    leak from /usr/lib/x86_64-linux-gnu/libpulse*
+    Memcheck:Leak
+    ...
+    obj:/usr/lib/x86_64-linux-gnu/libpulse*
+}
+
+{
+    uninit_writev
+    Memcheck:Param
+    writev(vector[...])
+    obj:/usr/lib/x86_64-linux-gnu/lib*
+}
+
+{
+    leak XrmGetStringDatabase
+    Memcheck:Leak
+    ...
+    fun:XrmGetStringDatabase
+}
+
+{
+    leak _dl_open
+    Memcheck:Leak
+    ...
+    fun:_dl_open
+}
+
+{
+    leak _XrmInitParseInfo
+    Memcheck:Leak
+    ...
+    fun:_XrmInitParseInfo
+}

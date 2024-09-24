@@ -41,6 +41,14 @@ int	init_xpm(t_imga *img, char *path, void *mlx, int i)
 	img->addr = mlx_get_data_addr(img->img, &img->bpp, &img->len, &img->endian);
 	if (!img->addr)
 		return (lerr(i, "Mlx Image address failed"), -1);
+	img->xdelta = 0;
+	img->ydelta = 0;
+	img->posx = 0;
+	img->posy = 0;
+	img->animx = 0;
+	img->animy = 0;
+	img->anim = NULL;
+	img->animnb = 0;
 	return (0);
 }
 
@@ -62,5 +70,6 @@ void	clean_exit(char **l, int fd, t_vars *v, bool free_line)
 	pfree_img(&v->infos.north.imga, v);
 	mlx_destroy_display(v->mlx);
 	free(v->mlx);
+	freeall(v->infos.map);
 	exit(FAIL);
 }

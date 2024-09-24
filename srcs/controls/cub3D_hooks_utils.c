@@ -14,7 +14,6 @@
 
 int	closecross(t_vars *v)
 {
-	mlx_do_key_autorepeaton(v->mlx);
 	exit((cleardata(v, 1), 0));
 	return (0);
 }

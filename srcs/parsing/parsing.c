@@ -17,6 +17,7 @@ void	parse_ids(t_vars *v, int fd, size_t *i)
 	char	*line;
 	char	**l;
 
+	l = NULL;
 	while (++(*i))
 	{
 		line = get_next_line(fd);

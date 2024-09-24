@@ -54,8 +54,6 @@ SRC =	ft_isalpha.c \
 		ft_strmapi.c \
 		ft_striteri.c \
 		ft_abs.c \
-		get_next_line_bonus.c \
-		get_next_line_utils_bonus.c \
 		ft_atol.c \
 		ft_isspace.c \
 		ft_lstprint.c \

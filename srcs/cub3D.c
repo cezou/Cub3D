@@ -39,6 +39,7 @@ int	main(int ac, char **av)
 {
 	t_vars	v;
 
+	ft_memset(&v, 0, sizeof(t_vars));
 	init(&v, ac, av);
 	while (1)
 	{
