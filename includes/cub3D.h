@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/25 19:19:32 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/25 19:58:02 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -344,12 +344,6 @@ typedef struct s_imga
 	char				*filename;
 	char				*fontname;
 	char				*fontname2;
-	double				posx;
-	double				posy;
-	int					xdelta;
-	int					ydelta;
-	int					animx;
-	int					animy;
 	int					id;
 }						t_imga;
 

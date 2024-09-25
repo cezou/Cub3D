@@ -6,21 +6,11 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/25 18:49:51 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/25 19:58:18 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
-
-void	initanim(t_vars *v, int ent, int d)
-{
-	v->img[ent].anim[d].xdelta = 0;
-	v->img[ent].anim[d].ydelta = 0;
-	v->img[ent].anim[d].posx = 0;
-	v->img[ent].anim[d].posy = 0;
-	v->img[ent].anim[d].animx = 0;
-	v->img[ent].anim[d].animy = 0;
-}
 
 // void	initprojectile(t_vars *v, int d)
 // {
@@ -99,7 +89,6 @@ void	initguardanim(t_vars *v, int d)
 				&v->img[EGUARD].anim[d].endian);
 		if (!v->img[EGUARD].anim[d].addr)
 			exit((prterr(v, "Error mlx texture anim image address\n", 1, 1), 1));
-		initanim(v, EGUARD, d);
 	}
 }
 
