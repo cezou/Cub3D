@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_management.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 16:14:16 by cviegas           #+#    #+#             */
-/*   Updated: 2024/09/22 16:14:16 by cviegas          ###   ########.fr       */
+/*   Updated: 2024/09/25 19:19:35 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@ void	tooglegod(t_vars *v)
 		v->game.god = 0;
 }
 
+void	save_screen_to_buffer(t_imga dest, t_imga src, size_t offset)
+{
+	ft_memcpy(dest.addr + offset, src.addr,
+		src.width * src.height * (src.bpp / 8));
+}
+
 int	returnkey(t_vars *v)
 {
 	if ((v->menu.menu == 1 && v->menu.menui == 3) || (v->menu.menu == 2
@@ -37,17 +43,15 @@ int	returnkey(t_vars *v)
 	v->game.start++;
 	if (v->game.start > 3)
 		v->game.start = 3;
-	if (v->game.start == 2)
+	if (v->game.start == 2 && v->game.won == 0)
 	{
-		if (ACTIVATE_SOUND)
-		{
-			ma_sound_stop(&v->sound.sound[0]);
-			ma_sound_set_looping(&v->sound.sound[2], MA_TRUE);
-			ma_sound_set_fade_start_in_milliseconds(&v->sound.sound[2], 0.0f,
-				0.8f, 3000, 3000);
-			ma_sound_start(&v->sound.sound[2]);
-		}
-		mlx_loop_end(v->mlx);
+		raycasting(v);
+		renderhud(v);
+		rendermenu(v);
+		save_screen_to_buffer(v->img[EBUFF], v->img[EMAP], 0);
+		save_screen_to_buffer(v->img[EBUFF], v->img[EHUD], (v->img[EHUD].width
+				* v->img[EHUD].height * (v->img[EHUD].bpp / 8)));
+		mlx_loop_end((v->game.won = 4, v->mlx));
 	}
 	return (0);
 }

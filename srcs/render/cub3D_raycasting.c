@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/24 07:18:08 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/25 18:03:59 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,32 +76,32 @@ static void	get_texture_index(t_vars *v)
 /// @param texx Texture x coordinate
 /// @param texy Texture y coordinate
 /// color = v->tex[2][128 * texy + texx];
-void	update_texture_pixels(t_vars *v, t_point p, int texx, int texy)
+void	update_texture_pixels(t_vars *v, t_point p, int *t, t_imga *img)
 {
 	double		step;
 	double		pos;
 
 	get_texture_index(v);
-	texx = (int)(v->ray.wall_x * v->ray.img.width);
-	texx = door_extend_ray(v, p, texx);
-	if (texx < 0)
+	t[0] = (int)(v->ray.wall_x * v->ray.img.width);
+	t[0] = door_extend_ray(v, p, t, img);
+	if (t[0] < 0)
 		return ;
 	if ((v->ray.side == 0 && v->ray.dir_x > 0)
 		|| (v->ray.side == 1 && v->ray.dir_y < 0))
-		texx = v->ray.img.width - texx - 1;
+		t[0] = v->ray.img.width - t[0] - 1;
 	step = 1.0 * v->ray.img.width / v->ray.line_height;
 	pos = (v->ray.draw_start - v->ray.pitch - (v->player.z / v->ray.wall_dist)
 			- v->screen.gameh / 2 + v->ray.line_height / 2) * step;
 	p.y = v->ray.draw_start - 1;
+	img[0] = v->ray.img;
 	while (++p.y < v->ray.draw_end)
 	{
-		texy = (int)pos & (v->ray.img.width - 1);
+		t[1] = (int)pos & (img[0].width - 1);
 		pos += step;
-		p.z = (texy * v->ray.img.len) + (texx * 4);
+		p.z = (t[1] * img[0].len) + (t[0] * 4);
 		if (v->ray.side == 0)
 			p.color = -1;
-		add_pix_to_buffer(v, v->ray.img, p,
-			(t_point2){1, v->ray.wall_dist, FOGC, FOGL});
+		add_pix(v, img, p, (t_point2){1, v->ray.wall_dist, FOGC, FOGL});
 	}
 }
 
@@ -116,9 +116,13 @@ void	update_texture_pixels(t_vars *v, t_point p, int texx, int texy)
 int	raycasting(t_vars *v)
 {
 	int		x;
+	int		t[2];
+	t_imga	img[2];
 
+	img[1] = v->img[EMAP];
 	x = 0;
-	draw_skybox(v, (t_point){-1, -1, 0, 0}, 0, 0);
+	img[0] = v->game.skybox;
+	draw_skybox(v, (t_point){-1, -1, 0, 0}, t, img);
 	draw_floor_ceiling(v);
 	while (x < v->screen.resw)
 	{
@@ -126,7 +130,7 @@ int	raycasting(t_vars *v)
 		set_dda(v);
 		perform_dda(v, 1);
 		calculate_line_height(v);
-		update_texture_pixels(v, (t_point){x, 0, 0, 0}, 0, 0);
+		update_texture_pixels(v, (t_point){x, 0, 0, 0}, t, img);
 		v->ray.zbuffer[x] = v->ray.wall_dist;
 		x++;
 	}

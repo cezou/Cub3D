@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/17 15:47:56 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/25 18:49:51 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ void	initanim(t_vars *v, int ent, int d)
 // 	(void)v;
 // 	d++;
 // 	// v->img[ESPAWN].animnb = DIR_N * ANIM_N;
-// 	// v->img[ESPAWN].anim = (t_imga *)malloc(sizeof(t_imga) * (DIR_N * ANIM_N));
+// 	// v->img[ESPAWN].anim = (t_imga *)malloc(sizeof(t_imga)
+	// * (DIR_N * ANIM_N));
 // 	// if (!v->img[ESPAWN].anim)
 // 	// 	exit((prterr(v, ERRMALL, 1, 1), 1));
 // 	// initplayerpathanim(v);
@@ -80,20 +81,11 @@ void	initanim(t_vars *v, int ent, int d)
 
 void	initguardanim(t_vars *v, int d)
 {
-	// (void)v;
-	// d++;
 	v->img[EGUARD].anim = (t_imga *)malloc(sizeof(t_imga) * (1));
 	if (!v->img[EGUARD].anim)
 		exit((prterr(v, ERRMALL, 1, 1), 1));
 	v->img[EGUARD].animnb = 1;
 	v->img[EGUARD].anim[0].filename = "resources/textures/general.xpm";
-	// v->img[EGUARD].anim[1].filename = "resources/textures/CthululuWalkLeft.xpm";
-	// v->img[EGUARD].anim[2].filename = "resources/textures/CthululuHitRight.xpm";
-	// v->img[EGUARD].anim[3].filename = "resources/textures/CthululuHitLeft.xpm";
-	// v->img[EGUARD].anim[4].filename = "resources/textures/CthululuDeathR.xpm";
-	// v->img[EGUARD].anim[5].filename = "resources/textures/CthululuDeathL.xpm";
-	v->img[EGUARD].posx = 15.0;
-	v->img[EGUARD].posy = 3.0;
 	while (++d < 1)
 	{
 		v->img[EGUARD].anim[d].img = mlx_xpm_file_to_image(v->mlx,

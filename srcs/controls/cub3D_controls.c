@@ -17,7 +17,6 @@ void	hotreload(t_vars *v)
 	char	*path;
 	int		start;
 
-	loading(v);
 	if (v->mapv.map)
 		map_clear(v->mapv.map);
 	v->game.start = 2;
@@ -53,8 +52,9 @@ void	resetpos(t_vars *v, int renderb)
 
 void	menuexit(t_vars *v)
 {
-	if (MANDATORY || v->game.won > 0)
+	if (v->game.won < 4 && (MANDATORY || v->game.won > 0 && v->game.won < 4))
 		exit((mlx_do_key_autorepeaton(v->mlx), cleardata(v, 1), 0));
+	v->game.refresh_hud = 1;
 	if (v->menu.menu == 2)
 	{
 		v->menu.menu = 0;

@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/24 06:42:50 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/25 18:56:29 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,14 @@
 
 void	initmainimage(t_vars *v)
 {
-	v->img[EMAP].width = v->screen.resw;
-	v->img[EMAP].height = v->screen.resh;
+	v->img[EMAP].width = v->screen.gamew;
+	v->img[EMAP].height = v->screen.gameh;
+	v->img[EBUFF].height = v->screen.resw;
+	v->img[EBUFF].height = v->screen.resh;
 	v->img[COMP_N].width = v->screen.resw;
 	v->img[COMP_N].height = v->screen.resh;
+	v->img[EHUD].width = v->screen.hudw;
+	v->img[EHUD].height = v->screen.hudh;
 	v->img[EMAP].animx = 0;
 	v->img[EMAP].animy = 0;
 	v->img[COMP_N].animx = 0;

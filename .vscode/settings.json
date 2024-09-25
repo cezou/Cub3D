@@ -2,6 +2,8 @@
 	"files.associations": {
 		"cub3d.h": "c",
 		"kek": "c",
-		"kek2": "c"
+		"kek2": "c",
+		"unistd.h": "c",
+		"wait.h": "c"
 	}
 }

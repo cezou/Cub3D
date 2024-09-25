@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/24 07:18:08 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/25 18:03:59 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,13 @@ void	sort_sprites(t_vars *v, int i, int sort)
 /// @param v Vars
 /// @param sp Sprite struct containing calcul datas 
 /// @param p The actual sprite to draw
-void	draw_sprite(t_vars *v, t_sprite *sp, t_point p, t_guard g)
+void	draw_sprite(t_vars *v, t_sprite *sp, t_guard g, t_imga *img)
 {
-	int	tx;
-	int	ty;
+	int		tx;
+	int		ty;
+	t_point	p;
 
+	p = (t_point){0};
 	p.x = sp->drawstartx - 1;
 	while (++p.x < sp->drawendx)
 	{
@@ -114,9 +116,9 @@ void	draw_sprite(t_vars *v, t_sprite *sp, t_point p, t_guard g)
 			{
 				p.z = (p.y - sp->vmovescreen) * 256 - v->screen.gameh * 128
 					+ sp->spriteheight * 128;
-				ty = ((p.z * v->img[g.img_i].height) / sp->spriteheight) / 256;
-				p.z = (ty * v->img[g.img_i].len) + (tx * 4);
-				add_pix_to_buffer(v, v->img[g.img_i], p,
+				ty = ((p.z * img[0].height) / sp->spriteheight) / 256;
+				p.z = (ty * img[0].len) + (tx * 4);
+				add_pix(v, img, p,
 					(t_point2){1, sp->transformy, FOGC, FOGL});
 			}
 		}
@@ -127,14 +129,17 @@ void	draw_sprite(t_vars *v, t_sprite *sp, t_point p, t_guard g)
 /// @param v Vars
 void	draw_sprites(t_vars *v)
 {
-	int	i;
+	int		i;
+	t_imga	img[2];
 
 	i = -1;
+	img[1] = v->img[EMAP];
 	while (++i < v->game.nb_guard)
 	{
+		img[0] = v->img[v->guard[i].img_i];
 		sort_sprites(v, -1, 0);
 		transform_sprite(v, &v->sprite, v->guard[i]);
 		set_sprite_boundaries(v, &v->sprite, v->guard[i]);
-		draw_sprite(v, &v->sprite, (t_point){0, 0, 0, 0}, v->guard[i]);
+		draw_sprite(v, &v->sprite, v->guard[i], img);
 	}
 }

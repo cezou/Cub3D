@@ -6,7 +6,7 @@
 #    By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 11:28:17 by pmagnero          #+#    #+#              #
-#    Updated: 2024/09/23 21:14:58 by pmagnero         ###   ########.fr        #
+#    Updated: 2024/09/25 17:38:41 by pmagnero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,8 @@ d	=	0
 # no comment error in norme
 c 	=	0
 
+b	=	0
+
 ifeq ($(d),1)
 	DEBUG	=	-ggdb
 else
@@ -46,7 +48,7 @@ endif
 
 CC	=	cc
 
-VALGRIND_F	=	--leak-check=full --show-leak-kinds=all --track-fds=yes #--show-leak-kinds=all --log-fd=1 --trace-children=yes
+VALGRIND_F	=	--leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes --suppressions=ignore.txt#--show-leak-kinds=all --log-fd=1 --trace-children=yes
 
 NORME	=	srcs/**/*.c includes/*.h includes/printf/*.c includes/printf/*.h includes/printf/**/*.c includes/printf/**/*.h
 
@@ -82,6 +84,7 @@ SRCS =	srcs/cub3D.c \
 		srcs/utils/cub3D_utils2.c \
 		srcs/utils/cub3D_utils3.c \
 		srcs/utils/cub3D_clear.c \
+		srcs/utils/cub3D_random.c \
 		srcs/init/cub3D_init.c \
 		srcs/init/cub3D_init_anim.c \
 		srcs/init/cub3D_init_paths.c \
@@ -210,7 +213,11 @@ valgrind:
 	@echo "\n\033[$(COLOR_TITLE)m########################################"
 	@echo "##############  VALGRIND  ##############"
 	@echo "########################################\033[0m\n"
-	@valgrind $(VALGRIND_F) ./$(NAME) resources/maps/map.ber
+ifeq ($(b), 0)
+	@valgrind $(VALGRIND_F) --log-file=valgrind.log ./$(NAME) resources/maps/subject.cub
+else
+	@valgrind $(VALGRIND_F) --log-file=valgrind_bonus.log ./$(NAME_BONUS) resources/maps/subject.cub
+endif
 
 clean:
 	@echo "\n\033[$(COLOR_TITLE)m########################################"

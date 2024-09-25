@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:58:10 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/23 02:44:07 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/25 13:24:21 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,21 +111,21 @@ static void	check_door(t_vars *v)
 /// @param p Pixels informations
 /// @param texx Texture x coordinate
 /// @return Texture x coordinate
-int	door_extend_ray(t_vars *v, t_point p, int texx)
+int	door_extend_ray(t_vars *v, t_point p, int *t, t_imga *img)
 {
 	if (v->ray.hit->val == 'D')
 	{
-		texx -= v->ray.img.width - v->ray.door.xdelta;
-		if (texx < 0)
+		t[0] -= v->ray.img.width - v->ray.door.xdelta;
+		if (t[0] < 0)
 		{
 			v->ray.hit = NULL;
 			perform_dda(v, 1);
 			calculate_line_height(v);
-			update_texture_pixels(v, p, 0, 0);
+			update_texture_pixels(v, p, t, img);
 			return (-1);
 		}
 	}
-	return (texx);
+	return (t[0]);
 }
 
 /// @brief Perform the DDA (Digital Differential Analysis) to get

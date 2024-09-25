@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 09:51:53 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/20 18:41:22 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/25 19:09:30 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,19 +94,38 @@ int	credits(t_vars *v)
 	return (scrolling(v, &h, "STAFF", (t_point2){0.45f, rh, 1, R_P}), 0);
 }
 
-/// @brief Loading screen to display
+/// @brief Transition screen to display
 /// @param v Vars
-void	loading(t_vars *v)
+int	transition_melt_screen(t_vars *v)
 {
-	mlx_clear_window(v->mlx, v->screen.win);
-	mlx_set_font(v->mlx, v->screen.win, v->img->fontname2);
-	if (ACTIVATE_SOUND && ma_sound_is_playing(&v->sound.sound[2]))
-		ma_sound_stop(&v->sound.sound[2]);
-	mlx_string_put(v->mlx, v->screen.win, v->screen.resw * 0.45, v->screen.resh
-		* 0.90, W_P, "Loading...");
-	mlx_set_font(v->mlx, v->screen.win, v->img->fontname);
-	mlx_do_sync(v->mlx);
+	static int	delta = 0;
+	static bool	done = true;
+
+	done = true;
+	v->keys[XK_Escape] = false;
+	if (!v->screen.win || timestamp_in_ms(v)
+		- v->game.updated_at < (uint64_t)(3000 / v->game.fps))
+		return (1);
+	v->game.updated_at = timestamp_in_ms(v);
+	ft_bzero(v->img[EBUFF].addr, v->screen.resw * v->screen.gameh
+		* (v->img[EBUFF].bpp / 8));
+	ft_memcpy(v->img[EBUFF].addr, v->img[EMAP].addr,
+		v->img[EMAP].width * v->img[EMAP].height * (v->img[EMAP].bpp / 8));
+	ft_memcpy(v->img[EBUFF].addr
+		+ (v->img[EMAP].width * v->img[EMAP].height * (v->img[EMAP].bpp / 8)),
+		v->img[EHUD].addr,
+		v->img[EHUD].width * v->img[EHUD].height * (v->img[EHUD].bpp / 8));
+	melting(v, ++delta, &done, -1);
+	if (done)
+		mlx_loop_end((v->game.won = 0, v->mlx));
+	mlx_put_image_to_window(v->mlx, v->screen.win, v->img[EBUFF].img, 0, 0);
+	return (0);
 }
+	// mlx_set_font(v->mlx, v->screen.win, v->img->fontname2);
+	// mlx_string_put(v->mlx, v->screen.win, v->screen.resw * 0.45,
+	// v->screen.resh
+	// 	* 0.90, W_P, "Loading...");
+	// mlx_set_font(v->mlx, v->screen.win, v->img->fontname);
 
 /// @brief Main title loop/screen displayed at the begining of the game
 /// @param v Vars

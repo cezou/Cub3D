@@ -53,28 +53,28 @@ void	create_textures(t_vars *v, t_point c)
 
 /// @brief Get the color from texture and add it the pixel to the buffer
 /// @param v Vars
-/// @param img Texture to add to the buffer
+/// @param img Array of image 0=img src, 1=img dest
 /// @param p Pixel datas {x, y, k, color}
 ///	@param fog Fog datas {bool, dist, fog color, fog level}
-void	add_pix_to_buffer(t_vars *v, t_imga img, t_point p, t_point2 fog)
+void	add_pix(t_vars *v, t_imga img[2], t_point p, t_point2 fog)
 {
 	int	b;
 
 	b = p.color;
-	if (b <= 0 && img.addr[p.z + 3] == 0)
+	if (b <= 0 && img[0].addr[p.z + 3] == 0)
 	{
-		p.color = getcolorpix(v, img.addr, p.z);
+		p.color = getcolorpix(v, img[0].addr, p.z);
 		if (b)
 			p.color = (p.color >> 1) & 8355711;
 		if (fog.x)
 			p.color = color_lerp(p.color, fog.z, fog.y / 29 * fog.t);
-		img_pix_put(&v->img[EMAP], p, v);
+		img_pix_put(&img[1], p, v);
 	}
 	else if (b > 0)
 	{
 		if (fog.x)
 			p.color = color_lerp(p.color, fog.z, fog.y / 29 * fog.t);
-		img_pix_put(&v->img[EMAP], p, v);
+		img_pix_put(&img[1], p, v);
 	}
 }
 

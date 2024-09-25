@@ -6,13 +6,14 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/24 07:18:08 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/25 19:19:32 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
+# define _XOPEN_SOURCE 600
 # include <limits.h>
 # include <stdarg.h>
 # include <stdlib.h>
@@ -34,7 +35,6 @@
 # define STDERR STDERR_FILENO
 
 # define M_PI 3.14159265358979323846 /* pi */
-# define VALID " \t\n\v\f\r10NSOEDG"
 # define WHITESPACES " \t\n\v\f\r"
 # define MAX_KEYS 65535
 
@@ -59,9 +59,11 @@
 # ifndef MANDATORY
 #  define ACTIVATE_SOUND 1
 #  define MANDATORY 0
+#  define VALID " \t\n\v\f\r10NSOEDG"
 # else
 #  define ACTIVATE_SOUND 0
 #  define MANDATORY 1
+#  define VALID " \t\n\v\f\r10NSOE"
 # endif
 
 # ifndef MINIAUDIO_IMPLEMENTATION
@@ -157,8 +159,7 @@
 // # define FONT2 "-sun-open look glyph-----19-190-75-75-p-154-sunolglyph-1"
 
 // Mr. Potato-Head by Joan Stark
-# define POTATO \
-	"\
+# define POTATO	"\
 \t\t\t\t\t\t\t              .-\"'\"-.\n\
 \t\t\t\t\t\t\t             |       |  \n\
 \t\t\t\t\t\t\t           (`-._____.-')\n\
@@ -178,8 +179,7 @@
 \t\t\t\t\t\t\t\\|||    (`.___.')-(`.___.')    |||/ \n\
 \t\t\t\t\t\t\t '\"'     `-----'   `-----'     '\"' \n"
 
-# define CUB3D \
-	"\
+# define CUB3D "\
  _____  _   _ ______  _____ ______ \n\
 /  __ \\| | | || ___ \\|____ ||  _  \\ \n\
 | /  \\/| | | || |_/ /    / /| | | |\n\
@@ -187,8 +187,7 @@
 | \\__/\\| |_| || |_/ /.___/ /| |/ / \n\
  \\____/ \\___/ \\____/ \\____/ |___/  \n"
 
-# define BONUS \
-	"\
+# define BONUS "\
 \t\t\t\t          )      )         (     \n\
 \t\t\t\t   (   ( /(   ( /(         )\\ )  \n\
 \t\t\t\t ( )\\  )\\())  )\\())    (  (()/(  \n\
@@ -202,35 +201,25 @@
 // # define M_PI 3.14
 
 # define SOUND_GENERIC "resources/sounds/kek.mp3"
-# define SOUND_FOOTSTEPWALK \
-	"resources/sounds/Horror\
+# define SOUND_FOOTSTEPWALK "resources/sounds/Horror\
 /Character/Footsteps_walking.wav"
-# define SOUND_AMBIENT \
-	"resources/sounds/Horror\
+# define SOUND_AMBIENT "resources/sounds/Horror\
 /Ambient/Crying_moaning_ambience_2.wav"
-# define SOUND_BABYLAUGH1 \
-	"resources/sounds/Horror\
+# define SOUND_BABYLAUGH1 "resources/sounds/Horror\
 /Monsters & Ghosts/Child laugh_6.wav"
-# define SOUND_BABYLAUGH2 \
-	"resources/sounds/Horror\
+# define SOUND_BABYLAUGH2 "resources/sounds/Horror\
 /Monsters & Ghosts/Child laugh.wav"
-# define SOUND_BABYLAUGH3 \
-	"resources/sounds/Horror\
+# define SOUND_BABYLAUGH3 "resources/sounds/Horror\
 /Monsters & Ghosts/Child laugh_7.wav"
-# define SOUND_BUTTONCLICK1 \
-	"resources/sounds/Horror\
+# define SOUND_BUTTONCLICK1	"resources/sounds/Horror\
 /House & Office/Can_clink_4.wav"
-# define SOUND_BUTTONCLICK2 \
-	"resources/sounds/Horror\
+# define SOUND_BUTTONCLICK2	"resources/sounds/Horror\
 /House & Office/switch3.wav"
-# define SOUND_GUARDINJURED \
-	"resources/sounds/Horror\
+# define SOUND_GUARDINJURED	"resources/sounds/Horror\
 /Monsters & Ghosts/Zombie.wav"
-# define SOUND_GUARDDEATH \
-	"resources/sounds/Horror\
+# define SOUND_GUARDDEATH "resources/sounds/Horror\
 /Monsters & Ghosts/Zombie_8.wav"
-# define SOUND_ATTACK \
-	"resources/sounds/Horror\
+# define SOUND_ATTACK "resources/sounds/Horror\
 /Monsters & Ghosts/Injured.wav"
 # define SOUND_CREDITS "resources/sounds/musics/wav/Ambient 2.wav"
 # define SOUND_GAMEOVER "resources/sounds/musics/wav/Fx 3.wav"
@@ -303,10 +292,12 @@ typedef enum s_components
 	ESKYBOX,
 	EHUDIMG,
 	ETITLE,
+	EKEK,
 	EMENUSELECT,
 	EMENU,
 	EMENUIG,
 	EMENUOPT,
+	EBUFF,
 	COMP_N
 }						t_comp;
 
@@ -571,6 +562,7 @@ typedef struct s_game
 	t_imga				skybox;
 	int					nb_door;
 	int					nb_guard;
+	bool				refresh_hud;
 }						t_game;
 
 // images: verifier que le path finit bien par .xpm, que le fichier existe,
@@ -627,6 +619,9 @@ typedef struct s_vars
 	t_ray				ray;
 	t_sprite			sprite;
 	t_floor				floor;
+	t_imga				tmp[2];
+	int					*rand;
+	int					rndindex;
 	uint32_t			tex[8][4160];
 }						t_vars;
 
@@ -651,6 +646,10 @@ float					deg_to_rad(float deg);
 float					rad_to_deg(float rad);
 void					ft_swaps(t_guard *a, t_guard *b);
 int						find_door(t_vars *v, int x, int y);
+int						m_random(t_vars *v);
+void					m_clearrandom(t_vars *v);
+void					save_screen_to_buffer(t_imga dest, t_imga src,
+							size_t offset);
 
 // Time
 
@@ -665,21 +664,21 @@ int						cleardata(t_vars *vars, int b);
 int						map_clear(t_map *lst);
 
 // Init
-void			init(t_vars *v, int argc, char **argv);
-void			inittextures(t_vars *v, int i);
-void			initplayeranim(t_vars *v, int d);
-void			initobjectsanim(t_vars *v, int i, int obj);
-void			initguardanim(t_vars *v, int i);
-void			init_cam(t_vars *vars);
-void			initmodes(t_vars *v, int argc);
-void			initsounds(t_vars *v);
-void			initimage(t_vars *v, int index, int width, int height);
-void			initvars(t_vars *v);
-void			initwindow(t_vars *v, int argc, char **argv);
-void			initpathtext(t_vars *v);
-void			initplayerpathanim(t_vars *v);
-void			initprojectilepathanim(t_vars *v);
-void			init_player_dir(t_vars *v);
+void					init(t_vars *v, int argc, char **argv);
+void					inittextures(t_vars *v, int i);
+void					initplayeranim(t_vars *v, int d);
+void					initobjectsanim(t_vars *v, int i, int obj);
+void					initguardanim(t_vars *v, int i);
+void					init_cam(t_vars *vars);
+void					initmodes(t_vars *v, int argc);
+void					initsounds(t_vars *v);
+void					initimage(t_vars *v, int index, int width, int height);
+void					initvars(t_vars *v);
+void					initwindow(t_vars *v, int argc, char **argv);
+void					initpathtext(t_vars *v);
+void					initplayerpathanim(t_vars *v);
+void					initprojectilepathanim(t_vars *v);
+void					init_player_dir(t_vars *v);
 
 // Mouse
 
@@ -714,23 +713,27 @@ int						raycasting(t_vars *v);
 void					set_dda(t_vars *v);
 void					perform_dda(t_vars *v, int d);
 void					calculate_line_height(t_vars *v);
-int						door_extend_ray(t_vars *v, t_point p, int texx);
-void					update_texture_pixels(t_vars *v, t_point p, int texx,
-							int texy);
+int						door_extend_ray(t_vars *v, t_point p, int *t,
+							t_imga *img);
+void					update_texture_pixels(t_vars *v, t_point p, int *t,
+							t_imga *img);
 void					update_door_animations(t_vars *v, int i);
 void					draw_floor_ceiling(t_vars *v);
-// void			set_floor_ceiling_vert(t_vars *v, t_point p);
-void			draw_sprites(t_vars *v);
-void			draw_sprite(t_vars *v, t_sprite *sp, t_point p, t_guard g);
-void			transform_sprite(t_vars *v, t_sprite *sp, t_guard g);
-void			set_sprite_boundaries(t_vars *v, t_sprite *sp, t_guard g);
-void			sort_sprites(t_vars *v, int i, int sort);
-void			draw_skybox(t_vars *v, t_point p, int tx, int ty);
-void			renderhud(t_vars *v);
+// void					set_floor_ceiling_vert(t_vars *v, t_point p);
+void					draw_sprites(t_vars *v);
+void					draw_sprite(t_vars *v, t_sprite *sp, t_guard g,
+							t_imga *img);
+void					transform_sprite(t_vars *v, t_sprite *sp, t_guard g);
+void					set_sprite_boundaries(t_vars *v, t_sprite *sp,
+							t_guard g);
+void					sort_sprites(t_vars *v, int i, int sort);
+void					draw_skybox(t_vars *v, t_point p, int *t, t_imga *img);
+void					renderhud(t_vars *v);
+void					scale_img(t_point p, t_imga *src, t_imga *dest);
 
 int						render(t_vars *data);
 void					img_pix_put(t_imga *img, t_point p, t_vars *v);
-void					add_pix_to_buffer(t_vars *v, t_imga img, t_point p,
+void					add_pix(t_vars *v, t_imga *img, t_point p,
 							t_point2 fog);
 void					create_textures(t_vars *v, t_point c);
 int						getcolorpix(t_vars *v, char *addr, size_t k);
@@ -745,9 +748,10 @@ void					update_animations(t_vars *v);
 
 int						win(t_vars *v);
 int						lose(t_vars *v);
-void					loading(t_vars *v);
+int						transition_melt_screen(t_vars *v);
 int						credits(t_vars *v);
 int						maintitleanim(t_vars *v);
+void					melting(t_vars *v, int delta, bool *done, int x);
 
 /* FUNCTIONS */
 // void					freeall(void **tab);

@@ -31,6 +31,73 @@ void	displaytext(t_vars *v, char *str, char *str2)
 	}
 }
 
+/// @brief Init the random melting array that store the delay of each columns
+/// @param v Vars
+/// @param delta Is it the first frame
+void	init_random_melting_array(t_vars *v, int delta)
+{
+	int	r;
+	int	i;
+	int	w;
+
+	if (delta > 1)
+		return ;
+	v->tmp[0] = v->img[COMP_N];
+	v->tmp[1] = v->img[EBUFF];
+	w = v->tmp[0].width / 3;
+	i = 0;
+	v->rand = (int *)malloc(sizeof(int) * w);
+	if (!v->rand)
+		exit((prterr(v, ERRMALL, 1, 1), 1));
+	v->rand[0] = -(m_random(v) % 16);
+	while (++i < w)
+	{
+		r = (m_random(v) % 3) - 1;
+		v->rand[i] = v->rand[i - 1] + r;
+		if (v->rand[i] > 0)
+			v->rand[i] = 0;
+		else if (v->rand[i] == -16)
+			v->rand[i] = -15;
+	}
+}
+
+/// @brief Melting effect like in Doom original. 
+///	We use the random array for each column of the screen
+///	and delay the drop of each column. If the column value is not 0 in the array
+///	we delay it.
+/// @param v Vars
+/// @param delta Frame number
+/// @param done Is the wipe done
+/// @param x Iterator for the loop =-1
+void	melting(t_vars *v, int delta, bool *done, int x)
+{
+	t_point		p;
+	int			d;
+
+	init_random_melting_array(v, delta);
+	p.x = -1;
+	while (++p.x < v->tmp[0].width)
+	{
+		p.y = -1;
+		x = p.x / 3;
+		if (x >= v->tmp[0].width / 3)
+			x = v->tmp[0].width / 3 - 1;
+		while (++p.y < v->tmp[0].height)
+		{
+			d = p.y + v->rand[x] * 20;
+			if (p.y == v->tmp[0].height - 1 && p.x % 3 == 2)
+				v->rand[x] += 1;
+			if (d >= v->tmp[0].height - 1)
+				continue ;
+			if (v->rand[x] < 0)
+				d = p.y;
+			p.z = (p.y * v->tmp[0].len) + (p.x * 4);
+			add_pix((*done = false, v), v->tmp, (t_point){p.x, d, p.z,
+				getcolorpix(v, v->tmp[0].addr, p.z)}, (t_point2){0});
+		}
+	}
+}
+
 /// @brief Game loop that render the game on the screen at fps rate
 /// @param v Vars
 /// @return
@@ -55,7 +122,8 @@ int	render(t_vars *v)
 	raycasting(v);
 	renderhud(v);
 	rendermenu(v);
-	mlx_put_image_to_window(v->mlx, v->screen.win, v->img[EMAP].img, 0, 0);
+	save_screen_to_buffer(v->img[EBUFF], v->img[EMAP], 0);
+	mlx_put_image_to_window(v->mlx, v->screen.win, v->img[EBUFF].img, 0, 0);
 	v->game.oldtime = v->game.time;
 	v->game.time = timestamp_in_ms(v);
 	v->game.frametime = (v->game.time - v->game.oldtime) / 1000.0;

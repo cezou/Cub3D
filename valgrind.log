@@ -1,0 +1,32 @@
+==1098705== Memcheck, a memory error detector
+==1098705== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==1098705== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==1098705== Command: ./cub3D resources/maps/subject.cub
+==1098705== Parent PID: 1098701
+==1098705== 
+==1098705== 
+==1098705== FILE DESCRIPTORS: 8 open (3 std) at exit.
+==1098705== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==1098705==    <inherited from parent>
+==1098705== 
+==1098705== Open AF_UNIX socket 39: <unknown>
+==1098705==    <inherited from parent>
+==1098705== 
+==1098705== Open file descriptor 38: /home/pmagnero/.config/Code/logs/20240925T092848/ptyhost.log
+==1098705==    <inherited from parent>
+==1098705== 
+==1098705== Open file descriptor 37: /usr/share/code/resources/app/node_modules.asar
+==1098705==    <inherited from parent>
+==1098705== 
+==1098705== Open file descriptor 3: /home/pmagnero/repo/cub/valgrind.log
+==1098705==    <inherited from parent>
+==1098705== 
+==1098705== 
+==1098705== HEAP SUMMARY:
+==1098705==     in use at exit: 0 bytes in 0 blocks
+==1098705==   total heap usage: 16,937 allocs, 16,937 frees, 1,134,973 bytes allocated
+==1098705== 
+==1098705== All heap blocks were freed -- no leaks are possible
+==1098705== 
+==1098705== For lists of detected and suppressed errors, rerun with: -s
+==1098705== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

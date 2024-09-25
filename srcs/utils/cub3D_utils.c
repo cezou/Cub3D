@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:59:52 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/24 05:32:47 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/25 17:42:04 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,10 @@ void	showparams(t_vars *v)
 	ft_printf(1, "\t\t(default): 1024 768\n");
 	ft_printf(1, "%s", RCOLOR);
 	ft_printf(1, "\n%s", POTATO);
-	ft_printf(1,
-				"\n%s\t\t\t\t\t\t\tBy PIERRE MAGNERON <pmagnero@student.42.fr>%s\
-\n",
-				GREEN,
-				RCOLOR);
-	ft_printf(1,
-				"\n%s\t\t\t\t\t\t\t  & CESAIRE VIEGAS <cviegas@student.42.fr>%s\n\n\
-				\n",
-				GREEN,
-				RCOLOR);
+	ft_printf(1, "\n%s\t\t\t\t\t\t\tBy PIERRE MAGNERON <pmagnero@student.42.fr>%s\
+\n", GREEN, RCOLOR);
+	ft_printf(1, "\n%s\t\t\t\t\t\t\t  & CESAIRE VIEGAS <cviegas@student.42.fr>%s\n\n\
+\n", GREEN, RCOLOR);
 }
 
 /// @brief Generate a random number(int) between 0 and n
