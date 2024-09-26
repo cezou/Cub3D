@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 20:43:05 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/25 19:21:40 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/26 17:07:00 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,11 @@ void	scale_img(t_point p, t_imga *src, t_imga *dest)
 			dest->addr[p.z + 3] = src->addr[p.color + 3];
 			dest->addr[p.z + 2] = src->addr[p.color + 2];
 			dest->addr[p.z + 1] = src->addr[p.color + 1];
+			dest->addr[p.z] = src->addr[p.color];
 		}
 	}
+	dest->ratiox = (double)(src->width) / (double)(dest->width);
+	dest->ratioy = (double)(src->height) / (double)(dest->height);
 }
 
 /// @brief Render the HUD

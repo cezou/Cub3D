@@ -52,7 +52,7 @@ void	resetpos(t_vars *v, int renderb)
 
 void	menuexit(t_vars *v)
 {
-	if (v->game.won < 4 && (MANDATORY || v->game.won > 0 && v->game.won < 4))
+	if (v->game.won < 4 && (MANDATORY || v->game.won > 0))
 		exit((mlx_do_key_autorepeaton(v->mlx), cleardata(v, 1), 0));
 	v->game.refresh_hud = 1;
 	if (v->menu.menu == 2)

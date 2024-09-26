@@ -108,7 +108,7 @@ int	render(t_vars *v)
 		/ v->game.fps))
 		return (1);
 	v->game.updated_at = timestamp_in_ms(v);
-	if (v->game.start == 2 && ACTIVATE_SOUND
+	if (v->game.start > 1 && ACTIVATE_SOUND
 		&& !ma_sound_is_playing(&v->sound.sound[2]))
 	{
 		ma_sound_stop(&v->sound.sound[0]);
@@ -121,7 +121,9 @@ int	render(t_vars *v)
 	key_management(v);
 	raycasting(v);
 	renderhud(v);
+	render_player(v);
 	rendermenu(v);
+	update_animations(v);
 	save_screen_to_buffer(v->img[EBUFF], v->img[EMAP], 0);
 	mlx_put_image_to_window(v->mlx, v->screen.win, v->img[EBUFF].img, 0, 0);
 	v->game.oldtime = v->game.time;

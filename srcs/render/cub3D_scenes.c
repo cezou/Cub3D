@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 09:51:53 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/25 19:09:30 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/26 13:22:30 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,12 +109,9 @@ int	transition_melt_screen(t_vars *v)
 	v->game.updated_at = timestamp_in_ms(v);
 	ft_bzero(v->img[EBUFF].addr, v->screen.resw * v->screen.gameh
 		* (v->img[EBUFF].bpp / 8));
-	ft_memcpy(v->img[EBUFF].addr, v->img[EMAP].addr,
-		v->img[EMAP].width * v->img[EMAP].height * (v->img[EMAP].bpp / 8));
-	ft_memcpy(v->img[EBUFF].addr
-		+ (v->img[EMAP].width * v->img[EMAP].height * (v->img[EMAP].bpp / 8)),
-		v->img[EHUD].addr,
-		v->img[EHUD].width * v->img[EHUD].height * (v->img[EHUD].bpp / 8));
+	save_screen_to_buffer(v->img[EBUFF], v->img[EMAP], 0);
+	save_screen_to_buffer(v->img[EBUFF], v->img[EHUD], (v->img[EMAP].width
+			* v->img[EMAP].height * (v->img[EMAP].bpp / 8)));
 	melting(v, ++delta, &done, -1);
 	if (done)
 		mlx_loop_end((v->game.won = 0, v->mlx));

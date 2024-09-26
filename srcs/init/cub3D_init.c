@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/25 19:35:28 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:46:22 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,10 @@ void	check_map(t_vars *v)
 	i = -1;
 	j = -1;
 	parse(v, -1, NULL);
-	v->player.x = v->player.player->x;
-	v->player.y = v->player.player->y;
+	v->player.x = v->player.player->x + 0.5;
+	v->player.y = v->player.player->y + 0.5;
+	v->player.animp = EPLAYER;
+	v->player.animoff = 0;
 	v->door = (t_door *)malloc(sizeof(t_door) * (v->game.nb_door));
 	if (!v->door)
 		exit((prterr(v, ERRMALL, 1, 0), 1));
@@ -124,7 +126,7 @@ void	check_map(t_vars *v)
 			v->guard[j].udiv = 1.0;
 			v->guard[j].vmove = 0;
 			v->guard[j].dist = 0;
-			v->guard[j].animoff = v->img[v->guard[j].img_i].height;
+			v->guard[j].animoff = v->img[v->guard[j].img_i].anim[0].animx;
 		}
 		tmp = tmp->right;
 	}
@@ -149,9 +151,10 @@ void	init(t_vars *v, int argc, char **argv)
 	(ft_bzero(v->keys, MAX_KEYS), initwindow(v, argc, argv));
 	mlx_mouse_hide(v->mlx, v->screen.win);
 	initmodes(v, argc);
-	inittextures(v, 5);
+	inittextures(v, 6);
 	v->game.skybox = v->img[ESKYBOX];
 	initsounds(v);
+	initplayeranim(v, -1);
 	initguardanim(v, -1);
 	check_map(v);
 	init_player_dir(v);

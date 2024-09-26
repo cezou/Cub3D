@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 17:22:28 by cviegas           #+#    #+#             */
-/*   Updated: 2024/09/25 19:55:24 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/26 12:34:41 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	init_xpm(t_imga *img, char *path, void *mlx, int i)
 		return (lerr(i, "Mlx Image address failed"), -1);
 	img->anim = NULL;
 	img->animnb = 0;
+	img->animx = 0;
+	img->animy = 0;
 	return (0);
 }
 

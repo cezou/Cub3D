@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/25 18:15:53 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/26 17:34:04 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,30 @@ void	update_sprites_animations(t_vars *v)
 		if (timestamp_in_ms(v) - v->guard[i].time
 			>= (uint64_t)(10000 / v->game.fps))
 		{
-			v->guard[i].animoff += v->img[v->guard[i].img_i].height;
+			v->guard[i].animoff += v->img[v->guard[i].img_i].anim[0].animx;
 			v->guard[i].time = timestamp_in_ms(v);
 		}
 		if (v->guard[i].animoff > v->img[v->guard[i].img_i].width)
 			v->guard[i].animoff = 0;
+	}
+}
+
+/// @brief Update player animations
+/// @param v Vars
+void	update_player_animations(t_vars *v)
+{
+	if (!v->player.pattack)
+		return ;
+	if (timestamp_in_ms(v) - v->player.timerplayer
+		>= (uint64_t)(5000 / v->game.fps))
+	{
+		v->player.animoff += v->img[EPLAYER].anim[0].animx;
+		v->player.timerplayer = timestamp_in_ms(v);
+	}
+	if (v->player.animoff > v->img[EFCK].width)
+	{
+		v->player.animoff = 0;
+		v->player.pattack = 0;
 	}
 }
 
@@ -63,4 +82,5 @@ void	update_animations(t_vars *v)
 {
 	update_sprites_animations(v);
 	update_door_animations(v, -1);
+	update_player_animations(v);
 }

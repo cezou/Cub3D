@@ -12,6 +12,15 @@
 
 #include "../../includes/cub3D.h"
 
+void	attack(t_vars *v)
+{
+	if (!v->player.pattack)
+		v->player.pattack = 1;
+	else if (v->player.pattack && v->player.animoff > v->img[EFCK].width)
+		v->player.pattack = 0;
+	v->player.animoff = v->img[v->player.animp].anim[0].animx;
+}
+
 void	handle_movement(t_vars *v)
 {
 	if (is_pressed(XK_w, v))
@@ -37,6 +46,8 @@ void	handle_movement(t_vars *v)
 int	keys(int kd, t_vars *v)
 {
 	v->keys[kd] = true;
+	if (kd == XK_x)
+		attack(v);
 	if (kd == XK_Escape)
 		menuexit(v);
 	if (kd == XK_Return)

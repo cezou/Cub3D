@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:58:10 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/25 13:24:21 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/26 09:47:30 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ static void	check_door(t_vars *v)
 /// @return Texture x coordinate
 int	door_extend_ray(t_vars *v, t_point p, int *t, t_imga *img)
 {
+	img[0] = v->ray.img;
+	v->ray.lim = ((img[0].height - 1) * img[0].len) + ((img[0].width - 1) * 4);
 	if (v->ray.hit->val == 'D')
 	{
 		t[0] -= v->ray.img.width - v->ray.door.xdelta;

@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/25 18:03:59 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/26 10:18:24 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ static void	surf_rows(t_vars *v, t_point p, t_imga *img, int *t)
 	while (++p.y < v->ray.dy)
 	{
 		p.z = (t[1] * v->game.skybox.len) + (t[0] * 4);
-		add_pix(v, img, p, (t_point2){0});
+		if (p.z < v->ray.lim)
+			add_pix(v, img, p, (t_point2){0});
 		cy += v->ray.dty;
 		while (cy > v->ray.dy)
 		{
@@ -69,6 +70,8 @@ static void	surf_rows(t_vars *v, t_point p, t_imga *img, int *t)
 ///	@note 
 void	draw_skybox(t_vars *v, t_point p, int *t, t_imga *img)
 {
+	v->ray.lim = ((v->game.skybox.height - 1) * v->game.skybox.len)
+		+ ((v->game.skybox.width - 1) * 4);
 	set_skybox(v);
 	while (++p.x < v->screen.resw)
 	{

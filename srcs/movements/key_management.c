@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 16:14:16 by cviegas           #+#    #+#             */
-/*   Updated: 2024/09/25 19:19:35 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/26 16:32:36 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,6 @@ void	tooglegod(t_vars *v)
 		v->game.god = 0;
 }
 
-void	save_screen_to_buffer(t_imga dest, t_imga src, size_t offset)
-{
-	ft_memcpy(dest.addr + offset, src.addr,
-		src.width * src.height * (src.bpp / 8));
-}
-
 int	returnkey(t_vars *v)
 {
 	if ((v->menu.menu == 1 && v->menu.menui == 3) || (v->menu.menu == 2
@@ -48,6 +42,7 @@ int	returnkey(t_vars *v)
 		raycasting(v);
 		renderhud(v);
 		rendermenu(v);
+		render_player(v);
 		save_screen_to_buffer(v->img[EBUFF], v->img[EMAP], 0);
 		save_screen_to_buffer(v->img[EBUFF], v->img[EHUD], (v->img[EHUD].width
 				* v->img[EHUD].height * (v->img[EHUD].bpp / 8)));

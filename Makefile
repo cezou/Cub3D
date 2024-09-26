@@ -6,7 +6,7 @@
 #    By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 11:28:17 by pmagnero          #+#    #+#              #
-#    Updated: 2024/09/25 17:38:41 by pmagnero         ###   ########.fr        #
+#    Updated: 2024/09/26 17:02:56 by pmagnero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,7 @@ SRCS =	srcs/cub3D.c \
 		srcs/controls/cub3D_controls.c \
 		srcs/controls/cub3D_mouse.c \
 		srcs/render/cub3D_render_menus.c \
+		srcs/render/cub3D_render_player.c \
 		srcs/render/cub3D_render.c \
 		srcs/render/cub3D_scenes.c \
 		srcs/render/cub3D_raycasting.c \
@@ -214,9 +215,9 @@ valgrind:
 	@echo "##############  VALGRIND  ##############"
 	@echo "########################################\033[0m\n"
 ifeq ($(b), 0)
-	@valgrind $(VALGRIND_F) --log-file=valgrind.log ./$(NAME) resources/maps/subject.cub
+	@valgrind $(VALGRIND_F) --log-file=valgrind.log ./$(NAME) resources/maps/test.cub 800 600
 else
-	@valgrind $(VALGRIND_F) --log-file=valgrind_bonus.log ./$(NAME_BONUS) resources/maps/subject.cub
+	@valgrind $(VALGRIND_F) --log-file=valgrind_bonus.log ./$(NAME_BONUS) resources/maps/subject.cub 800 600
 endif
 
 clean:

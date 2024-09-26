@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/25 19:58:02 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/26 17:45:18 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@
 
 # define TOOLBAR_LINUX_H 70
 
-# define LOOKUP_MAX 500
+# define LOOKUP_MAX 300
 # define SKYBOX_REPEATS 4
 
 # define FOGL 4
@@ -280,15 +280,15 @@ typedef enum s_components
 {
 	EMAP,
 	EHUD,
+	EFCK,
 	ESOUTH,
 	ENORTH,
 	EWEST,
 	EEAST,
 	ESPACE,
-	EWALL,
 	EDOOR,
-	EWEAPON,
 	EGUARD,
+	EPLAYER,
 	ESKYBOX,
 	EHUDIMG,
 	ETITLE,
@@ -344,7 +344,11 @@ typedef struct s_imga
 	char				*filename;
 	char				*fontname;
 	char				*fontname2;
+	int					animx;
+	int					animy;
 	int					id;
+	double				ratiox;
+	double				ratioy;
 }						t_imga;
 
 typedef struct s_door
@@ -388,6 +392,7 @@ typedef struct s_ray
 	t_map				*hit;
 	t_imga				img;
 	t_door				door;
+	int					lim;
 	int					*zbuffer;
 }						t_ray;
 
@@ -457,7 +462,7 @@ typedef struct s_player
 	t_map				*player;
 	int					pattack;
 	int					animp;
-	int					nbmove;
+	int					animoff;
 	int					moving;
 	int					dir;
 	double				x;
@@ -473,7 +478,6 @@ typedef struct s_player
 	double				rotspeed;
 	double				mouserotspeed;
 	uint64_t			timerplayer;
-	int					pocket;
 }						t_player;
 
 typedef struct s_guard
@@ -538,6 +542,7 @@ typedef struct s_screen
 	int					gameh;
 	int					hudw;
 	int					hudh;
+	double				ratio;
 }						t_screen;
 
 typedef struct s_game
@@ -671,6 +676,7 @@ void					initvars(t_vars *v);
 void					initwindow(t_vars *v, int argc, char **argv);
 void					initpathtext(t_vars *v);
 void					initplayerpathanim(t_vars *v);
+void					initguardpathanim(t_vars *v);
 void					initprojectilepathanim(t_vars *v);
 void					init_player_dir(t_vars *v);
 
@@ -707,13 +713,16 @@ int						raycasting(t_vars *v);
 void					set_dda(t_vars *v);
 void					perform_dda(t_vars *v, int d);
 void					calculate_line_height(t_vars *v);
+
 int						door_extend_ray(t_vars *v, t_point p, int *t,
 							t_imga *img);
 void					update_texture_pixels(t_vars *v, t_point p, int *t,
 							t_imga *img);
 void					update_door_animations(t_vars *v, int i);
+
 void					draw_floor_ceiling(t_vars *v);
 // void					set_floor_ceiling_vert(t_vars *v, t_point p);
+
 void					draw_sprites(t_vars *v);
 void					draw_sprite(t_vars *v, t_sprite *sp, t_guard g,
 							t_imga *img);
@@ -721,8 +730,13 @@ void					transform_sprite(t_vars *v, t_sprite *sp, t_guard g);
 void					set_sprite_boundaries(t_vars *v, t_sprite *sp,
 							t_guard g);
 void					sort_sprites(t_vars *v, int i, int sort);
+
 void					draw_skybox(t_vars *v, t_point p, int *t, t_imga *img);
+
 void					renderhud(t_vars *v);
+
+void					render_player(t_vars *v);
+
 void					scale_img(t_point p, t_imga *src, t_imga *dest);
 
 int						render(t_vars *data);

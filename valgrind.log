@@ -1,32 +1,125 @@
-==1098705== Memcheck, a memory error detector
-==1098705== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==1098705== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==1098705== Command: ./cub3D resources/maps/subject.cub
-==1098705== Parent PID: 1098701
-==1098705== 
-==1098705== 
-==1098705== FILE DESCRIPTORS: 8 open (3 std) at exit.
-==1098705== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
-==1098705==    <inherited from parent>
-==1098705== 
-==1098705== Open AF_UNIX socket 39: <unknown>
-==1098705==    <inherited from parent>
-==1098705== 
-==1098705== Open file descriptor 38: /home/pmagnero/.config/Code/logs/20240925T092848/ptyhost.log
-==1098705==    <inherited from parent>
-==1098705== 
-==1098705== Open file descriptor 37: /usr/share/code/resources/app/node_modules.asar
-==1098705==    <inherited from parent>
-==1098705== 
-==1098705== Open file descriptor 3: /home/pmagnero/repo/cub/valgrind.log
-==1098705==    <inherited from parent>
-==1098705== 
-==1098705== 
-==1098705== HEAP SUMMARY:
-==1098705==     in use at exit: 0 bytes in 0 blocks
-==1098705==   total heap usage: 16,937 allocs, 16,937 frees, 1,134,973 bytes allocated
-==1098705== 
-==1098705== All heap blocks were freed -- no leaks are possible
-==1098705== 
-==1098705== For lists of detected and suppressed errors, rerun with: -s
-==1098705== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==964071== Memcheck, a memory error detector
+==964071== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==964071== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==964071== Command: ./cub3D resources/maps/test.cub 800 600
+==964071== Parent PID: 964067
+==964071== 
+==964071== Invalid read of size 8
+==964071==    at 0x40805C: freeall (cub3D_clear.c:25)
+==964071==    by 0x40ACF0: clean_exit (clean_and_imgs.c:67)
+==964071==    by 0x40A4C7: parse_map (parsing.c:49)
+==964071==    by 0x40A4C7: parsing (parsing.c:64)
+==964071==    by 0x408928: init (cub3D_init.c:138)
+==964071==    by 0x40298E: main (cub3D.c:48)
+==964071==  Address 0x50a4300 is 0 bytes inside a block of size 136 free'd
+==964071==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==964071==    by 0x408088: freeall (cub3D_clear.c:27)
+==964071==    by 0x40AC97: clean_exit (clean_and_imgs.c:60)
+==964071==    by 0x40A4C7: parse_map (parsing.c:49)
+==964071==    by 0x40A4C7: parsing (parsing.c:64)
+==964071==    by 0x408928: init (cub3D_init.c:138)
+==964071==    by 0x40298E: main (cub3D.c:48)
+==964071==  Block was alloc'd at
+==964071==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==964071==    by 0x40AF2E: store_map (map.c:80)
+==964071==    by 0x40A4A2: parse_map (parsing.c:47)
+==964071==    by 0x40A4A2: parsing (parsing.c:64)
+==964071==    by 0x408928: init (cub3D_init.c:138)
+==964071==    by 0x40298E: main (cub3D.c:48)
+==964071== 
+==964071== Invalid free() / delete / delete[] / realloc()
+==964071==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==964071==    by 0x408074: freeall (cub3D_clear.c:26)
+==964071==    by 0x40ACF0: clean_exit (clean_and_imgs.c:67)
+==964071==    by 0x40A4C7: parse_map (parsing.c:49)
+==964071==    by 0x40A4C7: parsing (parsing.c:64)
+==964071==    by 0x408928: init (cub3D_init.c:138)
+==964071==    by 0x40298E: main (cub3D.c:48)
+==964071==  Address 0x50a5d50 is 0 bytes inside a block of size 2 free'd
+==964071==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==964071==    by 0x408074: freeall (cub3D_clear.c:26)
+==964071==    by 0x40AC97: clean_exit (clean_and_imgs.c:60)
+==964071==    by 0x40A4C7: parse_map (parsing.c:49)
+==964071==    by 0x40A4C7: parsing (parsing.c:64)
+==964071==    by 0x408928: init (cub3D_init.c:138)
+==964071==    by 0x40298E: main (cub3D.c:48)
+==964071==  Block was alloc'd at
+==964071==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==964071==    by 0x40FD61: buff_to_char (get_next_line.c:70)
+==964071==    by 0x40FE82: get_next_line (get_next_line.c:50)
+==964071==    by 0x40AFA7: store_map (map.c:92)
+==964071==    by 0x40A4A2: parse_map (parsing.c:47)
+==964071==    by 0x40A4A2: parsing (parsing.c:64)
+==964071==    by 0x408928: init (cub3D_init.c:138)
+==964071==    by 0x40298E: main (cub3D.c:48)
+==964071== 
+==964071== Invalid read of size 8
+==964071==    at 0x408075: freeall (cub3D_clear.c:25)
+==964071==    by 0x40ACF0: clean_exit (clean_and_imgs.c:67)
+==964071==    by 0x40A4C7: parse_map (parsing.c:49)
+==964071==    by 0x40A4C7: parsing (parsing.c:64)
+==964071==    by 0x408928: init (cub3D_init.c:138)
+==964071==    by 0x40298E: main (cub3D.c:48)
+==964071==  Address 0x50a4308 is 8 bytes inside a block of size 136 free'd
+==964071==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==964071==    by 0x408088: freeall (cub3D_clear.c:27)
+==964071==    by 0x40AC97: clean_exit (clean_and_imgs.c:60)
+==964071==    by 0x40A4C7: parse_map (parsing.c:49)
+==964071==    by 0x40A4C7: parsing (parsing.c:64)
+==964071==    by 0x408928: init (cub3D_init.c:138)
+==964071==    by 0x40298E: main (cub3D.c:48)
+==964071==  Block was alloc'd at
+==964071==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==964071==    by 0x40AF2E: store_map (map.c:80)
+==964071==    by 0x40A4A2: parse_map (parsing.c:47)
+==964071==    by 0x40A4A2: parsing (parsing.c:64)
+==964071==    by 0x408928: init (cub3D_init.c:138)
+==964071==    by 0x40298E: main (cub3D.c:48)
+==964071== 
+==964071== Invalid free() / delete / delete[] / realloc()
+==964071==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==964071==    by 0x408088: freeall (cub3D_clear.c:27)
+==964071==    by 0x40ACF0: clean_exit (clean_and_imgs.c:67)
+==964071==    by 0x40A4C7: parse_map (parsing.c:49)
+==964071==    by 0x40A4C7: parsing (parsing.c:64)
+==964071==    by 0x408928: init (cub3D_init.c:138)
+==964071==    by 0x40298E: main (cub3D.c:48)
+==964071==  Address 0x50a4300 is 0 bytes inside a block of size 136 free'd
+==964071==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==964071==    by 0x408088: freeall (cub3D_clear.c:27)
+==964071==    by 0x40AC97: clean_exit (clean_and_imgs.c:60)
+==964071==    by 0x40A4C7: parse_map (parsing.c:49)
+==964071==    by 0x40A4C7: parsing (parsing.c:64)
+==964071==    by 0x408928: init (cub3D_init.c:138)
+==964071==    by 0x40298E: main (cub3D.c:48)
+==964071==  Block was alloc'd at
+==964071==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==964071==    by 0x40AF2E: store_map (map.c:80)
+==964071==    by 0x40A4A2: parse_map (parsing.c:47)
+==964071==    by 0x40A4A2: parsing (parsing.c:64)
+==964071==    by 0x408928: init (cub3D_init.c:138)
+==964071==    by 0x40298E: main (cub3D.c:48)
+==964071== 
+==964071== 
+==964071== FILE DESCRIPTORS: 7 open (3 std) at exit.
+==964071== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==964071==    <inherited from parent>
+==964071== 
+==964071== Open file descriptor 39: /home/pmagnero/.config/Code/logs/20240926T094053/ptyhost.log
+==964071==    <inherited from parent>
+==964071== 
+==964071== Open file descriptor 38: /usr/share/code/resources/app/node_modules.asar
+==964071==    <inherited from parent>
+==964071== 
+==964071== Open file descriptor 3: /home/pmagnero/repo/cub/valgrind.log
+==964071==    <inherited from parent>
+==964071== 
+==964071== 
+==964071== HEAP SUMMARY:
+==964071==     in use at exit: 0 bytes in 0 blocks
+==964071==   total heap usage: 17,459 allocs, 17,476 frees, 1,142,183 bytes allocated
+==964071== 
+==964071== All heap blocks were freed -- no leaks are possible
+==964071== 
+==964071== For lists of detected and suppressed errors, rerun with: -s
+==964071== ERROR SUMMARY: 34 errors from 4 contexts (suppressed: 0 from 0)

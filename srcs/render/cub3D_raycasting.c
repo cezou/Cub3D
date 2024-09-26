@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/25 18:03:59 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/26 17:28:35 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ void	update_texture_pixels(t_vars *v, t_point p, int *t, t_imga *img)
 	pos = (v->ray.draw_start - v->ray.pitch - (v->player.z / v->ray.wall_dist)
 			- v->screen.gameh / 2 + v->ray.line_height / 2) * step;
 	p.y = v->ray.draw_start - 1;
-	img[0] = v->ray.img;
 	while (++p.y < v->ray.draw_end)
 	{
 		t[1] = (int)pos & (img[0].width - 1);
@@ -101,7 +100,8 @@ void	update_texture_pixels(t_vars *v, t_point p, int *t, t_imga *img)
 		p.z = (t[1] * img[0].len) + (t[0] * 4);
 		if (v->ray.side == 0)
 			p.color = -1;
-		add_pix(v, img, p, (t_point2){1, v->ray.wall_dist, FOGC, FOGL});
+		if (p.z < v->ray.lim)
+			add_pix(v, img, p, (t_point2){1, v->ray.wall_dist, FOGC, FOGL});
 	}
 }
 
@@ -135,6 +135,5 @@ int	raycasting(t_vars *v)
 		x++;
 	}
 	draw_sprites(v);
-	update_animations(v);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/25 19:58:18 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/26 18:04:48 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,43 +40,38 @@
 // 	// }
 // }
 
-// void	initplayeranim(t_vars *v, int d)
-// {
-// 	(void)v;
-// 	d++;
-// 	// v->img[ESPAWN].animnb = DIR_N * ANIM_N;
-// 	// v->img[ESPAWN].anim = (t_imga *)malloc(sizeof(t_imga)
-	// * (DIR_N * ANIM_N));
-// 	// if (!v->img[ESPAWN].anim)
-// 	// 	exit((prterr(v, ERRMALL, 1, 1), 1));
-// 	// initplayerpathanim(v);
-// 	// initprojectile(v, -1);
-// 	// while (++d < v->img[ESPAWN].animnb)
-// 	// {
-// 	// 	v->img[ESPAWN].anim[d].img = mlx_xpm_file_to_image(v->mlx,
-// 	// 			v->img[ESPAWN].anim[d].filename,
-// 	// 			&v->img[ESPAWN].anim[d].width,
-// 	// 			&v->img[ESPAWN].anim[d].height);
-// 	// 	if (!v->img[ESPAWN].anim[d].img)
-// 	// 		exit((prterr(v, "Error mlx texture anim image\n", 1, 1), 1));
-// 	// 	v->img[ESPAWN].anim[d].addr
-// 	// 		= mlx_get_data_addr(v->img[ESPAWN].anim[d].img,
-// 	// 			&v->img[ESPAWN].anim[d].bpp, &v->img[ESPAWN].anim[d].len,
-// 	// 			&v->img[ESPAWN].anim[d].endian);
-// 	// 	if (!v->img[ESPAWN].anim[d].addr)
-// 	// 		exit((prterr(v, "Error mlx text anim img addr\n", 1, 1), 1));
-// 	// 	initanim(v, ESPAWN, d);
-// 	// }
-// }
+void	initplayeranim(t_vars *v, int d)
+{
+	v->img[EPLAYER].animnb = 1;
+	v->img[EPLAYER].anim = (t_imga *)malloc(sizeof(t_imga) * 1);
+	if (!v->img[EPLAYER].anim)
+		exit((prterr(v, ERRMALL, 1, 1), 1));
+	initplayerpathanim(v);
+	while (++d < v->img[EPLAYER].animnb)
+	{
+		v->img[EPLAYER].anim[d].img = mlx_xpm_file_to_image(v->mlx,
+				v->img[EPLAYER].anim[d].filename,
+				&v->img[EPLAYER].anim[d].width,
+				&v->img[EPLAYER].anim[d].height);
+		if (!v->img[EPLAYER].anim[d].img)
+			exit((prterr(v, "Error mlx texture anim image\n", 1, 1), 1));
+		v->img[EPLAYER].anim[d].addr
+			= mlx_get_data_addr(v->img[EPLAYER].anim[d].img,
+				&v->img[EPLAYER].anim[d].bpp, &v->img[EPLAYER].anim[d].len,
+				&v->img[EPLAYER].anim[d].endian);
+		if (!v->img[EPLAYER].anim[d].addr)
+			exit((prterr(v, "Error mlx text anim img addr\n", 1, 1), 1));
+	}
+}
 
 void	initguardanim(t_vars *v, int d)
 {
+	v->img[EGUARD].animnb = 1;
 	v->img[EGUARD].anim = (t_imga *)malloc(sizeof(t_imga) * (1));
 	if (!v->img[EGUARD].anim)
 		exit((prterr(v, ERRMALL, 1, 1), 1));
-	v->img[EGUARD].animnb = 1;
-	v->img[EGUARD].anim[0].filename = "resources/textures/general.xpm";
-	while (++d < 1)
+	initguardpathanim(v);
+	while (++d < v->img[EGUARD].animnb)
 	{
 		v->img[EGUARD].anim[d].img = mlx_xpm_file_to_image(v->mlx,
 				v->img[EGUARD].anim[d].filename, &v->img[EGUARD].anim[d].width,

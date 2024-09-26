@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/25 19:56:15 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/26 18:04:14 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 void	initmainimage(t_vars *v)
 {
+	v->screen.gamew = v->screen.resw;
+	v->screen.gameh = v->screen.resh - v->screen.resh / 5;
+	v->screen.hudw = v->screen.resw;
+	v->screen.hudh = v->screen.resh / 5;
+	v->screen.ratio = v->screen.resw / v->screen.resh;
 	v->img[EMAP].width = v->screen.gamew;
 	v->img[EMAP].height = v->screen.gameh;
 	v->img[EBUFF].height = v->screen.resw;
@@ -46,10 +51,6 @@ void	initwindow(t_vars *v, int argc, char **argv)
 			|| v->screen.resh <= 0)
 			exit((prterr(v, ERRRES, 1, 0), 1));
 	}
-	v->screen.gamew = v->screen.resw;
-	v->screen.gameh = v->screen.resh - v->screen.resh / 5;
-	v->screen.hudw = v->screen.resw;
-	v->screen.hudh = v->screen.resh / 5;
 	initmainimage(v);
 	v->screen.win = mlx_new_window(v->mlx, (int)v->screen.resw,
 			(int)v->screen.resh, "CUB3D");
