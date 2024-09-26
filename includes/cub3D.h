@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/26 17:45:18 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/26 18:44:54 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,6 @@
 
 # define TOOLBAR_LINUX_H 70
 
-# define LOOKUP_MAX 300
 # define SKYBOX_REPEATS 4
 
 # define FOGL 4

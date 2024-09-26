@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 18:24:52 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/26 13:05:20 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/26 18:53:35 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,14 @@ void	rotatecamy(t_vars *v, int d, double rotspeed, int mul)
 	if (d == UP)
 	{
 		v->ray.pitch += mul * rotspeed;
-		if (v->ray.pitch > LOOKUP_MAX)
-			v->ray.pitch = LOOKUP_MAX;
+		if (v->ray.pitch > v->screen.gameh / 2)
+			v->ray.pitch = v->screen.gameh / 2;
 	}
 	else if (d == DOWN)
 	{
 		v->ray.pitch -= mul * rotspeed;
-		if (v->ray.pitch < -LOOKUP_MAX)
-			v->ray.pitch = -LOOKUP_MAX;
+		if (v->ray.pitch < (-v->screen.gameh / 2) * 3)
+			v->ray.pitch = -(v->screen.gameh / 2) * 3;
 	}
 }
 

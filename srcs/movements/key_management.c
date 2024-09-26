@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 16:14:16 by cviegas           #+#    #+#             */
-/*   Updated: 2024/09/26 16:32:36 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/26 18:52:03 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,6 @@ void	key_management(t_vars *v)
 	if (!v->game.pause && !v->game.won && v->game.start > 1 && is_pressed(XK_F1,
 			v))
 		tooglegod(v);
-	if (!v->game.won && v->game.start > 1)
+	if (!v->game.won && v->game.won != 4 && v->game.start > 1)
 		handle_movement(v);
 }
