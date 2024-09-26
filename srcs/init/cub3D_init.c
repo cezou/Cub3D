@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/26 15:46:22 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/26 19:49:06 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	initvars(t_vars *v)
 {
-	v->mapv = (t_mapv){0};
+	// v->mapv = (t_mapv){0};
 	v->player = (t_player){0};
 	v->proj = (t_proj){0};
 	v->menu = (t_menu){0};
@@ -48,62 +48,16 @@ void	initmodes(t_vars *v, int argc)
 		exit((prterr(v, "Too many/few arguments\n", 1, 1), 1));
 }
 
-void	set_player_dir(t_vars *v, double x, double y)
-{
-	v->player.dir_x = x;
-	v->player.dir_y = y;
-}
-
-void	set_player_plane(t_vars *v, double px, double py)
-{
-	v->player.plane_x = px;
-	v->player.plane_y = py;
-}
-
-void	init_player_dir(t_vars *v)
-{
-	if (v->player.player->val == 'N')
-	{
-		set_player_dir(v, 0, -1);
-		set_player_plane(v, 0.66, 0);
-	}
-	else if (v->player.player->val == 'S')
-	{
-		set_player_dir(v, 0, 1);
-		set_player_plane(v, -0.66, 0);
-	}
-	else if (v->player.player->val == 'E')
-	{
-		set_player_dir(v, -1, 0);
-		set_player_plane(v, 0, -0.66);
-	}
-	else if (v->player.player->val == 'W')
-	{
-		set_player_dir(v, 1, 0);
-		set_player_plane(v, 0, 0.66);
-	}
-}
-
-void	check_map(t_vars *v)
+void	init_doors(t_vars *v)
 {
 	int		i;
-	int		j;
 	t_map	*tmp;
 
 	i = -1;
-	j = -1;
-	parse(v, -1, NULL);
-	v->player.x = v->player.player->x + 0.5;
-	v->player.y = v->player.player->y + 0.5;
-	v->player.animp = EPLAYER;
-	v->player.animoff = 0;
+	tmp = v->mapv.map;
 	v->door = (t_door *)malloc(sizeof(t_door) * (v->game.nb_door));
 	if (!v->door)
 		exit((prterr(v, ERRMALL, 1, 0), 1));
-	v->guard = (t_guard *)malloc(sizeof(t_guard) * (v->game.nb_guard));
-	if (!v->guard)
-		exit((prterr(v, ERRMALL, 1, 0), 1));
-	tmp = v->mapv.map;
 	while (tmp)
 	{
 		if (tmp->val == 'D')
@@ -115,6 +69,22 @@ void	check_map(t_vars *v)
 			v->door[i].img_i = EDOOR;
 			v->door[i].xdelta = v->img[v->door[i].img_i].width;
 		}
+		tmp = tmp->right;
+	}
+}
+
+void	init_guard(t_vars *v)
+{
+	int		j;
+	t_map	*tmp;
+
+	j = -1;
+	v->guard = (t_guard *)malloc(sizeof(t_guard) * (v->game.nb_guard));
+	if (!v->guard)
+		exit((prterr(v, ERRMALL, 1, 0), 1));
+	tmp = v->mapv.map;
+	while (tmp)
+	{
 		if (tmp->val == 'G')
 		{
 			v->guard[++j].x = tmp->x;
@@ -132,12 +102,23 @@ void	check_map(t_vars *v)
 	}
 }
 
+void	check_map(t_vars *v)
+{
+	parse(v, -1, NULL);
+	v->player.x = v->player.player->x + 0.5;
+	v->player.y = v->player.player->y + 0.5;
+	v->player.animp = EPLAYER;
+	v->player.animoff = 0;
+	init_doors(v);
+	init_guard(v);
+}
+
 void	init(t_vars *v, int argc, char **argv)
 {
 	int	i;
 
 	i = -1;
-	parsing(argc, argv, v);
+	parsing(argc, argv[1], v);
 	v->screen.win = NULL;
 	v->mapv.map = NULL;
 	v->sound.init = 0;

@@ -12,6 +12,8 @@
 
 #include "../../includes/cub3D.h"
 
+/// @brief Attack action. Change animations offset in the sprite sheet.
+/// @param v Vars
 void	attack(t_vars *v)
 {
 	if (!v->player.pattack)
@@ -21,6 +23,8 @@ void	attack(t_vars *v)
 	v->player.animoff = v->img[v->player.animp].anim[0].animx;
 }
 
+/// @brief Movement switch case
+/// @param v Vars
 void	handle_movement(t_vars *v)
 {
 	if (is_pressed(XK_w, v))
@@ -43,6 +47,20 @@ void	handle_movement(t_vars *v)
 		move(v, 8);
 }
 
+/// @brief Toggle god/debug mode
+/// @param v Vars
+void	tooglegod(t_vars *v)
+{
+	if (v->game.god == 0)
+		v->game.god = 1;
+	else if (v->game.god == 1)
+		v->game.god = 0;
+}
+
+/// @brief Hooks function when a key is pressed.
+/// @param kd Keyboard key pressed
+/// @param v Vars
+/// @return 0
 int	keys(int kd, t_vars *v)
 {
 	v->keys[kd] = true;
@@ -54,9 +72,17 @@ int	keys(int kd, t_vars *v)
 		returnkey(v);
 	if (v->game.pause)
 		menuarrow(v, kd);
+	if (!v->game.pause && !v->game.won && v->game.start > 1
+		&& is_pressed(XK_F1, v))
+		tooglegod(v);
+	if (((v->game.start > 1 && v->game.god) || v->game.won)
+		&& is_pressed(XK_F5, v))
+		hotreload(v);
 	return (0);
 }
 
+/// @brief Hooks function to catch events like mouse move, key pressed/released.
+/// @param v Vars
 void	hooks(t_vars *v)
 {
 	if (mlx_hook(v->screen.win, 4, 1L << 2, mouse_down, v) < 0)

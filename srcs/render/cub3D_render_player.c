@@ -6,12 +6,14 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/26 17:52:40 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/26 18:57:18 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
 
+/// @brief Render the player sprites/animations. Put those pixels in the buff.
+/// @param v Vars
 void	render_player(t_vars *v)
 {
 	t_point	p;

@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 16:14:16 by cviegas           #+#    #+#             */
-/*   Updated: 2024/09/26 18:52:03 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/26 19:35:18 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,6 @@ bool	is_pressed(int key, t_vars *v)
 	if (v->keys[key])
 		return (1);
 	return (0);
-}
-
-void	tooglegod(t_vars *v)
-{
-	if (v->game.god == 0)
-		v->game.god = 1;
-	else if (v->game.god == 1)
-		v->game.god = 0;
 }
 
 int	returnkey(t_vars *v)
@@ -58,12 +50,6 @@ void	key_management(t_vars *v)
 		resetpos((v->mouse.renderrate = 0, v), 1);
 	if (v->game.start > 1 && v->game.god && is_pressed(XK_m, v))
 		hotreload(v);
-	if (((v->game.start > 1 && v->game.god) || v->game.won) && is_pressed(XK_F5,
-			v))
-		hotreload(v);
-	if (!v->game.pause && !v->game.won && v->game.start > 1 && is_pressed(XK_F1,
-			v))
-		tooglegod(v);
 	if (!v->game.won && v->game.won != 4 && v->game.start > 1)
 		handle_movement(v);
 }

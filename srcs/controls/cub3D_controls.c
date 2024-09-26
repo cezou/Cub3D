@@ -14,22 +14,30 @@
 
 void	hotreload(t_vars *v)
 {
-	char	*path;
-	int		start;
+	// int		start;
+	char	*filename;
+	int		i;
 
+	i = -1;
+	filename = v->mapv.filename;
 	if (v->mapv.map)
 		map_clear(v->mapv.map);
 	v->game.start = 2;
-	path = v->mapv.filename;
-	start = v->game.start;
-	initvars(v);
-	v->mapv.filename = path;
-	v->game.start = start;
+	// start = v->game.start;
+	parsing(4, filename, v);
+	// v->game.start = start;
+	// v->img = (t_imga *)malloc(sizeof(t_imga) * (COMP_N + 1));
+	// if (!v->img)
+	// 	exit((prterr(v, ERRMALL, 1, 1), 1));
+	// while (v->img && ++i <= COMP_N)
+	// 	v->img[i] = (t_imga){0};
 	clearimgs(v);
-	inittextures(v, 0);
-	parse(v, -1, NULL);
-	v->player.x = v->player.player->x;
-	v->player.y = v->player.player->y;
+	initvars(v);
+	inittextures(v, 6);
+	ft_printf(1, "%sKUK\n", filename);
+	initplayeranim(v, -1);
+	initguardanim(v, -1);
+	check_map(v);
 	init_player_dir(v);
 	ft_printf(1, "hotreload\n");
 	mlx_loop_end((v->game.won = 0, v->mlx));

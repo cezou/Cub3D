@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/26 18:44:54 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/26 19:49:21 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -663,6 +663,7 @@ int						map_clear(t_map *lst);
 
 // Init
 void					init(t_vars *v, int argc, char **argv);
+void					check_map(t_vars *v);
 void					inittextures(t_vars *v, int i);
 void					initplayeranim(t_vars *v, int d);
 void					initobjectsanim(t_vars *v, int i, int obj);
@@ -807,7 +808,7 @@ void					pfree_img(t_imga *img, t_vars *v);
 char					*strrev(char *s);
 bool					is_valid_int(const char *s);
 bool					is_valid_int(const char *s);
-void					parsing(int ac, char **av, t_vars *v);
+void					parsing(int ac, char *filename, t_vars *v);
 bool					isnt_cub_ended(const char *s);
 
 void					lerr(size_t i, const char *s);
