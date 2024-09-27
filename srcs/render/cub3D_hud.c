@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 20:43:05 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/26 17:07:00 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/27 14:26:53 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,26 +44,59 @@ void	scale_img(t_point p, t_imga *src, t_imga *dest)
 
 /// @brief Render the HUD
 /// @param v Vars
+void	renderdoomhead(t_vars *v)
+{
+	t_point	p;
+	int		w;
+	int		h;
+
+	p.x = v->hud.animoff - 1;
+	v->tmp[0] = v->img[EDOOMHTMP];
+	v->tmp[1] = v->img[EHUD];
+	w = v->hud.animoff + v->tmp[0].animx;
+	h = v->tmp[0].height;
+	p.color = 0;
+	while (++p.x < w)
+	{
+		p.y = -1;
+		while (++p.y < h)
+		{
+			p.z = (p.y * v->tmp[0].len) + (p.x * 4);
+			add_pix(v, v->tmp, (t_point){p.x - v->hud.animoff + v->tmp[0].animx
+				+ (v->screen.hudw / 2) - (v->tmp[0].width / 2),
+				p.y, p.z, p.color}, (t_point2){0});
+		}
+	}
+}
+
+
+/// @brief Render the HUD
+/// @param v Vars
 void	renderhud(t_vars *v)
 {
 	t_point	p;
-	t_imga	img[2];
 
-	if (!v->game.refresh_hud)
+	if (!v->hud.refresh)
 		return ;
+	// ft_bzero(v->img[EHUD].addr, v->screen.hudw * v->screen.hudh
+	// 	* (v->img[EHUD].bpp / 8));
+	save_screen_to_buffer(v->img[EHUD], v->img[EHUDTMP], 0);
+	renderdoomhead(v);
 	p.x = -1;
-	img[0] = v->img[EHUD];
-	img[1] = v->img[EBUFF];
-	p.color = 0;
-	while (++p.x < v->img[EHUD].width)
-	{
-		p.y = -1;
-		while (++p.y < v->img[EHUD].height)
-		{
-			p.z = (p.y * img[0].len) + (p.x * 4);
-			add_pix(v, img, (t_point){p.x, p.y + v->screen.gameh, p.z,
-				p.color}, (t_point2){0});
-		}
-	}
-	v->game.refresh_hud = 0;
+	save_screen_to_buffer(v->img[EBUFF], v->img[EHUD], (v->img[EMAP].width
+		* v->img[EMAP].height * (v->img[EMAP].bpp / 8)));
+	// v->tmp[0] = v->img[EHUD];
+	// v->tmp[1] = v->img[EBUFF];
+	// p.color = 0;
+	// while (++p.x < v->img[EHUD].width)
+	// {
+	// 	p.y = -1;
+	// 	while (++p.y < v->img[EHUD].height)
+	// 	{
+	// 		p.z = (p.y * v->tmp[0].len) + (p.x * 4);
+	// 		add_pix(v, v->tmp, (t_point){p.x, p.y + v->screen.gameh, p.z,
+	// 			p.color}, (t_point2){0});
+	// 	}
+	// }
+	v->hud.refresh = 0;
 }

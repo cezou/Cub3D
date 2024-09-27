@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/26 19:49:21 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:52:11 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -292,11 +292,14 @@ typedef enum s_components
 	EHUDIMG,
 	ETITLE,
 	EKEK,
+	EDOOMH,
 	EMENUSELECT,
 	EMENU,
 	EMENUIG,
 	EMENUOPT,
 	EBUFF,
+	EDOOMHTMP,
+	EHUDTMP,
 	COMP_N
 }						t_comp;
 
@@ -479,6 +482,16 @@ typedef struct s_player
 	uint64_t			timerplayer;
 }						t_player;
 
+typedef struct s_hud
+{
+	bool				refresh;
+	t_imga				img;
+	t_imga				head;
+	int					headid;
+	int					animoff;
+	uint64_t			time;
+}						t_hud;
+
 typedef struct s_guard
 {
 	int					x;
@@ -560,7 +573,6 @@ typedef struct s_game
 	t_imga				skybox;
 	int					nb_door;
 	int					nb_guard;
-	bool				refresh_hud;
 }						t_game;
 
 // images: verifier que le path finit bien par .xpm, que le fichier existe,
@@ -617,6 +629,7 @@ typedef struct s_vars
 	t_ray				ray;
 	t_sprite			sprite;
 	t_floor				floor;
+	t_hud				hud;
 	t_imga				tmp[2];
 	int					*rand;
 	int					rndindex;
@@ -678,6 +691,7 @@ void					initpathtext(t_vars *v);
 void					initplayerpathanim(t_vars *v);
 void					initguardpathanim(t_vars *v);
 void					initprojectilepathanim(t_vars *v);
+void					inithud(t_vars *v);
 void					init_player_dir(t_vars *v);
 
 // Mouse
@@ -810,6 +824,8 @@ bool					is_valid_int(const char *s);
 bool					is_valid_int(const char *s);
 void					parsing(int ac, char *filename, t_vars *v);
 bool					isnt_cub_ended(const char *s);
+void					parse_ids(t_vars *v, int fd, size_t *i);
+void					parse_map(t_vars *v, int fd, int i);
 
 void					lerr(size_t i, const char *s);
 size_t					tab_len(char **tab);

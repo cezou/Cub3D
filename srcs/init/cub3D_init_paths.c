@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/26 18:04:37 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:36:11 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,18 @@ void	initpathtext(t_vars *v)
 	v->img[EMENUIG].filename = "resources/textures/menus/menu_ingame.xpm";
 	v->img[EMENUOPT].filename = "resources/textures/menus/menu_options.xpm";
 	v->img[EKEK].filename = "resources/textures/DoomTitle.xpm";
+	v->img[EDOOMH].filename = "resources/textures/Doomhead.xpm";
 }
 
 void	initplayerpathanim(t_vars *v)
 {
-	v->img[EFCK].width = v->img[EPLAYER].width * (v->screen.ratio * 3);
-	v->img[EFCK].height = v->img[EPLAYER].height * (v->screen.ratio * 3);
-	initimage(v, EFCK, v->img[EPLAYER].width * (v->screen.ratio * 3),
-		v->img[EPLAYER].height * (v->screen.ratio * 3));
+	v->img[EFCK].width = v->img[EPLAYER].width / (v->screen.ratio) * 3;
+	v->img[EFCK].height = v->img[EPLAYER].height / (v->screen.ratio) * 3;
+	initimage(v, EFCK, v->img[EFCK].width, v->img[EFCK].height);
 	scale_img((t_point){0}, &v->img[EPLAYER], &v->img[EFCK]);
 	v->img[EPLAYER].anim[0].filename = "resources/textures/fist.xpm";
-	v->img[EPLAYER].anim[0].animx = 150 * (1.0 / v->img[EFCK].ratiox);
+	v->img[EPLAYER].anim[0].animx = v->img[EPLAYER].width / 7
+		* (1.0 / v->img[EFCK].ratiox);
 }
 
 void	initguardpathanim(t_vars *v)

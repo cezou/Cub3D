@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 15:07:21 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/26 19:03:40 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/27 13:20:12 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	closecross(t_vars *v)
 int	keys_release(int keycode, t_vars *v)
 {
 	v->keys[keycode] = false;
+	if (!v->keys[XK_w] && !v->keys[XK_a] && !v->keys[XK_s] && !v->keys[XK_d])
+		v->player.moving = 0;
 	if (v->game.start > 1 && ACTIVATE_SOUND && (keycode == XK_w
 			|| keycode == XK_a || keycode == XK_s || keycode == XK_d))
 		ma_sound_stop(&v->sound.sound[1]);

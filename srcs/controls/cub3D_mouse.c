@@ -55,23 +55,24 @@ int	mouse_up(int button, int x, int y, t_vars *p)
 
 int	mouse_move(int x, int y, t_vars *p)
 {
-	p->mouse.renderrate = 0;
-	if (ft_abs(p->mouse.prevy - y) == 4 || ft_abs(p->mouse.prevx - x) == 4)
-		p->mouse.renderrate = 1;
+	// p->mouse.renderrate = 0;
+	// if (ft_abs(p->mouse.prevy - y) == 4 || ft_abs(p->mouse.prevx - x) == 4)
+	// 	p->mouse.renderrate = 1;
 	if (p->game.start > 1 && p->game.god)
 	{
 		if (x < p->mouse.prevx)
-			rotatecamx(p, RIGHT, p->player.mouserotspeed);
+			rotatecamx(p, RIGHT, p->player.mouserotspeed * p->game.frametime);
 		else if (x > p->mouse.prevx)
-			rotatecamx(p, LEFT, p->player.mouserotspeed);
+			rotatecamx(p, LEFT, p->player.mouserotspeed * p->game.frametime);
 		if (y < p->mouse.prevy)
-			rotatecamy(p, UP, p->player.mouserotspeed, 400);
+			rotatecamy(p, UP, p->player.mouserotspeed * p->game.frametime, 400);
 		else if (y > p->mouse.prevy)
-			rotatecamy(p, DOWN, p->player.mouserotspeed, 400);
+			rotatecamy(p, DOWN, p->player.mouserotspeed * p->game.frametime,
+				400);
 		p->mouse.prevx = x;
 		p->mouse.prevy = y;
-		if (p->mouse.renderrate == 1)
-			render(p);
+		// if (p->mouse.renderrate == 1)
+		// 	render(p);
 	}
 	return (0);
 }

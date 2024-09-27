@@ -12,25 +12,41 @@
 
 #include "../../includes/cub3D.h"
 
-void	hotreload(t_vars *v)
+void    hotreload(t_vars *v)
 {
-	// int		start;
-	char	*filename;
-	int		i;
+	size_t	i;
+	int		fd;
+	char    *filename;
 
-	i = -1;
 	filename = v->mapv.filename;
+	ft_printf(1, "%sKAK\n", filename);
 	if (v->mapv.map)
 		map_clear(v->mapv.map);
 	v->game.start = 2;
 	// start = v->game.start;
-	parsing(4, filename, v);
-	// v->game.start = start;
-	// v->img = (t_imga *)malloc(sizeof(t_imga) * (COMP_N + 1));
-	// if (!v->img)
-	// 	exit((prterr(v, ERRMALL, 1, 1), 1));
-	// while (v->img && ++i <= COMP_N)
-	// 	v->img[i] = (t_imga){0};
+	if (v->infos.map)
+		freeall(v->infos.map);
+	v->infos = (t_infos){0};
+	// if (v->img)
+	//     free(v->img);
+	// if (v->ray.zbuffer)
+	//     free(v->ray.zbuffer);
+	if (v->objs.objs)
+		free(v->objs.objs);
+	if (v->door)
+		free(v->door);
+	if (v->guard)
+		free(v->guard);
+	if (v->rand)
+		free(v->rand);
+	v->mapv = (t_mapv){0};
+	i = 0;
+	init_infos(v, filename, &fd);
+	parse_ids(v, fd, &i);
+	parse_map(v, fd, i);
+	print_map(v->infos.map);
+	printf("OI\n");
+	// parsing(4, filename, v);
 	clearimgs(v);
 	initvars(v);
 	inittextures(v, 6);
@@ -40,8 +56,40 @@ void	hotreload(t_vars *v)
 	check_map(v);
 	init_player_dir(v);
 	ft_printf(1, "hotreload\n");
+	// v->ray = (t_ray){0};
 	mlx_loop_end((v->game.won = 0, v->mlx));
 }
+
+// void	hotreload(t_vars *v)
+// {
+// 	// int		start;
+// 	char	*filename;
+// 	int		i;
+
+// 	i = -1;
+// 	filename = v->mapv.filename;
+// 	if (v->mapv.map)
+// 		map_clear(v->mapv.map);
+// 	v->game.start = 2;
+// 	// start = v->game.start;
+// 	parsing(4, filename, v);
+// 	// v->game.start = start;
+// 	// v->img = (t_imga *)malloc(sizeof(t_imga) * (COMP_N + 1));
+// 	// if (!v->img)
+// 	// 	exit((prterr(v, ERRMALL, 1, 1), 1));
+// 	// while (v->img && ++i <= COMP_N)
+// 	// 	v->img[i] = (t_imga){0};
+// 	clearimgs(v);
+// 	initvars(v);
+// 	inittextures(v, 6);
+// 	ft_printf(1, "%sKUK\n", filename);
+// 	initplayeranim(v, -1);
+// 	initguardanim(v, -1);
+// 	check_map(v);
+// 	init_player_dir(v);
+// 	ft_printf(1, "hotreload\n");
+// 	mlx_loop_end((v->game.won = 0, v->mlx));
+// }
 
 void	resetpos(t_vars *v, int renderb)
 {
@@ -62,7 +110,7 @@ void	menuexit(t_vars *v)
 {
 	if (v->game.won < 4 && (MANDATORY || v->game.won > 0))
 		exit((mlx_do_key_autorepeaton(v->mlx), cleardata(v, 1), 0));
-	v->game.refresh_hud = 1;
+	v->hud.refresh = 1;
 	if (v->menu.menu == 2)
 	{
 		v->menu.menu = 0;

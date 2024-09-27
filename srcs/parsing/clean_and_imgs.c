@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 17:22:28 by cviegas           #+#    #+#             */
-/*   Updated: 2024/09/26 19:27:56 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/27 16:08:06 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,6 @@ void	init_infos(t_vars *v, char *file, int *fd)
 	*fd = open(file, O_RDONLY);
 	if (*fd == -1)
 		exit((merr("file doesn't exist or open failed"), FAIL));
-	v->mlx = mlx_init();
-	if (!v->mlx)
-		exit((close(*fd), perr("MLX init failed"), FAIL));
 	v->infos.north.imga.img = NULL;
 	v->infos.north.is_set = NULL;
 	v->infos.east.imga.img = NULL;

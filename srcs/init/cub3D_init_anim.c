@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/26 18:04:48 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:39:36 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,26 @@ void	initguardanim(t_vars *v, int d)
 		if (!v->img[EGUARD].anim[d].addr)
 			exit((prterr(v, "Error mlx texture anim image address\n", 1, 1), 1));
 	}
+}
+
+void	inithud(t_vars *v)
+{
+	v->img[EHUD].width = v->screen.hudw;
+	v->img[EHUD].height = v->screen.hudh;
+	v->img[EHUDTMP].width = v->screen.hudw;
+	v->img[EHUDTMP].height = v->screen.hudh;
+	initimage(v, EHUD, v->screen.hudw, v->screen.hudh);
+	initimage(v, EHUDTMP, v->screen.hudw, v->screen.hudh);
+	scale_img((t_point){0}, &v->img[EHUDIMG], &v->img[EHUDTMP]);
+	v->hud.img = v->img[EHUDTMP];
+	v->img[EDOOMHTMP].width = v->img[EDOOMH].width / v->img[EHUDTMP].ratiox;
+	v->img[EDOOMHTMP].height = v->img[EDOOMH].height / v->img[EHUDTMP].ratioy;
+	initimage(v, EDOOMHTMP, v->img[EDOOMHTMP].width, v->img[EDOOMHTMP].height);
+	scale_img((t_point){0}, &v->img[EDOOMH], &v->img[EDOOMHTMP]);
+	v->img[EDOOMHTMP].animx = v->img[EDOOMHTMP].width / 3;
+	v->hud.head = v->img[EDOOMHTMP];
+	v->hud.headid = v->img[EDOOMHTMP].animx;
+	v->hud.animoff = v->img[EDOOMHTMP].animx;
 }
 
 // void	initobjectsanim(t_vars *v, int d, int obj)

@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/26 18:04:14 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/27 12:44:30 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ void	initmainimage(t_vars *v)
 	v->img[EBUFF].height = v->screen.resh;
 	v->img[COMP_N].width = v->screen.resw;
 	v->img[COMP_N].height = v->screen.resh;
-	v->img[EHUD].width = v->screen.hudw;
-	v->img[EHUD].height = v->screen.hudh;
 	v->img[COMP_N].anim = NULL;
 	v->img[EMAP].anim = NULL;
 	v->img[EMAP].animnb = 0;

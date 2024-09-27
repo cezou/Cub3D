@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 18:24:52 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/26 18:53:35 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:34:52 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 /// @param d Key input pressed
 /// @param rotspeed Rotation speed
 /// @param mul Rotation speed factor
-void	rotatecamx(t_vars *v, int d, double rotspeed)
+void	rotatecamx(t_vars *v, int d, double s)
 {
 	double	oldir;
 	double	oldplane;
@@ -25,17 +25,25 @@ void	rotatecamx(t_vars *v, int d, double rotspeed)
 	if (d != LEFT && d != RIGHT)
 		return ;
 	v->player.angle = atan2(v->player.dir_y, v->player.dir_x);
-	if (d == RIGHT)
-		rotspeed = -rotspeed;
+	if (d == LEFT)
+	{
+		if (v->hud.animoff != 0)
+			v->hud.refresh = 1;
+		v->hud.animoff = 0;
+	}
+	else if (d == RIGHT)
+	{
+		s = -s;
+		if (v->hud.animoff != v->hud.head.animx * 2)
+			v->hud.refresh = 1;
+		v->hud.animoff = v->hud.head.animx * 2;
+	}
 	oldir = v->player.dir_x;
-	v->player.dir_x = v->player.dir_x * cos(rotspeed) - v->player.dir_y
-		* sin(rotspeed);
-	v->player.dir_y = oldir * sin(rotspeed) + v->player.dir_y * cos(rotspeed);
+	v->player.dir_x = v->player.dir_x * cos(s) - v->player.dir_y * sin(s);
+	v->player.dir_y = oldir * sin(s) + v->player.dir_y * cos(s);
 	oldplane = v->player.plane_x;
-	v->player.plane_x = v->player.plane_x * cos(rotspeed) - v->player.plane_y
-		* sin(rotspeed);
-	v->player.plane_y = oldplane * sin(rotspeed) + v->player.plane_y
-		* cos(rotspeed);
+	v->player.plane_x = v->player.plane_x * cos(s) - v->player.plane_y * sin(s);
+	v->player.plane_y = oldplane * sin(s) + v->player.plane_y * cos(s);
 }
 
 /// @brief Rotate the camera on the y axis if the key pressed are UP/DOWN
@@ -65,17 +73,20 @@ void	rotatecamy(t_vars *v, int d, double rotspeed, int mul)
 static void	moveplayery(t_vars *v, int d)
 {
 	t_point2	k;
+	double		speed;
 
 	k = (t_point2){0.0, 0.0, 0, 0};
 	if (d == NORTH)
 	{
-		k.x = v->player.x + v->player.dir_x * v->player.movespeedy;
-		k.y = v->player.y + v->player.dir_y * v->player.movespeedy;
+		speed = v->player.movespeedy * v->game.frametime;
+		k.x = v->player.x + v->player.dir_x * speed;
+		k.y = v->player.y + v->player.dir_y * speed;
 	}
 	else if (d == SOUTH)
 	{
-		k.x = v->player.x - v->player.dir_x * v->player.movespeedy;
-		k.y = v->player.y - v->player.dir_y * v->player.movespeedy;
+		speed = v->player.movespeedy * v->game.frametime;
+		k.x = v->player.x - v->player.dir_x * speed;
+		k.y = v->player.y - v->player.dir_y * speed;
 	}
 	k.z = (int)k.x;
 	k.t = (int)k.y;
@@ -89,20 +100,23 @@ static void	moveplayerx(t_vars *v, int d)
 {
 	t_point2	k;
 	t_point2	p;
+	double		speed;
 
 	k = (t_point2){0.0, 0.0, 0, 0};
 	p = (t_point2){0.0, 0.0, 0, 0};
 	if (d == WEST)
 	{
+		speed = v->player.movespeedx * v->game.frametime;
 		p = get_90_angle(-1, v->player.dir_x, v->player.dir_y);
-		k.x = v->player.x + p.x * v->player.movespeedx;
-		k.y = v->player.y + p.y * v->player.movespeedx;
+		k.x = v->player.x + p.x * speed;
+		k.y = v->player.y + p.y * speed;
 	}
 	else if (d == EAST)
 	{
+		speed = v->player.movespeedx * v->game.frametime;
 		p = get_90_angle(-1, v->player.dir_x, v->player.dir_y);
-		k.x = v->player.x - p.x * v->player.movespeedx;
-		k.y = v->player.y - p.y * v->player.movespeedx;
+		k.x = v->player.x - p.x * speed;
+		k.y = v->player.y - p.y * speed;
 	}
 	k.z = (int)k.x;
 	k.t = (int)k.y;
@@ -123,11 +137,8 @@ void	move(t_vars *v, int d)
 		ma_sound_start(&v->sound.sound[1]);
 	}
 	v->player.moving = 1;
-	v->player.movespeedx = 3.0 * v->game.frametime;
-	v->player.movespeedy = 3.0 * v->game.frametime;
-	v->player.rotspeed = 2.0 * v->game.frametime;
-	rotatecamx(v, d, v->player.rotspeed);
-	rotatecamy(v, d, v->player.rotspeed, 500);
+	rotatecamx(v, d, v->player.rotspeed * v->game.frametime);
+	rotatecamy(v, d, v->player.rotspeed * v->game.frametime, 500);
 	moveplayerx(v, d);
 	moveplayery(v, d);
 	open_door(v, d);

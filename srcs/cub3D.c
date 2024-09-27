@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 09:51:53 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/26 19:38:29 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/27 12:22:10 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	inittextures(t_vars *v, int i)
 	initimage(v, EMAP, v->screen.gamew, v->screen.gameh);
 	initimage(v, COMP_N, v->screen.resw, v->screen.resh);
 	initimage(v, EBUFF, v->screen.resw, v->screen.resh);
-	initimage(v, EHUD, v->screen.hudw, v->screen.hudh);
 	v->img[ESOUTH] = v->infos.south.imga;
 	v->img[EEAST] = v->infos.east.imga;
 	v->img[EWEST] = v->infos.west.imga;
@@ -37,7 +36,6 @@ void	inittextures(t_vars *v, int i)
 			exit((prterr(v, "Error mlx texture image address\n", 1, 1), 1));
 	}
 	scale_img((t_point){0}, &v->img[EKEK], &v->img[COMP_N]);
-	scale_img((t_point){0}, &v->img[EHUDIMG], &v->img[EHUD]);
 }
 
 int	main(int ac, char **av)

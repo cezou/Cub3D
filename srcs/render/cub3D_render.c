@@ -118,6 +118,8 @@ int	render(t_vars *v)
 		ma_sound_start(&v->sound.sound[2]);
 		mlx_loop_end(v->mlx);
 	}
+	if (!v->player.moving && v->hud.animoff != v->hud.head.animx)
+		(v->hud.refresh = 1, v->hud.animoff = v->hud.head.animx);
 	key_management(v);
 	raycasting(v);
 	renderhud(v);
@@ -126,6 +128,8 @@ int	render(t_vars *v)
 	update_animations(v);
 	save_screen_to_buffer(v->img[EBUFF], v->img[EMAP], 0);
 	mlx_put_image_to_window(v->mlx, v->screen.win, v->img[EBUFF].img, 0, 0);
+	// mlx_clear_window(v->mlx, v->screen.win);
+	// mlx_put_image_to_window(v->mlx, v->screen.win, v->img[EHUD].img, 0, 0);
 	v->game.oldtime = v->game.time;
 	v->game.time = timestamp_in_ms(v);
 	v->game.frametime = (v->game.time - v->game.oldtime) / 1000.0;

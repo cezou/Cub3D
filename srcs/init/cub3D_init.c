@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/26 19:49:06 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/27 16:08:23 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,12 @@
 
 void	initvars(t_vars *v)
 {
-	// v->mapv = (t_mapv){0};
-	v->player = (t_player){0};
-	v->proj = (t_proj){0};
-	v->menu = (t_menu){0};
-	v->objs = (t_objs){0};
-	v->door = NULL;
-	v->guard = NULL;
-	v->game = (t_game){0};
-	v->mouse = (t_mouse){0};
-	v->last = NULL;
-	v->exit = NULL;
-	v->ray = (t_ray){0};
-	v->sprite = (t_sprite){0};
-	v->floor = (t_floor){0};
 	v->game.fps = 64;
+	v->hud.refresh = 1;
 	v->player.movespeedy = 3.0;
 	v->player.movespeedx = 3.0;
 	v->player.rotspeed = 2.0;
-	v->player.mouserotspeed = 0.04;
+	v->player.mouserotspeed = 2.5;
 }
 
 void	initmodes(t_vars *v, int argc)
@@ -118,23 +105,22 @@ void	init(t_vars *v, int argc, char **argv)
 	int	i;
 
 	i = -1;
+	v->mlx = mlx_init();
+	if (!v->mlx)
+		exit((perr("MLX init failed"), FAIL));
 	parsing(argc, argv[1], v);
-	v->screen.win = NULL;
-	v->mapv.map = NULL;
-	v->sound.init = 0;
-	v->objs.objs = NULL;
 	v->img = (t_imga *)malloc(sizeof(t_imga) * (COMP_N + 1));
 	if (!v->img)
 		exit((prterr(v, ERRMALL, 1, 1), 1));
 	while (v->img && ++i <= COMP_N)
 		v->img[i] = (t_imga){0};
-	v->screen = (t_screen){0};
 	(ft_bzero(v->keys, MAX_KEYS), initwindow(v, argc, argv));
 	mlx_mouse_hide(v->mlx, v->screen.win);
 	initmodes(v, argc);
 	inittextures(v, 6);
 	v->game.skybox = v->img[ESKYBOX];
 	initsounds(v);
+	inithud(v);
 	initplayeranim(v, -1);
 	initguardanim(v, -1);
 	check_map(v);
