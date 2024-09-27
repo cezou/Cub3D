@@ -55,9 +55,6 @@ int	mouse_up(int button, int x, int y, t_vars *p)
 
 int	mouse_move(int x, int y, t_vars *p)
 {
-	// p->mouse.renderrate = 0;
-	// if (ft_abs(p->mouse.prevy - y) == 4 || ft_abs(p->mouse.prevx - x) == 4)
-	// 	p->mouse.renderrate = 1;
 	if (p->game.start > 1 && p->game.god)
 	{
 		if (x < p->mouse.prevx)
@@ -71,8 +68,6 @@ int	mouse_move(int x, int y, t_vars *p)
 				400);
 		p->mouse.prevx = x;
 		p->mouse.prevy = y;
-		// if (p->mouse.renderrate == 1)
-		// 	render(p);
 	}
 	return (0);
 }

@@ -1,34 +1,43 @@
-==252735== Memcheck, a memory error detector
-==252735== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==252735== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==252735== Command: ./cub3D_bonus resources/maps/subject.cub 800 600
-==252735== Parent PID: 252731
-==252735== 
-==252735== 
-==252735== FILE DESCRIPTORS: 7 open (3 std) at exit.
-==252735== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
-==252735==    <inherited from parent>
-==252735== 
-==252735== Open file descriptor 39: /home/pmagnero/.config/Code/logs/20240927T093626/ptyhost.log
-==252735==    <inherited from parent>
-==252735== 
-==252735== Open file descriptor 38: /usr/share/code/resources/app/node_modules.asar
-==252735==    <inherited from parent>
-==252735== 
-==252735== Open file descriptor 3: /home/pmagnero/repo/cub/valgrind_bonus.log
-==252735==    <inherited from parent>
-==252735== 
-==252735== 
-==252735== HEAP SUMMARY:
-==252735==     in use at exit: 101,979 bytes in 565 blocks
-==252735==   total heap usage: 72,946 allocs, 72,381 frees, 17,266,594 bytes allocated
-==252735== 
-==252735== LEAK SUMMARY:
-==252735==    definitely lost: 0 bytes in 0 blocks
-==252735==    indirectly lost: 0 bytes in 0 blocks
-==252735==      possibly lost: 0 bytes in 0 blocks
-==252735==    still reachable: 0 bytes in 0 blocks
-==252735==         suppressed: 101,979 bytes in 565 blocks
-==252735== 
-==252735== For lists of detected and suppressed errors, rerun with: -s
-==252735== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 3 from 2)
+==32636== Memcheck, a memory error detector
+==32636== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==32636== Using Valgrind-3.16.1 and LibVEX; rerun with -h for copyright info
+==32636== Command: ./cub3D_bonus resources/maps/subject.cub 800 600
+==32636== Parent PID: 32632
+==32636== 
+==32636== 
+==32636== FILE DESCRIPTORS: 7 open at exit.
+==32636== Open file descriptor 24: /home/borgir/.vscode-server/data/logs/20240927T204426/network.log
+==32636==    <inherited from parent>
+==32636== 
+==32636== Open file descriptor 20: /home/borgir/.vscode-server/data/logs/20240927T204426/remoteagent.log
+==32636==    <inherited from parent>
+==32636== 
+==32636== Open file descriptor 19: /home/borgir/.vscode-server/data/logs/20240927T204426/ptyhost.log
+==32636==    <inherited from parent>
+==32636== 
+==32636== Open file descriptor 3: /home/borgir/42/cursus/Cub3D/valgrind_bonus.log
+==32636==    <inherited from parent>
+==32636== 
+==32636== Open file descriptor 2: /dev/pts/2
+==32636==    <inherited from parent>
+==32636== 
+==32636== Open file descriptor 1: /dev/pts/2
+==32636==    <inherited from parent>
+==32636== 
+==32636== Open file descriptor 0: /dev/pts/2
+==32636==    <inherited from parent>
+==32636== 
+==32636== 
+==32636== HEAP SUMMARY:
+==32636==     in use at exit: 16,569 bytes in 15 blocks
+==32636==   total heap usage: 109,840 allocs, 109,825 frees, 39,981,942 bytes allocated
+==32636== 
+==32636== LEAK SUMMARY:
+==32636==    definitely lost: 0 bytes in 0 blocks
+==32636==    indirectly lost: 0 bytes in 0 blocks
+==32636==      possibly lost: 0 bytes in 0 blocks
+==32636==    still reachable: 0 bytes in 0 blocks
+==32636==         suppressed: 16,569 bytes in 15 blocks
+==32636== 
+==32636== For lists of detected and suppressed errors, rerun with: -s
+==32636== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 3 from 1)

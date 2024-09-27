@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: borgir <borgir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/27 16:08:23 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/27 22:41:30 by borgir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	init_guard(t_vars *v)
 
 void	check_map(t_vars *v)
 {
+	init_random_melting_array(v);
 	parse(v, -1, NULL);
 	v->player.x = v->player.player->x + 0.5;
 	v->player.y = v->player.player->y + 0.5;

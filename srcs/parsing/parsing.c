@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: borgir <borgir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 17:22:43 by cviegas           #+#    #+#             */
-/*   Updated: 2024/09/27 16:06:38 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/27 22:43:47 by borgir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,4 @@ void	parsing(int ac, char *filename, t_vars *v)
 	i = 0;
 	parse_ids(v, fd, &i);
 	parse_map(v, fd, i);
-	print_map(v->infos.map);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D_scenes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: borgir <borgir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 09:51:53 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/27 14:07:21 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/27 22:54:58 by borgir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ int	credits(t_vars *v)
 /// @param v Vars
 int	transition_melt_screen(t_vars *v)
 {
-	static int	delta = 0;
 	static bool	done = true;
 
 	done = true;
@@ -112,7 +111,7 @@ int	transition_melt_screen(t_vars *v)
 	save_screen_to_buffer(v->img[EBUFF], v->img[EMAP], 0);
 	save_screen_to_buffer(v->img[EBUFF], v->img[EHUD], (v->img[EMAP].width
 			* v->img[EMAP].height * (v->img[EMAP].bpp / 8)));
-	melting(v, ++delta, &done, -1);
+	melting(v, &done, -1);
 	if (done)
 		mlx_loop_end((v->game.won = 0, v->mlx));
 	mlx_put_image_to_window(v->mlx, v->screen.win, v->img[EBUFF].img, 0, 0);
@@ -133,7 +132,6 @@ int	maintitleanim(t_vars *v)
 		- v->game.updated_at < (uint64_t)(1000 / v->game.fps))
 		return (1);
 	v->game.updated_at = timestamp_in_ms(v);
-	mlx_do_sync((mlx_clear_window(v->mlx, v->screen.win), v->mlx));
 	mlx_set_font(v->mlx, v->screen.win, v->img->fontname2);
 	if (ACTIVATE_SOUND && !ma_sound_is_playing(&v->sound.sound[0]))
 	{

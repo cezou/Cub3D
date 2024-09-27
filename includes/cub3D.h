@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: borgir <borgir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/27 15:52:11 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/27 22:53:28 by borgir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@
 // Sounds
 
 # ifndef MANDATORY
-#  define ACTIVATE_SOUND 1
+#  define ACTIVATE_SOUND 0
 #  define MANDATORY 0
 #  define VALID " \t\n\v\f\r10NSOEDG"
 # else
@@ -149,12 +149,12 @@
 # define E 69
 # define W 87
 
-# define FONT1 "-sony-fixed-medium-r-normal--17-120-100-100-c-0-iso8859-1"
-# define FONT2 "-sony-fixed-medium-r-normal--24-230-75-75-c-0-iso8859-1"
-// # define FONT1 "-misc-fixed-medium-r-semicondensed
-//--13-120-75-75-c-60-iso8859-1"
-// # define FONT2 "-misc-fixed-medium-r-semicondensed
-//--13-120-75-75-c-60-iso8859-1"
+// # define FONT1 "-sony-fixed-medium-r-normal--17-120-100-100-c-0-iso8859-1"
+// # define FONT2 "-sony-fixed-medium-r-normal--24-230-75-75-c-0-iso8859-1"
+# define FONT1 "-misc-fixed-medium-r-semicondensed\
+--13-120-75-75-c-60-iso8859-1"
+# define FONT2 "-misc-fixed-medium-r-semicondensed\
+--13-120-75-75-c-60-iso8859-1"
 // # define FONT2 "-sun-open look glyph-----19-190-75-75-p-154-sunolglyph-1"
 
 // Mr. Potato-Head by Joan Stark
@@ -693,6 +693,7 @@ void					initguardpathanim(t_vars *v);
 void					initprojectilepathanim(t_vars *v);
 void					inithud(t_vars *v);
 void					init_player_dir(t_vars *v);
+void					init_random_melting_array(t_vars *v);
 
 // Mouse
 
@@ -773,7 +774,7 @@ int						lose(t_vars *v);
 int						transition_melt_screen(t_vars *v);
 int						credits(t_vars *v);
 int						maintitleanim(t_vars *v);
-void					melting(t_vars *v, int delta, bool *done, int x);
+void					melting(t_vars *v, bool *done, int x);
 
 /* FUNCTIONS */
 // void					freeall(void **tab);

@@ -33,15 +33,12 @@ void	displaytext(t_vars *v, char *str, char *str2)
 
 /// @brief Init the random melting array that store the delay of each columns
 /// @param v Vars
-/// @param delta Is it the first frame
-void	init_random_melting_array(t_vars *v, int delta)
+void	init_random_melting_array(t_vars *v)
 {
 	int	r;
 	int	i;
 	int	w;
 
-	if (delta > 1)
-		return ;
 	v->tmp[0] = v->img[COMP_N];
 	v->tmp[1] = v->img[EBUFF];
 	w = v->tmp[0].width / 3;
@@ -66,15 +63,15 @@ void	init_random_melting_array(t_vars *v, int delta)
 ///	and delay the drop of each column. If the column value is not 0 in the array
 ///	we delay it.
 /// @param v Vars
-/// @param delta Frame number
 /// @param done Is the wipe done
 /// @param x Iterator for the loop =-1
-void	melting(t_vars *v, int delta, bool *done, int x)
+void	melting(t_vars *v, bool *done, int x)
 {
 	t_point		p;
 	int			d;
 
-	init_random_melting_array(v, delta);
+	v->tmp[0] = v->img[COMP_N];
+	v->tmp[1] = v->img[EBUFF];
 	p.x = -1;
 	while (++p.x < v->tmp[0].width)
 	{

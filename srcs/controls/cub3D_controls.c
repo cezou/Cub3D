@@ -12,25 +12,15 @@
 
 #include "../../includes/cub3D.h"
 
-void    hotreload(t_vars *v)
+void	hotreload(t_vars *v)
 {
-	size_t	i;
-	int		fd;
-	char    *filename;
+	char	*filename;
 
 	filename = v->mapv.filename;
-	ft_printf(1, "%sKAK\n", filename);
 	if (v->mapv.map)
 		map_clear(v->mapv.map);
-	v->game.start = 2;
-	// start = v->game.start;
 	if (v->infos.map)
 		freeall(v->infos.map);
-	v->infos = (t_infos){0};
-	// if (v->img)
-	//     free(v->img);
-	// if (v->ray.zbuffer)
-	//     free(v->ray.zbuffer);
 	if (v->objs.objs)
 		free(v->objs.objs);
 	if (v->door)
@@ -39,57 +29,36 @@ void    hotreload(t_vars *v)
 		free(v->guard);
 	if (v->rand)
 		free(v->rand);
+	v->infos = (t_infos){0};
 	v->mapv = (t_mapv){0};
-	i = 0;
-	init_infos(v, filename, &fd);
-	parse_ids(v, fd, &i);
-	parse_map(v, fd, i);
-	print_map(v->infos.map);
-	printf("OI\n");
-	// parsing(4, filename, v);
+	parsing(4, filename, v);
+	v->door = NULL;
+	v->exit = NULL;
+	v->guard = NULL;
+	v->last = NULL;
+	v->rand = NULL;
+	v->sprite = (t_sprite){0};
+	v->game = (t_game){0};
+	v->game.start = 2;
+	m_clearrandom(v);
 	clearimgs(v);
 	initvars(v);
+	initpathtext(v);
 	inittextures(v, 6);
-	ft_printf(1, "%sKUK\n", filename);
+	v->game.skybox = v->img[ESKYBOX];
+	inithud(v);
 	initplayeranim(v, -1);
 	initguardanim(v, -1);
 	check_map(v);
 	init_player_dir(v);
-	ft_printf(1, "hotreload\n");
-	// v->ray = (t_ray){0};
-	mlx_loop_end((v->game.won = 0, v->mlx));
+	ma_sound_stop(&v->sound.sound[ECRED]);
+	if (ACTIVATE_SOUND && !ma_sound_is_playing(&v->sound.sound[2]))
+	{
+		ma_sound_set_looping(&v->sound.sound[2], 1);
+		ma_sound_start(&v->sound.sound[2]);
+	}
+	mlx_loop_end((ft_printf(1, "hotreload\n"), v->game.won = 0, v->mlx));
 }
-
-// void	hotreload(t_vars *v)
-// {
-// 	// int		start;
-// 	char	*filename;
-// 	int		i;
-
-// 	i = -1;
-// 	filename = v->mapv.filename;
-// 	if (v->mapv.map)
-// 		map_clear(v->mapv.map);
-// 	v->game.start = 2;
-// 	// start = v->game.start;
-// 	parsing(4, filename, v);
-// 	// v->game.start = start;
-// 	// v->img = (t_imga *)malloc(sizeof(t_imga) * (COMP_N + 1));
-// 	// if (!v->img)
-// 	// 	exit((prterr(v, ERRMALL, 1, 1), 1));
-// 	// while (v->img && ++i <= COMP_N)
-// 	// 	v->img[i] = (t_imga){0};
-// 	clearimgs(v);
-// 	initvars(v);
-// 	inittextures(v, 6);
-// 	ft_printf(1, "%sKUK\n", filename);
-// 	initplayeranim(v, -1);
-// 	initguardanim(v, -1);
-// 	check_map(v);
-// 	init_player_dir(v);
-// 	ft_printf(1, "hotreload\n");
-// 	mlx_loop_end((v->game.won = 0, v->mlx));
-// }
 
 void	resetpos(t_vars *v, int renderb)
 {

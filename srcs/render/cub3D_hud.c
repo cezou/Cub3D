@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D_hud.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: borgir <borgir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 20:43:05 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/27 14:26:53 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/27 22:57:24 by borgir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,34 +69,15 @@ void	renderdoomhead(t_vars *v)
 	}
 }
 
-
 /// @brief Render the HUD
 /// @param v Vars
 void	renderhud(t_vars *v)
 {
-	t_point	p;
-
 	if (!v->hud.refresh)
 		return ;
-	// ft_bzero(v->img[EHUD].addr, v->screen.hudw * v->screen.hudh
-	// 	* (v->img[EHUD].bpp / 8));
 	save_screen_to_buffer(v->img[EHUD], v->img[EHUDTMP], 0);
 	renderdoomhead(v);
-	p.x = -1;
 	save_screen_to_buffer(v->img[EBUFF], v->img[EHUD], (v->img[EMAP].width
-		* v->img[EMAP].height * (v->img[EMAP].bpp / 8)));
-	// v->tmp[0] = v->img[EHUD];
-	// v->tmp[1] = v->img[EBUFF];
-	// p.color = 0;
-	// while (++p.x < v->img[EHUD].width)
-	// {
-	// 	p.y = -1;
-	// 	while (++p.y < v->img[EHUD].height)
-	// 	{
-	// 		p.z = (p.y * v->tmp[0].len) + (p.x * 4);
-	// 		add_pix(v, v->tmp, (t_point){p.x, p.y + v->screen.gameh, p.z,
-	// 			p.color}, (t_point2){0});
-	// 	}
-	// }
+			* v->img[EMAP].height * (v->img[EMAP].bpp / 8)));
 	v->hud.refresh = 0;
 }

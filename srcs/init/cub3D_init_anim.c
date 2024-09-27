@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D_init_anim.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: borgir <borgir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/27 15:39:36 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/27 22:58:43 by borgir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ void	initguardanim(t_vars *v, int d)
 				&v->img[EGUARD].anim[d].bpp, &v->img[EGUARD].anim[d].len,
 				&v->img[EGUARD].anim[d].endian);
 		if (!v->img[EGUARD].anim[d].addr)
-			exit((prterr(v, "Error mlx texture anim image address\n", 1, 1), 1));
+			exit((prterr(v, "Error mlx texture anim image address\n", 1, 1),
+					1));
 	}
 }
 
