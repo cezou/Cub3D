@@ -6,7 +6,7 @@
 #    By: borgir <borgir@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 11:28:17 by pmagnero          #+#    #+#              #
-#    Updated: 2024/09/27 21:27:12 by borgir           ###   ########.fr        #
+#    Updated: 2024/09/28 17:51:02 by borgir           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,6 +74,7 @@ SRCS =	srcs/cub3D.c \
 		srcs/render/cub3D_raycasting.c \
 		srcs/render/cub3D_raycasting_sprites.c \
 		srcs/render/cub3D_raycasting_dda.c \
+		srcs/render/cub3D_raycasting_dda_utils.c \
 		srcs/render/cub3D_raycasting_floor_ceiling.c \
 		srcs/render/cub3D_raycasting_skybox.c \
 		srcs/render/cub3D_animations.c \
@@ -106,15 +107,6 @@ SRCS =	srcs/cub3D.c \
 		srcs/parsing/map_utils.c \
 		srcs/parsing/print_utils.c \
 		srcs/parsing/map_floodfill.c
-
-
-# srcs/movements/cub3D_collisions.c
-# srcs/cub3D_pathfinding.c 
-# srcs/animations/cub3D_animations.c 
-# srcs/animations/cub3D_animations2.c 
-	
-# cub3D_isometric.c
-# cub3D_projection_bonus.c \
 
 OBJS			 = $(SRCS:.c=.o)
 OBJS_B			 = $(SRCS:.c=.o)
@@ -153,19 +145,6 @@ else
 	$(CC) -D_POSIX_C_SOURCE=199309L $(FLAG) -c $< -o $@
 endif
 
-#$(ARGS)
-# @valgrind $(VALGRIND_F) ./$(NAME) $(ARGS) | grep -aE "total heap usage:|ERROR SUMMARY:" | awk '{if ($$5 == $$7 && NR==1) printf "%s \033[$(COLOR_OK)mOK!\033[0m\n", $$0; else if ($$5 != $$7 && NR==1) printf "%s \033[$(COLOR_KO)mERROR!\033[0m\n", $$0;if ($$4 == 0 && NR==2) printf "%s \033[$(COLOR_OK)mOK!\033[0m\n", $$0; else if ($$4 > 0 && NR==2) printf "%s \033[$(COLOR_KO)mERROR!\033[0m\n", $$0}'
-# test:
-# 	@echo "\n\033[$(COLOR_TITLE)m########################################"
-# 	@echo "################  TESTS  ###############"
-# 	@echo "########################################\033[0m\n"
-# 	@echo "\n\033[$(COLOR_TITLE)m################  TEST 0 ################\033[0m\n\n"
-# 	@cd Leopst && bash basic_test.sh --yes -d && cd .. && rm -rf stderr stdout
-# 	@echo "\n\033[$(COLOR_TITLE)m################  TEST 1 ################\033[0m\n\n"
-# 	@make --no-print-directory -C push_swap_tester
-# 	@./push_swap_tester/complexity 100 100 700 checker_linux ; echo $$? | awk '{if ($$0 == '1') {printf "\n\033[$(COLOR_KO)mERROR!\nHmm, it seems that your algo dont work DUMBASS.\033[0m\n\n"} else {printf "\n\033[$(COLOR_OK)m\nWELL DONE ! let'\''s see the last test.\033[0m\n\n"}}'
-# 	@./push_swap_tester/complexity 500 100 5500 checker_linux && echo $$? | awk '{if ($$0 == '1') {printf "\n\033[$(COLOR_KO)mERROR!\nHmm, it seems that your algo dont work DUMBASS.\033[0m\n\n"} else {printf "\n\033[$(COLOR_OK)m\nWELL DONE ! You are good to go.\033[0m\n\n"}}'
-
 $(NAME): $(OBJECTS_PREFIXED)
 	@echo "\n\033[$(COLOR_TITLE)m########################################"
 	@echo "################  MAKE  ################"
@@ -179,8 +158,13 @@ endif
 
 $(NAME_BONUS): $(OBJECTS_PREFIXED_B)
 	@echo "\n\033[$(COLOR_TITLE)m########################################"
-	@echo "################  MAKE BONUS ################"
+	@echo "############ MAKE BONUS ################"
 	@echo "########################################\033[0m\n"
+ifdef WSL_DISTRO_NAME
+	@echo "WSL DETECTED"
+	@echo "Adding the DISPLAY variable to the environment to use Xming"
+	@export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0
+endif
 ifeq ($(d),1)
 	@make --no-print-directory -sC includes/printf
 else
@@ -192,15 +176,21 @@ all: $(NAME)
 
 bonus: $(NAME_BONUS)
 
+ifeq ($(b), 0)
 kek: $(NAME) norme extfunc valgrind
+else
+kek: $(NAME) norme extfunc valgrind
+endif
 
 extfunc:
 	@echo "\n\033[$(COLOR_TITLE)m########################################"
 	@echo "#########  EXTERNAL FUNCTION  ##########"
 	@echo "########################################\033[0m\n"
-	@nm -gu $(NAME)
-#| awk '!/malloc|exit|free|__|write|memcpy/ {++n;sub(/[ \t]+/, ""); printf "%s", $$0; if ($$0) printf "\t\033[$(COLOR_KO)mERROR!\033[0m\n\n"} END{if (n > 0) {printf "\033[$(COLOR_KO)mYou Fucking DONKEY, what are those forbidden functions !!!\033[0m\n\n";} else {printf "\033[$(COLOR_OK)mOK!, No forbidden functions in use !\033[0m\n\n"}}'
-
+ifeq ($(b), 0)
+	@nm -gu $(NAME_BONUS) | awk '!/malloc|exit|free|__|write|memcpy|X|pthread/ {++n;sub(/[ \t]+/, ""); printf "%s", $$0; if ($$0) printf "\t\033[$(COLOR_KO)mERROR!\033[0m\n\n"} END{if (n > 0) {printf "\033[$(COLOR_KO)mYou Fucking DONKEY, what are those forbidden functions !!!\033[0m\n\n";} else {printf "\033[$(COLOR_OK)mOK!, No forbidden functions in use !\033[0m\n\n"}}'
+else
+	@nm -gu $(NAME) | awk '!/malloc|exit|free|__|write|memcpy|X|pthread/ {++n;sub(/[ \t]+/, ""); printf "%s", $$0; if ($$0) printf "\t\033[$(COLOR_KO)mERROR!\033[0m\n\n"} END{if (n > 0) {printf "\033[$(COLOR_KO)mYou Fucking DONKEY, what are those forbidden functions !!!\033[0m\n\n";} else {printf "\033[$(COLOR_OK)mOK!, No forbidden functions in use !\033[0m\n\n"}}'
+endif
 norme:
 	@echo "\n\033[$(COLOR_TITLE)m########################################"
 	@echo "#############  NORMINETTE  #############"

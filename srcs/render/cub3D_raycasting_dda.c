@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D_raycasting_dda.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: borgir <borgir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:58:10 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/26 09:47:30 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/28 17:53:35 by borgir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,39 +46,36 @@ void	set_dda(t_vars *v)
 /// @param y Y coordinate
 /// @param d 
 /// @return 0 did not hit a wall/door, 1 hit a wall/door
-int	hashit(t_vars *v, int x, int y, int d)
+int	hashit(t_vars *v, t_map *tmp)
 {
-	t_map	*tmp;
-	int		i;
+	int	i;
 
 	i = -1;
-	tmp = v->mapv.map;
-	while (tmp)
+	if ((tmp->val == '1' || (tmp->val == 'D')))
 	{
-		if (tmp->x == x && tmp->y == y
-			&& (tmp->val == '1' || (d && tmp->val == 'D')))
+		if (tmp->val == 'D')
 		{
-			if (tmp->val == 'D')
+			i = find_door(v, tmp->x, tmp->y);
+			if (i < 0)
 			{
-				i = find_door(v, tmp->x, tmp->y);
-				if (i < 0)
-					return ((v->ray.img = v->img[ESPACE], 0));
-				v->ray.img = v->img[v->door[i].img_i];
-				v->ray.door = v->door[i];
-			}
-			else
 				v->ray.img = v->img[ESPACE];
-			return (v->ray.hit = tmp, 1);
+				return (0);
+			}
+			v->ray.img = v->img[v->door[i].img_i];
+			v->ray.door = v->door[i];
 		}
-		tmp = tmp->right;
+		else
+			v->ray.img = v->img[ESPACE];
+		v->ray.hit = tmp;
+		return (1);
 	}
 	return (0);
 }
 
 /// @brief If the ray hit a door then we need to extend the ray until it hit
-///	a wall so the if the door is open or opening we can render what is behind it
+///	a wall so if the door is open or opening we can render what is behind it
 /// @param v Vars
-static void	check_door(t_vars *v)
+void	check_door(t_vars *v)
 {
 	double	dist;
 
@@ -87,8 +84,7 @@ static void	check_door(t_vars *v)
 		dist = v->ray.sidedist_x - v->ray.deltadist_x * 0.5;
 		if (v->ray.sidedist_y < dist)
 		{
-			v->ray.hit = NULL;
-			perform_dda(v, 1);
+			perform_dda(v, v->ray.hit, 0);
 			return ;
 		}
 		v->ray.wall_dist = dist;
@@ -98,8 +94,7 @@ static void	check_door(t_vars *v)
 		dist = v->ray.sidedist_y - v->ray.deltadist_y * 0.5;
 		if (v->ray.sidedist_x < dist)
 		{
-			v->ray.hit = NULL;
-			perform_dda(v, 1);
+			perform_dda(v, v->ray.hit, 0);
 			return ;
 		}
 		v->ray.wall_dist = dist;
@@ -120,8 +115,7 @@ int	door_extend_ray(t_vars *v, t_point p, int *t, t_imga *img)
 		t[0] -= v->ray.img.width - v->ray.door.xdelta;
 		if (t[0] < 0)
 		{
-			v->ray.hit = NULL;
-			perform_dda(v, 1);
+			perform_dda(v, v->ray.hit, 0);
 			calculate_line_height(v);
 			update_texture_pixels(v, p, t, img);
 			return (-1);
@@ -133,32 +127,31 @@ int	door_extend_ray(t_vars *v, t_point p, int *t, t_imga *img)
 /// @brief Perform the DDA (Digital Differential Analysis) to get
 ///	the square position in the map from the coordinates of the line
 /// @param v Vars
-/// @param d 
-void	perform_dda(t_vars *v, int d)
+/// @param tmp Start position from where to begin the raycasting
+/// @param hit Boolean to end the loop =0
+void	perform_dda(t_vars *v, t_map *tmp, int hit)
 {
-	int		hit;
-
-	hit = 0;
 	while (hit == 0)
 	{
 		if (v->ray.sidedist_x < v->ray.sidedist_y)
 		{
 			v->ray.sidedist_x += v->ray.deltadist_x;
-			v->ray.map_x += v->ray.step_x;
+			if (v->ray.step_x > 0)
+				tmp = tmp->right;
+			else
+				tmp = tmp->left;
 			v->ray.side = 0;
 		}
 		else
 		{
 			v->ray.sidedist_y += v->ray.deltadist_y;
-			v->ray.map_y += v->ray.step_y;
+			if (v->ray.step_y > 0)
+				tmp = tmp->down;
+			else
+				tmp = tmp->up;
 			v->ray.side = 1;
 		}
-		hit = hashit(v, v->ray.map_x, v->ray.map_y, d);
+		hit = hashit(v, tmp);
 	}
-	if (v->ray.side == 0)
-		v->ray.wall_dist = (v->ray.sidedist_x - v->ray.deltadist_x);
-	else
-		v->ray.wall_dist = (v->ray.sidedist_y - v->ray.deltadist_y);
-	if (v->ray.img.id == EDOOR)
-		check_door(v);
+	dda_utils(v);
 }

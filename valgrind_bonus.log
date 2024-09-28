@@ -1,43 +1,996 @@
-==32636== Memcheck, a memory error detector
-==32636== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==32636== Using Valgrind-3.16.1 and LibVEX; rerun with -h for copyright info
-==32636== Command: ./cub3D_bonus resources/maps/subject.cub 800 600
-==32636== Parent PID: 32632
-==32636== 
-==32636== 
-==32636== FILE DESCRIPTORS: 7 open at exit.
-==32636== Open file descriptor 24: /home/borgir/.vscode-server/data/logs/20240927T204426/network.log
-==32636==    <inherited from parent>
-==32636== 
-==32636== Open file descriptor 20: /home/borgir/.vscode-server/data/logs/20240927T204426/remoteagent.log
-==32636==    <inherited from parent>
-==32636== 
-==32636== Open file descriptor 19: /home/borgir/.vscode-server/data/logs/20240927T204426/ptyhost.log
-==32636==    <inherited from parent>
-==32636== 
-==32636== Open file descriptor 3: /home/borgir/42/cursus/Cub3D/valgrind_bonus.log
-==32636==    <inherited from parent>
-==32636== 
-==32636== Open file descriptor 2: /dev/pts/2
-==32636==    <inherited from parent>
-==32636== 
-==32636== Open file descriptor 1: /dev/pts/2
-==32636==    <inherited from parent>
-==32636== 
-==32636== Open file descriptor 0: /dev/pts/2
-==32636==    <inherited from parent>
-==32636== 
-==32636== 
-==32636== HEAP SUMMARY:
-==32636==     in use at exit: 16,569 bytes in 15 blocks
-==32636==   total heap usage: 109,840 allocs, 109,825 frees, 39,981,942 bytes allocated
-==32636== 
-==32636== LEAK SUMMARY:
-==32636==    definitely lost: 0 bytes in 0 blocks
-==32636==    indirectly lost: 0 bytes in 0 blocks
-==32636==      possibly lost: 0 bytes in 0 blocks
-==32636==    still reachable: 0 bytes in 0 blocks
-==32636==         suppressed: 16,569 bytes in 15 blocks
-==32636== 
-==32636== For lists of detected and suppressed errors, rerun with: -s
-==32636== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 3 from 1)
+==27344== Memcheck, a memory error detector
+==27344== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==27344== Using Valgrind-3.16.1 and LibVEX; rerun with -h for copyright info
+==27344== Command: ./cub3D_bonus resources/maps/subject.cub 800 600
+==27344== Parent PID: 27340
+==27344== 
+==27344== Stack overflow in thread #1: can't grow stack to 0x1ffe801000
+==27344== 
+==27344== Process terminating with default action of signal 11 (SIGSEGV)
+==27344==  Access not within mapped region at address 0x1FFE801FF8
+==27344== Stack overflow in thread #1: can't grow stack to 0x1ffe801000
+==27344==    at 0x114E6F: door_extend_ray (cub3D_raycasting_dda.c:124)
+==27344==  If you believe this happened as a result of a stack
+==27344==  overflow in your program's main thread (unlikely but
+==27344==  possible), you can try to increase the size of the
+==27344==  main thread stack using the --main-stacksize= flag.
+==27344==  The main thread stack size used in this run was 8388608.
+==27344== Stack overflow in thread #1: can't grow stack to 0x1ffe801000
+==27344== 
+==27344== Process terminating with default action of signal 11 (SIGSEGV)
+==27344==  Access not within mapped region at address 0x1FFE801FF0
+==27344== Stack overflow in thread #1: can't grow stack to 0x1ffe801000
+==27344==    at 0x482E110: _vgnU_freeres (vg_preloaded.c:57)
+==27344==  If you believe this happened as a result of a stack
+==27344==  overflow in your program's main thread (unlikely but
+==27344==  possible), you can try to increase the size of the
+==27344==  main thread stack using the --main-stacksize= flag.
+==27344==  The main thread stack size used in this run was 8388608.
+==27344== 
+==27344== FILE DESCRIPTORS: 8 open at exit.
+==27344== Open AF_INET socket 4: 172.25.12.16:45078 <-> 172.25.0.1:6000
+==27344==    at 0x4C170B7: socket (syscall-template.S:120)
+==27344==    by 0x4CFEA6D: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==27344==    by 0x4CFEC0A: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==27344==    by 0x4CFF1C1: xcb_connect_to_display_with_auth_info (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==27344==    by 0x48AC411: _XConnectXCB (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x489CBD4: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DE177: mlx_init (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117858: init (cub3D_init.c:109)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== Open file descriptor 24: /home/borgir/.vscode-server/data/logs/20240928T151426/network.log
+==27344==    <inherited from parent>
+==27344== 
+==27344== Open file descriptor 20: /home/borgir/.vscode-server/data/logs/20240928T151426/remoteagent.log
+==27344==    <inherited from parent>
+==27344== 
+==27344== Open file descriptor 19: /home/borgir/.vscode-server/data/logs/20240928T151426/ptyhost.log
+==27344==    <inherited from parent>
+==27344== 
+==27344== Open file descriptor 3: /home/borgir/42/cursus/Cub3D/valgrind_bonus.log
+==27344==    <inherited from parent>
+==27344== 
+==27344== Open file descriptor 2: /dev/pts/3
+==27344==    <inherited from parent>
+==27344== 
+==27344== Open file descriptor 1: /dev/pts/3
+==27344==    <inherited from parent>
+==27344== 
+==27344== Open file descriptor 0: /dev/pts/3
+==27344==    <inherited from parent>
+==27344== 
+==27344== 
+==27344== HEAP SUMMARY:
+==27344==     in use at exit: 15,914,089 bytes in 1,062 blocks
+==27344==   total heap usage: 72,467 allocs, 71,405 frees, 20,558,154 bytes allocated
+==27344== 
+==27344== 10 bytes in 1 blocks are still reachable in loss record 2 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x4BA3B7A: strdup (strdup.c:42)
+==27344==    by 0x489693A: XInitExtension (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x4902BF3: XkbUseExtension (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x489D708: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DE177: mlx_init (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117858: init (cub3D_init.c:109)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 15 bytes in 1 blocks are still reachable in loss record 3 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x4BA3B7A: strdup (strdup.c:42)
+==27344==    by 0x489CBB1: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DE177: mlx_init (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117858: init (cub3D_init.c:109)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 15 bytes in 1 blocks are still reachable in loss record 4 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x489D0A6: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DE177: mlx_init (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117858: init (cub3D_init.c:109)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 16 bytes in 1 blocks are still reachable in loss record 5 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x4CFE64D: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==27344==    by 0x4CFCB33: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==27344==    by 0x4CFA9F1: xcb_connect_to_fd (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==27344==    by 0x4CFF025: xcb_connect_to_display_with_auth_info (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==27344==    by 0x48AC411: _XConnectXCB (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x489CBD4: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DE177: mlx_init (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117858: init (cub3D_init.c:109)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 24 bytes in 1 blocks are still reachable in loss record 6 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x48AC7B5: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48AD671: _XReply (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48A8FFA: XSync (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DE507: mlx_loop (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1108DF: main (cub3D.c:63)
+==27344== 
+==27344== 24 bytes in 12 blocks are still reachable in loss record 7 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x1E2045: buff_to_char (get_next_line.c:70)
+==27344==    by 0x1E1F72: get_next_line (get_next_line.c:50)
+==27344==    by 0x11AA15: store_map (map.c:92)
+==27344==    by 0x119C42: parse_map (parsing.c:47)
+==27344==    by 0x119C42: parsing (parsing.c:64)
+==27344==    by 0x117877: init (cub3D_init.c:112)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 25 bytes in 1 blocks are still reachable in loss record 8 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x4D1A3FF: XauFileName (in /usr/lib/x86_64-linux-gnu/libXau.so.6.0.0)
+==27344==    by 0x4D1A5F8: XauGetBestAuthByAddr (in /usr/lib/x86_64-linux-gnu/libXau.so.6.0.0)
+==27344==    by 0x4CFF3B3: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==27344==    by 0x4CFF58E: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==27344==    by 0x4CFF013: xcb_connect_to_display_with_auth_info (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==27344==    by 0x48AC411: _XConnectXCB (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x489CBD4: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DE177: mlx_init (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117858: init (cub3D_init.c:109)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 29 bytes in 1 blocks are still reachable in loss record 9 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x4897949: _XUpdateAtomCache (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x4897D19: XInternAtom (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DE222: mlx_init (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117858: init (cub3D_init.c:109)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 32 bytes in 1 blocks are still reachable in loss record 10 of 116
+==27344==    at 0x48386AF: malloc (vg_replace_malloc.c:306)
+==27344==    by 0x483ADE7: realloc (vg_replace_malloc.c:834)
+==27344==    by 0x4CFE29E: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==27344==    by 0x4CFE323: xcb_get_extension_data (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==27344==    by 0x4CFB1DE: xcb_prefetch_maximum_request_length (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==27344==    by 0x4CFB254: xcb_get_maximum_request_length (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==27344==    by 0x489D58B: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DE177: mlx_init (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117858: init (cub3D_init.c:109)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 32 bytes in 1 blocks are still reachable in loss record 11 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x4CFD812: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==27344==    by 0x4CFAF8E: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==27344==    by 0x4CFCD7E: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==27344==    by 0x4CFCE90: xcb_wait_for_reply (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==27344==    by 0x4CFE382: xcb_get_extension_data (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==27344==    by 0x4CFB1DE: xcb_prefetch_maximum_request_length (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==27344==    by 0x4CFB254: xcb_get_maximum_request_length (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==27344==    by 0x489D58B: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DE177: mlx_init (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117858: init (cub3D_init.c:109)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 32 bytes in 1 blocks are still reachable in loss record 12 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x48620FB: XextAddDisplay (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==27344==    by 0x485D5FE: XShmQueryVersion (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==27344==    by 0x1DDFB3: mlx_int_deal_shm (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DE231: mlx_init (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117858: init (cub3D_init.c:109)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 33 bytes in 1 blocks are still reachable in loss record 15 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x4897949: _XUpdateAtomCache (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x4897D19: XInternAtom (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DE20B: mlx_init (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117858: init (cub3D_init.c:109)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 40 bytes in 1 blocks are still reachable in loss record 16 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x48AE58D: _XPollfdCacheInit (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x489CED9: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DE177: mlx_init (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117858: init (cub3D_init.c:109)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 48 bytes in 1 blocks are still reachable in loss record 19 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x48AC399: _XConnectXCB (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x489CBD4: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DE177: mlx_init (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117858: init (cub3D_init.c:109)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 48 bytes in 1 blocks are still reachable in loss record 20 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x48AC3AF: _XConnectXCB (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x489CBD4: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DE177: mlx_init (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117858: init (cub3D_init.c:109)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 48 bytes in 1 blocks are still reachable in loss record 21 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x48FD33C: XkbGetMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48F93F2: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48F9947: XkbKeycodeToKeysym (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DFF37: mlx_int_param_KeyPress (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DE575: mlx_loop (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1108DF: main (cub3D.c:63)
+==27344== 
+==27344== 72 bytes in 1 blocks are still reachable in loss record 23 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x489CF8C: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DE177: mlx_init (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117858: init (cub3D_init.c:109)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 72 bytes in 1 blocks are still reachable in loss record 24 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x48FD320: XkbGetMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48F93F2: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48F9947: XkbKeycodeToKeysym (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DFF37: mlx_int_param_KeyPress (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DE575: mlx_loop (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1108DF: main (cub3D.c:63)
+==27344== 
+==27344== 88 bytes in 1 blocks are still reachable in loss record 27 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x1DEB40: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DF627: mlx_int_parse_xpm (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DFA61: mlx_xpm_file_to_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x11A49A: init_xpm (clean_and_imgs.c:35)
+==27344==    by 0x119FFB: set_value (ids.c:19)
+==27344==    by 0x119FFB: set_texture (ids.c:28)
+==27344==    by 0x119A0E: parse_ids (parsing.c:35)
+==27344==    by 0x119C0D: parsing (parsing.c:63)
+==27344==    by 0x117877: init (cub3D_init.c:112)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 88 bytes in 1 blocks are still reachable in loss record 28 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x1DEB40: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DF627: mlx_int_parse_xpm (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DFA61: mlx_xpm_file_to_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x11A49A: init_xpm (clean_and_imgs.c:35)
+==27344==    by 0x119FC2: set_value (ids.c:19)
+==27344==    by 0x119FC2: set_texture (ids.c:30)
+==27344==    by 0x119A0E: parse_ids (parsing.c:35)
+==27344==    by 0x119C0D: parsing (parsing.c:63)
+==27344==    by 0x117877: init (cub3D_init.c:112)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 88 bytes in 1 blocks are still reachable in loss record 29 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x1DEB40: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DF627: mlx_int_parse_xpm (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DFA61: mlx_xpm_file_to_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x11A49A: init_xpm (clean_and_imgs.c:35)
+==27344==    by 0x11A032: set_value (ids.c:19)
+==27344==    by 0x11A032: set_texture (ids.c:32)
+==27344==    by 0x11A032: set_texture (ids.c:25)
+==27344==    by 0x119A0E: parse_ids (parsing.c:35)
+==27344==    by 0x119C0D: parsing (parsing.c:63)
+==27344==    by 0x117877: init (cub3D_init.c:112)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 88 bytes in 1 blocks are still reachable in loss record 30 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x1DEB40: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DF627: mlx_int_parse_xpm (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DFA61: mlx_xpm_file_to_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x11A49A: init_xpm (clean_and_imgs.c:35)
+==27344==    by 0x119F7D: set_value (ids.c:19)
+==27344==    by 0x119F7D: set_texture (ids.c:33)
+==27344==    by 0x119F7D: set_texture (ids.c:25)
+==27344==    by 0x119A0E: parse_ids (parsing.c:35)
+==27344==    by 0x119C0D: parsing (parsing.c:63)
+==27344==    by 0x117877: init (cub3D_init.c:112)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 88 bytes in 1 blocks are still reachable in loss record 31 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x1DEB40: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x116643: initimage (cub3D_utils.c:87)
+==27344==    by 0x110AA2: inittextures (cub3D.c:20)
+==27344==    by 0x117956: init (cub3D_init.c:121)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 88 bytes in 1 blocks are still reachable in loss record 32 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x1DEB40: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x116643: initimage (cub3D_utils.c:87)
+==27344==    by 0x110ABF: inittextures (cub3D.c:21)
+==27344==    by 0x117956: init (cub3D_init.c:121)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 88 bytes in 1 blocks are still reachable in loss record 33 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x1DEB40: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x116643: initimage (cub3D_utils.c:87)
+==27344==    by 0x110ADC: inittextures (cub3D.c:22)
+==27344==    by 0x117956: init (cub3D_init.c:121)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 88 bytes in 1 blocks are still reachable in loss record 34 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x1DEB40: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x116643: initimage (cub3D_utils.c:87)
+==27344==    by 0x117F2A: inithud (cub3D_init_anim.c:97)
+==27344==    by 0x1179D6: init (cub3D_init.c:124)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 88 bytes in 1 blocks are still reachable in loss record 35 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x1DEB40: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x116643: initimage (cub3D_utils.c:87)
+==27344==    by 0x117F43: inithud (cub3D_init_anim.c:98)
+==27344==    by 0x1179D6: init (cub3D_init.c:124)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 88 bytes in 1 blocks are still reachable in loss record 36 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x1DEB40: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x116643: initimage (cub3D_utils.c:87)
+==27344==    by 0x118022: inithud (cub3D_init_anim.c:103)
+==27344==    by 0x1179D6: init (cub3D_init.c:124)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 88 bytes in 1 blocks are still reachable in loss record 37 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x1DEB40: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x116643: initimage (cub3D_utils.c:87)
+==27344==    by 0x118238: initplayerpathanim (cub3D_init_paths.c:43)
+==27344==    by 0x117C72: initplayeranim (cub3D_init_anim.c:49)
+==27344==    by 0x1179E3: init (cub3D_init.c:125)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 88 bytes in 1 blocks are still reachable in loss record 38 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x1DEB40: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DF627: mlx_int_parse_xpm (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DFA61: mlx_xpm_file_to_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117CB9: initplayeranim (cub3D_init_anim.c:52)
+==27344==    by 0x1179E3: init (cub3D_init.c:125)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 88 bytes in 1 blocks are still reachable in loss record 39 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x1DEB40: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DF627: mlx_int_parse_xpm (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DFA61: mlx_xpm_file_to_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117E19: initguardanim (cub3D_init_anim.c:76)
+==27344==    by 0x1179F0: init (cub3D_init.c:126)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 96 bytes in 1 blocks are still reachable in loss record 40 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x117A64: init_doors (cub3D_init.c:45)
+==27344==    by 0x117A64: check_map (cub3D_init.c:100)
+==27344==    by 0x117A64: init (cub3D_init.c:127)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 104 bytes in 3 blocks are still reachable in loss record 41 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x48FC8F5: _XkbReadGetMapReply (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48FD29E: XkbGetUpdatedMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48FD36C: XkbGetMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48F93F2: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48F9947: XkbKeycodeToKeysym (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DFF37: mlx_int_param_KeyPress (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DE575: mlx_loop (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1108DF: main (cub3D.c:63)
+==27344== 
+==27344== 112 bytes in 1 blocks are still reachable in loss record 42 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x48AC29E: _XConnectXCB (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x489CBD4: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DE177: mlx_init (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117858: init (cub3D_init.c:109)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 112 bytes in 1 blocks are still reachable in loss record 43 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x489D268: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DE177: mlx_init (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117858: init (cub3D_init.c:109)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 112 bytes in 1 blocks are still reachable in loss record 44 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x117C5A: initplayeranim (cub3D_init_anim.c:46)
+==27344==    by 0x1179E3: init (cub3D_init.c:125)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 112 bytes in 1 blocks are still reachable in loss record 45 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x117DBA: initguardanim (cub3D_init_anim.c:70)
+==27344==    by 0x1179F0: init (cub3D_init.c:126)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 128 bytes in 1 blocks are still reachable in loss record 47 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x489D196: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DE177: mlx_init (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117858: init (cub3D_init.c:109)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 128 bytes in 1 blocks are still reachable in loss record 48 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x489692A: XInitExtension (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x4902BF3: XkbUseExtension (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x489D708: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DE177: mlx_init (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117858: init (cub3D_init.c:109)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 128 bytes in 1 blocks are still reachable in loss record 49 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x4896A4E: XAddExtension (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48622FA: XextAddDisplay (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==27344==    by 0x485D5FE: XShmQueryVersion (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==27344==    by 0x1DDFB3: mlx_int_deal_shm (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DE231: mlx_init (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117858: init (cub3D_init.c:109)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 136 bytes in 1 blocks are still reachable in loss record 52 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x1DE15F: mlx_init (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117858: init (cub3D_init.c:109)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 136 bytes in 1 blocks are still reachable in loss record 53 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x48965A8: XCreateImage (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DEB91: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DF627: mlx_int_parse_xpm (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DFA61: mlx_xpm_file_to_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x11A49A: init_xpm (clean_and_imgs.c:35)
+==27344==    by 0x119FFB: set_value (ids.c:19)
+==27344==    by 0x119FFB: set_texture (ids.c:28)
+==27344==    by 0x119A0E: parse_ids (parsing.c:35)
+==27344==    by 0x119C0D: parsing (parsing.c:63)
+==27344==    by 0x117877: init (cub3D_init.c:112)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 136 bytes in 1 blocks are still reachable in loss record 54 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x48965A8: XCreateImage (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DEB91: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DF627: mlx_int_parse_xpm (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DFA61: mlx_xpm_file_to_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x11A49A: init_xpm (clean_and_imgs.c:35)
+==27344==    by 0x119FC2: set_value (ids.c:19)
+==27344==    by 0x119FC2: set_texture (ids.c:30)
+==27344==    by 0x119A0E: parse_ids (parsing.c:35)
+==27344==    by 0x119C0D: parsing (parsing.c:63)
+==27344==    by 0x117877: init (cub3D_init.c:112)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 136 bytes in 1 blocks are still reachable in loss record 55 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x48965A8: XCreateImage (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DEB91: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DF627: mlx_int_parse_xpm (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DFA61: mlx_xpm_file_to_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x11A49A: init_xpm (clean_and_imgs.c:35)
+==27344==    by 0x11A032: set_value (ids.c:19)
+==27344==    by 0x11A032: set_texture (ids.c:32)
+==27344==    by 0x11A032: set_texture (ids.c:25)
+==27344==    by 0x119A0E: parse_ids (parsing.c:35)
+==27344==    by 0x119C0D: parsing (parsing.c:63)
+==27344==    by 0x117877: init (cub3D_init.c:112)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 136 bytes in 1 blocks are still reachable in loss record 56 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x48965A8: XCreateImage (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DEB91: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DF627: mlx_int_parse_xpm (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DFA61: mlx_xpm_file_to_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x11A49A: init_xpm (clean_and_imgs.c:35)
+==27344==    by 0x119F7D: set_value (ids.c:19)
+==27344==    by 0x119F7D: set_texture (ids.c:33)
+==27344==    by 0x119F7D: set_texture (ids.c:25)
+==27344==    by 0x119A0E: parse_ids (parsing.c:35)
+==27344==    by 0x119C0D: parsing (parsing.c:63)
+==27344==    by 0x117877: init (cub3D_init.c:112)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 136 bytes in 1 blocks are still reachable in loss record 57 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x48965A8: XCreateImage (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DEB91: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x116643: initimage (cub3D_utils.c:87)
+==27344==    by 0x110AA2: inittextures (cub3D.c:20)
+==27344==    by 0x117956: init (cub3D_init.c:121)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 136 bytes in 1 blocks are still reachable in loss record 58 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x48965A8: XCreateImage (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DEB91: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x116643: initimage (cub3D_utils.c:87)
+==27344==    by 0x110ABF: inittextures (cub3D.c:21)
+==27344==    by 0x117956: init (cub3D_init.c:121)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 136 bytes in 1 blocks are still reachable in loss record 59 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x48965A8: XCreateImage (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DEB91: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x116643: initimage (cub3D_utils.c:87)
+==27344==    by 0x110ADC: inittextures (cub3D.c:22)
+==27344==    by 0x117956: init (cub3D_init.c:121)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 136 bytes in 1 blocks are still reachable in loss record 60 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x48965A8: XCreateImage (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DEB91: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x116643: initimage (cub3D_utils.c:87)
+==27344==    by 0x117F2A: inithud (cub3D_init_anim.c:97)
+==27344==    by 0x1179D6: init (cub3D_init.c:124)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 136 bytes in 1 blocks are still reachable in loss record 61 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x48965A8: XCreateImage (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DEB91: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x116643: initimage (cub3D_utils.c:87)
+==27344==    by 0x117F43: inithud (cub3D_init_anim.c:98)
+==27344==    by 0x1179D6: init (cub3D_init.c:124)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 136 bytes in 1 blocks are still reachable in loss record 62 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x48965A8: XCreateImage (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DEB91: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x116643: initimage (cub3D_utils.c:87)
+==27344==    by 0x118022: inithud (cub3D_init_anim.c:103)
+==27344==    by 0x1179D6: init (cub3D_init.c:124)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 136 bytes in 1 blocks are still reachable in loss record 63 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x48965A8: XCreateImage (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DEB91: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x116643: initimage (cub3D_utils.c:87)
+==27344==    by 0x118238: initplayerpathanim (cub3D_init_paths.c:43)
+==27344==    by 0x117C72: initplayeranim (cub3D_init_anim.c:49)
+==27344==    by 0x1179E3: init (cub3D_init.c:125)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 136 bytes in 1 blocks are still reachable in loss record 64 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x48965A8: XCreateImage (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DEB91: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DF627: mlx_int_parse_xpm (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DFA61: mlx_xpm_file_to_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117CB9: initplayeranim (cub3D_init_anim.c:52)
+==27344==    by 0x1179E3: init (cub3D_init.c:125)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 136 bytes in 1 blocks are still reachable in loss record 65 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x48965A8: XCreateImage (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DEB91: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DF627: mlx_int_parse_xpm (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DFA61: mlx_xpm_file_to_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117E19: initguardanim (cub3D_init_anim.c:76)
+==27344==    by 0x1179F0: init (cub3D_init.c:126)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 152 bytes in 1 blocks are still reachable in loss record 66 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x4902DEE: XkbUseExtension (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x489D708: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DE177: mlx_init (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117858: init (cub3D_init.c:109)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 160 bytes in 1 blocks are still reachable in loss record 67 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x488B07B: XCreateGC (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x489D604: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DE177: mlx_init (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117858: init (cub3D_init.c:109)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 160 bytes in 1 blocks are still reachable in loss record 68 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x488B07B: XCreateGC (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DE3AE: mlx_new_window (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1184E6: initwindow (cub3D_init_window.c:53)
+==27344==    by 0x1178BB: init (cub3D_init.c:118)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 168 bytes in 1 blocks are still reachable in loss record 69 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x489D11A: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DE177: mlx_init (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117858: init (cub3D_init.c:109)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 208 bytes in 1 blocks are still reachable in loss record 71 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x48AFD1E: _XEnq (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48AC5B6: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48AD310: _XReadEvents (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48AB785: XWindowEvent (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DE6B5: mlx_int_wait_first_expose (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DE3ED: mlx_new_window (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1184E6: initwindow (cub3D_init_window.c:53)
+==27344==    by 0x1178BB: init (cub3D_init.c:118)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 208 bytes in 1 blocks are still reachable in loss record 72 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x48AFD1E: _XEnq (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48AC5B6: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48AD7FC: _XReply (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48A3525: XQueryExtension (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x4896902: XInitExtension (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x5760A5C: XRenderFindDisplay (in /usr/lib/x86_64-linux-gnu/libXrender.so.1.3.0)
+==27344==    by 0x5760D80: XRenderQueryExtension (in /usr/lib/x86_64-linux-gnu/libXrender.so.1.3.0)
+==27344==    by 0x5751CBD: _XcursorGetDisplayInfo (in /usr/lib/x86_64-linux-gnu/libXcursor.so.1.0.2)
+==27344==    by 0x57521E8: XcursorSupportsARGB (in /usr/lib/x86_64-linux-gnu/libXcursor.so.1.0.2)
+==27344==    by 0x5754B30: XcursorNoticeCreateBitmap (in /usr/lib/x86_64-linux-gnu/libXcursor.so.1.0.2)
+==27344==    by 0x488BBE0: XCreatePixmap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344== 
+==27344== 256 bytes in 1 blocks are still reachable in loss record 73 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x117673: init_guard (cub3D_init.c:69)
+==27344==    by 0x117AA6: check_map (cub3D_init.c:101)
+==27344==    by 0x117AA6: init (cub3D_init.c:127)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 256 bytes in 1 blocks are still reachable in loss record 74 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x490B41D: XkbAllocClientMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48FD0FD: _XkbReadGetMapReply (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48FD29E: XkbGetUpdatedMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48FD36C: XkbGetMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48F93F2: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48F9947: XkbKeycodeToKeysym (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DFF37: mlx_int_param_KeyPress (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DE575: mlx_loop (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1108DF: main (cub3D.c:63)
+==27344== 
+==27344== 312 bytes in 1 blocks are still reachable in loss record 75 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x11A997: store_map (map.c:80)
+==27344==    by 0x119C42: parse_map (parsing.c:47)
+==27344==    by 0x119C42: parsing (parsing.c:64)
+==27344==    by 0x117877: init (cub3D_init.c:112)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 512 bytes in 1 blocks are still reachable in loss record 78 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x48978BA: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x4897C3A: XInternAtom (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DE20B: mlx_init (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117858: init (cub3D_init.c:109)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 624 bytes in 3 blocks are still reachable in loss record 79 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x48AFD1E: _XEnq (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48AC5B6: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48AD1C9: _XEventsQueued (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x488E609: XFlush (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DEC17: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x116643: initimage (cub3D_utils.c:87)
+==27344==    by 0x110ABF: inittextures (cub3D.c:21)
+==27344==    by 0x117956: init (cub3D_init.c:121)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 800 bytes in 1 blocks are still reachable in loss record 80 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x490B4E1: XkbAllocClientMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48FCED7: _XkbReadGetMapReply (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48FD29E: XkbGetUpdatedMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48FD36C: XkbGetMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48F93F2: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48F9947: XkbKeycodeToKeysym (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DFF37: mlx_int_param_KeyPress (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DE575: mlx_loop (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1108DF: main (cub3D.c:63)
+==27344== 
+==27344== 890 bytes in 26 blocks are still reachable in loss record 81 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x1E218E: stash_to_line (get_next_line_utils.c:48)
+==27344==    by 0x1E1EBE: get_next_line_aux (get_next_line.c:30)
+==27344==    by 0x1E1FF2: get_next_line (get_next_line.c:56)
+==27344==    by 0x11AA15: store_map (map.c:92)
+==27344==    by 0x119C42: parse_map (parsing.c:47)
+==27344==    by 0x119C42: parsing (parsing.c:64)
+==27344==    by 0x117877: init (cub3D_init.c:112)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 936 bytes in 1 blocks are still reachable in loss record 82 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x1DE310: mlx_new_window (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1184E6: initwindow (cub3D_init_window.c:53)
+==27344==    by 0x1178BB: init (cub3D_init.c:118)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 976 bytes in 1 blocks are still reachable in loss record 83 of 116
+==27344==    at 0x483AD7B: realloc (vg_replace_malloc.c:834)
+==27344==    by 0x4CFAB61: xcb_connect_to_fd (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==27344==    by 0x4CFF025: xcb_connect_to_display_with_auth_info (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==27344==    by 0x48AC411: _XConnectXCB (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x489CBD4: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DE177: mlx_init (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117858: init (cub3D_init.c:109)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 1,020 bytes in 19 blocks are still reachable in loss record 84 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x48FC7DD: _XkbReadGetMapReply (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48FD29E: XkbGetUpdatedMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48FD36C: XkbGetMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48F93F2: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48F9947: XkbKeycodeToKeysym (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DFF37: mlx_int_param_KeyPress (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DE575: mlx_loop (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1108DF: main (cub3D.c:63)
+==27344== 
+==27344== 1,064 bytes in 1 blocks are still reachable in loss record 85 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x1120BB: init_random_melting_array (cub3D_render.c:46)
+==27344==    by 0x1179F8: check_map (cub3D_init.c:94)
+==27344==    by 0x1179F8: init (cub3D_init.c:127)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 1,144 bytes in 13 blocks are still reachable in loss record 86 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x1DEB40: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DF627: mlx_int_parse_xpm (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DFA61: mlx_xpm_file_to_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x110CEB: inittextures (cub3D.c:29)
+==27344==    by 0x117956: init (cub3D_init.c:121)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 1,768 bytes in 13 blocks are still reachable in loss record 89 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x48965A8: XCreateImage (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DEB91: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DF627: mlx_int_parse_xpm (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DFA61: mlx_xpm_file_to_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x110CEB: inittextures (cub3D.c:29)
+==27344==    by 0x117956: init (cub3D_init.c:121)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 1,792 bytes in 1 blocks are still reachable in loss record 90 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x489D2F0: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DE177: mlx_init (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117858: init (cub3D_init.c:109)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 2,048 bytes in 1 blocks are still reachable in loss record 91 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x48FC914: _XkbReadGetMapReply (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48FD29E: XkbGetUpdatedMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48FD36C: XkbGetMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48F93F2: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48F9947: XkbKeycodeToKeysym (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DFF37: mlx_int_param_KeyPress (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DE575: mlx_loop (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1108DF: main (cub3D.c:63)
+==27344== 
+==27344== 2,048 bytes in 1 blocks are still reachable in loss record 92 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x48FD15D: _XkbReadGetMapReply (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48FD29E: XkbGetUpdatedMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48FD36C: XkbGetMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48F93F2: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48F9947: XkbKeycodeToKeysym (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DFF37: mlx_int_param_KeyPress (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DE575: mlx_loop (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1108DF: main (cub3D.c:63)
+==27344== 
+==27344== 2,080 bytes in 10 blocks are still reachable in loss record 93 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x48AFD1E: _XEnq (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48AC5B6: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48AD359: _XReadEvents (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x48AB785: XWindowEvent (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DE6B5: mlx_int_wait_first_expose (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DE3ED: mlx_new_window (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1184E6: initwindow (cub3D_init_window.c:53)
+==27344==    by 0x1178BB: init (cub3D_init.c:118)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 2,688 bytes in 1 blocks are still reachable in loss record 95 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x117886: init (cub3D_init.c:113)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 3,200 bytes in 1 blocks are still reachable in loss record 96 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x117925: initmodes (cub3D_init.c:30)
+==27344==    by 0x117925: init (cub3D_init.c:120)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 4,704 bytes in 1 blocks are still reachable in loss record 98 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x489CB9D: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DE177: mlx_init (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117858: init (cub3D_init.c:109)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 16,384 bytes in 1 blocks are still reachable in loss record 100 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x489CF29: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DE177: mlx_init (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117858: init (cub3D_init.c:109)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 21,168 bytes in 1 blocks are still reachable in loss record 101 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x4CFA980: xcb_connect_to_fd (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==27344==    by 0x4CFF025: xcb_connect_to_display_with_auth_info (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==27344==    by 0x48AC411: _XConnectXCB (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x489CBD4: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==27344==    by 0x1DE177: mlx_init (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117858: init (cub3D_init.c:109)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 46,928 bytes in 838 blocks are still reachable in loss record 102 of 116
+==27344==    at 0x483877F: malloc (vg_replace_malloc.c:307)
+==27344==    by 0x1168B5: new_point (cub3D_utils2.c:78)
+==27344==    by 0x119842: populate_map (cub3D_parse.c:50)
+==27344==    by 0x119842: parse (cub3D_parse.c:67)
+==27344==    by 0x117A07: check_map (cub3D_init.c:95)
+==27344==    by 0x117A07: init (cub3D_init.c:127)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 55,620 bytes in 1 blocks are still reachable in loss record 103 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x1DEB64: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DF627: mlx_int_parse_xpm (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DFA61: mlx_xpm_file_to_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x11A49A: init_xpm (clean_and_imgs.c:35)
+==27344==    by 0x119F7D: set_value (ids.c:19)
+==27344==    by 0x119F7D: set_texture (ids.c:33)
+==27344==    by 0x119F7D: set_texture (ids.c:25)
+==27344==    by 0x119A0E: parse_ids (parsing.c:35)
+==27344==    by 0x119C0D: parsing (parsing.c:63)
+==27344==    by 0x117877: init (cub3D_init.c:112)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 73,728 bytes in 1 blocks are still reachable in loss record 104 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x1DEB64: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DF627: mlx_int_parse_xpm (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DFA61: mlx_xpm_file_to_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117E19: initguardanim (cub3D_init_anim.c:76)
+==27344==    by 0x1179F0: init (cub3D_init.c:126)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 81,920 bytes in 1 blocks are still reachable in loss record 105 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x1DEB64: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DF627: mlx_int_parse_xpm (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DFA61: mlx_xpm_file_to_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x11A49A: init_xpm (clean_and_imgs.c:35)
+==27344==    by 0x119FFB: set_value (ids.c:19)
+==27344==    by 0x119FFB: set_texture (ids.c:28)
+==27344==    by 0x119A0E: parse_ids (parsing.c:35)
+==27344==    by 0x119C0D: parsing (parsing.c:63)
+==27344==    by 0x117877: init (cub3D_init.c:112)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 81,920 bytes in 1 blocks are still reachable in loss record 106 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x1DEB64: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DF627: mlx_int_parse_xpm (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DFA61: mlx_xpm_file_to_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x11A49A: init_xpm (clean_and_imgs.c:35)
+==27344==    by 0x119FC2: set_value (ids.c:19)
+==27344==    by 0x119FC2: set_texture (ids.c:30)
+==27344==    by 0x119A0E: parse_ids (parsing.c:35)
+==27344==    by 0x119C0D: parsing (parsing.c:63)
+==27344==    by 0x117877: init (cub3D_init.c:112)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 124,496 bytes in 1 blocks are still reachable in loss record 107 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x1DEB64: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x116643: initimage (cub3D_utils.c:87)
+==27344==    by 0x118022: inithud (cub3D_init_anim.c:103)
+==27344==    by 0x1179D6: init (cub3D_init.c:124)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 196,784 bytes in 1 blocks are still reachable in loss record 108 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x1DEB64: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DF627: mlx_int_parse_xpm (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DFA61: mlx_xpm_file_to_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x11A49A: init_xpm (clean_and_imgs.c:35)
+==27344==    by 0x11A032: set_value (ids.c:19)
+==27344==    by 0x11A032: set_texture (ids.c:32)
+==27344==    by 0x11A032: set_texture (ids.c:25)
+==27344==    by 0x119A0E: parse_ids (parsing.c:35)
+==27344==    by 0x119C0D: parsing (parsing.c:63)
+==27344==    by 0x117877: init (cub3D_init.c:112)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 346,240 bytes in 1 blocks are still reachable in loss record 109 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x1DEB64: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DF627: mlx_int_parse_xpm (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DFA61: mlx_xpm_file_to_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x117CB9: initplayeranim (cub3D_init_anim.c:52)
+==27344==    by 0x1179E3: init (cub3D_init.c:125)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 399,360 bytes in 1 blocks are still reachable in loss record 110 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x1DEB64: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x116643: initimage (cub3D_utils.c:87)
+==27344==    by 0x117F2A: inithud (cub3D_init_anim.c:97)
+==27344==    by 0x1179D6: init (cub3D_init.c:124)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 399,360 bytes in 1 blocks are still reachable in loss record 111 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x1DEB64: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x116643: initimage (cub3D_utils.c:87)
+==27344==    by 0x117F43: inithud (cub3D_init_anim.c:98)
+==27344==    by 0x1179D6: init (cub3D_init.c:124)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 1,597,440 bytes in 1 blocks are still reachable in loss record 112 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x1DEB64: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x116643: initimage (cub3D_utils.c:87)
+==27344==    by 0x110AA2: inittextures (cub3D.c:20)
+==27344==    by 0x117956: init (cub3D_init.c:121)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 1,996,800 bytes in 1 blocks are still reachable in loss record 113 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x1DEB64: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x116643: initimage (cub3D_utils.c:87)
+==27344==    by 0x110ABF: inittextures (cub3D.c:21)
+==27344==    by 0x117956: init (cub3D_init.c:121)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 1,996,800 bytes in 1 blocks are still reachable in loss record 114 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x1DEB64: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x116643: initimage (cub3D_utils.c:87)
+==27344==    by 0x110ADC: inittextures (cub3D.c:22)
+==27344==    by 0x117956: init (cub3D_init.c:121)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 3,054,720 bytes in 1 blocks are still reachable in loss record 115 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x1DEB64: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x116643: initimage (cub3D_utils.c:87)
+==27344==    by 0x118238: initplayerpathanim (cub3D_init_paths.c:43)
+==27344==    by 0x117C72: initplayeranim (cub3D_init_anim.c:49)
+==27344==    by 0x1179E3: init (cub3D_init.c:125)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== 5,370,232 bytes in 13 blocks are still reachable in loss record 116 of 116
+==27344==    at 0x483AB65: calloc (vg_replace_malloc.c:760)
+==27344==    by 0x1DEB64: mlx_int_new_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DF627: mlx_int_parse_xpm (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x1DFA61: mlx_xpm_file_to_image (in /home/borgir/42/cursus/Cub3D/cub3D_bonus)
+==27344==    by 0x110CEB: inittextures (cub3D.c:29)
+==27344==    by 0x117956: init (cub3D_init.c:121)
+==27344==    by 0x110894: main (cub3D.c:46)
+==27344== 
+==27344== LEAK SUMMARY:
+==27344==    definitely lost: 0 bytes in 0 blocks
+==27344==    indirectly lost: 0 bytes in 0 blocks
+==27344==      possibly lost: 0 bytes in 0 blocks
+==27344==    still reachable: 15,894,769 bytes in 1,037 blocks
+==27344==         suppressed: 19,320 bytes in 25 blocks
+==27344== 
+==27344== For lists of detected and suppressed errors, rerun with: -s
+==27344== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 3 from 1)

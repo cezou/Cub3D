@@ -6,7 +6,7 @@
 /*   By: borgir <borgir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/27 22:53:28 by borgir           ###   ########.fr       */
+/*   Updated: 2024/09/28 17:51:29 by borgir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -726,9 +726,11 @@ void					open_door(t_vars *v, int d);
 
 int						raycasting(t_vars *v);
 void					set_dda(t_vars *v);
-void					perform_dda(t_vars *v, int d);
+void					perform_dda(t_vars *v, t_map *tmp, int hit);
+void					dda_utils(t_vars *v);
 void					calculate_line_height(t_vars *v);
 
+void					check_door(t_vars *v);
 int						door_extend_ray(t_vars *v, t_point p, int *t,
 							t_imga *img);
 void					update_texture_pixels(t_vars *v, t_point p, int *t,

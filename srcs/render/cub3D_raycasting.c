@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D_raycasting.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: borgir <borgir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/27 16:11:22 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/28 17:37:51 by borgir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int	raycasting(t_vars *v)
 	{
 		init_raycasting_info(x, v);
 		set_dda(v);
-		perform_dda(v, 1);
+		perform_dda(v, v->player.player, 0);
 		calculate_line_height(v);
 		update_texture_pixels(v, (t_point){x, 0, 0, 0}, t, img);
 		v->ray.zbuffer[x] = v->ray.wall_dist;

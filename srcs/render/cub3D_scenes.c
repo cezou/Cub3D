@@ -6,7 +6,7 @@
 /*   By: borgir <borgir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 09:51:53 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/27 22:54:58 by borgir           ###   ########.fr       */
+/*   Updated: 2024/09/28 17:54:53 by borgir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,8 @@ int	transition_melt_screen(t_vars *v)
 	save_screen_to_buffer(v->img[EBUFF], v->img[EMAP], 0);
 	save_screen_to_buffer(v->img[EBUFF], v->img[EHUD], (v->img[EMAP].width
 			* v->img[EMAP].height * (v->img[EMAP].bpp / 8)));
+	v->tmp[0] = v->img[COMP_N];
+	v->tmp[1] = v->img[EBUFF];
 	melting(v, &done, -1);
 	if (done)
 		mlx_loop_end((v->game.won = 0, v->mlx));

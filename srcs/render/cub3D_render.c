@@ -70,8 +70,6 @@ void	melting(t_vars *v, bool *done, int x)
 	t_point		p;
 	int			d;
 
-	v->tmp[0] = v->img[COMP_N];
-	v->tmp[1] = v->img[EBUFF];
 	p.x = -1;
 	while (++p.x < v->tmp[0].width)
 	{
@@ -116,7 +114,10 @@ int	render(t_vars *v)
 		mlx_loop_end(v->mlx);
 	}
 	if (!v->player.moving && v->hud.animoff != v->hud.head.animx)
-		(v->hud.refresh = 1, v->hud.animoff = v->hud.head.animx);
+	{
+		v->hud.refresh = 1;
+		v->hud.animoff = v->hud.head.animx;
+	}
 	key_management(v);
 	raycasting(v);
 	renderhud(v);
@@ -125,13 +126,14 @@ int	render(t_vars *v)
 	update_animations(v);
 	save_screen_to_buffer(v->img[EBUFF], v->img[EMAP], 0);
 	mlx_put_image_to_window(v->mlx, v->screen.win, v->img[EBUFF].img, 0, 0);
-	// mlx_clear_window(v->mlx, v->screen.win);
-	// mlx_put_image_to_window(v->mlx, v->screen.win, v->img[EHUD].img, 0, 0);
 	v->game.oldtime = v->game.time;
 	v->game.time = timestamp_in_ms(v);
 	v->game.frametime = (v->game.time - v->game.oldtime) / 1000.0;
 	return (displaytext(v, NULL, NULL), v->game.start++, 0);
 }
+	// mlx_clear_window(v->mlx, v->screen.win);
+	// mlx_put_image_to_window(v->mlx, v->screen.win, v->img[EHUD].img, 0, 0);
+
 	// printf("%f\n", 1.0 / v->game.frametime);
 	// ft_bzero(v->img[EMAP].addr, v->screen.gamew * v->screen.gameh
 	// 	* (v->img[EMAP].bpp / 8));
