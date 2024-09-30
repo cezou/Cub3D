@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 18:24:52 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/27 15:34:52 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/30 19:47:53 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,8 +133,9 @@ void	move(t_vars *v, int d)
 	printmap2(v);
 	if (ACTIVATE_SOUND && (d < UP))
 	{
-		ma_sound_set_pitch(&v->sound.sound[1], 2.5);
+		ma_sound_set_pitch(&v->sound.sound[1], 1.0);
 		ma_sound_start(&v->sound.sound[1]);
+		// ma_sound_set_pitch()
 	}
 	v->player.moving = 1;
 	rotatecamx(v, d, v->player.rotspeed * v->game.frametime);

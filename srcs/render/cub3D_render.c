@@ -122,7 +122,7 @@ int	render(t_vars *v)
 	key_management(v);
 	raycasting(v);
 	renderhud(v);
-	render_player(v);
+	render_player(v, (t_point){0});
 	rendermenu(v);
 	update_animations(v);
 	save_screen_to_buffer(v->img[EBUFF], v->img[EMAP], 0);

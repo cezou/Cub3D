@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 16:14:16 by cviegas           #+#    #+#             */
-/*   Updated: 2024/09/30 15:08:29 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/30 19:40:06 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	returnkey(t_vars *v)
 		raycasting(v);
 		renderhud(v);
 		rendermenu(v);
-		render_player(v);
+		render_player(v, (t_point){0});
 		save_screen_to_buffer(v->img[EBUFF], v->img[EMAP], 0);
 		save_screen_to_buffer(v->img[EBUFF], v->img[EHUD], (v->img[EHUD].width
 				* v->img[EHUD].height * (v->img[EHUD].bpp / 8)));

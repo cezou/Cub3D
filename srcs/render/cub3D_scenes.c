@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 09:51:53 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/30 15:00:26 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/30 19:44:08 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ int	maintitleanim(t_vars *v)
 	mlx_set_font(v->mlx, v->screen.win, v->img->fontname2);
 	if (ACTIVATE_SOUND && !ma_sound_is_playing(&v->sound.sound[0]))
 	{
-		ma_sound_set_volume(&v->sound.sound[0], 0.5f);
+		ma_sound_set_volume(&v->sound.sound[0], 0.2f);
 		ma_sound_start(&v->sound.sound[0]);
 	}
 	mlx_put_image_to_window(v->mlx, v->screen.win, v->img[ETITLE].img,

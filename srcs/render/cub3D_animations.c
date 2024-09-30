@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/30 16:27:48 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/30 19:42:25 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,9 @@ void	update_animations(t_vars *v)
 	update_sprites_animations(v);
 	update_door_animations(v, -1);
 	update_player_animations(v);
+	if (v->player.moving)
+		v->game.bobtime += timestamp_in_ms(v) - v->game.updated_at;
+	else
+		v->game.bobtime = 0;
+	v->ray.pitch += sin((v->game.bobtime) * 0.03f) * 2.0f;
 }

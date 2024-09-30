@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/30 17:47:47 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/30 19:43:34 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -575,6 +575,7 @@ typedef struct s_game
 	int					fps;
 	uint64_t			created_at;
 	uint64_t			updated_at;
+	uint64_t			bobtime;
 	double				frametime;
 	uint64_t			time;
 	uint64_t			oldtime;
@@ -762,7 +763,7 @@ void					draw_skybox(t_vars *v, t_point p, int *t);
 
 void					renderhud(t_vars *v);
 
-void					render_player(t_vars *v);
+void					render_player(t_vars *v, t_point c);
 
 void					scale_img(t_point p, t_imga *src, t_imga *dest);
 
