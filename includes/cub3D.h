@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: borgir <borgir@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/28 17:51:29 by borgir           ###   ########.fr       */
+/*   Updated: 2024/09/30 17:47:47 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,13 @@
 // Sounds
 
 # ifndef MANDATORY
-#  define ACTIVATE_SOUND 0
+#  define ACTIVATE_SOUND 1
 #  define MANDATORY 0
-#  define VALID " \t\n\v\f\r10NSOEDG"
+#  define VALID " \t\n\v\f\r10NSWEDG"
 # else
 #  define ACTIVATE_SOUND 0
 #  define MANDATORY 1
-#  define VALID " \t\n\v\f\r10NSOE"
+#  define VALID " \t\n\v\f\r10NSWE"
 # endif
 
 # ifndef MINIAUDIO_IMPLEMENTATION
@@ -278,16 +278,14 @@ typedef enum s_door_state
 typedef enum s_components
 {
 	EMAP,
-	EHUD,
-	EFCK,
 	ESOUTH,
 	ENORTH,
 	EWEST,
 	EEAST,
 	ESPACE,
 	EDOOR,
-	EGUARD,
-	EPLAYER,
+	EGUARDW,
+	EGUARDDEATH,
 	ESKYBOX,
 	EHUDIMG,
 	ETITLE,
@@ -298,8 +296,12 @@ typedef enum s_components
 	EMENUIG,
 	EMENUOPT,
 	EBUFF,
+	EHUD,
+	EFIST,
+	EGUN,
 	EDOOMHTMP,
 	EHUDTMP,
+	ETMP,
 	COMP_N
 }						t_comp;
 
@@ -365,6 +367,8 @@ typedef struct s_door
 
 typedef struct s_ray
 {
+	int					x;
+	int					hitguard;
 	double				camera_x;
 	double				dir_x;
 	double				dir_y;
@@ -374,6 +378,8 @@ typedef struct s_ray
 	int					map_y;
 	int					step_x;
 	int					step_y;
+	double				pos;
+	double				step;
 	double				sidedist_x;
 	double				sidedist_y;
 	double				deltadist_x;
@@ -420,6 +426,8 @@ typedef struct s_floor
 	double				rowdist;
 	int					tx;
 	int					ty;
+	int					cx;
+	int					cy;
 	bool				isfloor;
 }						t_floor;
 
@@ -480,6 +488,7 @@ typedef struct s_player
 	double				rotspeed;
 	double				mouserotspeed;
 	uint64_t			timerplayer;
+	t_imga				img;
 }						t_player;
 
 typedef struct s_hud
@@ -496,6 +505,8 @@ typedef struct s_guard
 {
 	int					x;
 	int					y;
+	int					hp;
+	int					stop;
 	int					img_i;
 	int					xdelta;
 	int					animoff;
@@ -657,6 +668,7 @@ float					deg_to_rad(float deg);
 float					rad_to_deg(float rad);
 void					ft_swaps(t_guard *a, t_guard *b);
 int						find_door(t_vars *v, int x, int y);
+int						find_guard(t_vars *v, int x, int y);
 int						m_random(t_vars *v);
 void					m_clearrandom(t_vars *v);
 void					save_screen_to_buffer(t_imga dest, t_imga src,
@@ -678,9 +690,10 @@ int						map_clear(t_map *lst);
 void					init(t_vars *v, int argc, char **argv);
 void					check_map(t_vars *v);
 void					inittextures(t_vars *v, int i);
-void					initplayeranim(t_vars *v, int d);
+void					inittexture(t_vars *v, t_imga *img);
+void					initplayeranim(t_vars *v);
 void					initobjectsanim(t_vars *v, int i, int obj);
-void					initguardanim(t_vars *v, int i);
+void					initguardanim(t_vars *v);
 void					init_cam(t_vars *vars);
 void					initmodes(t_vars *v, int argc);
 void					initsounds(t_vars *v);
@@ -731,24 +744,21 @@ void					dda_utils(t_vars *v);
 void					calculate_line_height(t_vars *v);
 
 void					check_door(t_vars *v);
-int						door_extend_ray(t_vars *v, t_point p, int *t,
-							t_imga *img);
-void					update_texture_pixels(t_vars *v, t_point p, int *t,
-							t_imga *img);
+int						door_extend_ray(t_vars *v, t_point p, int *t);
+void					update_texture_pixels(t_vars *v, t_point p, int *t);
 void					update_door_animations(t_vars *v, int i);
 
 void					draw_floor_ceiling(t_vars *v);
 // void					set_floor_ceiling_vert(t_vars *v, t_point p);
 
 void					draw_sprites(t_vars *v);
-void					draw_sprite(t_vars *v, t_sprite *sp, t_guard g,
-							t_imga *img);
+void					draw_sprite(t_vars *v, t_sprite *sp, t_guard g);
 void					transform_sprite(t_vars *v, t_sprite *sp, t_guard g);
 void					set_sprite_boundaries(t_vars *v, t_sprite *sp,
 							t_guard g);
 void					sort_sprites(t_vars *v, int i, int sort);
 
-void					draw_skybox(t_vars *v, t_point p, int *t, t_imga *img);
+void					draw_skybox(t_vars *v, t_point p, int *t);
 
 void					renderhud(t_vars *v);
 
@@ -758,8 +768,8 @@ void					scale_img(t_point p, t_imga *src, t_imga *dest);
 
 int						render(t_vars *data);
 void					img_pix_put(t_imga *img, t_point p, t_vars *v);
-void					add_pix(t_vars *v, t_imga *img, t_point p,
-							t_point2 fog);
+void					add_pix(t_vars *v, t_point p, t_point2 fog,
+							t_point opt);
 void					create_textures(t_vars *v, t_point c);
 int						getcolorpix(t_vars *v, char *addr, size_t k);
 uint32_t				color_lerp(uint32_t color1, uint32_t color2, double t);

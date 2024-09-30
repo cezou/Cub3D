@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: borgir <borgir@student.42.fr>              +#+  +:+       +#+         #
+#    By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 11:28:17 by pmagnero          #+#    #+#              #
-#    Updated: 2024/09/28 17:51:02 by borgir           ###   ########.fr        #
+#    Updated: 2024/09/30 15:46:59 by pmagnero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,6 +73,7 @@ SRCS =	srcs/cub3D.c \
 		srcs/render/cub3D_scenes.c \
 		srcs/render/cub3D_raycasting.c \
 		srcs/render/cub3D_raycasting_sprites.c \
+		srcs/render/cub3D_raycasting_sprites_utils.c \
 		srcs/render/cub3D_raycasting_dda.c \
 		srcs/render/cub3D_raycasting_dda_utils.c \
 		srcs/render/cub3D_raycasting_floor_ceiling.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D_scenes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: borgir <borgir@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 09:51:53 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/28 17:54:53 by borgir           ###   ########.fr       */
+/*   Updated: 2024/09/30 15:00:26 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,17 @@ int	credits(t_vars *v)
 int	transition_melt_screen(t_vars *v)
 {
 	static bool	done = true;
+	static int	delta = 0;
 
 	done = true;
-	v->keys[XK_Escape] = false;
+	if (!delta && timestamp_in_ms(v)
+		- v->game.updated_at < (uint64_t)5000)
+		return (mlx_put_image_to_window(v->mlx, v->screen.win,
+				v->img[COMP_N].img, 0, 0), delta = 0, 1);
 	if (!v->screen.win || timestamp_in_ms(v)
 		- v->game.updated_at < (uint64_t)(3000 / v->game.fps))
-		return (1);
+		return (delta = 1, 1);
+	delta = 1;
 	v->game.updated_at = timestamp_in_ms(v);
 	ft_bzero(v->img[EBUFF].addr, v->screen.resw * v->screen.gameh
 		* (v->img[EBUFF].bpp / 8));
@@ -131,7 +136,7 @@ int	transition_melt_screen(t_vars *v)
 int	maintitleanim(t_vars *v)
 {
 	if (!v->screen.win || timestamp_in_ms(v)
-		- v->game.updated_at < (uint64_t)(1000 / v->game.fps))
+		- v->game.updated_at < (uint64_t)(3000 / v->game.fps))
 		return (1);
 	v->game.updated_at = timestamp_in_ms(v);
 	mlx_set_font(v->mlx, v->screen.win, v->img->fontname2);

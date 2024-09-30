@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:38:17 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/25 18:03:59 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/30 17:01:48 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,31 +50,30 @@ static void	init_data_floor(t_vars *v, t_floor *f, int y)
 /// @param f Floor structure
 /// @param p Pixel coordinate to add to the buffer
 /// @param img Texture to use
-static void	update_floor_ceil_texture_pixels(t_vars *v, t_floor *f,
-	t_point p, t_imga *img)
+static void	update_floor_ceil_texture_pixels(t_vars *v, t_floor *f, t_point p)
 {
-	int	cx;
-	int	cy;
-
 	while (p.x < v->screen.resw)
 	{
-		cx = (int)(f->fx);
-		cy = (int)(f->fy);
-		f->tx = (int)(img[0].width * (f->fx - cx)) & (img[0].width - 1);
-		f->ty = (int)(img[0].width * (f->fy - cy)) & (img[0].width - 1);
+		f->cx = (int)(f->fx);
+		f->cy = (int)(f->fy);
+		f->tx = (int)(v->tmp[0].width * (f->fx - f->cx))
+			& (v->tmp[0].width - 1);
+		f->ty = (int)(v->tmp[0].width * (f->fy - f->cy))
+			& (v->tmp[0].width - 1);
 		f->fx += f->fstepx;
 		f->fy += f->fstepy;
-		p.z = (f->ty * img[0].len) + (f->tx * 4);
-		p.color = -1;
+		p.z = (f->ty * v->tmp[0].len) + (f->tx * 4);
 		if (MANDATORY)
 			p.color = v->infos.floor;
 		if (f->isfloor)
-			add_pix(v, img, p, (t_point2){1, f->rowdist, FOGC, FOGL});
-		else if (cx < 10 || cx > 16)
+			add_pix(v, p, (t_point2){1, f->rowdist, FOGC, FOGL},
+				(t_point){0, p.color, 0, 0});
+		else if (f->cx < 10 || f->cx > 16)
 		{
 			if (MANDATORY)
 				p.color = v->infos.ceil;
-			add_pix(v, img, p, (t_point2){1, f->rowdist, FOGC, FOGL});
+			add_pix(v, p, (t_point2){1, f->rowdist, FOGC, FOGL},
+				(t_point){0, p.color, 0, 0});
 		}
 		p.x++;
 	}
@@ -85,16 +84,15 @@ static void	update_floor_ceil_texture_pixels(t_vars *v, t_floor *f,
 void	draw_floor_ceiling(t_vars *v)
 {
 	int		y;
-	t_imga	img[2];
 
 	y = 0;
-	img[0] = v->img[ESPACE];
-	img[1] = v->img[EMAP];
+	v->tmp[0] = v->img[ESPACE];
+	v->tmp[1] = v->img[EMAP];
 	while (y < v->screen.gameh)
 	{
 		init_data_floor(v, &v->floor, y);
 		update_floor_ceil_texture_pixels(v, &v->floor,
-			(t_point){0, y, 0, 0}, img);
+			(t_point){0, y, 0, 0});
 		y++;
 	}
 }

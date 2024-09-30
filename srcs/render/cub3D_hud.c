@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D_hud.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: borgir <borgir@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 20:43:05 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/27 22:57:24 by borgir           ###   ########.fr       */
+/*   Updated: 2024/09/30 16:55:18 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ void	renderdoomhead(t_vars *v)
 		while (++p.y < h)
 		{
 			p.z = (p.y * v->tmp[0].len) + (p.x * 4);
-			add_pix(v, v->tmp, (t_point){p.x - v->hud.animoff + v->tmp[0].animx
+			add_pix(v, (t_point){p.x - v->hud.animoff + v->tmp[0].animx
 				+ (v->screen.hudw / 2) - (v->tmp[0].width / 2),
-				p.y, p.z, p.color}, (t_point2){0});
+				p.y, p.z, p.color}, (t_point2){0}, (t_point){0});
 		}
 	}
 }

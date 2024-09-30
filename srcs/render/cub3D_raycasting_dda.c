@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D_raycasting_dda.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: borgir <borgir@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:58:10 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/28 17:53:35 by borgir           ###   ########.fr       */
+/*   Updated: 2024/09/30 16:45:56 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,8 @@ void	set_dda(t_vars *v)
 /// @param y Y coordinate
 /// @param d 
 /// @return 0 did not hit a wall/door, 1 hit a wall/door
-int	hashit(t_vars *v, t_map *tmp)
+int	hashit(t_vars *v, t_map *tmp, int i)
 {
-	int	i;
-
-	i = -1;
 	if ((tmp->val == '1' || (tmp->val == 'D')))
 	{
 		if (tmp->val == 'D')
@@ -69,6 +66,10 @@ int	hashit(t_vars *v, t_map *tmp)
 		v->ray.hit = tmp;
 		return (1);
 	}
+	else if (tmp->val == 'G' && v->player.pattack && !v->ray.hitguard
+		&& v->ray.x == v->screen.gamew / 2)
+		return (tmp->val = '0', find_guard(v, tmp->x, tmp->y),
+			v->ray.hitguard = 1, 0);
 	return (0);
 }
 
@@ -106,10 +107,11 @@ void	check_door(t_vars *v)
 /// @param p Pixels informations
 /// @param texx Texture x coordinate
 /// @return Texture x coordinate
-int	door_extend_ray(t_vars *v, t_point p, int *t, t_imga *img)
+int	door_extend_ray(t_vars *v, t_point p, int *t)
 {
-	img[0] = v->ray.img;
-	v->ray.lim = ((img[0].height - 1) * img[0].len) + ((img[0].width - 1) * 4);
+	v->tmp[0] = v->ray.img;
+	v->ray.lim = ((v->tmp[0].height - 1) * v->tmp[0].len)
+		+ ((v->tmp[0].width - 1) * 4);
 	if (v->ray.hit->val == 'D')
 	{
 		t[0] -= v->ray.img.width - v->ray.door.xdelta;
@@ -117,7 +119,7 @@ int	door_extend_ray(t_vars *v, t_point p, int *t, t_imga *img)
 		{
 			perform_dda(v, v->ray.hit, 0);
 			calculate_line_height(v);
-			update_texture_pixels(v, p, t, img);
+			update_texture_pixels(v, p, t);
 			return (-1);
 		}
 	}
@@ -151,7 +153,7 @@ void	perform_dda(t_vars *v, t_map *tmp, int hit)
 				tmp = tmp->up;
 			v->ray.side = 1;
 		}
-		hit = hashit(v, tmp);
+		hit = hashit(v, tmp, -1);
 	}
 	dda_utils(v);
 }

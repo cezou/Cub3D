@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: borgir <borgir@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/27 22:41:30 by borgir           ###   ########.fr       */
+/*   Updated: 2024/09/30 16:48:12 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,11 @@ void	init_doors(t_vars *v)
 	}
 }
 
-void	init_guard(t_vars *v)
+void	init_guard(t_vars *v, int j, t_map *tmp)
 {
-	int		j;
-	t_map	*tmp;
-
-	j = -1;
 	v->guard = (t_guard *)malloc(sizeof(t_guard) * (v->game.nb_guard));
 	if (!v->guard)
 		exit((prterr(v, ERRMALL, 1, 0), 1));
-	tmp = v->mapv.map;
 	while (tmp)
 	{
 		if (tmp->val == 'G')
@@ -77,13 +72,15 @@ void	init_guard(t_vars *v)
 			v->guard[++j].x = tmp->x;
 			v->guard[j].y = tmp->y;
 			v->guard[j].time = 0;
-			v->guard[j].img_i = EGUARD;
+			v->guard[j].stop = 0;
+			v->guard[j].hp = 100;
+			v->guard[j].img_i = EGUARDW;
 			v->guard[j].xdelta = 0;
 			v->guard[j].vdiv = 1.0;
 			v->guard[j].udiv = 1.0;
 			v->guard[j].vmove = 0;
 			v->guard[j].dist = 0;
-			v->guard[j].animoff = v->img[v->guard[j].img_i].anim[0].animx;
+			v->guard[j].animoff = v->img[v->guard[j].img_i].animx;
 		}
 		tmp = tmp->right;
 	}
@@ -95,10 +92,10 @@ void	check_map(t_vars *v)
 	parse(v, -1, NULL);
 	v->player.x = v->player.player->x + 0.5;
 	v->player.y = v->player.player->y + 0.5;
-	v->player.animp = EPLAYER;
+	v->player.animp = EFIST;
 	v->player.animoff = 0;
 	init_doors(v);
-	init_guard(v);
+	init_guard(v, -1, v->mapv.map);
 }
 
 void	init(t_vars *v, int argc, char **argv)
@@ -106,6 +103,7 @@ void	init(t_vars *v, int argc, char **argv)
 	int	i;
 
 	i = -1;
+	ft_memset(v, 0, sizeof(t_vars));
 	v->mlx = mlx_init();
 	if (!v->mlx)
 		exit((perr("MLX init failed"), FAIL));
@@ -118,12 +116,12 @@ void	init(t_vars *v, int argc, char **argv)
 	(ft_bzero(v->keys, MAX_KEYS), initwindow(v, argc, argv));
 	mlx_mouse_hide(v->mlx, v->screen.win);
 	initmodes(v, argc);
-	inittextures(v, 6);
+	inittextures(v, 4);
 	v->game.skybox = v->img[ESKYBOX];
 	initsounds(v);
 	inithud(v);
-	initplayeranim(v, -1);
-	initguardanim(v, -1);
+	initplayeranim(v);
+	initguardanim(v);
 	check_map(v);
 	init_player_dir(v);
 	mlx_do_key_autorepeatoff(v->mlx);

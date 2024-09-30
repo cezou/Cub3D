@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D_raycasting.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: borgir <borgir@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/28 17:37:51 by borgir           ###   ########.fr       */
+/*   Updated: 2024/09/30 17:49:41 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,32 +76,32 @@ static void	get_texture_index(t_vars *v)
 /// @param texx Texture x coordinate
 /// @param texy Texture y coordinate
 /// color = v->tex[2][128 * texy + texx];
-void	update_texture_pixels(t_vars *v, t_point p, int *t, t_imga *img)
+void	update_texture_pixels(t_vars *v, t_point p, int *t)
 {
-	double		step;
-	double		pos;
-
 	get_texture_index(v);
 	t[0] = (int)(v->ray.wall_x * v->ray.img.width);
-	t[0] = door_extend_ray(v, p, t, img);
+	t[0] = door_extend_ray(v, p, t);
 	if (t[0] < 0)
 		return ;
 	if ((v->ray.side == 0 && v->ray.dir_x > 0)
 		|| (v->ray.side == 1 && v->ray.dir_y < 0))
 		t[0] = v->ray.img.width - t[0] - 1;
-	step = 1.0 * v->ray.img.width / v->ray.line_height;
-	pos = (v->ray.draw_start - v->ray.pitch - (v->player.z / v->ray.wall_dist)
-			- v->screen.gameh / 2 + v->ray.line_height / 2) * step;
+	v->ray.step = 1.0 * v->ray.img.width / v->ray.line_height;
+	v->ray.pos = (v->ray.draw_start - v->ray.pitch
+			- (v->player.z / v->ray.wall_dist)
+			- v->screen.gameh / 2 + v->ray.line_height / 2) * v->ray.step;
 	p.y = v->ray.draw_start - 1;
 	while (++p.y < v->ray.draw_end)
 	{
-		t[1] = (int)pos & (img[0].width - 1);
-		pos += step;
-		p.z = (t[1] * img[0].len) + (t[0] * 4);
-		if (v->ray.side == 0)
-			p.color = -1;
-		if (p.z < v->ray.lim)
-			add_pix(v, img, p, (t_point2){1, v->ray.wall_dist, FOGC, FOGL});
+		t[1] = (int)v->ray.pos & (v->tmp[0].width - 1);
+		v->ray.pos += v->ray.step;
+		p.z = (t[1] * v->tmp[0].len) + (t[0] * 4);
+		if (p.z < v->ray.lim && v->ray.side == 0)
+			add_pix(v, p, (t_point2){1, v->ray.wall_dist, FOGC, FOGL},
+				(t_point){1, 0, 0, 0});
+		else if (p.z < v->ray.lim && v->ray.side == 1)
+			add_pix(v, p, (t_point2){1, v->ray.wall_dist, FOGC, FOGL},
+				(t_point){0});
 	}
 }
 
@@ -115,24 +115,21 @@ void	update_texture_pixels(t_vars *v, t_point p, int *t, t_imga *img)
 /// @return 
 int	raycasting(t_vars *v)
 {
-	int		x;
 	int		t[2];
-	t_imga	img[2];
 
-	img[1] = v->img[EMAP];
-	x = 0;
-	img[0] = v->game.skybox;
-	draw_skybox(v, (t_point){-1, -1, 0, 0}, t, img);
+	v->tmp[1] = v->img[EMAP];
+	v->ray.x = -1;
+	v->tmp[0] = v->game.skybox;
+	draw_skybox(v, (t_point){-1, -1, 0, 0}, t);
 	draw_floor_ceiling(v);
-	while (x < v->screen.resw)
+	while (++v->ray.x < v->screen.resw)
 	{
-		init_raycasting_info(x, v);
+		init_raycasting_info(v->ray.x, v);
 		set_dda(v);
 		perform_dda(v, v->player.player, 0);
 		calculate_line_height(v);
-		update_texture_pixels(v, (t_point){x, 0, 0, 0}, t, img);
-		v->ray.zbuffer[x] = v->ray.wall_dist;
-		x++;
+		update_texture_pixels(v, (t_point){v->ray.x, 0, 0, 0}, t);
+		v->ray.zbuffer[v->ray.x] = v->ray.wall_dist;
 	}
 	draw_sprites(v);
 	return (1);

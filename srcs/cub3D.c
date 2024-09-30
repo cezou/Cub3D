@@ -6,11 +6,26 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 09:51:53 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/27 12:22:10 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/30 16:03:44 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3D.h"
+
+/// @brief Init one texture
+/// @param v Vars
+/// @param img Texture to initialize
+void	inittexture(t_vars *v, t_imga *img)
+{
+	img->img = mlx_xpm_file_to_image(v->mlx, img->filename,
+			&img->width, &img->height);
+	if (!img->img)
+		exit((prterr(v, "Error mlx texture image\n", 1, 1), 1));
+	img->addr = mlx_get_data_addr(img->img, &img->bpp,
+			&img->len, &img->endian);
+	if (!img->addr)
+		exit((prterr(v, "Error mlx texture image address\n", 1, 1), 1));
+}
 
 /// @brief Init textures
 /// @param v Vars
@@ -25,16 +40,7 @@ void	inittextures(t_vars *v, int i)
 	v->img[EWEST] = v->infos.west.imga;
 	v->img[ENORTH] = v->infos.north.imga;
 	while (++i < EBUFF)
-	{
-		v->img[i].img = mlx_xpm_file_to_image(v->mlx, v->img[i].filename,
-				&v->img[i].width, &v->img[i].height);
-		if (!v->img[i].img)
-			exit((prterr(v, "Error mlx texture image\n", 1, 1), 1));
-		v->img[i].addr = mlx_get_data_addr(v->img[i].img, &v->img[i].bpp,
-				&v->img[i].len, &v->img[i].endian);
-		if (!v->img[i].addr)
-			exit((prterr(v, "Error mlx texture image address\n", 1, 1), 1));
-	}
+		inittexture(v, &v->img[i]);
 	scale_img((t_point){0}, &v->img[EKEK], &v->img[COMP_N]);
 }
 
@@ -42,10 +48,11 @@ int	main(int ac, char **av)
 {
 	t_vars	v;
 
-	ft_memset(&v, 0, sizeof(t_vars));
 	init(&v, ac, av);
 	while (1)
 	{
+		mlx_clear_window(v.mlx, v.screen.win);
+		mlx_do_sync(v.mlx);
 		v.game.updated_at = 0;
 		hooks(&v);
 		if (v.game.start == 0)

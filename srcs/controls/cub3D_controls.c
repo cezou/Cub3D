@@ -44,11 +44,11 @@ void	hotreload(t_vars *v)
 	clearimgs(v);
 	initvars(v);
 	initpathtext(v);
-	inittextures(v, 6);
+	inittextures(v, 4);
 	v->game.skybox = v->img[ESKYBOX];
 	inithud(v);
-	initplayeranim(v, -1);
-	initguardanim(v, -1);
+	initplayeranim(v);
+	initguardanim(v);
 	check_map(v);
 	init_player_dir(v);
 	ma_sound_stop(&v->sound.sound[ECRED]);

@@ -1,40 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3D_render_player.c                              :+:      :+:    :+:   */
+/*   cub3D_raycasting_sprites_utils.c                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/30 16:53:41 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/30 17:42:05 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
 
-/// @brief Render the player sprites/animations. Put those pixels in the buff.
+/// @brief Find guard in the guard array with its coordinates
 /// @param v Vars
-void	render_player(t_vars *v)
+/// @param x X coordinate
+/// @param y Y coordinate
+/// @return Index of the guard in the guard array
+int	find_guard(t_vars *v, int x, int y)
 {
-	t_point	p;
-	int		w;
-	int		h;
+	int		i;
 
-	v->tmp[0] = v->player.img;
-	v->tmp[1] = v->img[EMAP];
-	w = v->player.animoff + v->player.img.animx;
-	h = v->tmp[0].height;
-	p.x = v->player.animoff - 1;
-	p.color = 0;
-	while (++p.x < w)
+	i = -1;
+	while (++i < v->game.nb_guard)
 	{
-		p.y = -1;
-		while (++p.y < h)
-		{
-			p.z = (p.y * v->tmp[0].len) + (p.x * 4);
-			add_pix(v, (t_point){p.x - v->player.animoff + v->screen.gamew / 2
-				- v->player.img.animx / 2, p.y + v->screen.gameh
-				- h, p.z, p.color}, (t_point2){0}, (t_point){0});
-		}
+		if (v->guard[i].x == x && v->guard[i].y == y)
+			return (v->guard[i].img_i = EGUARDDEATH,
+				v->guard[i].animoff = 0, i);
 	}
+	return (-1);
 }

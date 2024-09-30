@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/26 18:45:32 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/30 16:55:08 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	set_skybox(t_vars *v)
 /// @param p Pixel to add to the buffer
 /// @param tx Texture x coordinate
 /// @param ty Texture y coordinate
-static void	surf_rows(t_vars *v, t_point p, t_imga *img, int *t)
+static void	surf_rows(t_vars *v, t_point p, int *t)
 {
 	int	cy;
 
@@ -52,7 +52,7 @@ static void	surf_rows(t_vars *v, t_point p, t_imga *img, int *t)
 	{
 		p.z = (t[1] * v->game.skybox.len) + (t[0] * 4);
 		if (p.z < v->ray.lim)
-			add_pix(v, img, p, (t_point2){0});
+			add_pix(v, p, (t_point2){0}, (t_point){0});
 		cy += v->ray.dty;
 		while (cy > v->ray.dy)
 		{
@@ -68,7 +68,7 @@ static void	surf_rows(t_vars *v, t_point p, t_imga *img, int *t)
 /// @param tx Texture x coordinate
 /// @param ty Texture y coordinate
 ///	@note 
-void	draw_skybox(t_vars *v, t_point p, int *t, t_imga *img)
+void	draw_skybox(t_vars *v, t_point p, int *t)
 {
 	v->ray.lim = ((v->game.skybox.height - 1) * v->game.skybox.len)
 		+ ((v->game.skybox.width - 1) * 4);
@@ -80,7 +80,7 @@ void	draw_skybox(t_vars *v, t_point p, int *t, t_imga *img)
 			t[0] = v->ray.tx0 - v->game.skybox.width;
 		p.y = -1;
 		t[1] = v->ray.ty0;
-		surf_rows(v, p, img, t);
+		surf_rows(v, p, t);
 		p.z += v->ray.dtx;
 		while (p.z > v->screen.resw)
 		{

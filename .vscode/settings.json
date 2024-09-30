@@ -4,6 +4,8 @@
 		"kek": "c",
 		"kek2": "c",
 		"unistd.h": "c",
-		"wait.h": "c"
+		"wait.h": "c",
+		"compare": "c",
+		"random": "c"
 	}
 }

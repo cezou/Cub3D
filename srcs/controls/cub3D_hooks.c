@@ -18,9 +18,11 @@ void	attack(t_vars *v)
 {
 	if (!v->player.pattack)
 		v->player.pattack = 1;
-	else if (v->player.pattack && v->player.animoff > v->img[EFCK].width)
+	else if (v->player.pattack && v->player.animoff > v->player.img.width)
+	{
 		v->player.pattack = 0;
-	v->player.animoff = v->img[v->player.animp].anim[0].animx;
+	}
+	v->player.animoff = v->player.img.animx;
 }
 
 /// @brief Movement switch case
@@ -64,18 +66,30 @@ void	tooglegod(t_vars *v)
 int	keys(int kd, t_vars *v)
 {
 	v->keys[kd] = true;
-	if (kd == XK_x)
+	if (v->game.won < 4 && kd == XK_x)
 		attack(v);
+	if (v->game.won < 4 && kd == 38 && v->player.animoff == 0)
+		(v->player.img = v->img[EFIST]);
+	if (v->game.won < 4 && kd == 233 && v->player.animoff == 0)
+		(v->player.img = v->img[EGUN]);
+	// if (v->game.won < 4 && kd == 34)
+		// (v->player.img = v->img[EGUN]);// OTHER WEAPONS
+	// if (v->game.won < 4 && kd == 39)
+		// (v->player.img = v->img[EGUN]);// OTHER WEAPONS
+	// if (v->game.won < 4 && kd == 40)
+		// (v->player.img = v->img[EGUN]);// OTHER WEAPONS
+	// if (v->game.won < 4 && kd == 45)
+		// (v->player.img = v->img[EGUN]);// OTHER WEAPONS
 	if (kd == XK_Escape)
 		menuexit(v);
-	if (kd == XK_Return)
+	if (v->game.won < 4 && kd == XK_Return)
 		returnkey(v);
 	if (v->game.pause)
 		menuarrow(v, kd);
 	if (!v->game.pause && !v->game.won && v->game.start > 1
 		&& is_pressed(XK_F1, v))
 		tooglegod(v);
-	if (((v->game.start > 1 && v->game.god) || v->game.won)
+	if (((v->game.start > 1 && v->game.god && v->game.won < 4))
 		&& is_pressed(XK_F5, v))
 		hotreload(v);
 	return (0);

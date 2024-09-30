@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/26 18:56:05 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/30 16:27:48 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,21 @@ void	update_sprites_animations(t_vars *v)
 		if (timestamp_in_ms(v) - v->guard[i].time
 			>= (uint64_t)(10000 / v->game.fps))
 		{
-			v->guard[i].animoff += v->img[v->guard[i].img_i].anim[0].animx;
+			if (!v->guard[i].stop)
+				v->guard[i].animoff += v->img[v->guard[i].img_i].animx;
 			v->guard[i].time = timestamp_in_ms(v);
 		}
-		if (v->guard[i].animoff > v->img[v->guard[i].img_i].width)
+		if (v->guard[i].img_i != EGUARDDEATH
+			&& v->guard[i].animoff > v->img[v->guard[i].img_i].width)
 			v->guard[i].animoff = 0;
+		else if (v->guard[i].img_i == EGUARDDEATH
+			&& v->guard[i].animoff > v->img[v->guard[i].img_i].width
+			- v->img[v->guard[i].img_i].animx)
+		{
+			v->guard[i].stop = 1;
+			v->guard[i].animoff = v->img[v->guard[i].img_i].width
+				- v->img[v->guard[i].img_i].animx;
+		}
 	}
 }
 
@@ -66,13 +76,14 @@ void	update_player_animations(t_vars *v)
 	if (timestamp_in_ms(v) - v->player.timerplayer
 		>= (uint64_t)(5000 / v->game.fps))
 	{
-		v->player.animoff += v->img[EPLAYER].anim[0].animx;
+		v->player.animoff += v->player.img.animx;
 		v->player.timerplayer = timestamp_in_ms(v);
 	}
-	if (v->player.animoff > v->img[EFCK].width)
+	if (v->player.animoff > v->player.img.width)
 	{
 		v->player.animoff = 0;
 		v->player.pattack = 0;
+		v->ray.hitguard = 0;
 	}
 }
 

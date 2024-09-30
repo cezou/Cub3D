@@ -21,19 +21,18 @@ static void	puttexturesmenu(t_vars *v, int i, int ph, int pw)
 {
 	size_t	k;
 	t_point	p;
-	t_imga	img[2];
 
 	p.y = -1;
-	img[0] = v->img[i];
-	img[1] = v->img[EMAP];
+	v->tmp[0] = v->img[i];
+	v->tmp[1] = v->img[EMAP];
 	while (++(p.y) < v->img[i].height)
 	{
 		p.x = -1;
 		while (++(p.x) < v->img[i].width)
 		{
 			k = (p.y * v->img[i].len) + (p.x * 4);
-			add_pix(v, img,
-				(t_point){(p.x + pw), (p.y + ph), k, 0}, (t_point2){0});
+			add_pix(v, (t_point){(p.x + pw), (p.y + ph), k, 0},
+				(t_point2){0}, (t_point){0});
 		}
 	}
 }

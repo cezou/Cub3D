@@ -87,8 +87,9 @@ void	melting(t_vars *v, bool *done, int x)
 			if (v->rand[x] < 0)
 				d = p.y;
 			p.z = (p.y * v->tmp[0].len) + (p.x * 4);
-			add_pix((*done = false, v), v->tmp, (t_point){p.x, d, p.z,
-				getcolorpix(v, v->tmp[0].addr, p.z)}, (t_point2){0});
+			add_pix((*done = false, v), (t_point){p.x, d, p.z,
+				getcolorpix(v, v->tmp[0].addr, p.z)},
+				(t_point2){0}, (t_point){0, 1, 0, 0});
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/25 18:03:59 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/09/30 17:42:12 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,20 +75,21 @@ void	sort_sprites(t_vars *v, int i, int sort)
 	i = 0;
 	while (true)
 	{
-		if (i < v->game.nb_guard - 1 && v->guard[i].dist < v->guard[i + 1].dist)
+		if (i < v->game.nb_guard - 1)
 		{
-			ft_swaps(&v->guard[i], &v->guard[i + 1]);
-			sort++;
+			if (v->guard[i].dist < v->guard[i + 1].dist)
+				ft_swaps((sort = 1, &v->guard[i]), &v->guard[i + 1]);
+			else
+				sort++;
+			if (sort == v->game.nb_guard - 1)
+				break ;
 			i++;
-			continue ;
 		}
-		if (sort)
+		else
 		{
 			i = 0;
 			sort = 0;
-			continue ;
 		}
-		break ;
 	}
 }
 
@@ -96,7 +97,7 @@ void	sort_sprites(t_vars *v, int i, int sort)
 /// @param v Vars
 /// @param sp Sprite struct containing calcul datas 
 /// @param p The actual sprite to draw
-void	draw_sprite(t_vars *v, t_sprite *sp, t_guard g, t_imga *img)
+void	draw_sprite(t_vars *v, t_sprite *sp, t_guard g)
 {
 	int		tx;
 	int		ty;
@@ -116,10 +117,10 @@ void	draw_sprite(t_vars *v, t_sprite *sp, t_guard g, t_imga *img)
 			{
 				p.z = (p.y - sp->vmovescreen) * 256 - v->screen.gameh * 128
 					+ sp->spriteheight * 128;
-				ty = ((p.z * img[0].height) / sp->spriteheight) / 256;
-				p.z = (ty * img[0].len) + (tx * 4);
-				add_pix(v, img, p,
-					(t_point2){1, sp->transformy, FOGC, FOGL});
+				ty = ((p.z * v->tmp[0].height) / sp->spriteheight) / 256;
+				p.z = (ty * v->tmp[0].len) + (tx * 4);
+				add_pix(v, p, (t_point2){1, sp->transformy, FOGC, FOGL},
+					(t_point){0});
 			}
 		}
 	}
@@ -130,16 +131,15 @@ void	draw_sprite(t_vars *v, t_sprite *sp, t_guard g, t_imga *img)
 void	draw_sprites(t_vars *v)
 {
 	int		i;
-	t_imga	img[2];
 
 	i = -1;
-	img[1] = v->img[EMAP];
+	v->tmp[1] = v->img[EMAP];
 	while (++i < v->game.nb_guard)
 	{
-		img[0] = v->img[v->guard[i].img_i];
+		v->tmp[0] = v->img[v->guard[i].img_i];
 		sort_sprites(v, -1, 0);
 		transform_sprite(v, &v->sprite, v->guard[i]);
 		set_sprite_boundaries(v, &v->sprite, v->guard[i]);
-		draw_sprite(v, &v->sprite, v->guard[i], img);
+		draw_sprite(v, &v->sprite, v->guard[i]);
 	}
 }
