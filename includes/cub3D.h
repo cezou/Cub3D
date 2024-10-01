@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/01 11:43:33 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/01 13:51:20 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,12 +149,12 @@
 # define E 69
 # define W 87
 
-// # define FONT1 "-sony-fixed-medium-r-normal--17-120-100-100-c-0-iso8859-1"
-// # define FONT2 "-sony-fixed-medium-r-normal--24-230-75-75-c-0-iso8859-1"
-# define FONT1 "-misc-fixed-medium-r-semicondensed\
---13-120-75-75-c-60-iso8859-1"
-# define FONT2 "-misc-fixed-medium-r-semicondensed\
---13-120-75-75-c-60-iso8859-1"
+# define FONT1 "-sony-fixed-medium-r-normal--17-120-100-100-c-0-iso8859-1"
+# define FONT2 "-sony-fixed-medium-r-normal--24-230-75-75-c-0-iso8859-1"
+// # define FONT1 "-misc-fixed-medium-r-semicondensed
+// --13-120-75-75-c-60-iso8859-1"
+// # define FONT2 "-misc-fixed-medium-r-semicondensed
+// --13-120-75-75-c-60-iso8859-1"
 // # define FONT2 "-sun-open look glyph-----19-190-75-75-p-154-sunolglyph-1"
 
 // Mr. Potato-Head by Joan Stark
@@ -454,6 +454,8 @@ typedef struct s_mouse
 	double				yangle;
 	double				zangle;
 	float				zheight;
+	double				sensx;
+	double				sensy;
 }						t_mouse;
 
 typedef struct s_sound
@@ -594,6 +596,7 @@ typedef struct s_game
 	t_imga				skybox;
 	int					nb_door;
 	int					nb_guard;
+	int					canhit;
 }						t_game;
 
 // images: verifier que le path finit bien par .xpm, que le fichier existe,

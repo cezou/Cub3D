@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 20:43:05 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/30 16:55:18 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/01 14:09:43 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,45 @@ void	renderdoomhead(t_vars *v)
 	}
 }
 
+/// @brief Render the crosshair
+/// @param v Vars
+void	rendercrosshair(t_vars *v, t_point p, int w, int h)
+{
+	while (++p.x < w)
+	{
+		p.y = v->tmp[0].height / 2 - 2;
+		while (++p.y < h)
+		{
+			p.color = v->infos.floor;
+			if (v->game.canhit)
+				p.color = v->infos.ceil;
+			add_pix(v, p, (t_point2){0}, (t_point){0, 1, 0, 0});
+		}
+	}
+	p.x = v->tmp[0].width / 2 - 2;
+	w = v->tmp[0].width / 2 + 2;
+	h = v->tmp[0].height / 2 + 10;
+	while (++p.x < w)
+	{
+		p.y = v->tmp[0].height / 2 - 10;
+		while (++p.y < h)
+		{
+			p.color = v->infos.floor;
+			if (v->game.canhit)
+				p.color = v->infos.ceil;
+			add_pix(v, p, (t_point2){0}, (t_point){0, 1, 0, 0});
+		}
+	}
+}
+
 /// @brief Render the HUD
 /// @param v Vars
 void	renderhud(t_vars *v)
 {
+	v->tmp[0] = v->img[EMAP];
+	v->tmp[1] = v->img[EMAP];
+	rendercrosshair(v, (t_point){v->tmp[0].width / 2 - 10, 0, 0, 0},
+		v->tmp[0].width / 2 + 10, v->tmp[0].height / 2 + 2);
 	if (!v->hud.refresh)
 		return ;
 	save_screen_to_buffer(v->img[EHUD], v->img[EHUDTMP], 0);

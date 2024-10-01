@@ -59,7 +59,7 @@ void	create_textures(t_vars *v, t_point c)
 ///	@param options Options {dark, transparence, 0, 0}
 void	add_pix(t_vars *v, t_point p, t_point2 fog, t_point opt)
 {
-	if (!opt.y && v->tmp[0].addr[p.z + 3] == 0)
+	if (!opt.y && p.z > -1 && v->tmp[0].addr[p.z + 3] == 0)
 	{
 		p.color = getcolorpix(v, v->tmp[0].addr, p.z);
 		if (opt.x)

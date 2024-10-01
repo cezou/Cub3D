@@ -99,6 +99,8 @@ void	melting(t_vars *v, bool *done, int x)
 /// @return
 int	render(t_vars *v)
 {
+	if (v->game.god)
+		v->game.fps = 32;
 	if (!v->screen.win || v->game.won > 0 || !v->game.start
 		|| timestamp_in_ms(v) - v->game.updated_at < (uint64_t)(1000
 		/ v->game.fps))

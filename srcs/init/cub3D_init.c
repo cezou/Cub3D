@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/01 12:18:06 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/01 14:01:40 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,15 @@ void	initvars(t_vars *v)
 	v->player.movespeedy = 0;
 	v->player.movespeedx = 3.0;
 	v->player.rotspeed = 2.0;
-	v->player.mouserotspeed = 2.5;
+	v->player.mouserotspeed = 0.1;
 	v->player.accx = 5.0;
 	v->player.accy = 0.08;
 	v->player.maxspeedx = 0.2;
 	v->player.maxspeedy = 0.15;
 	v->player.deccx = 0.1;
 	v->player.deccy = 0.2;
+	v->mouse.sensx = 20.0;
+	v->mouse.sensy = 10.0;
 }
 
 void	initmodes(t_vars *v, int argc)
