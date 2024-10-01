@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/01 15:33:35 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/01 18:28:08 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -291,6 +291,7 @@ typedef enum s_components
 	ETITLE,
 	EKEK,
 	EDOOMH,
+	EARMOR,
 	EMENUSELECT,
 	EMENU,
 	EMENUIG,
@@ -320,6 +321,15 @@ typedef struct s_point2
 	int					z;
 	int					t;
 }						t_point2;
+
+typedef struct s_point3
+{
+	double				x;
+	double				y;
+	int					z;
+	double				uv;
+	double				v;
+}						t_point3;
 
 typedef struct s_map
 {
@@ -404,7 +414,7 @@ typedef struct s_ray
 	int					*zbuffer;
 }						t_ray;
 
-typedef struct s_sprite
+typedef struct s_sprite_data
 {
 	int					drawstartx;
 	int					drawstarty;
@@ -415,7 +425,7 @@ typedef struct s_sprite
 	int					spritewidth;
 	int					spriteheight;
 	double				transformy;
-}						t_sprite;
+}						t_sprite_data;
 
 typedef struct s_floor
 {
@@ -476,6 +486,7 @@ typedef struct s_player
 	int					animp;
 	int					animoff;
 	int					moving;
+	int					movingy;
 	int					jumping;
 	int					injump;
 	int					dir;
@@ -513,11 +524,12 @@ typedef struct s_hud
 	uint64_t			time;
 }						t_hud;
 
-typedef struct s_guard
+typedef struct s_sprtie
 {
-	int					x;
-	int					y;
+	double				x;
+	double				y;
 	int					hp;
+	int					isguard;
 	int					stop;
 	int					img_i;
 	int					xdelta;
@@ -527,7 +539,7 @@ typedef struct s_guard
 	double				vmove;
 	double				dist;
 	uint64_t			time;
-}						t_guard;
+}						t_sprite;
 
 typedef struct s_mapv
 {
@@ -598,6 +610,7 @@ typedef struct s_game
 	t_imga				skybox;
 	int					nb_door;
 	int					nb_guard;
+	int					nb_sprites;
 	int					canhit;
 }						t_game;
 
@@ -648,12 +661,12 @@ typedef struct s_vars
 	t_menu				menu;
 	t_proj				proj;
 	t_door				*door;
-	t_guard				*guard;
+	t_sprite			*sprites;
 	t_objs				objs;
 	t_mapv				mapv;
 	t_player			player;
 	t_ray				ray;
-	t_sprite			sprite;
+	t_sprite_data		sp;
 	t_floor				floor;
 	t_hud				hud;
 	t_imga				tmp[2];
@@ -681,7 +694,7 @@ int						myrand(int nb);
 t_point2				get_90_angle(int dir, double x, double y);
 float					deg_to_rad(float deg);
 float					rad_to_deg(float rad);
-void					ft_swaps(t_guard *a, t_guard *b);
+void					ft_swaps(t_sprite *a, t_sprite *b);
 int						find_door(t_vars *v, int x, int y);
 int						find_guard(t_vars *v, int x, int y);
 int						m_random(t_vars *v);
@@ -769,10 +782,11 @@ void					draw_floor_ceiling(t_vars *v);
 // void					set_floor_ceiling_vert(t_vars *v, t_point p);
 
 void					draw_sprites(t_vars *v);
-void					draw_sprite(t_vars *v, t_sprite *sp, t_guard g);
-void					transform_sprite(t_vars *v, t_sprite *sp, t_guard g);
-void					set_sprite_boundaries(t_vars *v, t_sprite *sp,
-							t_guard g);
+void					draw_sprite(t_vars *v, t_sprite_data *sp, t_sprite g);
+void					transform_sprite(t_vars *v, t_sprite_data *sp,
+							t_sprite g);
+void					set_sprite_boundaries(t_vars *v, t_sprite_data *sp,
+							t_sprite g);
 void					sort_sprites(t_vars *v, int i, int sort);
 
 void					draw_skybox(t_vars *v, t_point p, int *t);

@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 15:07:21 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/01 12:19:11 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/01 17:24:29 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int	keys_release(int keycode, t_vars *v)
 	v->keys[keycode] = false;
 	if (!v->keys[XK_w] && !v->keys[XK_a] && !v->keys[XK_s] && !v->keys[XK_d])
 		v->player.moving = 0;
+	if (!v->keys[XK_w] && !v->keys[XK_s])
+		v->player.movingy = 0;
 	if (v->game.start > 1 && ACTIVATE_SOUND && (keycode == XK_w
 			|| keycode == XK_a || keycode == XK_s || keycode == XK_d))
 		ma_sound_stop(&v->sound.sound[1]);

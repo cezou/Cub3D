@@ -6,11 +6,17 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/01 15:38:27 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/01 19:04:50 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
+
+/// @brief 
+t_point3	g_objs[2] = {
+{14.0, 8.0, EARMOR, 5.0, 127.0},
+{15.0, 8.0, EARMOR, 1.0, 0}
+};
 
 void	initvars(t_vars *v)
 {
@@ -68,29 +74,34 @@ void	init_doors(t_vars *v)
 	}
 }
 
-void	init_guard(t_vars *v, int j, t_map *tmp)
+void	init_guard(t_vars *v, int j, t_map *tmp, int i)
 {
-	v->guard = (t_guard *)malloc(sizeof(t_guard) * (v->game.nb_guard));
-	if (!v->guard)
-		exit((prterr(v, ERRMALL, 1, 0), 1));
 	while (tmp)
 	{
 		if (tmp->val == 'G')
 		{
-			v->guard[++j].x = tmp->x;
-			v->guard[j].y = tmp->y;
-			v->guard[j].time = 0;
-			v->guard[j].stop = 0;
-			v->guard[j].hp = 100;
-			v->guard[j].img_i = EGUARDW;
-			v->guard[j].xdelta = 0;
-			v->guard[j].vdiv = 1.0;
-			v->guard[j].udiv = 1.0;
-			v->guard[j].vmove = 0;
-			v->guard[j].dist = 0;
-			v->guard[j].animoff = v->img[v->guard[j].img_i].animx;
+			v->sprites[++j] = (t_sprite){0};
+			v->sprites[j].x = tmp->x;
+			v->sprites[j].y = tmp->y;
+			v->sprites[j].hp = 100;
+			v->sprites[j].img_i = EGUARDW;
+			v->sprites[j].vdiv = 1.0;
+			v->sprites[j].udiv = 1.0;
+			v->sprites[j].isguard = 1;
+			v->sprites[j].animoff = 0;
 		}
 		tmp = tmp->right;
+	}
+	while (++j < v->game.nb_sprites)
+	{
+		v->sprites[j] = (t_sprite){0};
+		v->sprites[j].x = g_objs[++i].x;
+		v->sprites[j].y = g_objs[i].y;
+		v->sprites[j].img_i = g_objs[i].z;
+		v->sprites[j].vdiv = g_objs[i].uv;
+		v->sprites[j].udiv = g_objs[i].uv;
+		v->sprites[j].vmove = g_objs[i].v;
+		v->sprites[j].animoff = 0;
 	}
 }
 
@@ -102,8 +113,12 @@ void	check_map(t_vars *v)
 	v->player.y = v->player.player->y + 0.5;
 	v->player.animp = EFIST;
 	v->player.animoff = 0;
+	v->game.nb_sprites = v->game.nb_guard + 2;
 	init_doors(v);
-	init_guard(v, -1, v->mapv.map);
+	v->sprites = (t_sprite *)malloc(sizeof(t_sprite) * (v->game.nb_sprites));
+	if (!v->sprites)
+		exit((prterr(v, ERRMALL, 1, 0), 1));
+	init_guard(v, -1, v->mapv.map, -1);
 }
 
 void	init(t_vars *v, int argc, char **argv)

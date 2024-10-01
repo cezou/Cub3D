@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 18:24:52 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/01 13:50:14 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/01 17:25:18 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,8 @@ void	move(t_vars *v, int d)
 	rotatecamy(v, d, v->player.rotspeed * v->game.frametime, 500);
 	if (d > -1 && d < 4)
 		v->player.moving = 1;
+	if (d == 0 || d == 1)
+		v->player.movingy = 1;
 	moveplayerx(v, d);
 	moveplayery(v, d);
 	open_door(v, d);

@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/30 17:52:06 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/01 18:45:12 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	initpathtext(t_vars *v)
 	v->img[ESPACE].id = ESPACE;
 	v->img[EDOOR].filename = "resources/textures/Door.xpm";
 	v->img[EDOOR].id = EDOOR;
+	v->img[EARMOR].filename = "resources/textures/armor.xpm";
 	v->img[EGUARDW].filename = "resources/textures/general.xpm";
 	v->img[EGUARDDEATH].filename = "resources/textures/generaldeath.xpm";
 	v->img[ESKYBOX].filename = "resources/textures/skybox.xpm";
@@ -33,10 +34,19 @@ void	initpathtext(t_vars *v)
 
 void	initanim(t_vars *v, int index, int b, int animnb)
 {
+	double	factorx;
+	double	factory;
+	double	scalefactor;
+
+	factorx = (double)v->screen.gamew / 800;
+	factory = (double)v->screen.gameh / 600;
+	scalefactor = factorx;
+	if (factorx >= factory)
+		scalefactor = factory;
 	v->img[ETMP].filename = v->img[index].filename;
 	inittexture(v, &v->img[ETMP]);
-	v->img[index].width = v->img[ETMP].width / (v->screen.ratio) * 3;
-	v->img[index].height = v->img[ETMP].height / (v->screen.ratio) * 3;
+	v->img[index].width = scalefactor * v->img[ETMP].width * 3;
+	v->img[index].height = scalefactor * v->img[ETMP].height * 3;
 	initimage(v, index, v->img[index].width, v->img[index].height);
 	scale_img((t_point){0}, &v->img[ETMP], &v->img[index]);
 	v->img[index].animx = v->img[ETMP].width / animnb
@@ -56,8 +66,9 @@ void	initplayerpathanim(t_vars *v)
 
 void	initguardpathanim(t_vars *v)
 {
-	v->img[EGUARDW].animx = v->img[EGUARDW].height;
-	v->img[EGUARDDEATH].animx = v->img[EGUARDDEATH].height;
+	v->img[EGUARDW].animx = v->img[EGUARDW].width / 4;
+	v->img[EGUARDDEATH].animx = v->img[EGUARDDEATH].width / 4;
+	v->img[EARMOR].animx = 0;
 }
 
 void	initprojectilepathanim(t_vars *v)

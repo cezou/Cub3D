@@ -1,7 +1,7 @@
 NO ./resources/textures/Ground.xpm
 SO ./resources/textures/Door.xpm
 
-WE ./resources/textures/Star.xpm
+WE ./resources/textures/Star2.xpm
 EA ./resources/textures/Exit.xpm
 
 C 255,100,100

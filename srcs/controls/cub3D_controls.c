@@ -25,8 +25,8 @@ void	hotreload(t_vars *v)
 		free(v->objs.objs);
 	if (v->door)
 		free(v->door);
-	if (v->guard)
-		free(v->guard);
+	if (v->sprites)
+		free(v->sprites);
 	if (v->rand)
 		free(v->rand);
 	v->infos = (t_infos){0};
@@ -34,10 +34,10 @@ void	hotreload(t_vars *v)
 	parsing(4, filename, v);
 	v->door = NULL;
 	v->exit = NULL;
-	v->guard = NULL;
+	v->sprites = NULL;
 	v->last = NULL;
 	v->rand = NULL;
-	v->sprite = (t_sprite){0};
+	v->sp = (t_sprite_data){0};
 	v->game = (t_game){0};
 	v->game.start = 2;
 	m_clearrandom(v);

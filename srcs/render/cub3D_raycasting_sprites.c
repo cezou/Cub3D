@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/01 14:23:42 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/01 18:59:54 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 /// @param sp Sprite struct containing calcul datas
 /// @param g The actual sprite to draw
 // using 'transformY' instead of the real distance prevents fisheye 
-void	transform_sprite(t_vars *v, t_sprite *sp, t_guard g)
+void	transform_sprite(t_vars *v, t_sprite_data *sp, t_sprite g)
 {
 	double		invdet;
 	double		spritex;
@@ -43,7 +43,7 @@ void	transform_sprite(t_vars *v, t_sprite *sp, t_guard g)
 /// @param v Vars
 /// @param sp Sprite struct containing calcul datas 
 /// @param g The actual sprite to draw
-void	set_sprite_boundaries(t_vars *v, t_sprite *sp, t_guard g)
+void	set_sprite_boundaries(t_vars *v, t_sprite_data *sp, t_sprite g)
 {
 	sp->drawstarty = -sp->spriteheight / 2
 		+ v->screen.gameh / 2 + sp->vmovescreen;
@@ -67,21 +67,21 @@ void	set_sprite_boundaries(t_vars *v, t_sprite *sp, t_guard g)
 /// @param sort Integer used to sort =0
 void	sort_sprites(t_vars *v, int i, int sort)
 {
-	while (++i < v->game.nb_guard)
+	while (++i < v->game.nb_sprites)
 	{
-		v->guard[i].dist = pow((v->player.x - v->guard[i].x), 2)
-			+ pow((v->player.y - v->guard[i].y), 2);
+		v->sprites[i].dist = pow((v->player.x - v->sprites[i].x), 2)
+			+ pow((v->player.y - v->sprites[i].y), 2);
 	}
 	i = 0;
 	while (true)
 	{
-		if (i < v->game.nb_guard - 1)
+		if (i < v->game.nb_sprites - 1)
 		{
-			if (v->guard[i].dist < v->guard[i + 1].dist)
-				ft_swaps((sort = 1, &v->guard[i]), &v->guard[i + 1]);
+			if (v->sprites[i].dist < v->sprites[i + 1].dist)
+				ft_swaps((sort = 1, &v->sprites[i]), &v->sprites[i + 1]);
 			else
 				sort++;
-			if (sort == v->game.nb_guard - 1)
+			if (sort == v->game.nb_sprites - 1)
 				break ;
 			i++;
 		}
@@ -97,7 +97,7 @@ void	sort_sprites(t_vars *v, int i, int sort)
 /// @param v Vars
 /// @param sp Sprite struct containing calcul datas 
 /// @param p The actual sprite to draw
-void	draw_sprite(t_vars *v, t_sprite *sp, t_guard g)
+void	draw_sprite(t_vars *v, t_sprite_data *sp, t_sprite g)
 {
 	int		tx;
 	int		ty;
@@ -134,12 +134,12 @@ void	draw_sprites(t_vars *v)
 
 	i = -1;
 	v->tmp[1] = v->img[EMAP];
-	while (++i < v->game.nb_guard)
+	sort_sprites(v, -1, 0);
+	while (++i < v->game.nb_sprites)
 	{
-		v->tmp[0] = v->img[v->guard[i].img_i];
-		sort_sprites(v, -1, 0);
-		transform_sprite(v, &v->sprite, v->guard[i]);
-		set_sprite_boundaries(v, &v->sprite, v->guard[i]);
-		draw_sprite(v, &v->sprite, v->guard[i]);
+		v->tmp[0] = v->img[v->sprites[i].img_i];
+		transform_sprite(v, &v->sp, v->sprites[i]);
+		set_sprite_boundaries(v, &v->sp, v->sprites[i]);
+		draw_sprite(v, &v->sp, v->sprites[i]);
 	}
 }

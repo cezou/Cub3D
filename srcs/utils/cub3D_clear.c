@@ -142,8 +142,8 @@ int	cleardata(t_vars *v, int b)
 		free(v->objs.objs);
 	if (b && v->door)
 		free(v->door);
-	if (b && v->guard)
-		free(v->guard);
+	if (b && v->sprites)
+		free(v->sprites);
 	if (v->rand)
 		free(v->rand);
 	return (0);
