@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/01 13:51:20 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/01 15:33:35 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -476,6 +476,8 @@ typedef struct s_player
 	int					animp;
 	int					animoff;
 	int					moving;
+	int					jumping;
+	int					injump;
 	int					dir;
 	double				x;
 	double				y;

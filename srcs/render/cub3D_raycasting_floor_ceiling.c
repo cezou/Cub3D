@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:38:17 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/30 17:01:48 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/01 15:09:30 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ static void	init_data_floor(t_vars *v, t_floor *f, int y)
 }
 
 // color = v->tex[4][64 * ty + tx];
-// color = (color >> 1) & 8355711;
 
 /// @brief Add the pixel from the texture to the buffer
 /// @param v Vars

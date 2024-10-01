@@ -68,6 +68,8 @@ int	keys(int kd, t_vars *v)
 	v->keys[kd] = true;
 	if (v->game.won < 4 && kd == XK_x)
 		attack(v);
+	if (v->game.won < 4 && kd == XK_Shift_L && !v->player.injump)
+		v->player.jumping = 1;
 	if (v->game.won < 4 && kd == 38 && v->player.animoff == 0)
 		(v->player.img = v->img[EFIST]);
 	if (v->game.won < 4 && kd == 233 && v->player.animoff == 0)

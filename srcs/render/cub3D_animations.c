@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/01 12:17:28 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/01 15:37:26 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,8 @@ void	update_player_animations(t_vars *v)
 	}
 }
 
-/// @brief Update animations
-/// @param v Vars
-void	update_animations(t_vars *v)
+void	update_player_movement(t_vars *v)
 {
-	update_sprites_animations(v);
-	update_door_animations(v, -1);
-	update_player_animations(v);
 	if (v->player.moving)
 	{
 		v->game.cambobtime += v->game.frametime;
@@ -111,7 +106,34 @@ void	update_animations(t_vars *v)
 			v->player.movespeedy = 0.0;
 		moveplayery(v, v->player.dir);
 	}
-	v->ray.pitch += sin((v->game.cambobtime) * 5.0f) * 1.8f;
+	v->ray.pitch += sin((v->game.cambobtime) * 5.0f) * 1.4f;
 	v->player.motionx = sin((v->game.cambobtime) * 8.0f) * 2.0f;
 	v->player.motiony = sin((v->game.cambobtime) * 8.0f) * 5.0f;
+}
+
+
+/// @brief Update animations
+/// @param v Vars
+void	update_animations(t_vars *v)
+{
+	update_sprites_animations(v);
+	update_door_animations(v, -1);
+	update_player_animations(v);
+	update_player_movement(v);
+	if (v->player.jumping)
+	{
+		v->player.z += 1000.0 * v->game.frametime;
+		if (v->player.z >= v->screen.gameh / 2)
+			v->player.jumping = 0;
+	}
+	else
+	{
+		v->player.injump = 1;
+		v->player.z -= 1000.0 * v->game.frametime;
+		if (v->player.z <= 0)
+		{
+			v->player.z = 0;
+			v->player.injump = 0;
+		}
+	}
 }
