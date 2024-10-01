@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 15:07:21 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/27 13:20:12 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/01 12:19:11 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,17 @@ int	closecross(t_vars *v)
 /// @return 0
 int	keys_release(int keycode, t_vars *v)
 {
+	if (v->keys[XK_w] && !v->keys[XK_a] && !v->keys[XK_s] && !v->keys[XK_d])
+		v->player.dir = NORTH;
+	else if (!v->keys[XK_w] && v->keys[XK_a]
+		&& !v->keys[XK_s] && !v->keys[XK_d])
+		v->player.dir = WEST;
+	else if (!v->keys[XK_w] && !v->keys[XK_a]
+		&& v->keys[XK_s] && !v->keys[XK_d])
+		v->player.dir = SOUTH;
+	else if (!v->keys[XK_w] && !v->keys[XK_a]
+		&& !v->keys[XK_s] && v->keys[XK_d])
+		v->player.dir = EAST;
 	v->keys[keycode] = false;
 	if (!v->keys[XK_w] && !v->keys[XK_a] && !v->keys[XK_s] && !v->keys[XK_d])
 		v->player.moving = 0;

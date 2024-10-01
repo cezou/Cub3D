@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/30 19:43:34 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/01 11:43:33 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -483,6 +483,14 @@ typedef struct s_player
 	double				plane_x;
 	double				plane_y;
 	double				angle;
+	double				motionx;
+	double				motiony;
+	double				accx;
+	double				accy;
+	double				deccx;
+	double				deccy;
+	double				maxspeedx;
+	double				maxspeedy;
 	double				movespeedx;
 	double				movespeedy;
 	double				rotspeed;
@@ -575,7 +583,8 @@ typedef struct s_game
 	int					fps;
 	uint64_t			created_at;
 	uint64_t			updated_at;
-	uint64_t			bobtime;
+	double				cambobtime;
+	double				playbobtime;
 	double				frametime;
 	uint64_t			time;
 	uint64_t			oldtime;
@@ -731,6 +740,8 @@ void					menuoptions(t_vars *v);
 // Controls
 
 void					move(t_vars *v, int d);
+void					moveplayerx(t_vars *v, int d);
+void					moveplayery(t_vars *v, int d);
 void					rotatecamx(t_vars *v, int d, double speed);
 void					rotatecamy(t_vars *v, int d, double speed, int mul);
 t_map					*set_pos(t_vars *v, t_point2 k, int d);

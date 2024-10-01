@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/30 19:42:25 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/01 12:17:28 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,23 @@ void	update_animations(t_vars *v)
 	update_door_animations(v, -1);
 	update_player_animations(v);
 	if (v->player.moving)
-		v->game.bobtime += timestamp_in_ms(v) - v->game.updated_at;
+	{
+		v->game.cambobtime += v->game.frametime;
+		v->game.playbobtime += v->game.frametime;
+		v->player.movespeedy += v->game.frametime * v->player.accy;
+		if (v->player.movespeedy > v->player.maxspeedy)
+			v->player.movespeedy = v->player.maxspeedy;
+	}
 	else
-		v->game.bobtime = 0;
-	v->ray.pitch += sin((v->game.bobtime) * 0.03f) * 2.0f;
+	{
+		v->game.cambobtime = 0;
+		v->game.playbobtime = 0;
+		v->player.movespeedy -= v->game.frametime * v->player.deccy;
+		if (v->player.movespeedy < 0.0)
+			v->player.movespeedy = 0.0;
+		moveplayery(v, v->player.dir);
+	}
+	v->ray.pitch += sin((v->game.cambobtime) * 5.0f) * 1.8f;
+	v->player.motionx = sin((v->game.cambobtime) * 8.0f) * 2.0f;
+	v->player.motiony = sin((v->game.cambobtime) * 8.0f) * 5.0f;
 }

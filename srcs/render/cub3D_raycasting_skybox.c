@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/30 16:55:08 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/01 11:29:25 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ static void	surf_rows(t_vars *v, t_point p, int *t)
 	while (++p.y < v->ray.dy)
 	{
 		p.z = (t[1] * v->game.skybox.len) + (t[0] * 4);
-		if (p.z < v->ray.lim)
+		if (p.z < v->ray.lim && p.z >= 0 && p.x >= 0 && p.x < v->screen.gamew
+			&& p.y >= 0)
 			add_pix(v, p, (t_point2){0}, (t_point){0});
 		cy += v->ray.dty;
 		while (cy > v->ray.dy)

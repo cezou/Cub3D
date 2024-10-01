@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/30 19:56:47 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/01 12:16:56 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,11 @@ void	render_player(t_vars *v, t_point c)
 		while (++p.y < c.color)
 		{
 			c.x = p.x - v->player.animoff + v->screen.gamew / 2
-				- v->player.img.animx / 2;
-			c.y = p.y + v->screen.gameh - c.color - v->ray.pitch;
-			// if (v->ray.pitch < -100)
-			// 	c.y = p.y + v->screen.gameh - c.color;
+				- v->player.img.animx / 2 - v->player.motionx;
+			c.y = p.y + v->screen.gameh - c.color - v->player.motiony + 10;
 			p.z = (p.y * v->tmp[0].len) + (p.x * 4);
-			if (c.x >= 0 && c.x < v->tmp[1].width
-				&& c.y >= 0 && c.y < v->tmp[1].height)
+			if (c.x >= 0 && c.x < v->screen.gamew
+				&& c.y >= 0 && c.y < v->screen.gameh)
 				add_pix(v, (t_point){c.x, c.y, p.z, p.color},
 					(t_point2){0}, (t_point){0});
 		}
