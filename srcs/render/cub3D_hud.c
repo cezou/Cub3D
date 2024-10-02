@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 20:43:05 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/01 14:09:43 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/02 16:27:03 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	renderdoomhead(t_vars *v)
 
 	p.x = v->hud.animoff - 1;
 	v->tmp[0] = v->img[EDOOMHTMP];
-	v->tmp[1] = v->img[EHUD];
+	v->tmp[1] = v->img[EBUFF];
 	w = v->hud.animoff + v->tmp[0].animx;
 	h = v->tmp[0].height;
 	p.color = 0;
@@ -64,7 +64,8 @@ void	renderdoomhead(t_vars *v)
 			p.z = (p.y * v->tmp[0].len) + (p.x * 4);
 			add_pix(v, (t_point){p.x - v->hud.animoff + v->tmp[0].animx
 				+ (v->screen.hudw / 2) - (v->tmp[0].width / 2),
-				p.y, p.z, p.color}, (t_point2){0}, (t_point){0});
+				p.y + v->screen.gameh, p.z, p.color},
+				(t_point2){0}, (t_point){0});
 		}
 	}
 }
@@ -105,13 +106,15 @@ void	rendercrosshair(t_vars *v, t_point p, int w, int h)
 void	renderhud(t_vars *v)
 {
 	v->tmp[0] = v->img[EMAP];
-	v->tmp[1] = v->img[EMAP];
+	v->tmp[1] = v->img[EBUFF];
 	rendercrosshair(v, (t_point){v->tmp[0].width / 2 - 10, 0, 0, 0},
 		v->tmp[0].width / 2 + 10, v->tmp[0].height / 2 + 2);
+	if (v->hud.refreshdh)
+		renderdoomhead(v);
+	v->hud.refreshdh = 0;
 	if (!v->hud.refresh)
 		return ;
 	save_screen_to_buffer(v->img[EHUD], v->img[EHUDTMP], 0);
-	renderdoomhead(v);
 	save_screen_to_buffer(v->img[EBUFF], v->img[EHUD], (v->img[EMAP].width
 			* v->img[EMAP].height * (v->img[EMAP].bpp / 8)));
 	v->hud.refresh = 0;

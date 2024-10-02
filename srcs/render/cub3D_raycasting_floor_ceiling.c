@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:38:17 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/01 15:09:30 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/02 14:45:26 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ void	draw_floor_ceiling(t_vars *v)
 
 	y = 0;
 	v->tmp[0] = v->img[ESPACE];
-	v->tmp[1] = v->img[EMAP];
 	while (y < v->screen.gameh)
 	{
 		init_data_floor(v, &v->floor, y);

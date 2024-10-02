@@ -24,7 +24,6 @@ static void	puttexturesmenu(t_vars *v, int i, int ph, int pw)
 
 	p.y = -1;
 	v->tmp[0] = v->img[i];
-	v->tmp[1] = v->img[EMAP];
 	while (++(p.y) < v->img[i].height)
 	{
 		p.x = -1;

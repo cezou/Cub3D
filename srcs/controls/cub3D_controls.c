@@ -60,21 +60,6 @@ void	hotreload(t_vars *v)
 	mlx_loop_end((ft_printf(1, "hotreload\n"), v->game.won = 0, v->mlx));
 }
 
-void	resetpos(t_vars *v, int renderb)
-{
-	v->mouse.xoff = 0;
-	v->mouse.yoff = 0;
-	v->mouse.xangle = -0.1515472907;
-	v->mouse.yangle = -0.523599;
-	v->mouse.zangle = 0.1515472907;
-	v->mouse.zheight = 1;
-	v->mouse.zoom = 1;
-	v->game.start = 2;
-	renderb++;
-	(ft_printf(1, "Reset View\n"));
-	render(v);
-}
-
 void	menuexit(t_vars *v)
 {
 	if (v->game.won < 4 && (MANDATORY || v->game.won > 0))

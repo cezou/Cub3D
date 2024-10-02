@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/01 18:28:08 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/02 21:53:43 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,12 +149,17 @@
 # define E 69
 # define W 87
 
-# define FONT1 "-sony-fixed-medium-r-normal--17-120-100-100-c-0-iso8859-1"
-# define FONT2 "-sony-fixed-medium-r-normal--24-230-75-75-c-0-iso8859-1"
-// # define FONT1 "-misc-fixed-medium-r-semicondensed
-// --13-120-75-75-c-60-iso8859-1"
-// # define FONT2 "-misc-fixed-medium-r-semicondensed
-// --13-120-75-75-c-60-iso8859-1"
+# ifndef WSL
+#  define WSL 0
+#  define FONT1 "-sony-fixed-medium-r-normal--17-120-100-100-c-0-iso8859-1"
+#  define FONT2 "-sony-fixed-medium-r-normal--24-230-75-75-c-0-iso8859-1"
+# else
+#  define WSL 1
+#  define FONT1 "-misc-fixed-medium-r-semicondensed\
+--13-120-75-75-c-60-iso8859-1"
+#  define FONT2 "-misc-fixed-medium-r-semicondensed\
+--13-120-75-75-c-60-iso8859-1"
+# endif
 // # define FONT2 "-sun-open look glyph-----19-190-75-75-p-154-sunolglyph-1"
 
 // Mr. Potato-Head by Joan Stark
@@ -517,6 +522,7 @@ typedef struct s_player
 typedef struct s_hud
 {
 	bool				refresh;
+	bool				refreshdh;
 	t_imga				img;
 	t_imga				head;
 	int					headid;
@@ -748,7 +754,6 @@ int						mouse_move(int x, int y, t_vars *p);
 int						keys(int keycode, t_vars *vars);
 int						closecross(t_vars *vars);
 void					hooks(t_vars *vars);
-void					resetpos(t_vars *v, int renderb);
 void					hotreload(t_vars *vars);
 int						keys_release(int keycode, t_vars *v);
 void					menuexit(t_vars *v);
@@ -767,7 +772,7 @@ void					open_door(t_vars *v, int d);
 
 // Rendering
 
-int						raycasting(t_vars *v);
+int						raycasting(t_vars *v, t_imga dest);
 void					set_dda(t_vars *v);
 void					perform_dda(t_vars *v, t_map *tmp, int hit);
 void					dda_utils(t_vars *v);

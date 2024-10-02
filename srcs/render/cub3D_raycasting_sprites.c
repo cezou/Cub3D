@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/01 18:59:54 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/02 14:45:47 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,6 @@ void	draw_sprites(t_vars *v)
 	int		i;
 
 	i = -1;
-	v->tmp[1] = v->img[EMAP];
 	sort_sprites(v, -1, 0);
 	while (++i < v->game.nb_sprites)
 	{

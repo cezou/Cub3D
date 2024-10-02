@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/01 15:13:52 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/02 14:49:02 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,14 +110,13 @@ void	update_texture_pixels(t_vars *v, t_point p, int *t)
 /// @note We draw the floor and the ceiling with the horizontal method
 /// @note We then draw the walls and doors with the raycasting algorithm
 /// @note We draw the sprites
-/// @note And finally we update the states of all the animations
 /// @param v Vars
 /// @return 
-int	raycasting(t_vars *v)
+int	raycasting(t_vars *v, t_imga dest)
 {
 	int		t[2];
 
-	v->tmp[1] = v->img[EMAP];
+	v->tmp[1] = dest;
 	v->ray.x = -1;
 	v->tmp[0] = v->game.skybox;
 	if (v->ray.pitch > v->screen.gameh / 2)

@@ -6,7 +6,7 @@
 #    By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 11:28:17 by pmagnero          #+#    #+#              #
-#    Updated: 2024/09/30 15:46:59 by pmagnero         ###   ########.fr        #
+#    Updated: 2024/10/02 21:40:10 by pmagnero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,8 +42,16 @@ b	=	0
 
 ifeq ($(d),1)
 	DEBUG	=	-ggdb
+	PG		=	-pg
 else
     DEBUG	=	
+    PG		=	
+endif
+
+ifdef WSL_DISTRO_NAME
+	WSL		=	-DWSL=1
+else
+	WSL		=	
 endif
 
 CC	=	cc
@@ -125,9 +133,9 @@ $(OBJS_DIR)%.o : %.c includes/cub3D.h
 	@mkdir -p $(OBJS_DIR)srcs/utils
 	@mkdir -p $(OBJS_DIR)srcs/parsing
 ifeq ($(d),1)
-	@$(CC) -DDEBUG=1 -DMANDATORY=1 $(DEBUG) $(FLAG) -c $< -o $@
+	@$(CC) -DDEBUG=1 -DMANDATORY=1 $(DEBUG) $(WSL) $(PG) $(FLAG) -c $< -o $@
 else
-	$(CC) -DMANDATORY=1 $(FLAG) -c $< -o $@
+	$(CC) -DMANDATORY=1 $(FLAG) $(WSL) -c $< -o $@
 endif
 
 $(OBJS_DIR_B)%.o : %.c includes/cub3D.h
@@ -141,15 +149,20 @@ $(OBJS_DIR_B)%.o : %.c includes/cub3D.h
 	@mkdir -p $(OBJS_DIR_B)srcs/parsing
 	@mkdir -p $(OBJS_DIR_B)srcs/utils
 ifeq ($(d),1)
-	@$(CC) -D_POSIX_C_SOURCE=199309L -DDEBUG=1 $(DEBUG) $(FLAG) -c $< -o $@
+	@$(CC) -D_POSIX_C_SOURCE=199309L -DDEBUG=1 $(DEBUG) $(WSL) $(PG) $(FLAG) -c $< -o $@
 else
-	$(CC) -D_POSIX_C_SOURCE=199309L $(FLAG) -c $< -o $@
+	$(CC) -D_POSIX_C_SOURCE=199309L $(FLAG) $(WSL) -c $< -o $@
 endif
 
 $(NAME): $(OBJECTS_PREFIXED)
 	@echo "\n\033[$(COLOR_TITLE)m########################################"
 	@echo "################  MAKE  ################"
 	@echo "########################################\033[0m\n"
+ifdef WSL_DISTRO_NAME
+	@echo "WSL DETECTED"
+	@echo "Adding the DISPLAY variable to the environment to use Xming"
+	@export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0
+endif
 ifeq ($(d),1)
 	@make --no-print-directory -sC includes/printf
 else
@@ -180,7 +193,7 @@ bonus: $(NAME_BONUS)
 ifeq ($(b), 0)
 kek: $(NAME) norme extfunc valgrind
 else
-kek: $(NAME) norme extfunc valgrind
+kek: $(NAME_BONUS) norme extfunc valgrind
 endif
 
 extfunc:

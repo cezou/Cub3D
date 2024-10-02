@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 16:14:16 by cviegas           #+#    #+#             */
-/*   Updated: 2024/09/30 19:40:06 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/02 21:53:34 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ int	returnkey(t_vars *v)
 		v->game.start = 3;
 	if (v->game.start == 2 && v->game.won == 0)
 	{
-		raycasting(v);
-		renderhud(v);
+		raycasting(v, v->img[EMAP]);
 		rendermenu(v);
 		render_player(v, (t_point){0});
+		renderhud(v);
 		save_screen_to_buffer(v->img[EBUFF], v->img[EMAP], 0);
 		save_screen_to_buffer(v->img[EBUFF], v->img[EHUD], (v->img[EHUD].width
 				* v->img[EHUD].height * (v->img[EHUD].bpp / 8)));
@@ -45,9 +45,6 @@ int	returnkey(t_vars *v)
 
 void	key_management(t_vars *v)
 {
-	if (!v->game.pause && v->game.start > 1 && v->game.god && is_pressed(XK_r,
-			v))
-		resetpos((v->mouse.renderrate = 0, v), 1);
 	if (v->game.start > 1 && v->game.god && is_pressed(XK_m, v))
 		hotreload(v);
 	if (!v->game.won && v->game.won != 4 && v->game.start > 1)

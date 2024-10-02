@@ -6,21 +6,22 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/01 19:04:50 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/02 14:34:59 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
 
-/// @brief 
-t_point3	g_objs[2] = {
-{14.0, 8.0, EARMOR, 5.0, 127.0},
+/// @brief Array of objects
+///	{x, y, sprite ID, scale factor, vertical position}
+const t_point3	g_objs[2] = {
+{14.0, 8.0, EARMOR, 5.0, 128.0},
 {15.0, 8.0, EARMOR, 1.0, 0}
 };
 
 void	initvars(t_vars *v)
 {
-	v->game.fps = 64;
+	v->game.fps = 60;
 	v->hud.refresh = 1;
 	v->player.movespeedy = 0;
 	v->player.movespeedx = 3.0;
@@ -28,8 +29,8 @@ void	initvars(t_vars *v)
 	v->player.mouserotspeed = 0.1;
 	v->player.accx = 5.0;
 	v->player.accy = 0.08;
-	v->player.maxspeedx = 0.2;
-	v->player.maxspeedy = 0.15;
+	v->player.maxspeedx = 0.1;
+	v->player.maxspeedy = 5.0;
 	v->player.deccx = 0.1;
 	v->player.deccy = 0.2;
 	v->mouse.sensx = 20.0;
@@ -88,7 +89,6 @@ void	init_guard(t_vars *v, int j, t_map *tmp, int i)
 			v->sprites[j].vdiv = 1.0;
 			v->sprites[j].udiv = 1.0;
 			v->sprites[j].isguard = 1;
-			v->sprites[j].animoff = 0;
 		}
 		tmp = tmp->right;
 	}
@@ -101,7 +101,6 @@ void	init_guard(t_vars *v, int j, t_map *tmp, int i)
 		v->sprites[j].vdiv = g_objs[i].uv;
 		v->sprites[j].udiv = g_objs[i].uv;
 		v->sprites[j].vmove = g_objs[i].v;
-		v->sprites[j].animoff = 0;
 	}
 }
 

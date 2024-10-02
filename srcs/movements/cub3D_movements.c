@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 18:24:52 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/01 17:25:18 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/02 21:48:35 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ void	rotatecamx(t_vars *v, int d, double s)
 	if (d == LEFT)
 	{
 		if (v->hud.animoff != 0)
-			v->hud.refresh = 1;
+			v->hud.refreshdh = 1;
 		v->hud.animoff = 0;
 	}
 	else if (d == RIGHT)
 	{
 		s = -s;
 		if (v->hud.animoff != v->hud.head.animx * 2)
-			v->hud.refresh = 1;
+			v->hud.refreshdh = 1;
 		v->hud.animoff = v->hud.head.animx * 2;
 	}
 	oldir = v->player.dir_x;
@@ -143,7 +143,6 @@ void	move(t_vars *v, int d)
 	moveplayerx(v, d);
 	moveplayery(v, d);
 	open_door(v, d);
-	render(v);
 }
 // if (d == 8)
 // v->player.z = 200;

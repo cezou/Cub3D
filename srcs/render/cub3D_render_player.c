@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/01 12:16:56 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/02 14:53:12 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	render_player(t_vars *v, t_point c)
 	t_point	p;
 
 	v->tmp[0] = v->player.img;
-	v->tmp[1] = v->img[EMAP];
 	c.z = v->player.animoff + v->player.img.animx;
 	c.color = v->tmp[0].height;
 	p.x = v->player.animoff - 1;
