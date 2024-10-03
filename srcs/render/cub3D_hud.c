@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 20:43:05 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/03 19:55:52 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/03 23:23:01 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,23 +68,23 @@ void	rendersmalldigit(t_vars *v, int res[4], t_point g, int yoff)
 {
 	t_point	p;
 	int		w;
-	int		h;
 	int		delta;
 	int		d;
 
-	d = yoff;
+	d = yoff - v->tmp[0].animy + (12 / v->img[EHUDTMP].ratioy);
 	if (v->tmp[1].id == v->img[EBUFF].id)
-		d = v->screen.gameh + yoff;
+		d = v->screen.gameh + yoff - v->tmp[0].animy
+			+ (12 / v->img[EHUDTMP].ratioy);
 	delta = (g.x / v->img[EHUDTMP].ratiox)
-		- v->tmp[0].animx * res[g.z] - ((g.y + 1) - g.z) * v->tmp[0].animx;
-	p.x = res[g.z] * v->tmp[0].animx + 1;
+		- v->tmp[0].animx * res[g.z] - ((g.y + 1) - g.z) * v->tmp[0].animx
+		+ (3 / v->img[EHUDTMP].ratiox) * ((g.y - 1) - g.z);
+	p.x = res[g.z] * (v->tmp[0].animx) - 1;
 	w = p.x + v->tmp[0].animx;
-	h = v->tmp[0].height;
 	p.color = 0;
 	while (++p.x < w)
 	{
 		p.y = v->tmp[0].animy + 1;
-		while (++p.y < h)
+		while (++p.y < g.color)
 		{
 			p.z = (p.y * v->tmp[0].len) + (p.x * 4);
 			add_pix(v, (t_point){p.x + delta, p.y + d, p.z, p.color},
@@ -152,7 +152,7 @@ void	renderelement(t_vars *v, int xoff, int nb, int percent)
 
 /// @brief 
 /// @param v 
-void	renderammun(t_vars *v, int xoff)
+void	renderammun(t_vars *v, int xoff, int arr[4])
 {
 	int	res[4];
 	int	i;
@@ -160,21 +160,23 @@ void	renderammun(t_vars *v, int xoff)
 	int	t;
 
 	t = -1;
+	v->tmp[0] = v->img[ESMALLNUMBERS];
 	while (++t < 4)
 	{
 		i = 0;
-		number_to_digits(v, v->player.ammo[t], res, &i);
+		number_to_digits(v, arr[t], res, &i);
 		j = i;
 		res[j] = -1;
 		while (++j <= 3)
 			res[j] = -1;
+		i--;
 		j = 4;
-		v->tmp[0] = v->img[ESMALLNUMBERS];
 		while (--j > -1)
 		{
 			if (res[j] == -1)
 				continue ;
-			rendersmalldigit(v, res, (t_point){xoff, i, j, 0}, v->tmp[0].animy * t);
+			rendersmalldigit(v, res, (t_point){xoff, i, j, v->tmp[0].height},
+				(v->tmp[0].animy - 4) * t);
 		}
 	}
 }
@@ -217,7 +219,6 @@ void	renderarmsdigits(t_vars *v, int xoff)
 {
 	int		delta;
 	int		i;
-
 
 	v->tmp[0] = v->img[ESMALLNUMBERS];
 	i = 0;
@@ -336,7 +337,8 @@ void	renderhud(t_vars *v, t_imga dest)
 	if (v->hud.refreshammun)
 	{
 		renderemptyzone(v, v->img[EAMMUN], 546);
-		renderammun((v->hud.refreshammun = 0, v), 546);
+		renderammun(v, 640, v->player.ammo);
+		renderammun((v->hud.refreshammun = 0, v), 690, v->player.maxammo);
 	}
 	if (v->hud.refresh)
 	{
