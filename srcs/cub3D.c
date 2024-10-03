@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 09:51:53 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/30 16:03:44 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/03 14:54:12 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 /// @brief Init one texture
 /// @param v Vars
 /// @param img Texture to initialize
-void	inittexture(t_vars *v, t_imga *img)
+void	inittexture(t_vars *v, t_imga *img, int i)
 {
 	img->img = mlx_xpm_file_to_image(v->mlx, img->filename,
 			&img->width, &img->height);
+	img->id = i;
 	if (!img->img)
 		exit((prterr(v, "Error mlx texture image\n", 1, 1), 1));
 	img->addr = mlx_get_data_addr(img->img, &img->bpp,
@@ -40,7 +41,7 @@ void	inittextures(t_vars *v, int i)
 	v->img[EWEST] = v->infos.west.imga;
 	v->img[ENORTH] = v->infos.north.imga;
 	while (++i < EBUFF)
-		inittexture(v, &v->img[i]);
+		inittexture(v, &v->img[i], i);
 	scale_img((t_point){0}, &v->img[EKEK], &v->img[COMP_N]);
 }
 

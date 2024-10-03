@@ -47,6 +47,18 @@ void	handle_movement(t_vars *v)
 		move(v, DOWN);
 	if (is_pressed(XK_space, v))
 		move(v, 8);
+	if (is_pressed(XK_Page_Down, v))
+	{
+		v->player.hp -= 1;
+		v->hud.refreshhealth = 1;
+	}
+	if (is_pressed(XK_Page_Up, v))
+	{
+		v->player.armor += 1;
+		v->hud.refresharmor = 1;
+		v->player.ammo[0] += 1;
+		v->hud.refreshammo = 1;
+	}
 }
 
 /// @brief Toggle god/debug mode

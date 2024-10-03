@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 09:51:53 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/02 16:26:59 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/03 14:44:25 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	transition_melt_screen(t_vars *v)
 		return (delta = 1, 1);
 	delta = 1;
 	v->game.updated_at = timestamp_in_ms(v);
-	ft_bzero(v->img[EBUFF].addr, v->screen.resw * v->screen.gameh
+	ft_bzero(v->img[EBUFF].addr, v->screen.resw * v->screen.resh
 		* (v->img[EBUFF].bpp / 8));
 	save_screen_to_buffer(v->img[EBUFF], v->img[EMAP], 0);
 	save_screen_to_buffer(v->img[EBUFF], v->img[EHUD], (v->img[EMAP].width

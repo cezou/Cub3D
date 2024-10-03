@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/02 21:53:43 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/03 19:46:54 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -296,7 +296,14 @@ typedef enum s_components
 	ETITLE,
 	EKEK,
 	EDOOMH,
-	EARMOR,
+	EBIGNUMBERSTMP,
+	ESMALLNUMBERSTMP,
+	EHEALTHTMP,
+	EARMORTMP,
+	EAMMOTMP,
+	EWEAPONTMP,
+	EAMMUNTMP,
+	EPARMOR,
 	EMENUSELECT,
 	EMENU,
 	EMENUIG,
@@ -305,6 +312,13 @@ typedef enum s_components
 	EHUD,
 	EFIST,
 	EGUN,
+	EBIGNUMBERS,
+	ESMALLNUMBERS,
+	EHEALTH,
+	EARMOR,
+	EAMMO,
+	EWEAPON,
+	EAMMUN,
 	EDOOMHTMP,
 	EHUDTMP,
 	ETMP,
@@ -495,6 +509,11 @@ typedef struct s_player
 	int					jumping;
 	int					injump;
 	int					dir;
+	int					hp;
+	int					armor;
+	int					ammo[4];
+	int					maxammo[4];
+	int					weapons[7];
 	double				x;
 	double				y;
 	double				z;
@@ -523,6 +542,11 @@ typedef struct s_hud
 {
 	bool				refresh;
 	bool				refreshdh;
+	bool				refreshhealth;
+	bool				refresharmor;
+	bool				refreshammo;
+	bool				refreshammun;
+	bool				refreshweapon;
 	t_imga				img;
 	t_imga				head;
 	int					headid;
@@ -724,7 +748,7 @@ int						map_clear(t_map *lst);
 void					init(t_vars *v, int argc, char **argv);
 void					check_map(t_vars *v);
 void					inittextures(t_vars *v, int i);
-void					inittexture(t_vars *v, t_imga *img);
+void					inittexture(t_vars *v, t_imga *img, int i);
 void					initplayeranim(t_vars *v);
 void					initobjectsanim(t_vars *v, int i, int obj);
 void					initguardanim(t_vars *v);
@@ -741,6 +765,7 @@ void					initprojectilepathanim(t_vars *v);
 void					inithud(t_vars *v);
 void					init_player_dir(t_vars *v);
 void					init_random_melting_array(t_vars *v);
+void					initanim(t_vars *v, int index, int b, int animnb);
 
 // Mouse
 
@@ -796,7 +821,7 @@ void					sort_sprites(t_vars *v, int i, int sort);
 
 void					draw_skybox(t_vars *v, t_point p, int *t);
 
-void					renderhud(t_vars *v);
+void					renderhud(t_vars *v, t_imga dest);
 
 void					render_player(t_vars *v, t_point c);
 

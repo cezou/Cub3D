@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/02 14:34:59 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/03 19:25:46 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,20 @@
 /// @brief Array of objects
 ///	{x, y, sprite ID, scale factor, vertical position}
 const t_point3	g_objs[2] = {
-{14.0, 8.0, EARMOR, 5.0, 128.0},
-{15.0, 8.0, EARMOR, 1.0, 0}
+{14.0, 8.0, EPARMOR, 5.0, 128.0},
+{15.0, 8.0, EPARMOR, 1.0, 0}
 };
 
 void	initvars(t_vars *v)
 {
 	v->game.fps = 60;
 	v->hud.refresh = 1;
-	v->player.movespeedy = 0;
+	v->hud.refreshhealth = 1;
+	v->hud.refresharmor = 1;
+	v->hud.refreshammo = 1;
+	v->hud.refreshammun = 1;
+	v->hud.refreshweapon = 1;
+	v->hud.refreshdh = 1;
 	v->player.movespeedx = 3.0;
 	v->player.rotspeed = 2.0;
 	v->player.mouserotspeed = 0.1;
@@ -35,6 +40,18 @@ void	initvars(t_vars *v)
 	v->player.deccy = 0.2;
 	v->mouse.sensx = 20.0;
 	v->mouse.sensy = 10.0;
+	v->player.hp = 100;
+	v->player.maxammo[0] = 200;
+	v->player.maxammo[1] = 50;
+	v->player.maxammo[2] = 50;
+	v->player.maxammo[3] = 300;
+	v->player.weapons[0] = 1;
+	v->player.weapons[1] = 1;
+	v->player.weapons[2] = 0;
+	v->player.weapons[3] = 0;
+	v->player.weapons[4] = 1;
+	v->player.weapons[5] = 0;
+	v->player.weapons[6] = 1;
 }
 
 void	initmodes(t_vars *v, int argc)

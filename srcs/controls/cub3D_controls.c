@@ -64,7 +64,12 @@ void	menuexit(t_vars *v)
 {
 	if (v->game.won < 4 && (MANDATORY || v->game.won > 0))
 		exit((mlx_do_key_autorepeaton(v->mlx), cleardata(v, 1), 0));
-	v->hud.refresh = 1;
+	v->hud.refreshammo = 1;
+	v->hud.refreshammun = 1;
+	v->hud.refresharmor = 1;
+	v->hud.refreshhealth = 1;
+	v->hud.refreshdh = 1;
+	v->hud.refreshweapon = 1;
 	if (v->menu.menu == 2)
 	{
 		v->menu.menu = 0;

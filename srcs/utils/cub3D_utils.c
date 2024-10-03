@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:59:52 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/02 16:12:20 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/03 14:53:20 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int	myrand(int nb)
 void	initimage(t_vars *v, int index, int width, int height)
 {
 	v->img[index].img = mlx_new_image(v->mlx, width, height);
+	v->img[index].id = index;
 	if (!v->img[index].img)
 		exit((prterr(v, "Error mlx map image\n", 1, 1), 1));
 	v->img[index].addr = mlx_get_data_addr(v->img[index].img,
