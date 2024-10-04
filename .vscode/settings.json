@@ -1,7 +1,8 @@
 {
-	"files.associations": {
-		"cub3d.h": "c",
-		"kek": "c",
-		"kek2": "c"
-	}
+  "files.associations": {
+    "cub3d.h": "c",
+    "kek": "c",
+    "kek2": "c"
+  },
+  "functionHeaderExtension.headerFilePath": "/home/cviegas/Projets42/Cub3D/includes/cub3D.h"
 }
