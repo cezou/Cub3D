@@ -26,7 +26,7 @@ bool	is_not_accepted(char **map, int i, int j)
 
 bool	is_surrounded_aux(char **map, int i, int j, size_t map_start)
 {
-	if (!map[i] || j > (int)ft_strlen(map[i]))
+	if (!map[i])
 		return (cerr(i + map_start, j), 0);
 	if (map[i][j] == '1' || map[i][j] == 'V')
 		return (1);

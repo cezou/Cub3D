@@ -65,7 +65,7 @@ void	calculate_mapsize_checking(char *line, t_vars *v, int fd, int i)
 		if (!check_line(line, v, i))
 			clean_exit((char **)j, fd, v, 0);
 	}
-	v->infos.map_height = j - 1;
+	v->infos.map_height = j + 1;
 	close(fd);
 }
 
@@ -95,4 +95,5 @@ void	store_map(t_vars *v)
 		v->infos.map[i][ft_strlen(v->infos.map[i]) - 1] = 0;
 	}
 	(close(fd), v->infos.map[i] = 0);
+	print_map(v->infos.map);
 }
