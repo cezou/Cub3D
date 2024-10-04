@@ -120,7 +120,8 @@ SRCS =	srcs/cub3D.c \
 		srcs/parsing/map.c \
 		srcs/parsing/map_utils.c \
 		srcs/parsing/print_utils.c \
-		srcs/parsing/map_floodfill.c
+		srcs/parsing/map_floodfill.c \
+		srcs/render/minimap/minimap.c
 
 OBJS			 = $(SRCS:.c=.o)
 OBJS_B			 = $(SRCS:.c=.o)
@@ -133,6 +134,7 @@ $(OBJS_DIR)%.o : %.c includes/cub3D.h
 	@mkdir -p $(OBJS_DIR)srcs/init
 	@mkdir -p $(OBJS_DIR)srcs/render
 	@mkdir -p $(OBJS_DIR)srcs/render/hud
+	@mkdir -p $(OBJS_DIR)srcs/render/minimap
 	@mkdir -p $(OBJS_DIR)srcs/menus
 	@mkdir -p $(OBJS_DIR)srcs/animations
 	@mkdir -p $(OBJS_DIR)srcs/movements
@@ -150,11 +152,13 @@ $(OBJS_DIR_B)%.o : %.c includes/cub3D.h
 	@mkdir -p $(OBJS_DIR_B)srcs/init
 	@mkdir -p $(OBJS_DIR_B)srcs/render
 	@mkdir -p $(OBJS_DIR_B)srcs/render/hud
+	@mkdir -p $(OBJS_DIR_B)srcs/render/minimap
 	@mkdir -p $(OBJS_DIR_B)srcs/menus
 	@mkdir -p $(OBJS_DIR_B)srcs/animations
 	@mkdir -p $(OBJS_DIR_B)srcs/movements
 	@mkdir -p $(OBJS_DIR_B)srcs/parsing
 	@mkdir -p $(OBJS_DIR_B)srcs/utils
+	
 ifeq ($(d),1)
 	@$(CC) -D_POSIX_C_SOURCE=199309L -DDEBUG=1 $(DEBUG) $(WSL) $(PG) $(FLAG) -c $< -o $@
 else

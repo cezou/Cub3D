@@ -95,5 +95,4 @@ void	store_map(t_vars *v)
 		v->infos.map[i][ft_strlen(v->infos.map[i]) - 1] = 0;
 	}
 	(close(fd), v->infos.map[i] = 0);
-	print_map(v->infos.map);
 }

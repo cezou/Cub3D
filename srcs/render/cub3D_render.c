@@ -58,7 +58,7 @@ void	init_random_melting_array(t_vars *v)
 	}
 }
 
-/// @brief Melting effect like in Doom original. 
+/// @brief Melting effect like in Doom original.
 ///	We use the random array for each column of the screen
 ///	and delay the drop of each column. If the column value is not 0 in the array
 ///	we delay it.
@@ -67,8 +67,8 @@ void	init_random_melting_array(t_vars *v)
 /// @param x Iterator for the loop =-1
 void	melting(t_vars *v, bool *done, int x)
 {
-	t_point		p;
-	int			d;
+	t_point	p;
+	int		d;
 
 	p.x = -1;
 	while (++p.x < v->tmp[0].width)
@@ -87,9 +87,9 @@ void	melting(t_vars *v, bool *done, int x)
 			if (v->rand[x] < 0)
 				d = p.y;
 			p.z = (p.y * v->tmp[0].len) + (p.x * 4);
-			add_pix((*done = false, v), (t_point){p.x, d, p.z,
-				getcolorpix(v, v->tmp[0].addr, p.z)},
-				(t_point2){0}, (t_point){0, 1, 0, 0});
+			add_pix((*done = false, v), (t_point){p.x, d, p.z, getcolorpix(v,
+					v->tmp[0].addr, p.z)}, (t_point2){0}, (t_point){0, 1, 0,
+				0});
 		}
 	}
 }
@@ -103,7 +103,7 @@ int	render(t_vars *v)
 		v->game.fps = 30;
 	if (!v->screen.win || v->game.won > 0 || !v->game.start
 		|| timestamp_in_ms(v) - v->game.updated_at < (uint64_t)(1000
-		/ v->game.fps))
+			/ v->game.fps))
 		return (1);
 	v->game.updated_at = timestamp_in_ms(v);
 	if (v->game.start > 1 && ACTIVATE_SOUND
@@ -126,6 +126,7 @@ int	render(t_vars *v)
 	render_player(v, (t_point){0});
 	rendermenu(v);
 	renderhud(v, v->img[EBUFF]);
+	rendermap(v);
 	update_animations(v);
 	mlx_put_image_to_window(v->mlx, v->screen.win, v->img[EBUFF].img, 0, 0);
 	v->game.oldtime = v->game.time;
@@ -133,10 +134,10 @@ int	render(t_vars *v)
 	v->game.frametime = (v->game.time - v->game.oldtime) / 1000.0;
 	return (displaytext(v, NULL, NULL), v->game.start++, 0);
 }
-	// save_screen_to_buffer(v->img[EBUFF], v->img[EMAP], 0);
-	// mlx_clear_window(v->mlx, v->screen.win);
-	// mlx_put_image_to_window(v->mlx, v->screen.win, v->img[EHUD].img, 0, 0);
+// save_screen_to_buffer(v->img[EBUFF], v->img[EMAP], 0);
+// mlx_clear_window(v->mlx, v->screen.win);
+// mlx_put_image_to_window(v->mlx, v->screen.win, v->img[EHUD].img, 0, 0);
 
-	// printf("%f\n", 1.0 / v->game.frametime);
-	// ft_bzero(v->img[EMAP].addr, v->screen.gamew * v->screen.gameh
-	// 	* (v->img[EMAP].bpp / 8));
+// printf("%f\n", 1.0 / v->game.frametime);
+// ft_bzero(v->img[EMAP].addr, v->screen.gamew * v->screen.gameh
+// 	* (v->img[EMAP].bpp / 8));

@@ -863,6 +863,8 @@ int						maintitleanim(t_vars *v);
 void					melting(t_vars *v, bool *done, int x);
 
 /* FUNCTIONS */
+void	rendermap(t_vars *v)
+;
 // void					freeall(void **tab);
 void					key_management(t_vars *v);
 int						returnkey(t_vars *v);

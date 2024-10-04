@@ -55,24 +55,24 @@ static void	update_floor_ceil_texture_pixels(t_vars *v, t_floor *f, t_point p)
 	{
 		f->cx = (int)(f->fx);
 		f->cy = (int)(f->fy);
-		f->tx = (int)(v->tmp[0].width * (f->fx - f->cx))
-			& (v->tmp[0].width - 1);
-		f->ty = (int)(v->tmp[0].width * (f->fy - f->cy))
-			& (v->tmp[0].width - 1);
+		f->tx = (int)(v->tmp[0].width * (f->fx - f->cx)) & (v->tmp[0].width
+				- 1);
+		f->ty = (int)(v->tmp[0].width * (f->fy - f->cy)) & (v->tmp[0].width
+				- 1);
 		f->fx += f->fstepx;
 		f->fy += f->fstepy;
 		p.z = (f->ty * v->tmp[0].len) + (f->tx * 4);
 		if (MANDATORY)
 			p.color = v->infos.floor;
 		if (f->isfloor)
-			add_pix(v, p, (t_point2){1, f->rowdist, FOGC, FOGL},
-				(t_point){0, p.color, 0, 0});
+			add_pix(v, p, (t_point2){1, f->rowdist, FOGC, FOGL}, (t_point){0,
+				p.color, 0, 0});
 		else if (f->cx < 10 || f->cx > 16)
 		{
 			if (MANDATORY)
 				p.color = v->infos.ceil;
-			add_pix(v, p, (t_point2){1, f->rowdist, FOGC, FOGL},
-				(t_point){0, p.color, 0, 0});
+			add_pix(v, p, (t_point2){1, f->rowdist, FOGC, FOGL}, (t_point){0,
+				p.color, 0, 0});
 		}
 		p.x++;
 	}
@@ -82,15 +82,14 @@ static void	update_floor_ceil_texture_pixels(t_vars *v, t_floor *f, t_point p)
 /// @param v Vars
 void	draw_floor_ceiling(t_vars *v)
 {
-	int		y;
+	int	y;
 
 	y = 0;
 	v->tmp[0] = v->img[ESPACE];
 	while (y < v->screen.gameh)
 	{
 		init_data_floor(v, &v->floor, y);
-		update_floor_ceil_texture_pixels(v, &v->floor,
-			(t_point){0, y, 0, 0});
+		update_floor_ceil_texture_pixels(v, &v->floor, (t_point){0, y, 0, 0});
 		y++;
 	}
 }
@@ -179,7 +178,7 @@ void	draw_floor_ceiling(t_vars *v)
 // 		// if (v->ray.img.id == EDOOR)
 // 		// {
 // 		// 	weight = (currdist - distplay) /
-			// (v->ray.wall_dist + v->ray.deltadist_y * 0.5 - distplay);
+// (v->ray.wall_dist + v->ray.deltadist_y * 0.5 - distplay);
 // 		// }
 // 		currfx = weight * v->ray.dir_x1 + (1.0 - weight) * v->player.x;
 // 		currfy = weight * v->ray.dir_y1 + (1.0 - weight) * v->player.y;
