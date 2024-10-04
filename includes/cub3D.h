@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/03 19:46:54 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/04 12:35:06 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@
 // Sounds
 
 # ifndef MANDATORY
-#  define ACTIVATE_SOUND 1
+#  define ACTIVATE_SOUND 0
 #  define MANDATORY 0
 #  define VALID " \t\n\v\f\r10NSWEDG"
 # else
@@ -303,6 +303,8 @@ typedef enum s_components
 	EAMMOTMP,
 	EWEAPONTMP,
 	EAMMUNTMP,
+	ECARDSLOTTMP,
+	ECARDSTMP,
 	EPARMOR,
 	EMENUSELECT,
 	EMENU,
@@ -319,6 +321,8 @@ typedef enum s_components
 	EAMMO,
 	EWEAPON,
 	EAMMUN,
+	ECARDSLOT,
+	ECARDS,
 	EDOOMHTMP,
 	EHUDTMP,
 	ETMP,
@@ -514,6 +518,7 @@ typedef struct s_player
 	int					ammo[4];
 	int					maxammo[4];
 	int					weapons[7];
+	int					cards[3];
 	double				x;
 	double				y;
 	double				z;
@@ -547,6 +552,7 @@ typedef struct s_hud
 	bool				refreshammo;
 	bool				refreshammun;
 	bool				refreshweapon;
+	bool				refreshcards;
 	t_imga				img;
 	t_imga				head;
 	int					headid;
@@ -821,7 +827,14 @@ void					sort_sprites(t_vars *v, int i, int sort);
 
 void					draw_skybox(t_vars *v, t_point p, int *t);
 
+// HUD
+
 void					renderhud(t_vars *v, t_imga dest);
+void					renderelement(t_vars *v, int xoff, int nb, int percent);
+void					number_to_digits(t_vars *v, int n, int res[4], int *i);
+void					renderarmsdigits(t_vars *v, int xoff);
+void					renderammun(t_vars *v, int xoff, int arr[4]);
+void					rendercards(t_vars *v, int xoff, int yoff, int *arr);
 
 void					render_player(t_vars *v, t_point c);
 

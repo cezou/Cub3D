@@ -12,11 +12,8 @@
 
 #include "../../includes/cub3D.h"
 
-void	hotreload(t_vars *v)
+void	hotreload_clear(t_vars *v, char *filename)
 {
-	char	*filename;
-
-	filename = v->mapv.filename;
 	if (v->mapv.map)
 		map_clear(v->mapv.map);
 	if (v->infos.map)
@@ -42,6 +39,14 @@ void	hotreload(t_vars *v)
 	v->game.start = 2;
 	m_clearrandom(v);
 	clearimgs(v);
+}
+
+void	hotreload(t_vars *v)
+{
+	char	*filename;
+
+	filename = v->mapv.filename;
+	hotreload_clear(v, filename);
 	initvars(v);
 	initpathtext(v);
 	inittextures(v, 4);
@@ -65,6 +70,7 @@ void	menuexit(t_vars *v)
 	if (v->game.won < 4 && (MANDATORY || v->game.won > 0))
 		exit((mlx_do_key_autorepeaton(v->mlx), cleardata(v, 1), 0));
 	v->hud.refreshammo = 1;
+	v->hud.refreshcards = 1;
 	v->hud.refreshammun = 1;
 	v->hud.refresharmor = 1;
 	v->hud.refreshhealth = 1;

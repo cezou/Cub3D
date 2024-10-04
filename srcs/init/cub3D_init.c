@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/03 19:25:46 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/04 11:25:33 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	initvars(t_vars *v)
 	v->hud.refreshammo = 1;
 	v->hud.refreshammun = 1;
 	v->hud.refreshweapon = 1;
+	v->hud.refreshcards = 1;
 	v->hud.refreshdh = 1;
 	v->player.movespeedx = 3.0;
 	v->player.rotspeed = 2.0;
@@ -47,11 +48,10 @@ void	initvars(t_vars *v)
 	v->player.maxammo[3] = 300;
 	v->player.weapons[0] = 1;
 	v->player.weapons[1] = 1;
-	v->player.weapons[2] = 0;
-	v->player.weapons[3] = 0;
-	v->player.weapons[4] = 1;
-	v->player.weapons[5] = 0;
-	v->player.weapons[6] = 1;
+	v->player.ammo[0] = 50;
+	v->player.cards[0] = 2;
+	v->player.cards[1] = 2;
+	v->player.cards[2] = 1;
 }
 
 void	initmodes(t_vars *v, int argc)

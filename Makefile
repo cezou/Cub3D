@@ -6,7 +6,7 @@
 #    By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 11:28:17 by pmagnero          #+#    #+#              #
-#    Updated: 2024/10/03 10:18:39 by pmagnero         ###   ########.fr        #
+#    Updated: 2024/10/04 12:33:36 by pmagnero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -87,7 +87,11 @@ SRCS =	srcs/cub3D.c \
 		srcs/render/cub3D_raycasting_floor_ceiling.c \
 		srcs/render/cub3D_raycasting_skybox.c \
 		srcs/render/cub3D_animations.c \
-		srcs/render/cub3D_hud.c \
+		srcs/render/hud/cub3D_hud.c \
+		srcs/render/hud/cub3D_hud_ammun.c \
+		srcs/render/hud/cub3D_hud_arms.c \
+		srcs/render/hud/cub3D_hud_cards.c \
+		srcs/render/hud/cub3D_hud_health_armor.c \
 		srcs/menus/cub3D_menus_naviguation.c \
 		srcs/utils/cub3D_time.c \
 		srcs/utils/cub3D_math.c \
@@ -128,6 +132,7 @@ $(OBJS_DIR)%.o : %.c includes/cub3D.h
 	@mkdir -p $(OBJS_DIR)srcs/controls
 	@mkdir -p $(OBJS_DIR)srcs/init
 	@mkdir -p $(OBJS_DIR)srcs/render
+	@mkdir -p $(OBJS_DIR)srcs/render/hud
 	@mkdir -p $(OBJS_DIR)srcs/menus
 	@mkdir -p $(OBJS_DIR)srcs/animations
 	@mkdir -p $(OBJS_DIR)srcs/movements
@@ -144,6 +149,7 @@ $(OBJS_DIR_B)%.o : %.c includes/cub3D.h
 	@mkdir -p $(OBJS_DIR_B)srcs/controls
 	@mkdir -p $(OBJS_DIR_B)srcs/init
 	@mkdir -p $(OBJS_DIR_B)srcs/render
+	@mkdir -p $(OBJS_DIR_B)srcs/render/hud
 	@mkdir -p $(OBJS_DIR_B)srcs/menus
 	@mkdir -p $(OBJS_DIR_B)srcs/animations
 	@mkdir -p $(OBJS_DIR_B)srcs/movements

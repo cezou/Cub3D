@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/03 19:37:52 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/04 13:35:25 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,9 @@
 void	initpathtext(t_vars *v)
 {
 	v->img[ESPACE].filename = "resources/textures/Ground.xpm";
-	v->img[ESPACE].id = ESPACE;
 	v->img[EDOOR].filename = "resources/textures/Door.xpm";
-	v->img[EDOOR].id = EDOOR;
 	v->img[EPARMOR].filename = "resources/textures/armor.xpm";
-	v->img[EPARMOR].id = EPARMOR;
 	v->img[EGUARDW].filename = "resources/textures/general.xpm";
-	v->img[EGUARDW].id = EGUARDW;
 	v->img[EGUARDDEATH].filename = "resources/textures/generaldeath.xpm";
 	v->img[ESKYBOX].filename = "resources/textures/skybox.xpm";
 	v->img[EHUDIMG].filename = "resources/textures/HUDempty.xpm";
@@ -39,6 +35,8 @@ void	initpathtext(t_vars *v)
 	v->img[EAMMOTMP].filename = "resources/textures/Ammo.xpm";
 	v->img[EWEAPONTMP].filename = "resources/textures/Arms.xpm";
 	v->img[EAMMUNTMP].filename = "resources/textures/Ammunitions.xpm";
+	v->img[ECARDSTMP].filename = "resources/textures/Cards.xpm";
+	v->img[ECARDSLOTTMP].filename = "resources/textures/CardsSlot.xpm";
 }
 
 void	initanim(t_vars *v, int index, int b, int animnb)
@@ -77,7 +75,6 @@ void	initguardpathanim(t_vars *v)
 {
 	v->img[EGUARDW].animx = v->img[EGUARDW].width / 4;
 	v->img[EGUARDDEATH].animx = v->img[EGUARDDEATH].width / 4;
-	v->img[EPARMOR].animx = 0;
 }
 
 void	initprojectilepathanim(t_vars *v)

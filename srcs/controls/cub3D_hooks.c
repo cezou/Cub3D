@@ -16,13 +16,16 @@
 /// @param v Vars
 void	attack(t_vars *v)
 {
-	if (!v->player.pattack)
-		v->player.pattack = 1;
-	else if (v->player.pattack && v->player.animoff > v->player.img.width)
-	{
-		v->player.pattack = 0;
-	}
+	v->player.pattack = 1;
+	v->hud.refreshammo = 1;
+	v->player.ammo[0] -= 1;
 	v->player.animoff = v->player.img.animx;
+	if (v->player.ammo[0] < 0)
+	{
+		v->player.ammo[0] = 0;
+		v->player.pattack = 0;
+		v->player.animoff = 0;
+	}
 }
 
 /// @brief Movement switch case
