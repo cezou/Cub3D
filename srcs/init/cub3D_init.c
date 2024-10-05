@@ -14,10 +14,8 @@
 
 /// @brief Array of objects
 ///	{x, y, sprite ID, scale factor, vertical position}
-const t_point3	g_objs[2] = {
-{14.0, 8.0, EPARMOR, 5.0, 128.0},
-{15.0, 8.0, EPARMOR, 1.0, 0}
-};
+const t_point3	g_objs[2] = {{14.0, 8.0, EPARMOR, 5.0, 128.0}, {15.0, 8.0,
+		EPARMOR, 1.0, 0}};
 
 void	initvars(t_vars *v)
 {
@@ -152,14 +150,13 @@ void	init(t_vars *v, int argc, char **argv)
 		exit((prterr(v, ERRMALL, 1, 1), 1));
 	while (v->img && ++i <= COMP_N)
 		v->img[i] = (t_imga){0};
-	(ft_bzero(v->keys, MAX_KEYS), initwindow(v, argc, argv));
+	(ft_bzero(v->keys, MAX_KEYS), ft_bzero(v->mouses, MAX_MOUSE));
+	initwindow(v, argc, argv);
 	mlx_mouse_hide(v->mlx, v->screen.win);
 	initmodes(v, argc);
 	inittextures(v, 4);
 	v->game.skybox = v->img[ESKYBOX];
-	initsounds(v);
-	inithud(v);
-	initplayeranim(v);
+	(initsounds(v), inithud(v), initplayeranim(v));
 	initguardanim(v);
 	check_map(v);
 	init_player_dir(v);

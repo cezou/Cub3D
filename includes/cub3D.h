@@ -37,6 +37,9 @@
 # define M_PI 3.14159265358979323846 /* pi */
 # define WHITESPACES " \t\n\v\f\r"
 # define MAX_KEYS 65535
+# define MAX_MOUSE 8
+# define SCROLL_UP 4
+# define SCROLL_DOWN 5
 
 // Debug
 
@@ -346,6 +349,8 @@ typedef enum s_components
 	COMP_N
 }							t_comp;
 
+typedef int					i;
+
 typedef struct s_point
 {
 	int						x;
@@ -578,6 +583,7 @@ typedef struct s_hud
 	t_imga					head;
 	int						headid;
 	int						animoff;
+	size_t					map_zoom;
 	uint64_t				time;
 }							t_hud;
 
@@ -707,6 +713,7 @@ typedef struct s_vars
 	t_infos					infos;
 	t_xvar					*mlx;
 	bool					keys[MAX_KEYS];
+	bool					mouses[MAX_MOUSE];
 	t_imga					*img;
 	t_mouse					mouse;
 	t_map					*exit;

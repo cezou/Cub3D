@@ -22,6 +22,10 @@ void	zoom(int button, t_vars *vars)
 
 int	mouse_down(int button, int x, int y, t_vars *p)
 {
+	if (button == SCROLL_UP && p->hud.map_zoom != 100)
+		p->hud.map_zoom += 2;
+	if (button == SCROLL_DOWN && p->hud.map_zoom != 4)
+		p->hud.map_zoom -= 2;
 	if (p->game.start > 1 && p->game.god && (button == 4 || button == 5))
 	{
 		p->mouse.button = button;
@@ -45,6 +49,7 @@ int	mouse_up(int button, int x, int y, t_vars *p)
 {
 	(void)x;
 	(void)y;
+	p->mouses[button] = false;
 	if (p->game.start > 1 && p->game.god && (button == 1 || button == 3))
 	{
 		p->game.start = 2;

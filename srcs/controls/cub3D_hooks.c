@@ -90,21 +90,21 @@ int	keys(int kd, t_vars *v)
 	if (v->game.won < 4 && kd == 233 && v->player.animoff == 0)
 		(v->player.img = v->img[EGUN]);
 	// if (v->game.won < 4 && kd == 34)
-		// (v->player.img = v->img[EGUN]);// OTHER WEAPONS
+	// (v->player.img = v->img[EGUN]);// OTHER WEAPONS
 	// if (v->game.won < 4 && kd == 39)
-		// (v->player.img = v->img[EGUN]);// OTHER WEAPONS
+	// (v->player.img = v->img[EGUN]);// OTHER WEAPONS
 	// if (v->game.won < 4 && kd == 40)
-		// (v->player.img = v->img[EGUN]);// OTHER WEAPONS
+	// (v->player.img = v->img[EGUN]);// OTHER WEAPONS
 	// if (v->game.won < 4 && kd == 45)
-		// (v->player.img = v->img[EGUN]);// OTHER WEAPONS
+	// (v->player.img = v->img[EGUN]);// OTHER WEAPONS
 	if (kd == XK_Escape)
 		menuexit(v);
 	if (v->game.won < 4 && kd == XK_Return)
 		returnkey(v);
 	if (v->game.pause)
 		menuarrow(v, kd);
-	if (!v->game.pause && !v->game.won && v->game.start > 1
-		&& is_pressed(XK_F1, v))
+	if (!v->game.pause && !v->game.won && v->game.start > 1 && is_pressed(XK_F1,
+			v))
 		tooglegod(v);
 	if (((v->game.start > 1 && v->game.god && v->game.won < 4))
 		&& is_pressed(XK_F5, v))
