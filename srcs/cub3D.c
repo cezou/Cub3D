@@ -17,13 +17,12 @@
 /// @param img Texture to initialize
 void	inittexture(t_vars *v, t_imga *img, int i)
 {
-	img->img = mlx_xpm_file_to_image(v->mlx, img->filename,
-			&img->width, &img->height);
+	img->img = mlx_xpm_file_to_image(v->mlx, img->filename, &img->width,
+			&img->height);
 	img->id = i;
 	if (!img->img)
 		exit((prterr(v, "Error mlx texture image\n", 1, 1), 1));
-	img->addr = mlx_get_data_addr(img->img, &img->bpp,
-			&img->len, &img->endian);
+	img->addr = mlx_get_data_addr(img->img, &img->bpp, &img->len, &img->endian);
 	if (!img->addr)
 		exit((prterr(v, "Error mlx texture image address\n", 1, 1), 1));
 }
@@ -65,6 +64,7 @@ int	main(int ac, char **av)
 		else if (v.game.won == 3)
 			mlx_loop_hook(v.mlx, &credits, &v);
 		else if (v.game.won == 4)
+			// mlx_loop_hook(v.mlx, &render, &v);
 			mlx_loop_hook(v.mlx, &transition_melt_screen, &v);
 		else
 			mlx_loop_hook(v.mlx, &render, &v);
