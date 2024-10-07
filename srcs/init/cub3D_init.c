@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/04 11:25:33 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/05 19:40:00 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,14 @@ const t_point3	g_objs[2] = {
 {14.0, 8.0, EPARMOR, 5.0, 128.0},
 {15.0, 8.0, EPARMOR, 1.0, 0}
 };
+
+void	initweapon(t_vars *v)
+{
+	v->player.weapon[EFIST] = (t_weapon){1, -1, -1, -1, 20, 0, v->img[EIFIST]};
+	v->player.weapon[EGUN] = (t_weapon){1, 50, 200, EBULL, 15, 0,
+		v->img[EIGUN]};
+	v->player.currweapon = v->player.weapon[EFIST];
+}
 
 void	initvars(t_vars *v)
 {
@@ -31,7 +39,7 @@ void	initvars(t_vars *v)
 	v->hud.refreshcards = 1;
 	v->hud.refreshdh = 1;
 	v->player.movespeedx = 3.0;
-	v->player.rotspeed = 2.0;
+	v->player.rotspeed = 1.0;
 	v->player.mouserotspeed = 0.1;
 	v->player.accx = 5.0;
 	v->player.accy = 0.08;
@@ -46,12 +54,12 @@ void	initvars(t_vars *v)
 	v->player.maxammo[1] = 50;
 	v->player.maxammo[2] = 50;
 	v->player.maxammo[3] = 300;
-	v->player.weapons[0] = 1;
-	v->player.weapons[1] = 1;
+	// v->player.weapons[0] = 1;
+	// v->player.weapons[1] = 1;
 	v->player.ammo[0] = 50;
-	v->player.cards[0] = 2;
-	v->player.cards[1] = 2;
-	v->player.cards[2] = 1;
+	// v->player.cards[0] = 2;
+	// v->player.cards[1] = 2;
+	// v->player.cards[2] = 1;
 }
 
 void	initmodes(t_vars *v, int argc)
@@ -127,7 +135,7 @@ void	check_map(t_vars *v)
 	parse(v, -1, NULL);
 	v->player.x = v->player.player->x + 0.5;
 	v->player.y = v->player.player->y + 0.5;
-	v->player.animp = EFIST;
+	v->player.animp = EIFIST;
 	v->player.animoff = 0;
 	v->game.nb_sprites = v->game.nb_guard + 2;
 	init_doors(v);
@@ -160,6 +168,7 @@ void	init(t_vars *v, int argc, char **argv)
 	initsounds(v);
 	inithud(v);
 	initplayeranim(v);
+	initweapon(v);
 	initguardanim(v);
 	check_map(v);
 	init_player_dir(v);

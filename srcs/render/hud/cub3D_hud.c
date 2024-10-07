@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 20:43:05 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/04 12:32:48 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/05 19:44:37 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,8 +143,10 @@ void	renderhud(t_vars *v, t_imga dest)
 	if (v->hud.refreshammo)
 	{
 		renderemptyzone(v, v->img[EAMMO], 0);
-		renderelement((v->hud.refreshammo = 0, v),
-			0 + v->img[EAMMOTMP].width - 4, v->player.ammo[0], 0);
+		if (v->player.currweapon.typeammo != -1)
+			renderelement((v->hud.refreshammo = 0, v),
+				v->img[EAMMOTMP].width - 4,
+				v->player.ammo[v->player.currweapon.typeammo], 0);
 	}
 	if (v->hud.refreshweapon)
 	{

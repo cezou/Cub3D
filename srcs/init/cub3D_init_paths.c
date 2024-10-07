@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/04 13:35:25 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/05 18:41:34 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ void	initanim(t_vars *v, int index, int b, int animnb)
 
 void	initplayerpathanim(t_vars *v)
 {
-	v->img[EFIST].filename = "resources/textures/fist.xpm";
-	initanim(v, EFIST, 1, 7);
-	v->player.img = v->img[EFIST];
-	v->img[EGUN].filename = "resources/textures/gun.xpm";
-	initanim(v, EGUN, 0, 7);
+	v->img[EIFIST].filename = "resources/textures/fist.xpm";
+	initanim(v, EIFIST, 1, 7);
+	v->player.currweapon.img = v->img[EIFIST];
+	v->img[EIGUN].filename = "resources/textures/gun.xpm";
+	initanim(v, EIGUN, 0, 7);
 }
 
 void	initguardpathanim(t_vars *v)

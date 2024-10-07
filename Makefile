@@ -6,7 +6,7 @@
 #    By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 11:28:17 by pmagnero          #+#    #+#              #
-#    Updated: 2024/10/04 12:33:36 by pmagnero         ###   ########.fr        #
+#    Updated: 2024/10/05 12:30:22 by pmagnero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -179,7 +179,7 @@ ifeq ($(d),1)
 else
 	make -C includes/printf
 endif
-	$(CC) -o $(NAME) $(FLAG) $(OPTION) $(OBJECTS_PREFIXED) $(MINIAUDIO) $(MLX) $(MLX_FLAG) $(LIBFT)
+	$(CC) -o $(NAME) $(FLAG) $(PG) $(OPTION) $(OBJECTS_PREFIXED) $(MINIAUDIO) $(MLX) $(MLX_FLAG) $(LIBFT)
 
 $(NAME_BONUS): $(OBJECTS_PREFIXED_B)
 	@echo "\n\033[$(COLOR_TITLE)m########################################"
@@ -195,7 +195,7 @@ ifeq ($(d),1)
 else
 	make -C includes/printf
 endif
-	$(CC) -o $(NAME_BONUS) $(FLAG) $(OPTION) $(OBJECTS_PREFIXED_B) -D_POSIX_C_SOURCE=199309L $(MINIAUDIO) $(MLX) $(MLX_FLAG) $(LIBFT)
+	$(CC) -o $(NAME_BONUS) $(FLAG) $(PG) $(OPTION) $(OBJECTS_PREFIXED_B) -D_POSIX_C_SOURCE=199309L $(MINIAUDIO) $(MLX) $(MLX_FLAG) $(LIBFT)
 
 all: $(NAME)
 

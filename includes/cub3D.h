@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/04 12:35:06 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/05 19:38:16 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@
 // Sounds
 
 # ifndef MANDATORY
-#  define ACTIVATE_SOUND 0
+#  define ACTIVATE_SOUND 1
 #  define MANDATORY 0
 #  define VALID " \t\n\v\f\r10NSWEDG"
 # else
@@ -280,6 +280,26 @@ typedef enum s_door_state
 	ECLOSING
 }						t_door_state;
 
+typedef enum s_ammo
+{
+	EBULL,
+	ESHELL,
+	EROCK,
+	ECELL,
+}						t_ammo;
+
+typedef enum s_weapons
+{
+	EFIST,
+	EGUN,
+	ESHOTGUN,
+	EGATLIN,
+	EROCKETL,
+	EPLASMA,
+	EBFG,
+	ECHAINSAW
+}						t_weapons;
+
 typedef enum s_components
 {
 	EMAP,
@@ -312,8 +332,8 @@ typedef enum s_components
 	EMENUOPT,
 	EBUFF,
 	EHUD,
-	EFIST,
-	EGUN,
+	EIFIST,
+	EIGUN,
 	EBIGNUMBERS,
 	ESMALLNUMBERS,
 	EHEALTH,
@@ -502,6 +522,17 @@ typedef struct s_sound
 	int					init;
 }						t_sound;
 
+typedef struct s_weapon
+{
+	int					active;
+	int					ammo;
+	int					maxammo;
+	int					typeammo;
+	int					dmg;
+	int					idsound;
+	t_imga				img;
+}						t_weapon;
+
 typedef struct s_player
 {
 	t_map				*player;
@@ -517,8 +548,10 @@ typedef struct s_player
 	int					armor;
 	int					ammo[4];
 	int					maxammo[4];
-	int					weapons[7];
+	int					weapons[8];
 	int					cards[3];
+	t_weapon			currweapon;
+	t_weapon			weapon[EBFG];
 	double				x;
 	double				y;
 	double				z;
@@ -540,7 +573,6 @@ typedef struct s_player
 	double				rotspeed;
 	double				mouserotspeed;
 	uint64_t			timerplayer;
-	t_imga				img;
 }						t_player;
 
 typedef struct s_hud
@@ -793,13 +825,13 @@ void					menuoptions(t_vars *v);
 
 // Controls
 
-void					move(t_vars *v, int d);
+void					move(t_vars *v);
 void					moveplayerx(t_vars *v, int d);
 void					moveplayery(t_vars *v, int d);
 void					rotatecamx(t_vars *v, int d, double speed);
 void					rotatecamy(t_vars *v, int d, double speed, int mul);
 t_map					*set_pos(t_vars *v, t_point2 k, int d);
-void					open_door(t_vars *v, int d);
+void					open_door(t_vars *v);
 
 // Rendering
 
@@ -863,8 +895,7 @@ int						maintitleanim(t_vars *v);
 void					melting(t_vars *v, bool *done, int x);
 
 /* FUNCTIONS */
-void	rendermap(t_vars *v)
-;
+void					rendermap(t_vars *v);
 // void					freeall(void **tab);
 void					key_management(t_vars *v);
 int						returnkey(t_vars *v);

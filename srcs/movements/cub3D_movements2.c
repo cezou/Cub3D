@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 18:24:52 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/23 03:21:42 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/05 12:18:33 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,12 @@ t_map	*set_pos(t_vars *v, t_point2 k, int d)
 
 /// @brief Set the door state to opening of the door around the player
 /// @param v Vars
-/// @param d Key input pressed
-void	open_door(t_vars *v, int d)
+void	open_door(t_vars *v)
 {
 	int		i;
 	t_map	*pd;
 
-	if (d == 8)
+	if (v->keys[XK_space])
 	{
 		pd = set_pos(v, (t_point2){0, 0,
 				(int)(v->player.x + v->player.dir_x),

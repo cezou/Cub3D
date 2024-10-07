@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/02 14:53:12 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/05 18:50:29 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@ void	render_player(t_vars *v, t_point c)
 {
 	t_point	p;
 
-	v->tmp[0] = v->player.img;
-	c.z = v->player.animoff + v->player.img.animx;
+	v->tmp[0] = v->player.currweapon.img;
+	// printf("%d\n", v->player.currweapon.img.id);
+	c.z = v->player.animoff + v->player.currweapon.img.animx;
 	c.color = v->tmp[0].height;
 	p.x = v->player.animoff - 1;
 	p.color = 0;
@@ -29,7 +30,7 @@ void	render_player(t_vars *v, t_point c)
 		while (++p.y < c.color)
 		{
 			c.x = p.x - v->player.animoff + v->screen.gamew / 2
-				- v->player.img.animx / 2 - v->player.motionx;
+				- v->player.currweapon.img.animx / 2 - v->player.motionx;
 			c.y = p.y + v->screen.gameh - c.color - v->player.motiony + 10;
 			p.z = (p.y * v->tmp[0].len) + (p.x * 4);
 			if (c.x >= 0 && c.x < v->screen.gamew

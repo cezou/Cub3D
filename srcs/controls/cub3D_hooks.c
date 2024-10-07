@@ -18,11 +18,14 @@ void	attack(t_vars *v)
 {
 	v->player.pattack = 1;
 	v->hud.refreshammo = 1;
-	v->player.ammo[0] -= 1;
-	v->player.animoff = v->player.img.animx;
-	if (v->player.ammo[0] < 0)
+	v->hud.refreshammun = 1;
+	if (v->player.currweapon.typeammo != -1)
+		v->player.ammo[v->player.currweapon.typeammo] -= 1;
+	v->player.animoff = v->player.currweapon.img.animx;
+	if (v->player.ammo[v->player.currweapon.typeammo] < 0
+		&& v->player.currweapon.typeammo != -1)
 	{
-		v->player.ammo[0] = 0;
+		v->player.ammo[v->player.currweapon.typeammo] = 0;
 		v->player.pattack = 0;
 		v->player.animoff = 0;
 	}
@@ -32,24 +35,11 @@ void	attack(t_vars *v)
 /// @param v Vars
 void	handle_movement(t_vars *v)
 {
-	if (is_pressed(XK_w, v))
-		move(v, NORTH);
-	if (is_pressed(XK_s, v))
-		move(v, SOUTH);
-	if (is_pressed(XK_a, v))
-		move(v, WEST);
-	if (is_pressed(XK_d, v))
-		move(v, EAST);
-	if (is_pressed(XK_Left, v))
-		move(v, RIGHT);
-	if (is_pressed(XK_Right, v))
-		move(v, LEFT);
-	if (is_pressed(XK_Up, v))
-		move(v, UP);
-	if (is_pressed(XK_Down, v))
-		move(v, DOWN);
-	if (is_pressed(XK_space, v))
-		move(v, 8);
+	if (is_pressed(XK_w, v) || is_pressed(XK_s, v) || is_pressed(XK_a, v)
+		|| is_pressed(XK_d, v) || is_pressed(XK_Left, v)
+		|| is_pressed(XK_Right, v) || is_pressed(XK_Up, v)
+		|| is_pressed(XK_Down, v) || is_pressed(XK_space, v))
+		move(v);
 	if (is_pressed(XK_Page_Down, v))
 	{
 		v->player.hp -= 1;
@@ -59,7 +49,7 @@ void	handle_movement(t_vars *v)
 	{
 		v->player.armor += 1;
 		v->hud.refresharmor = 1;
-		v->player.ammo[0] += 1;
+		v->player.ammo[v->player.currweapon.typeammo] += 1;
 		v->hud.refreshammo = 1;
 	}
 }
@@ -86,17 +76,24 @@ int	keys(int kd, t_vars *v)
 	if (v->game.won < 4 && kd == XK_Shift_L && !v->player.injump)
 		v->player.jumping = 1;
 	if (v->game.won < 4 && kd == 38 && v->player.animoff == 0)
-		(v->player.img = v->img[EFIST]);
+	{
+		v->player.currweapon = v->player.weapon[EFIST];
+		v->hud.refreshammo = 1;
+	}
 	if (v->game.won < 4 && kd == 233 && v->player.animoff == 0)
-		(v->player.img = v->img[EGUN]);
+	{
+		v->player.currweapon = v->player.weapon[EGUN];
+		v->hud.refreshammo = 1;
+	}
+		// v->player.img = v->img[EIGUN];
 	// if (v->game.won < 4 && kd == 34)
-		// (v->player.img = v->img[EGUN]);// OTHER WEAPONS
+		// (v->player.img = v->img[EIGUN]);// OTHER WEAPONS
 	// if (v->game.won < 4 && kd == 39)
-		// (v->player.img = v->img[EGUN]);// OTHER WEAPONS
+		// (v->player.img = v->img[EIGUN]);// OTHER WEAPONS
 	// if (v->game.won < 4 && kd == 40)
-		// (v->player.img = v->img[EGUN]);// OTHER WEAPONS
+		// (v->player.img = v->img[EIGUN]);// OTHER WEAPONS
 	// if (v->game.won < 4 && kd == 45)
-		// (v->player.img = v->img[EGUN]);// OTHER WEAPONS
+		// (v->player.img = v->img[EIGUN]);// OTHER WEAPONS
 	if (kd == XK_Escape)
 		menuexit(v);
 	if (v->game.won < 4 && kd == XK_Return)
