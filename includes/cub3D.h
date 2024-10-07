@@ -307,6 +307,8 @@ typedef enum s_components
 	ENORTH,
 	EWEST,
 	EEAST,
+	EMAPBORDER,
+	EMAPHEAD,
 	ESPACE,
 	EDOOR,
 	EGUARDW,
@@ -899,6 +901,13 @@ int							maintitleanim(t_vars *v);
 void						melting(t_vars *v, bool *done, int x);
 
 /* FUNCTIONS */
+void	draw_square(t_v2f pos, float size, int color, t_vars *v)
+;
+void	draw_rotated_img(t_imga *img, t_v2f pos, float size, t_vars *v,
+		float angle);
+void						draw_scaled_img(t_imga *img, t_v2f pos, float size,
+								t_vars *v);
+;
 void						rendermap(t_vars *v);
 // void					freeall(void **tab);
 void						key_management(t_vars *v);

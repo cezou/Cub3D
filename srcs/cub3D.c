@@ -64,7 +64,6 @@ int	main(int ac, char **av)
 		else if (v.game.won == 3)
 			mlx_loop_hook(v.mlx, &credits, &v);
 		else if (v.game.won == 4)
-			// mlx_loop_hook(v.mlx, &render, &v);
 			mlx_loop_hook(v.mlx, &transition_melt_screen, &v);
 		else
 			mlx_loop_hook(v.mlx, &render, &v);

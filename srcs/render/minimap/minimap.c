@@ -11,52 +11,35 @@
 /* ************************************************************************** */
 
 #include "../../../includes/cub3D.h"
-
-/// @brief Draw a square on the minimap.
-/// @param pos Position containing the starting coordinates.
-/// @param size Size of the square.
-/// @param color Color of the square.
-void	draw_square(t_v2f pos, float size, int color, t_vars *v)
-{
-	size_t	x;
-	int		y;
-
-	x = 0;
-	while (x < size)
-	{
-		y = -1;
-		while (++y < size)
-			img_pix_put(&v->tmp[1], (t_point){pos[0] + x, pos[1] + y, 0, color},
-				v);
-		x++;
-	}
-}
+#include <math.h>
 
 /// @brief Draw the border of the minimap.
 /// @param size Size of each square in the border.
-void	draw_border(float size, int nb_blocks, t_vars *v)
+static void	draw_border(float size, int nb_blocks, t_vars *v)
 {
 	int	i;
 
 	i = -1;
 	while (++i < nb_blocks + 2)
-		draw_square((t_v2f){size * (i), 0}, size, B_P, v);
+		draw_scaled_img(&v->img[EMAPBORDER], (t_v2f){size * (i), 0}, size, v);
 	i = -1;
 	while (++i < nb_blocks + 2)
-		draw_square((t_v2f){0, size * (i)}, size, B_P, v);
+		draw_scaled_img(&v->img[EMAPBORDER], (t_v2f){0, size * (i)}, size, v);
 	i = -1;
 	while (++i < nb_blocks + 2)
-		draw_square((t_v2f){size * (nb_blocks + 1), size * (i)}, size, B_P, v);
+		draw_scaled_img(&v->img[EMAPBORDER], (t_v2f){size * (nb_blocks + 1),
+			size * (i)}, size, v);
 	i = -1;
 	while (++i < nb_blocks + 2)
-		draw_square((t_v2f){size * (i), size * (nb_blocks + 1)}, size, B_P, v);
+		draw_scaled_img(&v->img[EMAPBORDER], (t_v2f){size * (i), size
+			* (nb_blocks + 1)}, size, v);
 }
 
 /// @brief Draw a block on the minimap depending on the letters in the mapfile
 /// @param screen Position on the screen where the block should be drawn.
 /// @param i_j Coordinates in the map array.
 /// @param size Size of the block.
-void	draw_a_block(t_v2f screen, t_v2i i_j, float size, t_vars *v)
+static void	draw_a_block(t_v2f screen, t_v2i i_j, float size, t_vars *v)
 {
 	if (i_j[1] < 0 || i_j[0] < 0 || i_j[1] >= (int)tab_len(v->infos.map)
 		|| i_j[0] >= (int)ft_strlen(v->infos.map[i_j[1]]))
@@ -64,14 +47,66 @@ void	draw_a_block(t_v2f screen, t_v2i i_j, float size, t_vars *v)
 	if (v->infos.map[i_j[1]][i_j[0]] == '1')
 		draw_square(screen, size, W_P, v);
 	else if (v->infos.map[i_j[1]][i_j[0]] == 'D')
-		draw_square(screen, size, GR_P, v);
+		draw_scaled_img(&v->img[EDOOR], screen, size, v);
 	else
-		draw_square(screen, size, v->infos.floor, v);
+		draw_scaled_img(&v->img[ESPACE], screen, size, v);
+}
+
+static void	pick_and_draw(t_v2f size_angle, t_v2i x_y, t_v2f pos, t_vars *v)
+{
+	t_v2i	center;
+	t_v2i	src;
+	int		color;
+	t_v2f	ratio;
+	t_imga	*img;
+
+	img = &v->img[EMAPHEAD];
+	center = (t_v2i){img->width / 2, img->height / 2};
+	ratio[0] = (float)img->width / size_angle[0];
+	ratio[1] = (float)img->height / size_angle[0];
+	src[0] = (int)(((x_y[0] * ratio[0] - center[0]) * cos(size_angle[1])
+				- (x_y[1] * ratio[1] - center[1]) * sin(size_angle[1]))
+			+ center[0]);
+	src[1] = (int)(((x_y[0] * ratio[0] - center[0]) * sin(size_angle[1])
+				+ (x_y[1] * ratio[1] - center[1]) * cos(size_angle[1]))
+			+ center[1]);
+	if (src[0] >= 0 && src[0] < img->width && src[1] >= 0
+		&& src[1] < img->height)
+	{
+		color = *(int *)(img->addr + (src[1] * img->len + src[0] * (img->bpp
+						/ 8)));
+		if (color != 0x00FFFF)
+			img_pix_put(&v->img[EBUFF], (t_point){pos[0] + x_y[0], pos[1]
+				+ x_y[1], 0, color}, v);
+	}
+}
+
+static void	draw_player(float size, size_t nb_blocks, t_vars *v)
+{
+	t_v2f	pos;
+	size_t	x;
+	int		y;
+	float	angle;
+
+	pos = (t_v2f){size / 2 + (nb_blocks / 2) * size, size / 2 + (nb_blocks / 2)
+		* size};
+	angle = (atan2(v->player.dir_y, v->player.dir_x) * -180.0 / M_PI + 90.0)
+		* M_PI / 180.0;
+	x = 0;
+	while (x < size)
+	{
+		y = -1;
+		while (++y < size)
+		{
+			pick_and_draw((t_v2f){size, angle}, (t_v2i){x, y}, pos, v);
+		}
+		x++;
+	}
 }
 
 /// @brief Draw a minimap in the top-left corner of the screen,
 /// @brief depending on the zoom: scrolling increase or decrease
-// @brief the number of blocks drawn on the map
+/// @brief the number of blocks drawn on the map
 void	rendermap(t_vars *v)
 {
 	t_v2i	i_j;
@@ -96,7 +131,6 @@ void	rendermap(t_vars *v)
 			draw_a_block(screen, i_j, size, v);
 		}
 	}
-	draw_square((t_v2f){size / 2 + (nb_blocks / 2) * size, size / 2 + (nb_blocks
-			/ 2) * size}, size, RE_P, v);
+	draw_player(size, nb_blocks, v);
 	draw_border(size, nb_blocks, v);
 }
