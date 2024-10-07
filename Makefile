@@ -121,7 +121,8 @@ SRCS =	srcs/cub3D.c \
 		srcs/parsing/map_utils.c \
 		srcs/parsing/print_utils.c \
 		srcs/parsing/map_floodfill.c \
-		srcs/render/minimap/minimap.c
+		srcs/render/minimap/minimap.c \
+		srcs/render/minimap/utils.c
 
 OBJS			 = $(SRCS:.c=.o)
 OBJS_B			 = $(SRCS:.c=.o)

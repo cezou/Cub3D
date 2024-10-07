@@ -100,8 +100,8 @@ int	keys(int kd, t_vars *v)
 		returnkey(v);
 	if (v->game.pause)
 		menuarrow(v, kd);
-	if (!v->game.pause && !v->game.won && v->game.start > 1
-		&& is_pressed(XK_F1, v))
+	if (!v->game.pause && !v->game.won && v->game.start > 1 && is_pressed(XK_F1,
+			v))
 		tooglegod(v);
 	if (((v->game.start > 1 && v->game.god && v->game.won < 4))
 		&& is_pressed(XK_F5, v))

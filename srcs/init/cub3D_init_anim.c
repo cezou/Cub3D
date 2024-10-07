@@ -22,7 +22,7 @@ void	initguardanim(t_vars *v)
 	initguardpathanim(v);
 }
 
-/// @brief 
+/// @brief
 /// @param v Vars
 /// @param p {img index, tmp img index, animx offset, animy offset}
 void	init_elem(t_vars *v, t_point p)
@@ -37,7 +37,7 @@ void	init_elem(t_vars *v, t_point p)
 		v->img[p.x].animy = v->img[p.x].height / p.color;
 }
 
-/// @brief 
+/// @brief
 /// @param v Vars
 void	inithud(t_vars *v)
 {
@@ -63,4 +63,5 @@ void	inithud(t_vars *v)
 	init_elem(v, (t_point){EAMMUN, EAMMUNTMP, 0, 0});
 	init_elem(v, (t_point){ECARDS, ECARDSTMP, 3, 2});
 	init_elem(v, (t_point){ECARDSLOT, ECARDSLOTTMP, 0, 0});
+	v->hud.map_zoom = 10;
 }

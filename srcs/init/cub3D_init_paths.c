@@ -21,6 +21,8 @@ void	initpathtext(t_vars *v)
 	v->img[EGUARDDEATH].filename = "resources/textures/generaldeath.xpm";
 	v->img[ESKYBOX].filename = "resources/textures/skybox.xpm";
 	v->img[EHUDIMG].filename = "resources/textures/HUDempty.xpm";
+	v->img[EMAPBORDER].filename = "resources/textures/MapBorder.xpm";
+	v->img[EMAPHEAD].filename = "resources/textures/MapHead.xpm";
 	v->img[ETITLE].filename = "resources/textures/title.xpm";
 	v->img[EMENUSELECT].filename = "resources/textures/menus/select.xpm";
 	v->img[EMENU].filename = "resources/textures/menus/menu_start.xpm";
@@ -56,8 +58,8 @@ void	initanim(t_vars *v, int index, int b, int animnb)
 	v->img[index].height = scalefactor * v->img[ETMP].height * 3;
 	initimage(v, index, v->img[index].width, v->img[index].height);
 	scale_img((t_point){0}, &v->img[ETMP], &v->img[index]);
-	v->img[index].animx = v->img[ETMP].width / animnb
-		* (1.0 / v->img[index].ratiox);
+	v->img[index].animx = v->img[ETMP].width / animnb * (1.0
+			/ v->img[index].ratiox);
 	if (b)
 		mlx_destroy_image(v->mlx, v->img[ETMP].img);
 }

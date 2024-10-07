@@ -102,13 +102,12 @@ int	transition_melt_screen(t_vars *v)
 	static int	delta = 0;
 
 	done = true;
-	if (!delta && timestamp_in_ms(v)
-		- v->game.updated_at < (uint64_t)5000)
-		return (mlx_put_image_to_window(v->mlx, v->screen.win,
-				v->img[COMP_N].img, 0, 0), delta = 0, 1);
-	if (!v->screen.win || timestamp_in_ms(v)
-		- v->game.updated_at < (uint64_t)(3000 / v->game.fps))
-		return (delta = 1, 1);
+	// if (!delta && timestamp_in_ms(v) - v->game.updated_at < (uint64_t)5000)
+	// 	return (mlx_put_image_to_window(v->mlx, v->screen.win,
+	// 			v->img[COMP_N].img, 0, 0), delta = 0, 1);
+	// if (!v->screen.win || timestamp_in_ms(v)
+	// 	- v->game.updated_at < (uint64_t)(3000 / v->game.fps))
+	// 	return (delta = 1, 1);
 	delta = 1;
 	v->game.updated_at = timestamp_in_ms(v);
 	ft_bzero(v->img[EBUFF].addr, v->screen.resw * v->screen.resh
@@ -124,11 +123,11 @@ int	transition_melt_screen(t_vars *v)
 	mlx_put_image_to_window(v->mlx, v->screen.win, v->img[EBUFF].img, 0, 0);
 	return (0);
 }
-	// mlx_set_font(v->mlx, v->screen.win, v->img->fontname2);
-	// mlx_string_put(v->mlx, v->screen.win, v->screen.resw * 0.45,
-	// v->screen.resh
-	// 	* 0.90, W_P, "Loading...");
-	// mlx_set_font(v->mlx, v->screen.win, v->img->fontname);
+// mlx_set_font(v->mlx, v->screen.win, v->img->fontname2);
+// mlx_string_put(v->mlx, v->screen.win, v->screen.resw * 0.45,
+// v->screen.resh
+// 	* 0.90, W_P, "Loading...");
+// mlx_set_font(v->mlx, v->screen.win, v->img->fontname);
 
 /// @brief Main title loop/screen displayed at the begining of the game
 /// @param v Vars
