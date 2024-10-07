@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/07 22:40:24 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/07 22:43:53 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ void	initvars(t_vars *v)
 	v->player.maxammo[1] = 50;
 	v->player.maxammo[2] = 50;
 	v->player.maxammo[3] = 300;
-	// v->player.weapons[0] = 1;
-	// v->player.weapons[1] = 1;
+	v->player.weapons[0] = 1;
+	v->player.weapons[1] = 1;
 	v->player.ammo[0] = 50;
 	// v->player.cards[0] = 2;
 	// v->player.cards[1] = 2;
