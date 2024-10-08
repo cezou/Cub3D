@@ -36,9 +36,9 @@ void	attack(t_vars *v)
 void	handle_movement(t_vars *v)
 {
 	if (is_pressed(XK_w, v) || is_pressed(XK_s, v) || is_pressed(XK_a, v)
-		|| is_pressed(XK_d, v) || is_pressed(XK_Left, v)
-		|| is_pressed(XK_Right, v) || is_pressed(XK_Up, v)
-		|| is_pressed(XK_Down, v) || is_pressed(XK_space, v))
+		|| is_pressed(XK_d, v) || is_pressed(XK_Left, v) || is_pressed(XK_Right,
+			v) || is_pressed(XK_Up, v) || is_pressed(XK_Down, v)
+		|| is_pressed(XK_space, v))
 		move(v);
 	if (is_pressed(XK_Page_Down, v))
 	{
@@ -85,15 +85,15 @@ int	keys(int kd, t_vars *v)
 		v->player.currweapon = v->player.weapon[EGUN];
 		v->hud.refreshammo = 1;
 	}
-		// v->player.img = v->img[EIGUN];
+	// v->player.img = v->img[EIGUN];
 	// if (v->game.won < 4 && kd == 34)
-		// (v->player.img = v->img[EIGUN]);// OTHER WEAPONS
+	// (v->player.img = v->img[EIGUN]);// OTHER WEAPONS
 	// if (v->game.won < 4 && kd == 39)
-		// (v->player.img = v->img[EIGUN]);// OTHER WEAPONS
+	// (v->player.img = v->img[EIGUN]);// OTHER WEAPONS
 	// if (v->game.won < 4 && kd == 40)
-		// (v->player.img = v->img[EIGUN]);// OTHER WEAPONS
+	// (v->player.img = v->img[EIGUN]);// OTHER WEAPONS
 	// if (v->game.won < 4 && kd == 45)
-		// (v->player.img = v->img[EIGUN]);// OTHER WEAPONS
+	// (v->player.img = v->img[EIGUN]);// OTHER WEAPONS
 	if (kd == XK_Escape)
 		menuexit(v);
 	if (v->game.won < 4 && kd == XK_Return)

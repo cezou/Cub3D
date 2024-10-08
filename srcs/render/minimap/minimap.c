@@ -64,12 +64,10 @@ static void	pick_and_draw(t_v2f size_angle, t_v2i x_y, t_v2f pos, t_vars *v)
 	center = (t_v2i){img->width / 2, img->height / 2};
 	ratio[0] = (float)img->width / size_angle[0];
 	ratio[1] = (float)img->height / size_angle[0];
-	src[0] = (int)(((x_y[0] * ratio[0] - center[0]) * cos(size_angle[1])
-				- (x_y[1] * ratio[1] - center[1]) * sin(size_angle[1]))
-			+ center[0]);
-	src[1] = (int)(((x_y[0] * ratio[0] - center[0]) * sin(size_angle[1])
-				+ (x_y[1] * ratio[1] - center[1]) * cos(size_angle[1]))
-			+ center[1]);
+	src[0] = (i)(((x_y[0] * ratio[0] - center[0]) * cos(size_angle[1]) - (x_y[1]
+					* ratio[1] - center[1]) * sin(size_angle[1])) + center[0]);
+	src[1] = (i)(((x_y[0] * ratio[0] - center[0]) * sin(size_angle[1]) + (x_y[1]
+					* ratio[1] - center[1]) * cos(size_angle[1])) + center[1]);
 	if (src[0] >= 0 && src[0] < img->width && src[1] >= 0
 		&& src[1] < img->height)
 	{
@@ -77,7 +75,8 @@ static void	pick_and_draw(t_v2f size_angle, t_v2i x_y, t_v2f pos, t_vars *v)
 						/ 8)));
 		if (color != 0x00FFFF)
 			img_pix_put(&v->img[EBUFF], (t_point){pos[0] + x_y[0], pos[1]
-				+ x_y[1], 0, color}, v);
+				+ x_y[1], 0, getcolorpix(v, img->addr, (src[1] * img->len
+						+ src[0] * (img->bpp / 8)))}, v);
 	}
 }
 

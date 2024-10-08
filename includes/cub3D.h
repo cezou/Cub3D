@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/07 22:39:04 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/08 18:38:39 by cviegas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -298,7 +298,7 @@ typedef enum s_door_state
 	ECLOSE,
 	EOPENING,
 	ECLOSING
-}						t_door_state;
+}							t_door_state;
 
 typedef enum s_ammo
 {
@@ -306,7 +306,7 @@ typedef enum s_ammo
 	ESHELL,
 	EROCK,
 	ECELL,
-}						t_ammo;
+}							t_ammo;
 
 typedef enum s_weapons
 {
@@ -318,7 +318,7 @@ typedef enum s_weapons
 	EPLASMA,
 	EBFG,
 	ECHAINSAW
-}						t_weapons;
+}							t_weapons;
 
 typedef enum s_components
 {
@@ -541,67 +541,67 @@ typedef struct s_mouse
 
 typedef struct s_sound
 {
-	ma_result			result;
-	ma_engine			engine;
-	ma_sound			sound[SOUND_NB];
-	ma_context			context;
-	ma_device_config	deviceconfig;
-	float				volume;
-	int					init;
-}						t_sound;
+	ma_result				result;
+	ma_engine				engine;
+	ma_sound				sound[SOUND_NB];
+	ma_context				context;
+	ma_device_config		deviceconfig;
+	float					volume;
+	int						init;
+}							t_sound;
 
 typedef struct s_weapon
 {
-	int					active;
-	int					ammo;
-	int					maxammo;
-	int					typeammo;
-	int					dmg;
-	int					idsound;
-	t_imga				img;
-}						t_weapon;
+	int						active;
+	int						ammo;
+	int						maxammo;
+	int						typeammo;
+	int						dmg;
+	int						idsound;
+	t_imga					img;
+}							t_weapon;
 
 typedef struct s_player
 {
-	t_map				*player;
-	int					pattack;
-	int					animp;
-	int					animoff;
-	int					moving;
-	int					movingy;
-	int					jumping;
-	int					injump;
-	int					dir;
-	int					hp;
-	int					armor;
-	int					ammo[4];
-	int					maxammo[4];
-	int					weapons[8];
-	int					cards[3];
-	t_weapon			currweapon;
-	t_weapon			weapon[EBFG];
-	double				x;
-	double				y;
-	double				z;
-	double				dir_x;
-	double				dir_y;
-	double				plane_x;
-	double				plane_y;
-	double				angle;
-	double				motionx;
-	double				motiony;
-	double				accx;
-	double				accy;
-	double				deccx;
-	double				deccy;
-	double				maxspeedx;
-	double				maxspeedy;
-	double				movespeedx;
-	double				movespeedy;
-	double				rotspeed;
-	double				mouserotspeed;
-	uint64_t			timerplayer;
-}						t_player;
+	t_map					*player;
+	int						pattack;
+	int						animp;
+	int						animoff;
+	int						moving;
+	int						movingy;
+	int						jumping;
+	int						injump;
+	int						dir;
+	int						hp;
+	int						armor;
+	int						ammo[4];
+	int						maxammo[4];
+	int						weapons[8];
+	int						cards[3];
+	t_weapon				currweapon;
+	t_weapon				weapon[EBFG];
+	double					x;
+	double					y;
+	double					z;
+	double					dir_x;
+	double					dir_y;
+	double					plane_x;
+	double					plane_y;
+	double					angle;
+	double					motionx;
+	double					motiony;
+	double					accx;
+	double					accy;
+	double					deccx;
+	double					deccy;
+	double					maxspeedx;
+	double					maxspeedy;
+	double					movespeedx;
+	double					movespeedy;
+	double					rotspeed;
+	double					mouserotspeed;
+	uint64_t				timerplayer;
+}							t_player;
 
 typedef struct s_hud
 {
@@ -858,13 +858,13 @@ void						menuoptions(t_vars *v);
 
 // Controls
 
-void					move(t_vars *v);
-void					moveplayerx(t_vars *v, int d);
-void					moveplayery(t_vars *v, int d);
-void					rotatecamx(t_vars *v, int d, double speed);
-void					rotatecamy(t_vars *v, int d, double speed, int mul);
-t_map					*set_pos(t_vars *v, t_point2 k, int d);
-void					open_door(t_vars *v);
+void						move(t_vars *v);
+void						moveplayerx(t_vars *v, int d);
+void						moveplayery(t_vars *v, int d);
+void						rotatecamx(t_vars *v, int d, double speed);
+void						rotatecamy(t_vars *v, int d, double speed, int mul);
+t_map						*set_pos(t_vars *v, t_point2 k, int d);
+void						open_door(t_vars *v);
 
 // Rendering
 
@@ -933,10 +933,17 @@ int							maintitleanim(t_vars *v);
 void						melting(t_vars *v, bool *done, int x);
 
 /* FUNCTIONS */
-void	draw_square(t_v2f pos, float size, int color, t_vars *v)
+char	*dupspace(char *s)
 ;
-void	draw_rotated_img(t_imga *img, t_v2f pos, float size, t_vars *v,
-		float angle);
+char						*skip_whitespaces(t_vars *v, int fd, int *i);
+void						calculate_mapsize_checking(char *line, t_vars *v,
+								int fd, int i);
+bool						is_there_unclosed_doors(char **map, t_vars *v);
+
+void						draw_square(t_v2f pos, float size, int color,
+								t_vars *v);
+void						draw_rotated_img(t_imga *img, t_v2f pos, float size,
+								t_vars *v, float angle);
 void						draw_scaled_img(t_imga *img, t_v2f pos, float size,
 								t_vars *v);
 ;
@@ -960,9 +967,6 @@ void						cerr(int i, int j);
 void						store_map(t_vars *v);
 void						s(void);
 void						store_map(t_vars *v);
-void						calculate_mapsize_checking(char *line, t_vars *v,
-								int fd, int i);
-char						*skip_whitespaces(t_vars *v, int fd, int *i);
 
 bool						is_char_valid(char c);
 bool						is_player_char(char c);
@@ -992,8 +996,6 @@ bool						is_valid_int(const char *s);
 bool						is_valid_int(const char *s);
 void						parsing(int ac, char *filename, t_vars *v);
 bool						isnt_cub_ended(const char *s);
-void						parse_ids(t_vars *v, int fd, size_t *i);
-void						parse_map(t_vars *v, int fd, int i);
 
 void						lerr(size_t i, const char *s);
 size_t						tab_len(char **tab);

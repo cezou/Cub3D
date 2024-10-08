@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+         #
+#    By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 11:28:17 by pmagnero          #+#    #+#              #
-#    Updated: 2024/10/05 12:30:22 by pmagnero         ###   ########.fr        #
+#    Updated: 2024/10/08 17:31:05 by cviegas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -120,6 +120,7 @@ SRCS =	srcs/cub3D.c \
 		srcs/parsing/map.c \
 		srcs/parsing/map_utils.c \
 		srcs/parsing/print_utils.c \
+		srcs/parsing/doors.c \
 		srcs/parsing/map_floodfill.c \
 		srcs/render/minimap/minimap.c \
 		srcs/render/minimap/utils.c

@@ -18,8 +18,8 @@
 /// @param dest Destination image
 void	scale_img(t_point p, t_imga *src, t_imga *dest)
 {
-	int		tx;
-	int		ty;
+	int	tx;
+	int	ty;
 
 	p.y = -1;
 	while (++p.y < dest->height)
@@ -40,4 +40,24 @@ void	scale_img(t_point p, t_imga *src, t_imga *dest)
 	}
 	dest->ratiox = (double)(src->width) / (double)(dest->width);
 	dest->ratioy = (double)(src->height) / (double)(dest->height);
+}
+
+char	*dupspace(char *s)
+{
+	size_t	i;
+	char	*dup;
+
+	dup = malloc(sizeof(char) * (ft_strlen(s) + 2));
+	if (!dup)
+		return (NULL);
+	i = 0;
+	while (s[i])
+	{
+		dup[i] = s[i];
+		i++;
+	}
+	dup[i++] = ' ';
+	dup[i] = 0;
+	free(s);
+	return (dup);
 }

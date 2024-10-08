@@ -20,6 +20,7 @@ void	draw_scaled_img(t_imga *img, t_v2f pos, float size, t_vars *v)
 	int		src_y;
 	int		color;
 
+	v->tmp[1] = v->img[EBUFF];
 	x = 0;
 	while (x < size)
 	{
@@ -28,11 +29,11 @@ void	draw_scaled_img(t_imga *img, t_v2f pos, float size, t_vars *v)
 		{
 			src_x = (int)(x * (float)img->width / size);
 			src_y = (int)(y * (float)img->height / size);
-			color = *(int *)(img->addr + (src_y * img->len + src_x * (img->bpp
-							/ 8)));
+			color = getcolorpix(v, img->addr, (src_y * img->len + src_x
+						* (img->bpp / 8)));
 			if (color != 0x00FFFF)
-				img_pix_put(&v->img[EBUFF], (t_point){pos[0] + x, pos[1] + y, 0,
-					color}, v);
+				add_pix(v, (t_point){pos[0] + x, pos[1] + y, 0, color},
+					(t_point2){0}, (t_point){1, 1, 1, 1});
 			y++;
 		}
 		x++;
@@ -48,13 +49,16 @@ void	draw_square(t_v2f pos, float size, int color, t_vars *v)
 	size_t	x;
 	int		y;
 
+	v->tmp[1] = v->img[EBUFF];
 	x = 0;
+	if (v->game.pause)
+		color = color & 0x00FFFF;
 	while (x < size)
 	{
 		y = -1;
 		while (++y < size)
-			img_pix_put(&v->img[EBUFF], (t_point){pos[0] + x, pos[1] + y, 0,
-				color}, v);
+			add_pix(v, (t_point){pos[0] + x, pos[1] + y, 0, color},
+				(t_point2){0}, (t_point){1, 1, 1, 1});
 		x++;
 	}
 }

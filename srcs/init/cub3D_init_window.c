@@ -12,7 +12,7 @@
 
 #include "../../includes/cub3D.h"
 
-void	initmainimage(t_vars *v)
+static void	initmainimage(t_vars *v)
 {
 	v->screen.gamew = v->screen.resw;
 	v->screen.gameh = v->screen.resh - v->screen.resh / 5;
@@ -31,6 +31,13 @@ void	initmainimage(t_vars *v)
 	v->img[COMP_N].animnb = 0;
 }
 
+static bool	is_bad_res(t_vars *v)
+{
+	return (v->screen.resw > INT_MAX || v->screen.resw < INT_MIN
+		|| v->screen.resh > INT_MAX || v->screen.resh < INT_MIN
+		|| v->screen.resw <= 0 || v->screen.resh <= 0);
+}
+
 void	initwindow(t_vars *v, int argc, char **argv)
 {
 	mlx_get_screen_size(v->mlx, &v->screen.screenw, &v->screen.screenh);
@@ -38,16 +45,15 @@ void	initwindow(t_vars *v, int argc, char **argv)
 	v->screen.screenh -= TOOLBAR_LINUX_H;
 	v->screen.resw = v->screen.screenw;
 	v->screen.resh = v->screen.screenh;
-	if (argc > 3 && argc < 5)
+	if (argc == 4)
 	{
 		v->screen.resw = ft_atol(argv[2]);
 		v->screen.resh = ft_atol(argv[3]);
-		if (v->screen.resw > INT_MAX || v->screen.resw < INT_MIN
-			|| v->screen.resw > v->screen.screenw || v->screen.resw <= 0
-			|| ft_strlen(argv[4]) > 10 || v->screen.resh > INT_MAX
-			|| v->screen.resh < INT_MIN || v->screen.resh > v->screen.screenh
-			|| v->screen.resh <= 0)
+		if (is_bad_res(v))
 			exit((prterr(v, ERRRES, 1, 0), 1));
+		if (v->screen.resw > v->screen.screenw
+			|| v->screen.resh > v->screen.screenh)
+			exit((prterr(v, "Resolution is bigger than your screen", 1, 0), 1));
 	}
 	initmainimage(v);
 	v->screen.win = mlx_new_window(v->mlx, (int)v->screen.resw,

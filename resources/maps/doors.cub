@@ -1,0 +1,12 @@
+NO ./resources/textures/Stone1L.xpm
+SO ./resources/textures/SnowbrickL.xpm
+
+WE ./resources/textures/BookshelfL.xpm
+EA ./resources/textures/MultibrickL.xpm
+
+C 255,100,100
+F 100,255,100
+
+111111111111111111111111
+1E1DDDDDDDDDDDDDDDDDDDD1
+11111111111111111111111

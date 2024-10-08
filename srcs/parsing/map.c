@@ -6,7 +6,7 @@
 /*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 17:22:37 by cviegas           #+#    #+#             */
-/*   Updated: 2024/09/18 21:53:13 by cviegas          ###   ########.fr       */
+/*   Updated: 2024/10/08 18:46:45 by cviegas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*skip_whitespaces(t_vars *v, int fd, int *i)
 	return (NULL);
 }
 
-bool	check_line(char *line, t_vars *v, size_t ind)
+static bool	check_line(char *line, t_vars *v, size_t ind)
 {
 	int	i;
 
@@ -82,17 +82,16 @@ void	store_map(t_vars *v)
 		(perr("Malloc Failed"), clean_exit(v->infos.map, fd, v, 0));
 	i = -1;
 	while (++i < (int)v->infos.map_index - 1)
-	{
-		v->infos.map[0] = get_next_line(fd);
-		free(v->infos.map[0]);
-	}
+		(v->infos.map[0] = get_next_line(fd), free(v->infos.map[0]));
 	i = -1;
 	while (++i < (int)v->infos.map_height)
 	{
 		v->infos.map[i] = get_next_line(fd);
 		if (!v->infos.map[i])
 			break ;
-		v->infos.map[i][ft_strlen(v->infos.map[i]) - 1] = 0;
+		if (v->infos.map[i][ft_strlen(v->infos.map[i]) - 1] == '\n')
+			v->infos.map[i][ft_strlen(v->infos.map[i]) - 1] = 0;
 	}
+	v->infos.map[i - 1] = dupspace(v->infos.map[i - 1]);
 	(close(fd), v->infos.map[i] = 0);
 }
