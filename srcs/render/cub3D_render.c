@@ -41,7 +41,7 @@ void	init_random_melting_array(t_vars *v)
 
 	v->tmp[0] = v->img[COMP_N];
 	v->tmp[1] = v->img[EBUFF];
-	w = v->tmp[0].width / 3;
+	w = v->tmp[0].width / 5;
 	i = 0;
 	v->rand = (int *)malloc(sizeof(int) * w);
 	if (!v->rand)
@@ -74,13 +74,13 @@ void	melting(t_vars *v, bool *done, int x)
 	while (++p.x < v->tmp[0].width)
 	{
 		p.y = -1;
-		x = p.x / 3;
-		if (x >= v->tmp[0].width / 3)
-			x = v->tmp[0].width / 3 - 1;
+		x = p.x / 5;
+		if (x >= v->tmp[0].width / 5)
+			x = v->tmp[0].width / 5 - 1;
 		while (++p.y < v->tmp[0].height)
 		{
 			d = p.y + v->rand[x] * 20;
-			if (p.y == v->tmp[0].height - 1 && p.x % 3 == 2)
+			if (p.y == v->tmp[0].height - 1 && p.x % 5 == 4)
 				v->rand[x] += 1;
 			if (d >= v->tmp[0].height - 1)
 				continue ;
@@ -103,7 +103,7 @@ int	render(t_vars *v)
 		v->game.fps = 30;
 	if (!v->screen.win || v->game.won > 0 || !v->game.start
 		|| timestamp_in_ms(v) - v->game.updated_at < (uint64_t)(1000
-			/ v->game.fps))
+		/ v->game.fps))
 		return (1);
 	v->game.updated_at = timestamp_in_ms(v);
 	if (v->game.start > 1 && ACTIVATE_SOUND
@@ -130,6 +130,7 @@ int	render(t_vars *v)
 		rendermap(v);
 	update_animations(v);
 	mlx_put_image_to_window(v->mlx, v->screen.win, v->img[EBUFF].img, 0, 0);
+	v->player.attack = 0;
 	v->game.oldtime = v->game.time;
 	v->game.time = timestamp_in_ms(v);
 	v->game.frametime = (v->game.time - v->game.oldtime) / 1000.0;

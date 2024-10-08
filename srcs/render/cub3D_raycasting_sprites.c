@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/02 14:45:47 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/08 18:44:05 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,18 +97,17 @@ void	sort_sprites(t_vars *v, int i, int sort)
 /// @param v Vars
 /// @param sp Sprite struct containing calcul datas 
 /// @param p The actual sprite to draw
-void	draw_sprite(t_vars *v, t_sprite_data *sp, t_sprite g)
+void	draw_sprite(t_vars *v, t_sprite_data *sp, t_sprite *g, t_point p)
 {
 	int		tx;
 	int		ty;
-	t_point	p;
 
-	p = (t_point){0};
 	p.x = sp->drawstartx - 1;
+	hitguard(v, sp, g, p.x);
 	while (++p.x < sp->drawendx)
 	{
 		tx = (int)(256 * (p.x - (sp->spritescreenx - sp->spritewidth / 2))
-				* 64 / sp->spritewidth) / 256 + g.animoff;
+				* 64 / sp->spritewidth) / 256 + g->animoff;
 		p.y = sp->drawstarty - 1;
 		if (sp->transformy > 0 && p.x > 0 && p.x < v->screen.resw
 			&& sp->transformy < v->ray.zbuffer[p.x])
@@ -139,6 +138,6 @@ void	draw_sprites(t_vars *v)
 		v->tmp[0] = v->img[v->sprites[i].img_i];
 		transform_sprite(v, &v->sp, v->sprites[i]);
 		set_sprite_boundaries(v, &v->sp, v->sprites[i]);
-		draw_sprite(v, &v->sp, v->sprites[i]);
+		draw_sprite(v, &v->sp, &v->sprites[i], (t_point){0});
 	}
 }

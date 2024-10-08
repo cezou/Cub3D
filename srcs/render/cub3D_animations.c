@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/05 18:22:29 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/08 18:29:03 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,18 @@ void	update_sprites_animations(t_vars *v)
 			v->sprites[i].animoff = 0;
 		else if (v->sprites[i].isguard && v->sprites[i].img_i == EGUARDDEATH
 			&& v->sprites[i].animoff >= v->img[v->sprites[i].img_i].width
-			- v->img[v->sprites[i].img_i].animx)
+			- v->img[v->sprites[i].img_i].animx && v->sprites[i].hit)
 		{
 			v->sprites[i].stop = 1;
 			v->sprites[i].animoff = v->img[v->sprites[i].img_i].width
 				- v->img[v->sprites[i].img_i].animx;
+			if (v->sprites[i].hp > 0)
+			{
+				v->sprites[i].stop = 0;
+				v->sprites[i].animoff = 0;
+				v->sprites[i].hit = 0;
+				v->sprites[i].img_i = EGUARDW;
+			}
 		}
 	}
 }
@@ -83,7 +90,7 @@ void	update_player_animations(t_vars *v)
 	{
 		v->player.animoff = 0;
 		v->player.pattack = 0;
-		v->ray.hitguard = 0;
+		v->ray.hitguard = 0; // Shots per minute
 	}
 }
 

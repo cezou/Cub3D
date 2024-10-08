@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:58:10 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/01 15:07:50 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/08 19:44:34 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,3 +22,16 @@ void	dda_utils(t_vars *v)
 	if (v->ray.img.id == EDOOR)
 		check_door(v);
 }
+
+// void	findtangent(t_vars *v, t_sprite sp)
+// {
+// 	// find tangent equation
+// 	double	x;
+// 	double	y;
+// 	double	m;
+
+// 	m = -1 / (sp.y - v->player.y) / (sp.x - v->player.x);
+// 	y = m * (x - sp.x) + sp.y;
+
+// 	// Intersection between ray and tangent
+// }

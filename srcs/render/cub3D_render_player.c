@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/05 18:50:29 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/08 19:44:11 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	render_player(t_vars *v, t_point c)
 	t_point	p;
 
 	v->tmp[0] = v->player.currweapon.img;
-	// printf("%d\n", v->player.currweapon.img.id);
 	c.z = v->player.animoff + v->player.currweapon.img.animx;
 	c.color = v->tmp[0].height;
 	p.x = v->player.animoff - 1;

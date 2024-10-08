@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:58:10 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/01 12:32:31 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/08 19:44:49 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,6 @@ int	hashit(t_vars *v, t_map *tmp, int i)
 		v->ray.hit = tmp;
 		return (1);
 	}
-	else if (tmp->val == 'G' && v->player.pattack && !v->ray.hitguard
-		&& v->ray.x == v->screen.gamew / 2)
-		return (tmp->val = '0', find_guard(v, tmp->x, tmp->y),
-			v->ray.hitguard = 1, 0);
-	else if (tmp->val == 'G' && v->ray.x == v->screen.gamew / 2)
-		v->game.canhit = 1;
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/07 22:39:04 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/08 19:44:05 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,18 +160,15 @@
 #  define FONT2 "-sony-fixed-medium-r-normal--24-230-75-75-c-0-iso8859-1"
 # else
 #  define WSL 1
-#  define FONT1 \
-	"-misc-fixed-medium-r-semicondensed\
+#  define FONT1 "-misc-fixed-medium-r-semicondensed\
 --13-120-75-75-c-60-iso8859-1"
-#  define FONT2 \
-	"-misc-fixed-medium-r-semicondensed\
+#  define FONT2 "-misc-fixed-medium-r-semicondensed\
 --13-120-75-75-c-60-iso8859-1"
 # endif
 // # define FONT2 "-sun-open look glyph-----19-190-75-75-p-154-sunolglyph-1"
 
 // Mr. Potato-Head by Joan Stark
-# define POTATO \
-	"\
+# define POTATO "\
 \t\t\t\t\t\t\t              .-\"'\"-.\n\
 \t\t\t\t\t\t\t             |       |  \n\
 \t\t\t\t\t\t\t           (`-._____.-')\n\
@@ -191,8 +188,7 @@
 \t\t\t\t\t\t\t\\|||    (`.___.')-(`.___.')    |||/ \n\
 \t\t\t\t\t\t\t '\"'     `-----'   `-----'     '\"' \n"
 
-# define CUB3D \
-	"\
+# define CUB3D "\
  _____  _   _ ______  _____ ______ \n\
 /  __ \\| | | || ___ \\|____ ||  _  \\ \n\
 | /  \\/| | | || |_/ /    / /| | | |\n\
@@ -200,8 +196,7 @@
 | \\__/\\| |_| || |_/ /.___/ /| |/ / \n\
  \\____/ \\___/ \\____/ \\____/ |___/  \n"
 
-# define BONUS \
-	"\
+# define BONUS "\
 \t\t\t\t          )      )         (     \n\
 \t\t\t\t   (   ( /(   ( /(         )\\ )  \n\
 \t\t\t\t ( )\\  )\\())  )\\())    (  (()/(  \n\
@@ -214,36 +209,25 @@
 
 // # define M_PI 3.14
 
-# define SOUND_GENERIC "resources/sounds/kek.mp3"
-# define SOUND_FOOTSTEPWALK \
-	"resources/sounds/Horror\
-/Character/Footsteps_walking.wav"
-# define SOUND_AMBIENT \
-	"resources/sounds/Horror\
-/Ambient/Crying_moaning_ambience_2.wav"
-# define SOUND_BABYLAUGH1 \
-	"resources/sounds/Horror\
+# define SOUND_GENERIC "resources/sounds/1-01. Main Menu.mp3"
+# define SOUND_FOOTSTEPWALK "resources/sounds/Horror/\
+Character/Footsteps_walking.wav"
+# define SOUND_AMBIENT "resources/sounds/03.E1M1-AtDoomsGate.mp3"
+# define SOUND_BABYLAUGH1 "resources/sounds/Horror\
 /Monsters & Ghosts/Child laugh_6.wav"
-# define SOUND_BABYLAUGH2 \
-	"resources/sounds/Horror\
+# define SOUND_BABYLAUGH2 "resources/sounds/Horror\
 /Monsters & Ghosts/Child laugh.wav"
-# define SOUND_BABYLAUGH3 \
-	"resources/sounds/Horror\
+# define SOUND_BABYLAUGH3 "resources/sounds/Horror\
 /Monsters & Ghosts/Child laugh_7.wav"
-# define SOUND_BUTTONCLICK1 \
-	"resources/sounds/Horror\
+# define SOUND_BUTTONCLICK1 "resources/sounds/Horror\
 /House & Office/Can_clink_4.wav"
-# define SOUND_BUTTONCLICK2 \
-	"resources/sounds/Horror\
+# define SOUND_BUTTONCLICK2 "resources/sounds/Horror\
 /House & Office/switch3.wav"
-# define SOUND_GUARDINJURED \
-	"resources/sounds/Horror\
+# define SOUND_GUARDINJURED "resources/sounds/Horror\
 /Monsters & Ghosts/Zombie.wav"
-# define SOUND_GUARDDEATH \
-	"resources/sounds/Horror\
+# define SOUND_GUARDDEATH "resources/sounds/Horror\
 /Monsters & Ghosts/Zombie_8.wav"
-# define SOUND_ATTACK \
-	"resources/sounds/Horror\
+# define SOUND_ATTACK "resources/sounds/Horror\
 /Monsters & Ghosts/Injured.wav"
 # define SOUND_CREDITS "resources/sounds/musics/wav/Ambient 2.wav"
 # define SOUND_GAMEOVER "resources/sounds/musics/wav/Fx 3.wav"
@@ -478,6 +462,7 @@ typedef struct s_ray
 	int						dy;
 	int						dty;
 	int						ty0;
+	int						hitx;
 	t_map					*hit;
 	t_imga					img;
 	t_door					door;
@@ -558,6 +543,7 @@ typedef struct s_weapon
 	int					typeammo;
 	int					dmg;
 	int					idsound;
+	double				range;
 	t_imga				img;
 }						t_weapon;
 
@@ -565,6 +551,7 @@ typedef struct s_player
 {
 	t_map				*player;
 	int					pattack;
+	int					attack;
 	int					animp;
 	int					animoff;
 	int					moving;
@@ -621,11 +608,12 @@ typedef struct s_hud
 	uint64_t				time;
 }							t_hud;
 
-typedef struct s_sprtie
+typedef struct s_sprite
 {
 	double					x;
 	double					y;
 	int						hp;
+	int						hit;
 	int						isguard;
 	int						stop;
 	int						img_i;
@@ -795,7 +783,9 @@ float						deg_to_rad(float deg);
 float						rad_to_deg(float rad);
 void						ft_swaps(t_sprite *a, t_sprite *b);
 int							find_door(t_vars *v, int x, int y);
-int							find_guard(t_vars *v, int x, int y);
+int							find_guard(t_vars *v, t_map *tmp);
+void						hitguard(t_vars *v, t_sprite_data *sp, t_sprite *g,
+								int x);
 int							m_random(t_vars *v);
 void						m_clearrandom(t_vars *v);
 void						save_screen_to_buffer(t_imga dest, t_imga src,
@@ -858,13 +848,13 @@ void						menuoptions(t_vars *v);
 
 // Controls
 
-void					move(t_vars *v);
-void					moveplayerx(t_vars *v, int d);
-void					moveplayery(t_vars *v, int d);
-void					rotatecamx(t_vars *v, int d, double speed);
-void					rotatecamy(t_vars *v, int d, double speed, int mul);
-t_map					*set_pos(t_vars *v, t_point2 k, int d);
-void					open_door(t_vars *v);
+void						move(t_vars *v);
+void						moveplayerx(t_vars *v, int d);
+void						moveplayery(t_vars *v, int d);
+void						rotatecamx(t_vars *v, int d, double speed);
+void						rotatecamy(t_vars *v, int d, double speed, int mul);
+t_map						*set_pos(t_vars *v, t_point2 k, t_map *m, int d);
+void						open_door(t_vars *v);
 
 // Rendering
 
@@ -884,7 +874,7 @@ void						draw_floor_ceiling(t_vars *v);
 
 void						draw_sprites(t_vars *v);
 void						draw_sprite(t_vars *v, t_sprite_data *sp,
-								t_sprite g);
+								t_sprite *g, t_point p);
 void						transform_sprite(t_vars *v, t_sprite_data *sp,
 								t_sprite g);
 void						set_sprite_boundaries(t_vars *v, t_sprite_data *sp,
@@ -933,10 +923,10 @@ int							maintitleanim(t_vars *v);
 void						melting(t_vars *v, bool *done, int x);
 
 /* FUNCTIONS */
-void	draw_square(t_v2f pos, float size, int color, t_vars *v)
-;
-void	draw_rotated_img(t_imga *img, t_v2f pos, float size, t_vars *v,
-		float angle);
+void						draw_square(t_v2f pos, float size, int color,
+								t_vars *v);
+void						draw_rotated_img(t_imga *img, t_v2f pos, float size,
+								t_vars *v, float angle);
 void						draw_scaled_img(t_imga *img, t_v2f pos, float size,
 								t_vars *v);
 ;

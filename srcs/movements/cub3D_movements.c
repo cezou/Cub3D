@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 18:24:52 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/05 12:16:39 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/08 17:26:01 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	moveplayery(t_vars *v, int d)
 	}
 	k.z = (int)k.x;
 	k.t = (int)k.y;
-	v->player.player = set_pos(v, k, 0);
+	v->player.player = set_pos(v, k, v->player.player, 0);
 }
 
 /// @brief Move the player on the x axis if the key pressed are A/D
@@ -115,7 +115,7 @@ void	moveplayerx(t_vars *v, int d)
 	}
 	k.z = (int)k.x;
 	k.t = (int)k.y;
-	v->player.player = set_pos(v, k, 0);
+	v->player.player = set_pos(v, k, v->player.player, 0);
 }
 
 /// @brief Action to do when a movement key is pressed

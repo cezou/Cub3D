@@ -17,6 +17,7 @@
 void	attack(t_vars *v)
 {
 	v->player.pattack = 1;
+	v->player.attack = 1;
 	v->hud.refreshammo = 1;
 	v->hud.refreshammun = 1;
 	if (v->player.currweapon.typeammo != -1)
