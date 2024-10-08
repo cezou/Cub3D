@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: borgir <borgir@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 17:22:43 by cviegas           #+#    #+#             */
-/*   Updated: 2024/09/27 22:43:47 by borgir           ###   ########.fr       */
+/*   Updated: 2024/10/08 17:30:35 by cviegas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
 
-void	parse_ids(t_vars *v, int fd, size_t *i)
+static void	parse_ids(t_vars *v, int fd, size_t *i)
 {
 	char	*line;
 	char	**l;
@@ -41,11 +41,13 @@ void	parse_ids(t_vars *v, int fd, size_t *i)
 	(lerr(*i, "There are values missing"), clean_exit(l, fd, v, 0));
 }
 
-void	parse_map(t_vars *v, int fd, int i)
+static void	parse_map(t_vars *v, int fd, int i)
 {
 	calculate_mapsize_checking(skip_whitespaces(v, fd, &i), v, fd, i);
 	store_map(v);
 	if (!is_map_closed(v->infos.map, v->infos.map_index))
+		clean_exit(v->infos.map, INT_MAX, v, 1);
+	if (!MANDATORY && is_there_unclosed_doors(v->infos.map, v))
 		clean_exit(v->infos.map, INT_MAX, v, 1);
 }
 

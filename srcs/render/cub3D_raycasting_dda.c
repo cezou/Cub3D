@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:58:10 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/08 19:44:49 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/08 19:48:38 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	set_dda(t_vars *v)
 /// @param v Vars
 /// @param x X coordinate
 /// @param y Y coordinate
-/// @param d 
+/// @param d
 /// @return 0 did not hit a wall/door, 1 hit a wall/door
 int	hashit(t_vars *v, t_map *tmp, int i)
 {
@@ -106,8 +106,8 @@ void	check_door(t_vars *v)
 int	door_extend_ray(t_vars *v, t_point p, int *t)
 {
 	v->tmp[0] = v->ray.img;
-	v->ray.lim = ((v->tmp[0].height - 1) * v->tmp[0].len)
-		+ ((v->tmp[0].width - 1) * 4);
+	v->ray.lim = ((v->tmp[0].height - 1) * v->tmp[0].len) + ((v->tmp[0].width
+				- 1) * 4);
 	if (v->ray.hit->val == 'D')
 	{
 		t[0] -= v->ray.img.width - v->ray.door.xdelta;

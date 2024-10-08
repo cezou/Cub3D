@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/08 19:44:05 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/08 19:48:32 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,7 +282,7 @@ typedef enum s_door_state
 	ECLOSE,
 	EOPENING,
 	ECLOSING
-}						t_door_state;
+}							t_door_state;
 
 typedef enum s_ammo
 {
@@ -290,7 +290,7 @@ typedef enum s_ammo
 	ESHELL,
 	EROCK,
 	ECELL,
-}						t_ammo;
+}							t_ammo;
 
 typedef enum s_weapons
 {
@@ -302,7 +302,7 @@ typedef enum s_weapons
 	EPLASMA,
 	EBFG,
 	ECHAINSAW
-}						t_weapons;
+}							t_weapons;
 
 typedef enum s_components
 {
@@ -526,14 +526,14 @@ typedef struct s_mouse
 
 typedef struct s_sound
 {
-	ma_result			result;
-	ma_engine			engine;
-	ma_sound			sound[SOUND_NB];
-	ma_context			context;
-	ma_device_config	deviceconfig;
-	float				volume;
-	int					init;
-}						t_sound;
+	ma_result				result;
+	ma_engine				engine;
+	ma_sound				sound[SOUND_NB];
+	ma_context				context;
+	ma_device_config		deviceconfig;
+	float					volume;
+	int						init;
+}							t_sound;
 
 typedef struct s_weapon
 {
@@ -923,6 +923,13 @@ int							maintitleanim(t_vars *v);
 void						melting(t_vars *v, bool *done, int x);
 
 /* FUNCTIONS */
+char	*dupspace(char *s)
+;
+char						*skip_whitespaces(t_vars *v, int fd, int *i);
+void						calculate_mapsize_checking(char *line, t_vars *v,
+								int fd, int i);
+bool						is_there_unclosed_doors(char **map, t_vars *v);
+
 void						draw_square(t_v2f pos, float size, int color,
 								t_vars *v);
 void						draw_rotated_img(t_imga *img, t_v2f pos, float size,
@@ -950,9 +957,6 @@ void						cerr(int i, int j);
 void						store_map(t_vars *v);
 void						s(void);
 void						store_map(t_vars *v);
-void						calculate_mapsize_checking(char *line, t_vars *v,
-								int fd, int i);
-char						*skip_whitespaces(t_vars *v, int fd, int *i);
 
 bool						is_char_valid(char c);
 bool						is_player_char(char c);
@@ -982,8 +986,6 @@ bool						is_valid_int(const char *s);
 bool						is_valid_int(const char *s);
 void						parsing(int ac, char *filename, t_vars *v);
 bool						isnt_cub_ended(const char *s);
-void						parse_ids(t_vars *v, int fd, size_t *i);
-void						parse_map(t_vars *v, int fd, int i);
 
 void						lerr(size_t i, const char *s);
 size_t						tab_len(char **tab);

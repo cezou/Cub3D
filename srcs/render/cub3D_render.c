@@ -126,7 +126,7 @@ int	render(t_vars *v)
 	render_player(v, (t_point){0});
 	rendermenu(v);
 	renderhud(v, v->img[EBUFF]);
-	if (!v->game.god && !v->game.pause)
+	if (!v->game.god)
 		rendermap(v);
 	update_animations(v);
 	mlx_put_image_to_window(v->mlx, v->screen.win, v->img[EBUFF].img, 0, 0);

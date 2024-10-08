@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D_raycasting.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/02 14:49:02 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/08 18:01:38 by cviegas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ void	init_raycasting_info(int x, t_vars *v)
 void	calculate_line_height(t_vars *v)
 {
 	v->ray.line_height = (int)(v->screen.gameh / v->ray.wall_dist);
-	v->ray.draw_start = -(v->ray.line_height) / 2
-		+ v->screen.gameh / 2 + v->ray.pitch + (v->player.z / v->ray.wall_dist);
+	v->ray.draw_start = -(v->ray.line_height) / 2 + v->screen.gameh / 2
+		+ v->ray.pitch + (v->player.z / v->ray.wall_dist);
 	if (v->ray.draw_start < 0)
 		v->ray.draw_start = 0;
-	v->ray.draw_end = v->ray.line_height / 2
-		+ v->screen.gameh / 2 + v->ray.pitch + (v->player.z / v->ray.wall_dist);
+	v->ray.draw_end = v->ray.line_height / 2 + v->screen.gameh / 2
+		+ v->ray.pitch + (v->player.z / v->ray.wall_dist);
 	if (v->ray.draw_end >= v->screen.gameh)
 		v->ray.draw_end = v->screen.gameh - 1;
 	if (v->ray.side == 0)
@@ -83,13 +83,13 @@ void	update_texture_pixels(t_vars *v, t_point p, int *t)
 	t[0] = door_extend_ray(v, p, t);
 	if (t[0] < 0)
 		return ;
-	if ((v->ray.side == 0 && v->ray.dir_x > 0)
-		|| (v->ray.side == 1 && v->ray.dir_y < 0))
+	if ((v->ray.side == 0 && v->ray.dir_x > 0) || (v->ray.side == 1
+			&& v->ray.dir_y < 0))
 		t[0] = v->ray.img.width - t[0] - 1;
 	v->ray.step = 1.0 * v->ray.img.width / v->ray.line_height;
-	v->ray.pos = (v->ray.draw_start - v->ray.pitch
-			- (v->player.z / v->ray.wall_dist)
-			- v->screen.gameh / 2 + v->ray.line_height / 2) * v->ray.step;
+	v->ray.pos = (v->ray.draw_start - v->ray.pitch - (v->player.z
+				/ v->ray.wall_dist) - v->screen.gameh / 2 + v->ray.line_height
+			/ 2) * v->ray.step;
 	p.y = v->ray.draw_start - 1;
 	while (++p.y < v->ray.draw_end)
 	{
@@ -111,10 +111,10 @@ void	update_texture_pixels(t_vars *v, t_point p, int *t)
 /// @note We then draw the walls and doors with the raycasting algorithm
 /// @note We draw the sprites
 /// @param v Vars
-/// @return 
+/// @return
 int	raycasting(t_vars *v, t_imga dest)
 {
-	int		t[2];
+	int	t[2];
 
 	v->tmp[1] = dest;
 	v->ray.x = -1;
