@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 18:24:52 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/08 17:26:01 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/09 14:55:42 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	moveplayery(t_vars *v, int d)
 	t_point2	k;
 
 	k = (t_point2){0.0, 0.0, 0, 0};
-	if (d == NORTH || v->keys[XK_w])
+	if (d == NORTH || v->keys[XK_z])
 	{
 		k.x = v->player.x + v->player.dir_x * v->player.movespeedy;
 		k.y = v->player.y + v->player.dir_y * v->player.movespeedy;
@@ -99,7 +99,7 @@ void	moveplayerx(t_vars *v, int d)
 
 	k = (t_point2){0.0, 0.0, 0, 0};
 	p = (t_point2){0.0, 0.0, 0, 0};
-	if (d == WEST || v->keys[XK_a])
+	if (d == WEST || v->keys[XK_q])
 	{
 		speed = v->player.movespeedx * v->game.frametime;
 		p = get_90_angle(-1, v->player.dir_x, v->player.dir_y);
@@ -126,8 +126,8 @@ void	move(t_vars *v)
 	if (v->game.pause)
 		return ;
 	printmap2(v);
-	if (ACTIVATE_SOUND && (v->keys[XK_w] || v->keys[XK_s]
-			|| v->keys[XK_a] || v->keys[XK_d]))
+	if (ACTIVATE_SOUND && (v->keys[XK_z] || v->keys[XK_s]
+			|| v->keys[XK_q] || v->keys[XK_d]))
 	{
 		ma_sound_set_pitch(&v->sound.sound[1], 1.0);
 		ma_sound_start(&v->sound.sound[1]);
@@ -135,15 +135,11 @@ void	move(t_vars *v)
 	v->game.canhit = 0;
 	rotatecamx(v, -1, v->player.rotspeed * v->game.frametime);
 	rotatecamy(v, -1, v->player.rotspeed * v->game.frametime, 500);
-	if (v->keys[XK_w] || v->keys[XK_s] || v->keys[XK_a] || v->keys[XK_d])
+	if (v->keys[XK_z] || v->keys[XK_s] || v->keys[XK_q] || v->keys[XK_d])
 		v->player.moving = 1;
-	if (v->keys[XK_w] || v->keys[XK_s])
+	if (v->keys[XK_z] || v->keys[XK_s])
 		v->player.movingy = 1;
 	moveplayerx(v, -1);
 	moveplayery(v, -1);
 	open_door(v);
 }
-// if (d == 8)
-// v->player.z = 200;
-// ft_bzero((mlx_clear_window(v->mlx, v->screen.win), v->img[EMAP].addr),
-// 	v->screen.resw * v->screen.resh * (v->img[EMAP].bpp / 8));

@@ -73,9 +73,9 @@ void	menuarrow(t_vars *v, int d)
 {
 	if (v->menu.menu != 3 && (d == XK_Down || d == XK_s))
 		menuarrowdown(v);
-	else if (v->menu.menu != 3 && (d == XK_Up || d == XK_w))
+	else if (v->menu.menu != 3 && (d == XK_Up || d == XK_z))
 		menuarrowup(v);
-	else if (v->menu.menu == 3 && (d == XK_Left || d == XK_a))
+	else if (v->menu.menu == 3 && (d == XK_Left || d == XK_q))
 		menuarrowleft(v);
 	else if (v->menu.menu == 3 && (d == XK_Right || d == XK_d))
 		menuarrowright(v);

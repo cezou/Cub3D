@@ -36,7 +36,7 @@ void	attack(t_vars *v)
 /// @param v Vars
 void	handle_movement(t_vars *v)
 {
-	if (is_pressed(XK_w, v) || is_pressed(XK_s, v) || is_pressed(XK_a, v)
+	if (is_pressed(XK_z, v) || is_pressed(XK_s, v) || is_pressed(XK_q, v)
 		|| is_pressed(XK_d, v) || is_pressed(XK_Left, v) || is_pressed(XK_Right,
 			v) || is_pressed(XK_Up, v) || is_pressed(XK_Down, v)
 		|| is_pressed(XK_space, v))
@@ -78,12 +78,12 @@ int	keys(int kd, t_vars *v)
 		attack(v);
 	if (v->game.won < 4 && kd == XK_Shift_L && !v->player.injump)
 		v->player.jumping = 1;
-	if (v->game.won < 4 && kd == 38 && v->player.animoff == 0)
+	if (v->game.won < 4 && kd == XK_1 && v->player.animoff == 0)
 	{
 		v->player.currweapon = v->player.weapon[EFIST];
 		v->hud.refreshammo = 1;
 	}
-	if (v->game.won < 4 && kd == 233 && v->player.animoff == 0)
+	if (v->game.won < 4 && kd == XK_2 && v->player.animoff == 0)
 	{
 		v->player.currweapon = v->player.weapon[EGUN];
 		v->hud.refreshammo = 1;

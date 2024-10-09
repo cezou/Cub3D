@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/08 19:44:27 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/09 18:47:18 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	find_guard(t_vars *v, t_map *tmp)
 			v->sprites[i].hp -= v->player.currweapon.dmg;
 			v->sprites[i].hit = 1;
 			v->sprites[i].img_i = EGUARDDEATH;
+			v->sprites[i].state = EDEAD;
 			if (v->sprites[i].hp <= 0)
 			{
 				v->sprites[i].hp = 0;
@@ -48,26 +49,35 @@ int	find_guard(t_vars *v, t_map *tmp)
 /// @param sp Sprite variables
 /// @param g Guard
 /// @param x X
-//printf("HIT %d, x: %f, y: %f, dist: %f\n", g->hp, g->x, g->y, g->dist);
-void	hitguard(t_vars *v, t_sprite_data *sp, t_sprite *g, int x)
+// printf("HIT %d, x: %f, y: %f, dist: %f, state: %d\n", g->hp, g->x, g->y, g->dist, g->state);
+void	hitguard(t_vars *v, t_sprite_data *sp, t_sprite *g)
 {
-	if (v->player.attack && g->isguard && !g->hit && g->hp > 0
-		&& v->screen.gamew / 2 >= x + 1
-		&& v->screen.gamew / 2 <= sp->drawendx
-		&& sp->transformy < v->ray.zbuffer[v->screen.gamew / 2]
-		&& g->dist <= v->player.currweapon.range)
+	if (!g->isguard || g->hit || g->hp <= 0
+		|| v->screen.gamew / 2 < sp->drawstartx
+		|| v->screen.gamew / 2 > sp->drawendx
+		|| v->screen.gameh / 2 < sp->drawstarty
+		|| v->screen.gameh / 2 > sp->drawendy || sp->transformy <= 0
+		|| sp->transformy > v->ray.zbuffer[v->screen.gamew / 2])
+		return ;
+	if (v->player.attack && g->dist <= v->player.currweapon.range)
 	{
 		g->hp -= v->player.currweapon.dmg;
 		g->hit = 1;
+		g->state = EPAIN;
 		g->img_i = EGUARDDEATH;
+		g->timestate = timestamp_in_ms(v);
 		if (g->hp <= 0)
+		{
 			g->hp = 0;
+			g->state = EDEAD;
+		}
 		g->animoff = 0;
 	}
-	else if (g->isguard && !g->hit && g->hp > 0
-		&& v->screen.gamew / 2 >= x + 1
-		&& v->screen.gamew / 2 <= sp->drawendx
-		&& sp->transformy < v->ray.zbuffer[v->screen.gamew / 2]
-		&& g->dist <= v->player.currweapon.range)
-		v->game.canhit = 1;
+	else if (g->dist <= v->player.currweapon.range)
+			v->game.canhit = 1;
+	if (g->dist < 150 && g->state != EPAIN && g->state != EDEAD)
+	{
+		g->img_i = EGUARDW;
+		g->state = ECHASE;
+	}
 }

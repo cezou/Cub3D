@@ -1,0 +1,12 @@
+.vscode/*
+gmon.out
+.normignore
+valgrind*
+objs/*
+objs_b/*
+includes/printf/*.o
+includes/printf/libft/*.o
+includes/printf/libftprintf.a
+includes/printf/libft/libft.a
+cub3D_bonus
+cub3D

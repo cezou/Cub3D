@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/09 12:18:05 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/09 18:47:05 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 # include <stdarg.h>
 # include <stdlib.h>
 # include <unistd.h>
-// # include <string.h>
 # include "mlx_linux/minilibx-linux/mlx.h"
 # include "mlx_linux/minilibx-linux/mlx_int.h"
 # include "printf/ft_printf.h"
 # include <X11/keysym.h>
+# include <X11/extensions/Xfixes.h>
 # include <errno.h>
 # include <math.h>
 # include <stdbool.h>
@@ -275,6 +275,17 @@ typedef enum s_anim
 	EATTACK,
 	ANIM_N
 }							t_anim;
+
+typedef enum s_guard_states
+{
+	EIDLE,
+	EPATROL,
+	ECHASE,
+	EATTACKM,
+	EATTACKR,
+	EPAIN,
+	EDEAD
+}							t_guard_states;
 
 typedef enum s_door_state
 {
@@ -616,14 +627,18 @@ typedef struct s_sprite
 	int						hit;
 	int						isguard;
 	int						stop;
+	int						state;
 	int						img_i;
 	int						xdelta;
 	int						animoff;
+	double					ms;
 	double					vdiv;
 	double					udiv;
 	double					vmove;
 	double					dist;
+	uint64_t				timestate;
 	uint64_t				time;
+	uint64_t				timem;
 }							t_sprite;
 
 typedef struct s_mapv
@@ -786,8 +801,7 @@ float						rad_to_deg(float rad);
 void						ft_swaps(t_sprite *a, t_sprite *b);
 int							find_door(t_vars *v, int x, int y);
 int							find_guard(t_vars *v, t_map *tmp);
-void						hitguard(t_vars *v, t_sprite_data *sp, t_sprite *g,
-								int x);
+void						hitguard(t_vars *v, t_sprite_data *sp, t_sprite *g);
 int							m_random(t_vars *v);
 void						m_clearrandom(t_vars *v);
 void						save_screen_to_buffer(t_imga dest, t_imga src,

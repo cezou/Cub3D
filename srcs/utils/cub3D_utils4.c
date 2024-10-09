@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
-#include <X11/extensions/Xfixes.h>
 
 /// @brief Scale a src image to the dimension of the dest image
 /// @param p {x, y, z, color} => {0}

@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/09 12:11:36 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/09 18:33:30 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ void	init_guard(t_vars *v, int j, t_map *tmp, int i)
 			v->sprites[j].vdiv = 1.0;
 			v->sprites[j].udiv = 1.0;
 			v->sprites[j].isguard = 1;
+			v->sprites[j].ms = 1.8;
 		}
 		tmp = tmp->right;
 	}
