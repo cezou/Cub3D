@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doors.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 17:23:25 by cviegas           #+#    #+#             */
-/*   Updated: 2024/10/08 17:33:08 by cviegas          ###   ########.fr       */
+/*   Updated: 2024/10/09 13:04:10 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,10 @@
 static void	derr(int i, int j, t_vars *v)
 {
 	ft_printf(STDERR,
-				RED "Error\nMap: " RCOLOR LIL_RED "Door at line %d, column "
-					"%d isn't between two walls\n" RCOLOR,
-				v->infos.map_index + i,
-				j);
+		RED "Error\nMap: " RCOLOR LIL_RED "Door at line %d, column "
+		"%d isn't between two walls\n" RCOLOR, v->infos.map_index + i, j);
 }
+
 static bool	is_unclosed_door(int i, int j, char **map)
 {
 	return (map[i][j] == 'D' && !((map[i - 1][j] == '1' && map[i + 1][j] == '1')

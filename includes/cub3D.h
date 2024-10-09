@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/08 19:48:32 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/09 12:18:05 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -665,7 +665,7 @@ typedef struct s_menu
 
 typedef struct s_screen
 {
-	void					*win;
+	t_win_list				*win;
 	long					resw;
 	long					resh;
 	int						screenw;
@@ -736,6 +736,8 @@ typedef struct s_vars
 	t_xvar					*mlx;
 	bool					keys[MAX_KEYS];
 	bool					mouses[MAX_MOUSE];
+	Cursor					cursor;
+	Pixmap					blank;
 	t_imga					*img;
 	t_mouse					mouse;
 	t_map					*exit;
@@ -827,6 +829,7 @@ void						inithud(t_vars *v);
 void						init_player_dir(t_vars *v);
 void						init_random_melting_array(t_vars *v);
 void						initanim(t_vars *v, int index, int b, int animnb);
+void						mouse_hide(t_vars *v);
 
 // Mouse
 

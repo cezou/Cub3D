@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/27 12:44:30 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/09 12:59:27 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,5 @@ void	initwindow(t_vars *v, int argc, char **argv)
 			(int)v->screen.resh, "CUB3D");
 	if (!v->screen.win)
 		exit((prterr(v, ERRMALL, 1, 0), 1));
+	mouse_hide(v);
 }

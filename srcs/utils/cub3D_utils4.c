@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
+#include <X11/extensions/Xfixes.h>
 
 /// @brief Scale a src image to the dimension of the dest image
 /// @param p {x, y, z, color} => {0}
@@ -60,4 +61,13 @@ char	*dupspace(char *s)
 	dup[i] = 0;
 	free(s);
 	return (dup);
+}
+
+/// @brief Fix the fcking MLX
+/// @param xvar Vars
+/// @return 
+void	mouse_hide(t_vars *v)
+{
+	XFixesHideCursor(v->mlx->display, v->mlx->root);
+	XSync(v->mlx->display, True);
 }

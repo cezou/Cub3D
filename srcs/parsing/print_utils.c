@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 21:44:07 by cviegas           #+#    #+#             */
-/*   Updated: 2024/10/08 17:33:22 by cviegas          ###   ########.fr       */
+/*   Updated: 2024/10/09 13:03:15 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	s(void)
 	static int	count = 0;
 	static int	color_index = 0;
 	const char	*colors[] = {"\033[1;31m", "\033[1;32m", "\033[1;33m",
-			"\033[1;34m", "\033[1;35m", "\033[1;36m", "\033[1;37m"};
+		"\033[1;34m", "\033[1;35m", "\033[1;36m", "\033[1;37m"};
 	int			num_colors;
 
 	num_colors = sizeof(colors) / sizeof(colors[0]);
@@ -29,10 +29,8 @@ void	s(void)
 void	cerr(int i, int j)
 {
 	ft_printf(STDERR,
-				RED "Error\nMap: " RCOLOR LIL_RED "Char at line %d, column "
-					"%d (± 1) isn't surrounded by walls\n" RCOLOR,
-				i,
-				j);
+		RED "Error\nMap: " RCOLOR LIL_RED "Char at line %d, column "
+		"%d (± 1) isn't surrounded by walls\n" RCOLOR, i, j);
 }
 
 void	perr(const char *s)

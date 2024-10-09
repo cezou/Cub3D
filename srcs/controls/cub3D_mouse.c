@@ -57,17 +57,25 @@ int	mouse_up(int button, int x, int y, t_vars *p)
 	}
 	return (0);
 }
+		// printf("x: %d y: %d\n", x, y);
+		// // if ()
 
 int	mouse_move(int x, int y, t_vars *p)
 {
 	double	fx;
 	double	fy;
+	int		centerx;
+	int		centery;
 
+	centerx = p->screen.gamew / 2;
+	centery = p->screen.gameh / 2;
 	if (p->game.start > 1 && p->game.god)
 	{
+		if (x == centerx && y == centery)
+			return (0);
 		p->game.canhit = 0;
-		p->mouse.prevx = x - p->screen.gamew / 2;
-		p->mouse.prevy = y - p->screen.gameh / 2;
+		p->mouse.prevx = x - centerx;
+		p->mouse.prevy = y - centery;
 		fx = (double)p->mouse.prevx / (double)p->screen.gamew * p->mouse.sensx;
 		fy = (double)p->mouse.prevy / (double)p->screen.gameh * p->mouse.sensy;
 		if (x < p->mouse.prevx)
@@ -78,8 +86,7 @@ int	mouse_move(int x, int y, t_vars *p)
 			rotatecamy(p, UP, fy * p->player.mouserotspeed, 400);
 		else if (y > p->mouse.prevy)
 			rotatecamy(p, DOWN, fy * p->player.mouserotspeed, 400);
-		mlx_mouse_move(p->mlx, p->screen.win, p->screen.gamew / 2,
-			p->screen.gameh / 2);
+		mlx_mouse_move(p->mlx, p->screen.win, centerx, centery);
 	}
 	return (0);
 }

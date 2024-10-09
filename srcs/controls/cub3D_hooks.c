@@ -59,6 +59,8 @@ void	handle_movement(t_vars *v)
 /// @param v Vars
 void	tooglegod(t_vars *v)
 {
+	if (MANDATORY)
+		return ;
 	if (v->game.god == 0)
 		v->game.god = 1;
 	else if (v->game.god == 1)

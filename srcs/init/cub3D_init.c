@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/08 19:45:22 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/09 12:11:36 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,6 @@ void	init(t_vars *v, int argc, char **argv)
 		v->img[i] = (t_imga){0};
 	(ft_bzero(v->keys, MAX_KEYS), ft_bzero(v->mouses, MAX_MOUSE));
 	initwindow(v, argc, argv);
-	mlx_mouse_hide(v->mlx, v->screen.win);
 	initmodes(v, argc);
 	inittextures(v, 4);
 	v->game.skybox = v->img[ESKYBOX];

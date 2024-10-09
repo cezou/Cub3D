@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 17:22:37 by cviegas           #+#    #+#             */
-/*   Updated: 2024/10/08 18:46:45 by cviegas          ###   ########.fr       */
+/*   Updated: 2024/10/09 13:03:50 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	store_map(t_vars *v)
 		(perr("Malloc Failed"), clean_exit(v->infos.map, fd, v, 0));
 	i = -1;
 	while (++i < (int)v->infos.map_index - 1)
-		(v->infos.map[0] = get_next_line(fd), free(v->infos.map[0]));
+			(v->infos.map[0] = get_next_line(fd), free(v->infos.map[0]));
 	i = -1;
 	while (++i < (int)v->infos.map_height)
 	{
