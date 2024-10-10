@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/09 18:49:15 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/10 16:34:10 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	update_sprites_animations(t_vars *v)
 			v->sprites[i].animoff = 0;
 		else if (v->sprites[i].state == EDEAD
 			&& v->sprites[i].animoff >= v->img[v->sprites[i].img_i].width
-			- v->img[v->sprites[i].img_i].animx && v->sprites[i].hit)
+			- v->img[v->sprites[i].img_i].animx)
 		{
 			v->sprites[i].state = EDEAD;
 			v->sprites[i].stop = 1;
@@ -71,10 +71,22 @@ void	update_sprites_animations(t_vars *v)
 		{
 			v->sprites[i].animoff = 0;
 			v->sprites[i].hit = 0;
+			if (timestamp_in_ms(v) - v->sprites[i].timestate > 250)//p_random(v) < v->sprites[i].painchance && 
+			{
+				v->sprites[i].state = ECHASE;
+				v->sprites[i].img_i = EGUARDW;
+				v->sprites[i].timestate = 0;
+			}
+		}
+		else if (v->sprites[i].state == EATTACKR)
+		{
+			// v->sprites[i].animoff = 0;
+			// v->sprites[i].hit = 0;
 			if (timestamp_in_ms(v) - v->sprites[i].timestate > 250)
 			{
 				v->sprites[i].state = ECHASE;
 				v->sprites[i].img_i = EGUARDW;
+				v->sprites[i].timestate = 0;
 			}
 		}
 	}
@@ -89,6 +101,8 @@ void	update_guard_movement(t_vars *v)
 	int	i;
 
 	i = -1;
+	if (v->game.pause)
+		return ;
 	while (++i < v->game.nb_sprites)
 	{
 		if (!v->sprites[i].isguard)

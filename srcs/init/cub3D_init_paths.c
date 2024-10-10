@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/05 18:41:34 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/10 15:25:00 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	initpathtext(t_vars *v)
 	v->img[EPARMOR].filename = "resources/textures/armor.xpm";
 	v->img[EGUARDW].filename = "resources/textures/general.xpm";
 	v->img[EGUARDDEATH].filename = "resources/textures/generaldeath.xpm";
+	v->img[EGUARDATTR].filename = "resources/textures/generalattackrange.xpm";
 	v->img[ESKYBOX].filename = "resources/textures/skybox.xpm";
 	v->img[EHUDIMG].filename = "resources/textures/HUDempty.xpm";
 	v->img[EMAPBORDER].filename = "resources/textures/MapBorder.xpm";
@@ -77,6 +78,7 @@ void	initguardpathanim(t_vars *v)
 {
 	v->img[EGUARDW].animx = v->img[EGUARDW].width / 4;
 	v->img[EGUARDDEATH].animx = v->img[EGUARDDEATH].width / 4;
+	v->img[EGUARDATTR].animx = v->img[EGUARDATTR].width / 4;
 }
 
 void	initprojectilepathanim(t_vars *v)

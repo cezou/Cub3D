@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/09 18:47:10 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/10 16:02:09 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void	draw_sprite(t_vars *v, t_sprite_data *sp, t_sprite *g, t_point p)
 
 	p.x = sp->drawstartx - 1;
 	hitguard(v, sp, g);
+	guardattack(v, sp, g);
 	while (++p.x < sp->drawendx)
 	{
 		tx = (int)(256 * (p.x - (sp->spritescreenx - sp->spritewidth / 2))

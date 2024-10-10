@@ -6,11 +6,33 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/09 18:33:30 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/10 15:29:34 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
+
+// Commander Keen 		256 (100%) 		100
+// Lost soul 			256 (100%) 		100
+// Boss brain 			255 (99.61%) 	250
+// Imp 					200 (79.30%) 	60
+// Zombieman 			200 (79.30%) 	20
+// Demon 				180 (70.70%) 	150
+// Spectre 				180 (70.70%) 	150
+// Heavy weapon dude 	170 (67.58%) 	70
+// Wolfenstein SS 		170 (67.58%) 	50
+// Shotgun guy 			170 (67.58%) 	30
+// Arachnotron 			128 (50%) 		500
+// Cacodemon 			128 (50%) 		400
+// Pain elemental 		128 (50%) 		400
+// Revenant 			100 (39.84%) 	300
+// Mancubus 			80 (30.86%) 	600
+// Baron of Hell 		50 (16.80%) 	1000
+// Hell knight 			50 (16.80%) 	500
+// Spiderdemon 			40 (12.89%) 	3000
+// Cyberdemon 			20 (5.47%) 		4000
+// Arch-vile 			10 (3.13%) 		700
+// Barrel 				0 (0%) 			20
 
 /// @brief Array of objects
 ///	{x, y, sprite ID, scale factor, vertical position}
@@ -113,6 +135,9 @@ void	init_guard(t_vars *v, int j, t_map *tmp, int i)
 			v->sprites[j].udiv = 1.0;
 			v->sprites[j].isguard = 1;
 			v->sprites[j].ms = 1.8;
+			v->sprites[j].painchance = 40;
+			v->sprites[j].hasmelee = 0;
+			v->sprites[j].hasrange = 1;
 		}
 		tmp = tmp->right;
 	}

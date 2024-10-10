@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/09 18:47:05 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/10 16:35:07 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -328,6 +328,8 @@ typedef enum s_components
 	EDOOR,
 	EGUARDW,
 	EGUARDDEATH,
+	// EGUARDATTM,
+	EGUARDATTR,
 	ESKYBOX,
 	EHUDIMG,
 	ETITLE,
@@ -625,6 +627,10 @@ typedef struct s_sprite
 	double					y;
 	int						hp;
 	int						hit;
+	int						justattack;
+	int						hasrange;
+	int						hasmelee;
+	int						painchance;
 	int						isguard;
 	int						stop;
 	int						state;
@@ -775,6 +781,7 @@ typedef struct s_vars
 	t_imga					tmp[2];
 	int						*rand;
 	int						rndindex;
+	int						prndindex;
 	uint32_t				tex[8][4160];
 }							t_vars;
 
@@ -802,7 +809,9 @@ void						ft_swaps(t_sprite *a, t_sprite *b);
 int							find_door(t_vars *v, int x, int y);
 int							find_guard(t_vars *v, t_map *tmp);
 void						hitguard(t_vars *v, t_sprite_data *sp, t_sprite *g);
+void						guardattack(t_vars *v, t_sprite_data *sp, t_sprite *g);
 int							m_random(t_vars *v);
+int							p_random(t_vars *v);
 void						m_clearrandom(t_vars *v);
 void						save_screen_to_buffer(t_imga dest, t_imga src,
 								size_t offset);

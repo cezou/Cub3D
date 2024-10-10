@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 17:32:16 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/25 18:09:08 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/10 11:08:23 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,19 @@ int	m_random(t_vars *v)
 	return (g_rndtable[v->rndindex]);
 }
 
+/// @brief Return a number from 0 to 255
+/// @param v Vars
+/// @return A number from 0 to 255
+int	p_random(t_vars *v)
+{
+	v->prndindex = (v->prndindex + 1) & 0xff;
+	return (g_rndtable[v->prndindex]);
+}
+
 /// @brief Reset random index
 /// @param v Vars
 void	m_clearrandom(t_vars *v)
 {
 	v->rndindex = 0;
+	v->prndindex = 0;
 }

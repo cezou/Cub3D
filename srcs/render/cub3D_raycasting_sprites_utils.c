@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/09 18:47:18 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/10 16:03:34 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,24 @@ int	find_guard(t_vars *v, t_map *tmp)
 	return (-1);
 }
 
+/// @brief 
+/// @param v 
+/// @param sp 
+/// @param g 
+void	guardattack(t_vars *v, t_sprite_data *sp, t_sprite *g)
+{
+	if (!g->isguard || g->hit || g->hp <= 0
+		|| sp->transformy <= 0
+		|| sp->transformy >= v->ray.zbuffer[v->screen.gamew / 2])
+		return ;
+	if (g->hasrange && g->dist > 10 && g->state == ECHASE)
+	{
+		g->img_i = EGUARDATTR;
+		g->state = EATTACKR;
+		g->timestate = timestamp_in_ms(v);
+	}
+}
+
 /// @brief Check if a guard is hit
 /// @param v Vars
 /// @param sp Sprite variables
@@ -63,20 +81,24 @@ void	hitguard(t_vars *v, t_sprite_data *sp, t_sprite *g)
 	{
 		g->hp -= v->player.currweapon.dmg;
 		g->hit = 1;
-		g->state = EPAIN;
+		g->animoff = 0;
 		g->img_i = EGUARDDEATH;
-		g->timestate = timestamp_in_ms(v);
+		if (p_random(v) >= g->painchance)
+		{
+			g->state = EPAIN;
+			g->timestate = timestamp_in_ms(v);
+		}
 		if (g->hp <= 0)
 		{
 			g->hp = 0;
 			g->state = EDEAD;
 		}
-		g->animoff = 0;
 	}
 	else if (g->dist <= v->player.currweapon.range)
-			v->game.canhit = 1;
+		v->game.canhit = 1;
 	if (g->dist < 150 && g->state != EPAIN && g->state != EDEAD)
 	{
+		g->hit = 0;
 		g->img_i = EGUARDW;
 		g->state = ECHASE;
 	}
