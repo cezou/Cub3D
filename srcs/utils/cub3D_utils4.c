@@ -70,3 +70,14 @@ void	mouse_hide(t_vars *v)
 	XFixesHideCursor(v->mlx->display, v->mlx->root);
 	XSync(v->mlx->display, True);
 }
+
+/// @brief Convert number to digits
+/// @param v 
+/// @param nb 
+void	number_to_digits(t_vars *v, int n, int res[4], int *i)
+{
+	if (n > 9)
+		number_to_digits(v, n / 10, res, i);
+	res[*i] = n % 10;
+	(*i)++;
+}

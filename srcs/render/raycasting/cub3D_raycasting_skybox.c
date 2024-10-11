@@ -6,11 +6,11 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/01 11:29:25 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/11 16:30:04 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3D.h"
+#include "../../../includes/cub3D.h"
 
 /// @brief Set skybox datas
 /// @param v Vars
@@ -53,7 +53,7 @@ static void	surf_rows(t_vars *v, t_point p, int *t)
 		p.z = (t[1] * v->game.skybox.len) + (t[0] * 4);
 		if (p.z < v->ray.lim && p.z >= 0 && p.x >= 0 && p.x < v->screen.gamew
 			&& p.y >= 0)
-			add_pix(v, p, (t_point2){0}, (t_point){0});
+			add_pix(v, p, (t_point3){0}, (t_point){0});
 		cy += v->ray.dty;
 		while (cy > v->ray.dy)
 		{

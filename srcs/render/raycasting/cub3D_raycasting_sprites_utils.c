@@ -6,11 +6,11 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/10 16:03:34 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/11 17:24:48 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3D.h"
+#include "../../../includes/cub3D.h"
 
 /// @brief Find guard in the guard array with its coordinates
 /// @param v Vars
@@ -26,8 +26,8 @@ int	find_guard(t_vars *v, t_map *tmp)
 		if (!v->ray.hitguard && v->sprites[i].isguard
 			&& v->sprites[i].x == tmp->x && v->sprites[i].y == tmp->y)
 		{
-			v->sprites[i].hp -= v->player.currweapon.dmg;
-			v->sprites[i].hit = 1;
+			v->sprites[i].hp -= v->player.currweapon.dmg
+				/ (p_random(v) % 3 + 1);
 			v->sprites[i].img_i = EGUARDDEATH;
 			v->sprites[i].state = EDEAD;
 			if (v->sprites[i].hp <= 0)
@@ -50,15 +50,15 @@ int	find_guard(t_vars *v, t_map *tmp)
 /// @param g 
 void	guardattack(t_vars *v, t_sprite_data *sp, t_sprite *g)
 {
-	if (!g->isguard || g->hit || g->hp <= 0
+	if (!g->isguard || g->hp <= 0
 		|| sp->transformy <= 0
-		|| sp->transformy >= v->ray.zbuffer[v->screen.gamew / 2])
+		|| sp->drawstartx <= 0 || sp->drawstartx >= v->screen.resw
+		|| sp->transformy > v->ray.zbuffer[sp->drawstartx])
 		return ;
-	if (g->hasrange && g->dist > 10 && g->state == ECHASE)
+	if (g->hasrange && !g->justattack && g->dist > 15 && g->state == ECHASE)
 	{
 		g->img_i = EGUARDATTR;
 		g->state = EATTACKR;
-		g->timestate = timestamp_in_ms(v);
 	}
 }
 
@@ -67,20 +67,29 @@ void	guardattack(t_vars *v, t_sprite_data *sp, t_sprite *g)
 /// @param sp Sprite variables
 /// @param g Guard
 /// @param x X
-// printf("HIT %d, x: %f, y: %f, dist: %f, state: %d\n", g->hp, g->x, g->y, g->dist, g->state);
+// printf("HIT %d, x: %f, y: %f, dist: %f, state: %d\n", g->hp, g->x, g->y,
+// 	g->dist, g->state);
 void	hitguard(t_vars *v, t_sprite_data *sp, t_sprite *g)
 {
-	if (!g->isguard || g->hit || g->hp <= 0
-		|| v->screen.gamew / 2 < sp->drawstartx
+	if (!g->isguard || g->hp <= 0 || g->state == EDEAD || g->state == EPAIN
+		|| sp->transformy <= 0)
+		return ;
+	if (sp->drawstartx > 0 && g->dist < 50 && sp->drawstartx < v->screen.resw
+		&& sp->transformy < v->ray.zbuffer[sp->drawstartx])
+	{
+		g->img_i = EGUARDW;
+		g->state = ECHASE;
+	}
+	if (v->screen.gamew / 2 < sp->drawstartx
 		|| v->screen.gamew / 2 > sp->drawendx
 		|| v->screen.gameh / 2 < sp->drawstarty
-		|| v->screen.gameh / 2 > sp->drawendy || sp->transformy <= 0
+		|| v->screen.gameh / 2 > sp->drawendy
 		|| sp->transformy > v->ray.zbuffer[v->screen.gamew / 2])
 		return ;
-	if (v->player.attack && g->dist <= v->player.currweapon.range)
+	if (v->player.attack && g->dist <= v->player.currweapon.range
+		&& g->state != EDEAD)
 	{
-		g->hp -= v->player.currweapon.dmg;
-		g->hit = 1;
+		g->hp -= v->player.currweapon.dmg / (p_random(v) % 5 + 1);
 		g->animoff = 0;
 		g->img_i = EGUARDDEATH;
 		if (p_random(v) >= g->painchance)
@@ -96,10 +105,4 @@ void	hitguard(t_vars *v, t_sprite_data *sp, t_sprite *g)
 	}
 	else if (g->dist <= v->player.currweapon.range)
 		v->game.canhit = 1;
-	if (g->dist < 150 && g->state != EPAIN && g->state != EDEAD)
-	{
-		g->hit = 0;
-		g->img_i = EGUARDW;
-		g->state = ECHASE;
-	}
 }

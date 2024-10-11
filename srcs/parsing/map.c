@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 17:22:37 by cviegas           #+#    #+#             */
-/*   Updated: 2024/10/09 13:03:50 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/11 16:44:23 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,8 @@ void	calculate_mapsize_checking(char *line, t_vars *v, int fd, int i)
 	close(fd);
 }
 
-void	store_map(t_vars *v)
+void	store_map(t_vars *v, int fd, int i)
 {
-	int	fd;
-	int	i;
-
 	fd = open(v->mapv.filename, O_RDONLY);
 	if (fd == -1)
 		(perr("Malloc Failed"), clean_exit(v->infos.map, INT_MAX, v, 0));
@@ -82,7 +79,10 @@ void	store_map(t_vars *v)
 		(perr("Malloc Failed"), clean_exit(v->infos.map, fd, v, 0));
 	i = -1;
 	while (++i < (int)v->infos.map_index - 1)
-			(v->infos.map[0] = get_next_line(fd), free(v->infos.map[0]));
+	{
+		v->infos.map[0] = get_next_line(fd);
+		free(v->infos.map[0]);
+	}
 	i = -1;
 	while (++i < (int)v->infos.map_height)
 	{

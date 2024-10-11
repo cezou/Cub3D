@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D_raycasting.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/08 18:01:38 by cviegas          ###   ########.fr       */
+/*   Updated: 2024/10/11 16:30:22 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3D.h"
+#include "../../../includes/cub3D.h"
 
 /// @brief Init the datas needed for the raycasting algorithm
 /// @param x X pixel position
@@ -97,10 +97,10 @@ void	update_texture_pixels(t_vars *v, t_point p, int *t)
 		v->ray.pos += v->ray.step;
 		p.z = (t[1] * v->tmp[0].len) + (t[0] * 4);
 		if (p.z < v->ray.lim && v->ray.side == 0)
-			add_pix(v, p, (t_point2){1, v->ray.wall_dist, FOGC, FOGL},
+			add_pix(v, p, (t_point3){1, v->ray.wall_dist, FOGC, FOGL, 0},
 				(t_point){1, 0, 0, 0});
 		else if (p.z < v->ray.lim && v->ray.side == 1)
-			add_pix(v, p, (t_point2){1, v->ray.wall_dist, FOGC, FOGL},
+			add_pix(v, p, (t_point3){1, v->ray.wall_dist, FOGC, FOGL, 0},
 				(t_point){0});
 	}
 }

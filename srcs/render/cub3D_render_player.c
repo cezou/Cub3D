@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/08 19:44:11 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/11 11:13:28 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	render_player(t_vars *v, t_point c)
 			if (c.x >= 0 && c.x < v->screen.gamew
 				&& c.y >= 0 && c.y < v->screen.gameh)
 				add_pix(v, (t_point){c.x, c.y, p.z, p.color},
-					(t_point2){0}, (t_point){0});
+					(t_point3){0}, (t_point){0});
 		}
 	}
 }

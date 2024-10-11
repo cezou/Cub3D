@@ -6,13 +6,13 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/10 15:25:00 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/11 17:46:08 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
 
-void	initpathtext(t_vars *v)
+void	initpath2(t_vars *v)
 {
 	v->img[ESPACE].filename = "resources/textures/Ground.xpm";
 	v->img[EDOOR].filename = "resources/textures/Door.xpm";
@@ -25,6 +25,11 @@ void	initpathtext(t_vars *v)
 	v->img[EMAPBORDER].filename = "resources/textures/MapBorder.xpm";
 	v->img[EMAPHEAD].filename = "resources/textures/MapHead.xpm";
 	v->img[ETITLE].filename = "resources/textures/title.xpm";
+}
+
+void	initpathtext(t_vars *v)
+{
+	initpath2(v);
 	v->img[EMENUSELECT].filename = "resources/textures/menus/select.xpm";
 	v->img[EMENU].filename = "resources/textures/menus/menu_start.xpm";
 	v->img[EMENUIG].filename = "resources/textures/menus/menu_ingame.xpm";
@@ -81,7 +86,7 @@ void	initguardpathanim(t_vars *v)
 	v->img[EGUARDATTR].animx = v->img[EGUARDATTR].width / 4;
 }
 
-void	initprojectilepathanim(t_vars *v)
-{
-	(void)v;
-}
+// void	initprojectilepathanim(t_vars *v)
+// {
+// 	(void)v;
+// }

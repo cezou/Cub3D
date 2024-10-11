@@ -6,11 +6,36 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/10 15:29:34 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/11 17:13:31 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
+
+// DAMAGES
+//					HP		MIN	MAX
+
+// Trooper 			20 		3 	15
+// Seargeant 		30 		3 	(Per Pellet) 3 Pellets
+// 15 (Per Pellet) 3 Pellets
+// Imp 				60 		3 	24
+// Commando 		70 		3 	15
+// Lost Soul 		100 	3 	24
+// Hell Knight 		500 	10 	(Melee) 8 (Ranged) 	80 (Melee) 64 (Ranged)
+// Arachnotron 		500 	5 	40
+// Baron of hell 	1,000 	10 	(Melee) 8 (Ranged) 	80 (Melee) 64 (Ranged)
+// Mancubus 		600 	8 	(Per Fireball) 	64 (Per Fireball)
+// Cacodemon 		400 	10 	(Melee) 5 (Ranged) 	60 (Melee) 40 (Ranged)
+// Spiderdemon 		3,000 	3 	(Per Pellet) 	15 (Per Pellet)
+// Cyberdemon 		4,000 	20 	(Direct Hit) 0 (Blast Damage) 
+// 160 (Direct Hit) 128 (Blast Damage)
+// Arch-Vile 		700 	20 	(Direct Hit) 0 (Blast Damage)
+// 20 (Direct Hit) 70 (Blast Damage)
+// Revenant 		300 	8 	(Melee) 10 (Ranged) 	64 (Melee) 80 (Ranged)
+// Demon 			150 	4 	40
+// Wolfenstein SS 	50 		3 	15
+
+//	PAINCHANCE
 
 // Commander Keen 		256 (100%) 		100
 // Lost soul 			256 (100%) 		100
@@ -36,11 +61,14 @@
 
 /// @brief Array of objects
 ///	{x, y, sprite ID, scale factor, vertical position}
-const t_point3	g_objs[2] = {
-{14.0, 8.0, EPARMOR, 5.0, 128.0},
-{15.0, 8.0, EPARMOR, 1.0, 0}
+const t_point4	g_objs[2] = {
+{14.0, 8.0, EPARMOR, 5.0, 128.0, 0},
+{15.0, 8.0, EPARMOR, 1.0, 0, 0}
 };
 
+/// @brief Init Weapon stats
+/// @param v Vars
+/// {active, ammo, maxammo, typeammo, dmg, soundid, range, img}
 void	initweapon(t_vars *v)
 {
 	v->player.weapon[EFIST] = (t_weapon){1, -1, -1, -1, 20, 0, 2.0,
@@ -120,27 +148,11 @@ void	init_doors(t_vars *v)
 	}
 }
 
-void	init_guard(t_vars *v, int j, t_map *tmp, int i)
+void	init_objects(t_vars *v, int j)
 {
-	while (tmp)
-	{
-		if (tmp->val == 'G')
-		{
-			v->sprites[++j] = (t_sprite){0};
-			v->sprites[j].x = tmp->x;
-			v->sprites[j].y = tmp->y;
-			v->sprites[j].hp = 100;
-			v->sprites[j].img_i = EGUARDW;
-			v->sprites[j].vdiv = 1.0;
-			v->sprites[j].udiv = 1.0;
-			v->sprites[j].isguard = 1;
-			v->sprites[j].ms = 1.8;
-			v->sprites[j].painchance = 40;
-			v->sprites[j].hasmelee = 0;
-			v->sprites[j].hasrange = 1;
-		}
-		tmp = tmp->right;
-	}
+	int	i;
+
+	i = -1;
 	while (++j < v->game.nb_sprites)
 	{
 		v->sprites[j] = (t_sprite){0};
@@ -150,7 +162,43 @@ void	init_guard(t_vars *v, int j, t_map *tmp, int i)
 		v->sprites[j].vdiv = g_objs[i].uv;
 		v->sprites[j].udiv = g_objs[i].uv;
 		v->sprites[j].vmove = g_objs[i].v;
+		v->sprites[j].hashitbox = g_objs[i].h;
 	}
+}
+
+int	init_guard(t_vars *v, int j, t_map *tmp)
+{
+	while (tmp)
+	{
+		if (tmp->val == 'G')
+		{
+			v->sprites[++j] = (t_sprite){0};
+			v->sprites[j].x = tmp->x;
+			v->sprites[j].y = tmp->y;
+			v->sprites[j].hp = 60;
+			v->sprites[j].img_i = EGUARDW;
+			v->sprites[j].vdiv = 1.0;
+			v->sprites[j].udiv = 1.0;
+			v->sprites[j].isguard = 1;
+			v->sprites[j].ms = 2.2;
+			v->sprites[j].painchance = 40;
+			v->sprites[j].hasmelee = 0;
+			v->sprites[j].hasrange = 1;
+			v->sprites[j].hashitbox = 1;
+			v->sprites[j].dmg = 15;
+		}
+		tmp = tmp->right;
+	}
+	return (j);
+}
+
+void	init_sprites(t_vars *v)
+{
+	int	j;
+
+	j = -1;
+	j = init_guard(v, j, v->mapv.map);
+	init_objects(v, j);
 }
 
 void	check_map(t_vars *v)
@@ -166,7 +214,7 @@ void	check_map(t_vars *v)
 	v->sprites = (t_sprite *)malloc(sizeof(t_sprite) * (v->game.nb_sprites));
 	if (!v->sprites)
 		exit((prterr(v, ERRMALL, 1, 0), 1));
-	init_guard(v, -1, v->mapv.map, -1);
+	init_sprites(v);
 }
 
 void	init(t_vars *v, int argc, char **argv)

@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 20:43:05 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/04 12:32:53 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/11 11:13:46 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	rendercard(t_vars *v, t_point g, int t, int *off)
 		{
 			p.z = (p.y * v->tmp[0].len) + (p.x * 4);
 			add_pix(v, (t_point){p.x + delta, p.y + g.y, p.z, p.color},
-				(t_point2){0}, (t_point){0});
+				(t_point3){0}, (t_point){0});
 		}
 	}
 }

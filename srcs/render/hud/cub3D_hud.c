@@ -6,22 +6,11 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 20:43:05 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/05 19:44:37 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/11 17:18:59 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/cub3D.h"
-
-/// @brief 
-/// @param v 
-/// @param nb 
-void	number_to_digits(t_vars *v, int n, int res[4], int *i)
-{
-	if (n > 9)
-		number_to_digits(v, n / 10, res, i);
-	res[*i] = n % 10;
-	(*i)++;
-}
 
 /// @brief 
 /// @param v 
@@ -48,7 +37,7 @@ void	renderemptyzone(t_vars *v, t_imga zone, int xoff)
 			p.z = (p.y * v->tmp[0].len) + (p.x * 4);
 			add_pix(v, (t_point){p.x + ceil(xoff / v->hud.img.ratiox),
 				p.y + delta, p.z, p.color},
-				(t_point2){0}, (t_point){0});
+				(t_point3){0}, (t_point){0});
 		}
 	}
 }
@@ -79,7 +68,7 @@ void	renderdoomhead(t_vars *v)
 			add_pix(v, (t_point){p.x - v->hud.animoff + v->tmp[0].animx
 				+ (v->screen.hudw / 2) - (v->tmp[0].width / 2),
 				p.y + delta, p.z, p.color},
-				(t_point2){0}, (t_point){0});
+				(t_point3){0}, (t_point){0});
 		}
 	}
 }
@@ -96,7 +85,7 @@ void	rendercrosshair(t_vars *v, t_point p, int w, int h)
 			p.color = v->infos.floor;
 			if (v->game.canhit)
 				p.color = v->infos.ceil;
-			add_pix(v, p, (t_point2){0}, (t_point){0, 1, 0, 0});
+			add_pix(v, p, (t_point3){0}, (t_point){0, 1, 0, 0});
 		}
 	}
 	p.x = v->tmp[0].width / 2 - 2;
@@ -110,24 +99,15 @@ void	rendercrosshair(t_vars *v, t_point p, int w, int h)
 			p.color = v->infos.floor;
 			if (v->game.canhit)
 				p.color = v->infos.ceil;
-			add_pix(v, p, (t_point2){0}, (t_point){0, 1, 0, 0});
+			add_pix(v, p, (t_point3){0}, (t_point){0, 1, 0, 0});
 		}
 	}
 }
 
-/// @brief Render the HUD
-/// @param v Vars
-void	renderhud(t_vars *v, t_imga dest)
+/// @brief 
+/// @param v 
+void	render_hud_parts(t_vars *v)
 {
-	v->tmp[0] = v->img[EMAP];
-	v->tmp[1] = v->img[EBUFF];
-	rendercrosshair(v, (t_point){v->tmp[0].width / 2 - 10, 0, 0, 0},
-		v->tmp[0].width / 2 + 10, v->tmp[0].height / 2 + 2);
-	v->tmp[1] = dest;
-	if (v->hud.refresh)
-		save_screen_to_buffer(v->img[EHUD], v->hud.img, 0);
-	if (v->hud.refreshdh)
-		renderdoomhead((v->hud.refreshdh = 0, v));
 	if (v->hud.refreshhealth)
 	{
 		renderemptyzone(v, v->img[EHEALTH], 105);
@@ -152,7 +132,23 @@ void	renderhud(t_vars *v, t_imga dest)
 	{
 		renderemptyzone(v, v->img[EWEAPON], 234);
 		renderarmsdigits((v->hud.refreshweapon = 0, v), 234);
-	}
+	}	
+}
+
+/// @brief Render the HUD
+/// @param v Vars
+void	renderhud(t_vars *v, t_imga dest)
+{
+	v->tmp[0] = v->img[EMAP];
+	v->tmp[1] = v->img[EBUFF];
+	rendercrosshair(v, (t_point){v->tmp[0].width / 2 - 10, 0, 0, 0},
+		v->tmp[0].width / 2 + 10, v->tmp[0].height / 2 + 2);
+	v->tmp[1] = dest;
+	if (v->hud.refresh)
+		save_screen_to_buffer(v->img[EHUD], v->hud.img, 0);
+	if (v->hud.refreshdh)
+		renderdoomhead((v->hud.refreshdh = 0, v));
+	render_hud_parts(v);
 	if (v->hud.refreshammun)
 	{
 		renderemptyzone(v, v->img[EAMMUN], 546);
@@ -165,9 +161,6 @@ void	renderhud(t_vars *v, t_imga dest)
 		rendercards((v->hud.refreshcards = 0, v), 517, 0, v->player.cards);
 	}
 	if (v->hud.refresh)
-	{
-		save_screen_to_buffer(v->img[EBUFF], v->img[EHUD], (v->img[EMAP].width
-				* v->img[EMAP].height * (v->img[EMAP].bpp / 8)));
-		v->hud.refresh = 0;
-	}
+		save_screen_to_buffer((v->hud.refresh = 0, v->img[EBUFF]), v->img[EHUD],
+			v->img[EMAP].width * v->img[EMAP].height * (v->img[EMAP].bpp / 8));
 }

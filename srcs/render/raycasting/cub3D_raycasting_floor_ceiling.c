@@ -6,11 +6,11 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:38:17 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/02 14:45:26 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/11 17:23:19 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3D.h"
+#include "../../../includes/cub3D.h"
 
 /*HORIZONTAL METHOD*/
 
@@ -65,14 +65,14 @@ static void	update_floor_ceil_texture_pixels(t_vars *v, t_floor *f, t_point p)
 		if (MANDATORY)
 			p.color = v->infos.floor;
 		if (f->isfloor)
-			add_pix(v, p, (t_point2){1, f->rowdist, FOGC, FOGL}, (t_point){0,
-				p.color, 0, 0});
+			add_pix(v, p, (t_point3){1.0, f->rowdist, FOGC, FOGL, 0},
+				(t_point){0, p.color, 0, 0});
 		else if (f->cx < 10 || f->cx > 16)
 		{
 			if (MANDATORY)
 				p.color = v->infos.ceil;
-			add_pix(v, p, (t_point2){1, f->rowdist, FOGC, FOGL}, (t_point){0,
-				p.color, 0, 0});
+			add_pix(v, p, (t_point3){1.0, f->rowdist, FOGC, FOGL, 0},
+				(t_point){0, p.color, 0, 0});
 		}
 		p.x++;
 	}

@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 20:43:05 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/05 18:28:27 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/11 11:13:43 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	renderarmdigit(t_vars *v, int delta, int i, int xoff)
 			p.z = (p.y * v->tmp[0].len) + (p.x * 4);
 			add_pix(v, (t_point){p.x + d,
 				p.y + delta, p.z, p.color},
-				(t_point2){0}, (t_point){0});
+				(t_point3){0}, (t_point){0});
 		}
 	}
 }

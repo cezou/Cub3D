@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+         #
+#    By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 11:28:17 by pmagnero          #+#    #+#              #
-#    Updated: 2024/10/08 17:31:05 by cviegas          ###   ########.fr        #
+#    Updated: 2024/10/11 16:31:59 by pmagnero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,14 +79,16 @@ SRCS =	srcs/cub3D.c \
 		srcs/render/cub3D_render_player.c \
 		srcs/render/cub3D_render.c \
 		srcs/render/cub3D_scenes.c \
-		srcs/render/cub3D_raycasting.c \
-		srcs/render/cub3D_raycasting_sprites.c \
-		srcs/render/cub3D_raycasting_sprites_utils.c \
-		srcs/render/cub3D_raycasting_dda.c \
-		srcs/render/cub3D_raycasting_dda_utils.c \
-		srcs/render/cub3D_raycasting_floor_ceiling.c \
-		srcs/render/cub3D_raycasting_skybox.c \
-		srcs/render/cub3D_animations.c \
+		srcs/render/raycasting/cub3D_raycasting.c \
+		srcs/render/raycasting/cub3D_raycasting_sprites.c \
+		srcs/render/raycasting/cub3D_raycasting_sprites_utils.c \
+		srcs/render/raycasting/cub3D_raycasting_dda.c \
+		srcs/render/raycasting/cub3D_raycasting_dda_utils.c \
+		srcs/render/raycasting/cub3D_raycasting_floor_ceiling.c \
+		srcs/render/raycasting/cub3D_raycasting_skybox.c \
+		srcs/render/animations/cub3D_animations.c \
+		srcs/render/animations/cub3D_animations_sprites.c \
+		srcs/render/animations/cub3D_animations_player.c \
 		srcs/render/hud/cub3D_hud.c \
 		srcs/render/hud/cub3D_hud_ammun.c \
 		srcs/render/hud/cub3D_hud_arms.c \
@@ -135,10 +137,11 @@ $(OBJS_DIR)%.o : %.c includes/cub3D.h
 	@mkdir -p $(OBJS_DIR)srcs/controls
 	@mkdir -p $(OBJS_DIR)srcs/init
 	@mkdir -p $(OBJS_DIR)srcs/render
+	@mkdir -p $(OBJS_DIR)srcs/render/raycasting
+	@mkdir -p $(OBJS_DIR)srcs/render/animations
 	@mkdir -p $(OBJS_DIR)srcs/render/hud
 	@mkdir -p $(OBJS_DIR)srcs/render/minimap
 	@mkdir -p $(OBJS_DIR)srcs/menus
-	@mkdir -p $(OBJS_DIR)srcs/animations
 	@mkdir -p $(OBJS_DIR)srcs/movements
 	@mkdir -p $(OBJS_DIR)srcs/utils
 	@mkdir -p $(OBJS_DIR)srcs/parsing
@@ -153,10 +156,11 @@ $(OBJS_DIR_B)%.o : %.c includes/cub3D.h
 	@mkdir -p $(OBJS_DIR_B)srcs/controls
 	@mkdir -p $(OBJS_DIR_B)srcs/init
 	@mkdir -p $(OBJS_DIR_B)srcs/render
+	@mkdir -p $(OBJS_DIR_B)srcs/render/raycasting
+	@mkdir -p $(OBJS_DIR_B)srcs/render/animations
 	@mkdir -p $(OBJS_DIR_B)srcs/render/hud
 	@mkdir -p $(OBJS_DIR_B)srcs/render/minimap
 	@mkdir -p $(OBJS_DIR_B)srcs/menus
-	@mkdir -p $(OBJS_DIR_B)srcs/animations
 	@mkdir -p $(OBJS_DIR_B)srcs/movements
 	@mkdir -p $(OBJS_DIR_B)srcs/parsing
 	@mkdir -p $(OBJS_DIR_B)srcs/utils

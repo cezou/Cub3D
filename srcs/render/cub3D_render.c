@@ -88,7 +88,7 @@ void	melting(t_vars *v, bool *done, int x)
 				d = p.y;
 			p.z = (p.y * v->tmp[0].len) + (p.x * 4);
 			add_pix((*done = false, v), (t_point){p.x, d, p.z, getcolorpix(v,
-					v->tmp[0].addr, p.z)}, (t_point2){0}, (t_point){0, 1, 0,
+					v->tmp[0].addr, p.z)}, (t_point3){0}, (t_point){0, 1, 0,
 				0});
 		}
 	}
@@ -106,21 +106,6 @@ int	render(t_vars *v)
 		/ v->game.fps))
 		return (1);
 	v->game.updated_at = timestamp_in_ms(v);
-	if (v->game.start > 1 && ACTIVATE_SOUND
-		&& !ma_sound_is_playing(&v->sound.sound[2]))
-	{
-		ma_sound_stop(&v->sound.sound[0]);
-		ma_sound_set_looping(&v->sound.sound[2], MA_TRUE);
-		ma_sound_set_fade_start_in_milliseconds(&v->sound.sound[2], 0.0f, 0.8f,
-			3000, 3000);
-		ma_sound_start(&v->sound.sound[2]);
-		mlx_loop_end(v->mlx);
-	}
-	if (!v->player.moving && v->hud.animoff != v->hud.head.animx)
-	{
-		v->hud.refreshdh = 1;
-		v->hud.animoff = v->hud.head.animx;
-	}
 	key_management(v);
 	raycasting(v, v->img[EBUFF]);
 	render_player(v, (t_point){0});

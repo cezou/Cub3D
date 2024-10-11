@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 14:55:12 by cviegas           #+#    #+#             */
-/*   Updated: 2024/10/07 14:55:13 by cviegas          ###   ########.fr       */
+/*   Updated: 2024/10/11 11:14:22 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	draw_scaled_img(t_imga *img, t_v2f pos, float size, t_vars *v)
 						* (img->bpp / 8)));
 			if (color != 0x00FFFF)
 				add_pix(v, (t_point){pos[0] + x, pos[1] + y, 0, color},
-					(t_point2){0}, (t_point){1, 1, 1, 1});
+					(t_point3){0}, (t_point){1, 1, 1, 1});
 			y++;
 		}
 		x++;
@@ -58,7 +58,7 @@ void	draw_square(t_v2f pos, float size, int color, t_vars *v)
 		y = -1;
 		while (++y < size)
 			add_pix(v, (t_point){pos[0] + x, pos[1] + y, 0, color},
-				(t_point2){0}, (t_point){1, 1, 1, 1});
+				(t_point3){0}, (t_point){1, 1, 1, 1});
 		x++;
 	}
 }

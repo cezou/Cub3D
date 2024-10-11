@@ -6,11 +6,32 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 18:24:52 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/09 18:55:49 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/11 17:12:45 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
+
+/// @brief 
+/// @param v 
+/// @return 
+bool	sprites_collisions(t_vars *v, t_point2 p)
+{
+	int		i;
+	double	d;
+
+	i = -1;
+	while (++i < v->game.nb_sprites)
+	{
+		if (!v->sprites[i].hashitbox)
+			continue ;
+		d = pow((p.x - v->sprites[i].x), 2)
+			+ pow((p.y - v->sprites[i].y), 2);
+		if (d < 0.20)
+			return (false);
+	}
+	return (true);
+}
 
 /// @brief Helper function to check if a given map position is valid
 /// @param v Vars
@@ -43,7 +64,8 @@ static bool	is_valid_pos(t_vars *v, t_map *pos, t_point2 p, int d)
 	}
 	else if (pos->val != '1')
 		o = 1;
-	return (o && pos->x == p.z && pos->y == p.t && pos->x >= 0 && pos->y >= 0);
+	return (o && sprites_collisions(v, p) && pos->x == p.z && pos->y == p.t
+		&& pos->x >= 0 && pos->y >= 0);
 }
 
 /// @brief Function to update the player's position

@@ -31,7 +31,7 @@ static void	puttexturesmenu(t_vars *v, int i, int ph, int pw)
 		{
 			k = (p.y * v->img[i].len) + (p.x * 4);
 			add_pix(v, (t_point){(p.x + pw), (p.y + ph), k, 0},
-				(t_point2){0}, (t_point){0});
+				(t_point3){0}, (t_point){0});
 		}
 	}
 }

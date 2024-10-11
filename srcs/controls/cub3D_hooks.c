@@ -28,6 +28,7 @@ void	attack(t_vars *v)
 	{
 		v->player.ammo[v->player.currweapon.typeammo] = 0;
 		v->player.pattack = 0;
+		v->player.attack = 0;
 		v->player.animoff = 0;
 	}
 }
@@ -57,23 +58,8 @@ void	handle_movement(t_vars *v)
 
 /// @brief Toggle god/debug mode
 /// @param v Vars
-void	tooglegod(t_vars *v)
+void	actions(t_vars *v, int kd)
 {
-	if (MANDATORY)
-		return ;
-	if (v->game.god == 0)
-		v->game.god = 1;
-	else if (v->game.god == 1)
-		v->game.god = 0;
-}
-
-/// @brief Hooks function when a key is pressed.
-/// @param kd Keyboard key pressed
-/// @param v Vars
-/// @return 0
-int	keys(int kd, t_vars *v)
-{
-	v->keys[kd] = true;
 	if (v->game.won < 4 && kd == XK_x)
 		attack(v);
 	if (v->game.won < 4 && kd == XK_Shift_L && !v->player.injump)
@@ -88,24 +74,30 @@ int	keys(int kd, t_vars *v)
 		v->player.currweapon = v->player.weapon[EGUN];
 		v->hud.refreshammo = 1;
 	}
-	// v->player.img = v->img[EIGUN];
-	// if (v->game.won < 4 && kd == 34)
-	// (v->player.img = v->img[EIGUN]);// OTHER WEAPONS
-	// if (v->game.won < 4 && kd == 39)
-	// (v->player.img = v->img[EIGUN]);// OTHER WEAPONS
-	// if (v->game.won < 4 && kd == 40)
-	// (v->player.img = v->img[EIGUN]);// OTHER WEAPONS
-	// if (v->game.won < 4 && kd == 45)
-	// (v->player.img = v->img[EIGUN]);// OTHER WEAPONS
+}
+
+/// @brief Hooks function when a key is pressed.
+/// @param kd Keyboard key pressed
+/// @param v Vars
+/// @return 0
+int	keys(int kd, t_vars *v)
+{
+	v->keys[kd] = true;
+	actions(v, kd);
 	if (kd == XK_Escape)
 		menuexit(v);
 	if (v->game.won < 4 && kd == XK_Return)
 		returnkey(v);
 	if (v->game.pause)
 		menuarrow(v, kd);
-	if (!v->game.pause && !v->game.won && v->game.start > 1 && is_pressed(XK_F1,
-			v))
-		tooglegod(v);
+	if (!v->game.pause && !v->game.won && v->game.start > 1
+		&& is_pressed(XK_F1, v) && MANDATORY)
+	{
+		if (v->game.god == 0)
+			v->game.god = 1;
+		else if (v->game.god == 1)
+			v->game.god = 0;
+	}
 	if (((v->game.start > 1 && v->game.god && v->game.won < 4))
 		&& is_pressed(XK_F5, v))
 		hotreload(v);

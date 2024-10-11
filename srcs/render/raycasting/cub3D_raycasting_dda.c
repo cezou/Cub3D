@@ -6,11 +6,11 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:58:10 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/08 19:48:38 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/11 16:29:52 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3D.h"
+#include "../../../includes/cub3D.h"
 
 /// @brief Set DDA (Digital Differential Analysis) datas
 /// @param v Vars

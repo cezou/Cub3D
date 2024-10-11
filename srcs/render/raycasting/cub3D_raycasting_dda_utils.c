@@ -6,11 +6,11 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:58:10 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/08 19:44:34 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/11 16:29:47 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3D.h"
+#include "../../../includes/cub3D.h"
 
 /// @brief Utils function because of the fcking N0rMlnN3773
 /// @param v 

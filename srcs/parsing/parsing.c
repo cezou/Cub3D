@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 17:22:43 by cviegas           #+#    #+#             */
-/*   Updated: 2024/10/08 17:30:35 by cviegas          ###   ########.fr       */
+/*   Updated: 2024/10/11 16:43:53 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	parse_ids(t_vars *v, int fd, size_t *i)
 static void	parse_map(t_vars *v, int fd, int i)
 {
 	calculate_mapsize_checking(skip_whitespaces(v, fd, &i), v, fd, i);
-	store_map(v);
+	store_map(v, 0, -1);
 	if (!is_map_closed(v->infos.map, v->infos.map_index))
 		clean_exit(v->infos.map, INT_MAX, v, 1);
 	if (!MANDATORY && is_there_unclosed_doors(v->infos.map, v))

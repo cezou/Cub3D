@@ -57,7 +57,7 @@ void	create_textures(t_vars *v, t_point c)
 ///	@param fog Fog datas {bool, dist, fog color, fog level}
 ///	@param dark Darken the pixel
 ///	@param options Options {dark, transparence, 0, 0}
-void	add_pix(t_vars *v, t_point p, t_point2 fog, t_point opt)
+void	add_pix(t_vars *v, t_point p, t_point3 fog, t_point opt)
 {
 	if (!opt.y && p.z > -1 && v->tmp[0].addr[p.z + 3] == 0)
 	{
@@ -65,13 +65,13 @@ void	add_pix(t_vars *v, t_point p, t_point2 fog, t_point opt)
 		if (opt.x)
 			p.color = (p.color >> 1) & 8355711;
 		if (fog.x)
-			p.color = color_lerp(p.color, fog.z, fog.y / 29 * fog.t);
+			p.color = color_lerp(p.color, fog.z, fog.y / 29 * fog.uv);
 		img_pix_put(&v->tmp[1], p, v);
 	}
 	else if (opt.y)
 	{
 		if (fog.x)
-			p.color = color_lerp(p.color, fog.z, fog.y / 29 * fog.t);
+			p.color = color_lerp(p.color, fog.z, fog.y / 29 * fog.uv);
 		img_pix_put(&v->tmp[1], p, v);
 	}
 }
@@ -86,6 +86,8 @@ int	getcolorpix(t_vars *v, char *addr, size_t k)
 {
 	if (v->game.pause)
 		return ((addr[k] & 0xFF) + ((addr[k + 1]) << 8) + (0 << 16));
+	else if (v->game.pain)
+		return ((0) + ((0) << 8) + (addr[k + 2] << 16) * v->game.pain);
 	else
 		return ((addr[k] & 0xFF) + ((addr[k + 1] & 0xFF) << 8)
 			+ ((addr[k + 2] & 0xFF) << 16));

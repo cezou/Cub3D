@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/10 16:35:07 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/11 17:45:33 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@
 
 # define SKYBOX_REPEATS 4
 
-# define FOGL 4
+# define FOGL 2
 # define FOGC 0x000000
 
 # define SPACE 48
@@ -328,7 +328,6 @@ typedef enum s_components
 	EDOOR,
 	EGUARDW,
 	EGUARDDEATH,
-	// EGUARDATTM,
 	EGUARDATTR,
 	ESKYBOX,
 	EHUDIMG,
@@ -395,9 +394,19 @@ typedef struct s_point3
 	double					v;
 }							t_point3;
 
-typedef float t_v2f			__attribute__((vector_size(8)));
-typedef unsigned int t_v2u	__attribute__((vector_size(8)));
-typedef int t_v2i			__attribute__((vector_size(8)));
+typedef struct s_point4
+{
+	double					x;
+	double					y;
+	int						z;
+	double					uv;
+	double					v;
+	int						h;
+}							t_point4;
+
+typedef float				t_v2f __attribute__((vector_size(8)));
+typedef unsigned int		t_v2u __attribute__((vector_size(8)));
+typedef int					t_v2i __attribute__((vector_size(8)));
 
 typedef struct s_map
 {
@@ -573,6 +582,7 @@ typedef struct s_player
 	int					injump;
 	int					dir;
 	int					hp;
+	int					hit;
 	int					armor;
 	int					ammo[4];
 	int					maxammo[4];
@@ -626,7 +636,8 @@ typedef struct s_sprite
 	double					x;
 	double					y;
 	int						hp;
-	int						hit;
+	int						dmg;
+	int						hashitbox;
 	int						justattack;
 	int						hasrange;
 	int						hasmelee;
@@ -701,6 +712,7 @@ typedef struct s_screen
 typedef struct s_game
 {
 	int						pause;
+	int						pain;
 	int						start;
 	int						fps;
 	uint64_t				created_at;
@@ -809,7 +821,8 @@ void						ft_swaps(t_sprite *a, t_sprite *b);
 int							find_door(t_vars *v, int x, int y);
 int							find_guard(t_vars *v, t_map *tmp);
 void						hitguard(t_vars *v, t_sprite_data *sp, t_sprite *g);
-void						guardattack(t_vars *v, t_sprite_data *sp, t_sprite *g);
+void						guardattack(t_vars *v, t_sprite_data *sp,
+								t_sprite *g);
 int							m_random(t_vars *v);
 int							p_random(t_vars *v);
 void						m_clearrandom(t_vars *v);
@@ -847,7 +860,7 @@ void						initwindow(t_vars *v, int argc, char **argv);
 void						initpathtext(t_vars *v);
 void						initplayerpathanim(t_vars *v);
 void						initguardpathanim(t_vars *v);
-void						initprojectilepathanim(t_vars *v);
+// void						initprojectilepathanim(t_vars *v);
 void						inithud(t_vars *v);
 void						init_player_dir(t_vars *v);
 void						init_random_melting_array(t_vars *v);
@@ -893,7 +906,11 @@ void						calculate_line_height(t_vars *v);
 void						check_door(t_vars *v);
 int							door_extend_ray(t_vars *v, t_point p, int *t);
 void						update_texture_pixels(t_vars *v, t_point p, int *t);
+
+// Animations
 void						update_door_animations(t_vars *v, int i);
+void						update_sprites_animations(t_vars *v);
+void						update_player(t_vars *v);
 
 void						draw_floor_ceiling(t_vars *v);
 // void					set_floor_ceiling_vert(t_vars *v, t_point p);
@@ -927,7 +944,7 @@ void						scale_img(t_point p, t_imga *src, t_imga *dest);
 
 int							render(t_vars *data);
 void						img_pix_put(t_imga *img, t_point p, t_vars *v);
-void						add_pix(t_vars *v, t_point p, t_point2 fog,
+void						add_pix(t_vars *v, t_point p, t_point3 fog,
 								t_point opt);
 void						create_textures(t_vars *v, t_point c);
 int							getcolorpix(t_vars *v, char *addr, size_t k);
@@ -949,8 +966,7 @@ int							maintitleanim(t_vars *v);
 void						melting(t_vars *v, bool *done, int x);
 
 /* FUNCTIONS */
-char	*dupspace(char *s)
-;
+char						*dupspace(char *s);
 char						*skip_whitespaces(t_vars *v, int fd, int *i);
 void						calculate_mapsize_checking(char *line, t_vars *v,
 								int fd, int i);
@@ -980,9 +996,8 @@ void						print_map(char **s);
 bool						is_in_string(char c, char *s);
 void						cerr(int i, int j);
 
-void						store_map(t_vars *v);
+void						store_map(t_vars *v, int fd, int i);
 void						s(void);
-void						store_map(t_vars *v);
 
 bool						is_char_valid(char c);
 bool						is_player_char(char c);

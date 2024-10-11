@@ -6,11 +6,11 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/10 16:02:09 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/11 16:30:15 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3D.h"
+#include "../../../includes/cub3D.h"
 
 /// @brief Set datas for sprites like distance from the player, sprite height...
 /// @param v Vars
@@ -119,7 +119,7 @@ void	draw_sprite(t_vars *v, t_sprite_data *sp, t_sprite *g, t_point p)
 					+ sp->spriteheight * 128;
 				ty = ((p.z * v->tmp[0].height) / sp->spriteheight) / 256;
 				p.z = (ty * v->tmp[0].len) + (tx * 4);
-				add_pix(v, p, (t_point2){1, sp->transformy, FOGC, FOGL},
+				add_pix(v, p, (t_point3){1, sp->transformy, FOGC, FOGL, 0},
 					(t_point){0});
 			}
 		}
