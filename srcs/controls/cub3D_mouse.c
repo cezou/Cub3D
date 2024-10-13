@@ -37,6 +37,7 @@ int	mouse_down(int button, int x, int y, t_vars *p)
 	}
 	else if (p->game.start > 1 && p->game.god && (button == 1 || button == 3))
 	{
+		attack(p);
 		p->mouse.button = button;
 		p->mouse.prevx = x;
 		p->mouse.prevy = y;

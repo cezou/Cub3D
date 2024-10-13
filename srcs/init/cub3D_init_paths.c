@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/13 19:13:37 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/14 00:24:38 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,21 @@ void	initplayerpathanim(t_vars *v)
 	initanim(v, EIFIST, 1, 7);
 	v->player.currweapon.img = v->img[EIFIST];
 	v->img[EIGUN].filename = "resources/textures/gun.xpm";
-	initanim(v, EIGUN, 0, 7);
+	initanim(v, EIGUN, 1, 7);
+	v->img[EISHOTGUN].filename = "resources/textures/shotgun.xpm";
+	initanim(v, EISHOTGUN, 0, 8);
+	v->img[EIGATLIN].filename = "resources/textures/gatlin.xpm";
+	initanim(v, EIGATLIN, 0, 3);
+	v->img[EIROCKl].filename = "resources/textures/rocketl.xpm";
+	initanim(v, EIROCKl, 0, 6);
+	v->img[EIPLASMA].filename = "resources/textures/plasma.xpm";
+	initanim(v, EIPLASMA, 0, 4);
+	v->img[EICHAINSAW].filename = "resources/textures/chainsaw.xpm";
+	initanim(v, EICHAINSAW, 0, 4);
+	v->img[EISUPERSHOTGUN].filename = "resources/textures/supershotgun.xpm";
+	initanim(v, EISUPERSHOTGUN, 0, 10);
+	v->img[EIBFG].filename = "resources/textures/bfg.xpm";
+	initanim(v, EIBFG, 0, 4);
 }
 
 void	initguardpathanim(t_vars *v)

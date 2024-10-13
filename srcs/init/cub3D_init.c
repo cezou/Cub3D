@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/13 19:41:48 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/13 23:51:56 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,19 +97,19 @@ void	initweapon(t_vars *v)
 	v->player.weapon[EGUN] = (t_weapon){1, 50, 200, EBULL, 15, 0, 1000.0,
 		v->img[EIGUN]};
 	v->player.weapon[ESHOTGUN] = (t_weapon){1, 8, 50, ESHELL, 100, 0, 1000.0,
-		v->img[EIGUN]};
-	v->player.weapon[EBFG] = (t_weapon){1, 40, 300, ECELL, 800, 0, 1000.0,
-		v->img[EIGUN]};
+		v->img[EISHOTGUN]};
 	v->player.weapon[EGATLIN] = (t_weapon){1, 20, 200, EBULL, 15, 0, 1000.0,
-		v->img[EIGUN]};
+		v->img[EIGATLIN]};
 	v->player.weapon[EROCKETL] = (t_weapon){1, 2, 50, EROCK, 160, 0, 1000.0,
-		v->img[EIGUN]};
+		v->img[EIROCKl]};
 	v->player.weapon[EPLASMA] = (t_weapon){1, 40, 300, ECELL, 40, 0, 1000.0,
-		v->img[EIGUN]};
+		v->img[EIPLASMA]};
 	v->player.weapon[ECHAINSAW] = (t_weapon){1, -1, -1, -1, 20, 0, 2.0,
-		v->img[EIGUN]};
+		v->img[EICHAINSAW]};
 	v->player.weapon[ESUPERSHOTGUN] = (t_weapon){1, 8, 50, ESHELL, 245, 0,
-		1000.0, v->img[EIGUN]};
+		1000.0, v->img[EISUPERSHOTGUN]};
+	v->player.weapon[EBFG] = (t_weapon){1, 40, 300, ECELL, 800, 0, 1000.0,
+		v->img[EIBFG]};
 	v->player.currweapon = v->player.weapon[EFIST];
 }
 

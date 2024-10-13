@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 09:51:53 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/13 19:42:29 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/13 23:22:15 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,9 @@ bool	give_weapon(t_vars *v, t_weapons weapon, char *mess)
 	bool	gaveammo;
 	bool	gaveweapon;
 
-	if (v->player.weapon[weapon].typeammo == -1)
-		return (v->game.message = mess, v->hud.refreshweapon = 1, true);
-	gaveammo = give_ammo(v, 0, 2, v->player.weapon[weapon].typeammo);
+	gaveammo = true;
+	if (v->player.weapon[weapon].typeammo > -1)
+		gaveammo = give_ammo(v, 0, 2, v->player.weapon[weapon].typeammo);
 	if (v->player.weapons[weapon])
 		gaveweapon = false;
 	else

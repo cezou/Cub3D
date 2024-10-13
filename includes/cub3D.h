@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/13 19:36:42 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/13 23:51:09 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -431,6 +431,13 @@ typedef enum s_components
 	EHUD,
 	EIFIST,
 	EIGUN,
+	EISHOTGUN,
+	EIGATLIN,
+	EIROCKl,
+	EIPLASMA,
+	EICHAINSAW,
+	EISUPERSHOTGUN,
+	EIBFG,
 	EBIGNUMBERS,
 	ESMALLNUMBERS,
 	EHEALTH,
@@ -668,7 +675,7 @@ typedef struct s_player
 	int					ammo[4];
 	int					maxammo[4];
 	int					clipammo[4];
-	int					weapons[8];
+	int					weapons[NUMWEAPONS];
 	int					cards[3];
 	t_weapon			currweapon;
 	t_weapon			weapon[NUMWEAPONS];
@@ -970,6 +977,7 @@ int							keys_release(int keycode, t_vars *v);
 void						menuexit(t_vars *v);
 void						menuarrow(t_vars *v, int d);
 void						menuoptions(t_vars *v);
+void						attack(t_vars *v);
 
 // Controls
 
