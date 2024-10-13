@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/11 17:13:31 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/13 19:41:48 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,32 @@
 // Arch-vile 			10 (3.13%) 		700
 // Barrel 				0 (0%) 			20
 
+#define NUM_OBJS 21
+
 /// @brief Array of objects
-///	{x, y, sprite ID, scale factor, vertical position}
-const t_point4	g_objs[2] = {
-{14.0, 8.0, EPARMOR, 5.0, 128.0, 0},
-{15.0, 8.0, EPARMOR, 1.0, 0, 0}
+///	{x, y, sprite ID, scale factor, vertical position, hashitbox, pickable}
+const t_obj	g_objs[NUM_OBJS] = {
+{14.0, 9.0, EPARMOR, 5.0, 128.0, 1, 1}, // Scaled down
+{14.0, 9.5, EPARMOR1, 5.0, 128.0, 1, 1},
+{14.0, 10.0, ESTIM, 5.0, 128.0, 1, 1},
+{14.0, 10.5, EMEDI, 5.0, 128.0, 1, 1},
+{14.0, 11.0, EPCLIP, 5.0, 128.0, 1, 1},
+{14.0, 11.5, EPSHELL, 5.0, 128.0, 1, 1},
+{14.0, 12.0, EPROCK, 5.0, 128.0, 1, 1},
+{14.0, 12.5, EPCELL, 5.0, 128.0, 1, 1},
+{14.0, 13.0, EBKEY, 5.0, 128.0, 1, 1},
+{14.0, 13.5, EYKEY, 5.0, 128.0, 1, 1},
+{14.0, 14.0, ERKEY, 5.0, 128.0, 1, 1},
+{14.0, 14.5, EBSKEY, 5.0, 128.0, 1, 1},
+{14.0, 15.0, EYSKEY, 5.0, 128.0, 1, 1},
+{14.0, 15.5, ERSKEY, 5.0, 128.0, 1, 1},
+{14.0, 16.0, EPBFG, 2.0, 64.0, 1, 1},
+{14.0, 16.5, EPSHOTGUN, 2.0, 64.0, 1, 1},
+{14.0, 17.0, EPGATLIN, 2.0, 64.0, 1, 1},
+{14.0, 17.5, EPROCKETL, 2.0, 64.0, 1, 1},
+{14.0, 18.0, EPPLASMA, 2.0, 64.0, 1, 1},
+{14.0, 18.5, EPCHAINSAW, 2.0, 64.0, 1, 1},
+{14.0, 19.0, EPSUPERSHOTGUN, 2.0, 64.0, 1, 1}
 };
 
 /// @brief Init Weapon stats
@@ -75,6 +96,20 @@ void	initweapon(t_vars *v)
 		v->img[EIFIST]};
 	v->player.weapon[EGUN] = (t_weapon){1, 50, 200, EBULL, 15, 0, 1000.0,
 		v->img[EIGUN]};
+	v->player.weapon[ESHOTGUN] = (t_weapon){1, 8, 50, ESHELL, 100, 0, 1000.0,
+		v->img[EIGUN]};
+	v->player.weapon[EBFG] = (t_weapon){1, 40, 300, ECELL, 800, 0, 1000.0,
+		v->img[EIGUN]};
+	v->player.weapon[EGATLIN] = (t_weapon){1, 20, 200, EBULL, 15, 0, 1000.0,
+		v->img[EIGUN]};
+	v->player.weapon[EROCKETL] = (t_weapon){1, 2, 50, EROCK, 160, 0, 1000.0,
+		v->img[EIGUN]};
+	v->player.weapon[EPLASMA] = (t_weapon){1, 40, 300, ECELL, 40, 0, 1000.0,
+		v->img[EIGUN]};
+	v->player.weapon[ECHAINSAW] = (t_weapon){1, -1, -1, -1, 20, 0, 2.0,
+		v->img[EIGUN]};
+	v->player.weapon[ESUPERSHOTGUN] = (t_weapon){1, 8, 50, ESHELL, 245, 0,
+		1000.0, v->img[EIGUN]};
 	v->player.currweapon = v->player.weapon[EFIST];
 }
 
@@ -101,10 +136,14 @@ void	initvars(t_vars *v)
 	v->mouse.sensx = 20.0;
 	v->mouse.sensy = 10.0;
 	v->player.hp = 100;
-	v->player.maxammo[0] = 200;
-	v->player.maxammo[1] = 50;
-	v->player.maxammo[2] = 50;
-	v->player.maxammo[3] = 300;
+	v->player.maxammo[EBULL] = 200;
+	v->player.maxammo[ESHELL] = 50;
+	v->player.maxammo[EROCK] = 50;
+	v->player.maxammo[ECELL] = 300;
+	v->player.clipammo[EBULL] = 10;
+	v->player.clipammo[ESHELL] = 4;
+	v->player.clipammo[EROCK] = 1;
+	v->player.clipammo[ECELL] = 20;
 	v->player.weapons[0] = 1;
 	v->player.weapons[1] = 1;
 	v->player.ammo[0] = 50;
@@ -158,11 +197,13 @@ void	init_objects(t_vars *v, int j)
 		v->sprites[j] = (t_sprite){0};
 		v->sprites[j].x = g_objs[++i].x;
 		v->sprites[j].y = g_objs[i].y;
-		v->sprites[j].img_i = g_objs[i].z;
+		v->sprites[j].img_i = g_objs[i].img_id;
 		v->sprites[j].vdiv = g_objs[i].uv;
 		v->sprites[j].udiv = g_objs[i].uv;
 		v->sprites[j].vmove = g_objs[i].v;
 		v->sprites[j].hashitbox = g_objs[i].h;
+		v->sprites[j].pickable = g_objs[i].pickable;
+		v->sprites[j].active = 1;
 	}
 }
 
@@ -186,6 +227,7 @@ int	init_guard(t_vars *v, int j, t_map *tmp)
 			v->sprites[j].hasrange = 1;
 			v->sprites[j].hashitbox = 1;
 			v->sprites[j].dmg = 15;
+			v->sprites[j].active = 1;
 		}
 		tmp = tmp->right;
 	}
@@ -209,7 +251,7 @@ void	check_map(t_vars *v)
 	v->player.y = v->player.player->y + 0.5;
 	v->player.animp = EIFIST;
 	v->player.animoff = 0;
-	v->game.nb_sprites = v->game.nb_guard + 2;
+	v->game.nb_sprites = v->game.nb_guard + NUM_OBJS;
 	init_doors(v);
 	v->sprites = (t_sprite *)malloc(sizeof(t_sprite) * (v->game.nb_sprites));
 	if (!v->sprites)

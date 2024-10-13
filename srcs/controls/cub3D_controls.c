@@ -18,8 +18,6 @@ void	hotreload_clear(t_vars *v, char *filename)
 		map_clear(v->mapv.map);
 	if (v->infos.map)
 		freeall(v->infos.map);
-	if (v->objs.objs)
-		free(v->objs.objs);
 	if (v->door)
 		free(v->door);
 	if (v->sprites)

@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 18:24:52 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/11 17:12:45 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/13 17:03:26 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,19 @@ bool	sprites_collisions(t_vars *v, t_point2 p)
 	i = -1;
 	while (++i < v->game.nb_sprites)
 	{
-		if (!v->sprites[i].hashitbox)
+		if ((!v->sprites[i].hashitbox) || !v->sprites[i].active)
 			continue ;
 		d = pow((p.x - v->sprites[i].x), 2)
 			+ pow((p.y - v->sprites[i].y), 2);
 		if (d < 0.20)
+		{
+			if (v->sprites[i].pickable)
+			{
+				v->sprites[i].active = 0;
+				touch_thing(v, &v->sprites[i]);
+			}
 			return (false);
+		}
 	}
 	return (true);
 }

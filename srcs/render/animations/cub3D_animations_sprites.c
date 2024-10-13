@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/11 16:28:42 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/13 13:46:31 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	update_sprites_animations(t_vars *v)
 	i = -1;
 	while (++i < v->game.nb_sprites)
 	{
-		if (!v->sprites[i].isguard)
+		if (!v->sprites[i].active || !v->sprites[i].isguard)
 			continue ;
 		if (timestamp_in_ms(v) - v->sprites[i].time
 			>= (uint64_t)(5000 / v->game.fps))

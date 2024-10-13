@@ -138,8 +138,6 @@ int	cleardata(t_vars *v, int b)
 		free(v->img);
 	if (b && v->ray.zbuffer)
 		free(v->ray.zbuffer);
-	if (b && v->objs.objs)
-		free(v->objs.objs);
 	if (b && v->door)
 		free(v->door);
 	if (b && v->sprites)

@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/11 17:45:33 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/13 19:36:42 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,6 +233,61 @@ Character/Footsteps_walking.wav"
 # define SOUND_GAMEOVER "resources/sounds/musics/wav/Fx 3.wav"
 # define SOUND_WIN "resources/sounds/musics/wav/Fx 1.wav"
 
+# define GOTARMOR	"Picked up the armor."
+# define GOTMEGA	"Picked up the MegaArmor!"
+# define GOTHTHBONUS	"Picked up a health bonus."
+# define GOTARMBONUS	"Picked up an armor bonus."
+# define GOTSTIM	"Picked up a stimpack."
+# define GOTMEDINEED	"Picked up a medikit that you REALLY need!"
+# define GOTMEDIKIT	"Picked up a medikit."
+# define GOTSUPER	"Supercharge!"
+
+# define GOTBLUECARD	"Picked up a blue keycard."
+# define GOTYELWCARD	"Picked up a yellow keycard."
+# define GOTREDCARD	"Picked up a red keycard."
+# define GOTBLUESKUL	"Picked up a blue skull key."
+# define GOTYELWSKUL	"Picked up a yellow skull key."
+# define GOTREDSKULL	"Picked up a red skull key."
+
+# define GOTINVUL	"Invulnerability!"
+# define GOTBERSERK	"Berserk!"
+# define GOTINVIS	"Partial Invisibility"
+# define GOTSUIT	"Radiation Shielding Suit"
+# define GOTMAP	"Computer Area Map"
+# define GOTVISOR	"Light Amplification Visor"
+# define GOTMSPHERE	"MegaSphere!"
+
+# define GOTCLIP	"Picked up a clip."
+# define GOTCLIPBOX	"Picked up a box of bullets."
+# define GOTROCKET	"Picked up a rocket."
+# define GOTROCKBOX	"Picked up a box of rockets."
+# define GOTCELL	"Picked up an energy cell."
+# define GOTCELLBOX	"Picked up an energy cell pack."
+# define GOTSHELLS	"Picked up 4 shotgun shells."
+# define GOTSHELLBOX	"Picked up a box of shotgun shells."
+# define GOTBACKPACK	"Picked up a backpack full of ammo!"
+
+# define GOTBFG9000	"You got the BFG9000!  Oh, yes."
+# define GOTCHAINGUN	"You got the chaingun!"
+# define GOTCHAINSAW	"A chainsaw!  Find some meat!"
+# define GOTLAUNCHER	"You got the rocket launcher!"
+# define GOTPLASMA	"You got the plasma gun!"
+# define GOTSHOTGUN	"You got the shotgun!"
+# define GOTSHOTGUN2	"You got the super shotgun!"
+
+# define MAXHEALTH 100
+
+typedef enum s_card
+{
+	it_blueskull,
+	it_yellowskull,
+	it_redskull,
+	it_bluecard,
+	it_yellowcard,
+	it_redcard,
+	NUMCARDS
+}							t_card;
+
 typedef enum s_soundl
 {
 	EGENERIC,
@@ -301,6 +356,8 @@ typedef enum s_ammo
 	ESHELL,
 	EROCK,
 	ECELL,
+	NUMAMMO,
+	NOAMMO
 }							t_ammo;
 
 typedef enum s_weapons
@@ -312,7 +369,9 @@ typedef enum s_weapons
 	EROCKETL,
 	EPLASMA,
 	EBFG,
-	ECHAINSAW
+	ECHAINSAW,
+	ESUPERSHOTGUN,
+	NUMWEAPONS
 }							t_weapons;
 
 typedef enum s_components
@@ -344,6 +403,26 @@ typedef enum s_components
 	ECARDSLOTTMP,
 	ECARDSTMP,
 	EPARMOR,
+	EPARMOR1,
+	ESTIM,
+	EMEDI,
+	EPCLIP,
+	EPSHELL,
+	EPROCK,
+	EPCELL,
+	EBKEY,
+	EYKEY,
+	ERKEY,
+	EBSKEY,
+	EYSKEY,
+	ERSKEY,
+	EPBFG,
+	EPSHOTGUN,
+	EPGATLIN,
+	EPROCKETL,
+	EPPLASMA,
+	EPCHAINSAW,
+	EPSUPERSHOTGUN,
 	EMENUSELECT,
 	EMENU,
 	EMENUIG,
@@ -394,15 +473,16 @@ typedef struct s_point3
 	double					v;
 }							t_point3;
 
-typedef struct s_point4
+typedef struct s_obj
 {
 	double					x;
 	double					y;
-	int						z;
+	int						img_id;
 	double					uv;
 	double					v;
 	int						h;
-}							t_point4;
+	int						pickable;
+}							t_obj;
 
 typedef float				t_v2f __attribute__((vector_size(8)));
 typedef unsigned int		t_v2u __attribute__((vector_size(8)));
@@ -584,12 +664,14 @@ typedef struct s_player
 	int					hp;
 	int					hit;
 	int					armor;
+	int					armortype;
 	int					ammo[4];
 	int					maxammo[4];
+	int					clipammo[4];
 	int					weapons[8];
 	int					cards[3];
 	t_weapon			currweapon;
-	t_weapon			weapon[EBFG];
+	t_weapon			weapon[NUMWEAPONS];
 	double				x;
 	double				y;
 	double				z;
@@ -633,6 +715,7 @@ typedef struct s_hud
 
 typedef struct s_sprite
 {
+	int						active;
 	double					x;
 	double					y;
 	int						hp;
@@ -643,6 +726,7 @@ typedef struct s_sprite
 	int						hasmelee;
 	int						painchance;
 	int						isguard;
+	int						pickable;
 	int						stop;
 	int						state;
 	int						img_i;
@@ -673,14 +757,6 @@ typedef struct s_mapv
 	int						shifty;
 	char					*filename;
 }							t_mapv;
-
-typedef struct s_objs
-{
-	t_point					*objs;
-	int						initobjs;
-	uint64_t				timerobjs;
-	int						collect;
-}							t_objs;
 
 typedef struct s_proj
 {
@@ -730,6 +806,7 @@ typedef struct s_game
 	int						nb_guard;
 	int						nb_sprites;
 	int						canhit;
+	char					*message;
 }							t_game;
 
 // images: verifier que le path finit bien par .xpm, que le fichier existe,
@@ -783,7 +860,6 @@ typedef struct s_vars
 	t_proj					proj;
 	t_door					*door;
 	t_sprite				*sprites;
-	t_objs					objs;
 	t_mapv					mapv;
 	t_player				player;
 	t_ray					ray;
@@ -828,6 +904,16 @@ int							p_random(t_vars *v);
 void						m_clearrandom(t_vars *v);
 void						save_screen_to_buffer(t_imga dest, t_imga src,
 								size_t offset);
+
+// Interactions
+
+void						touch_thing(t_vars *v, t_sprite *sp);
+bool						give_weapon(t_vars *v, t_weapons weapon,
+								char *mess);
+bool						give_ammo(t_vars *v, int img, int num, t_ammo ammo);
+bool						give_armor(t_vars *v, t_sprite *sp);
+bool						give_body(t_vars *v, int num, int sp);
+bool						give_cards(t_vars *v, t_sprite *sp);
 
 // Time
 

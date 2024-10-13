@@ -91,7 +91,7 @@ int	keys(int kd, t_vars *v)
 	if (v->game.pause)
 		menuarrow(v, kd);
 	if (!v->game.pause && !v->game.won && v->game.start > 1
-		&& is_pressed(XK_F1, v) && MANDATORY)
+		&& is_pressed(XK_F1, v) && !MANDATORY)
 	{
 		if (v->game.god == 0)
 			v->game.god = 1;

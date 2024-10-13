@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/11 16:30:15 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/13 13:47:08 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,8 @@ void	draw_sprites(t_vars *v)
 	sort_sprites(v, -1, 0);
 	while (++i < v->game.nb_sprites)
 	{
+		if (!v->sprites[i].active)
+			continue ;
 		v->tmp[0] = v->img[v->sprites[i].img_i];
 		transform_sprite(v, &v->sp, v->sprites[i]);
 		set_sprite_boundaries(v, &v->sp, v->sprites[i]);

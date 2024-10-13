@@ -6,7 +6,7 @@
 #    By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 11:28:17 by pmagnero          #+#    #+#              #
-#    Updated: 2024/10/11 16:31:59 by pmagnero         ###   ########.fr        #
+#    Updated: 2024/10/13 19:36:08 by pmagnero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,6 +71,8 @@ COLOR_OK	=	32
 
 
 SRCS =	srcs/cub3D.c \
+		srcs/cub3D_interactions.c \
+		srcs/cub3D_interactions2.c \
 		srcs/controls/cub3D_hooks.c \
 		srcs/controls/cub3D_hooks_utils.c \
 		srcs/controls/cub3D_controls.c \

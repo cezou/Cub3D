@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/11 17:46:08 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/13 19:13:37 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,19 @@ void	initpath2(t_vars *v)
 	v->img[ESPACE].filename = "resources/textures/Ground.xpm";
 	v->img[EDOOR].filename = "resources/textures/Door.xpm";
 	v->img[EPARMOR].filename = "resources/textures/armor.xpm";
+	v->img[EPARMOR1].filename = "resources/textures/armor1.xpm";
+	v->img[ESTIM].filename = "resources/textures/stimpack.xpm";
+	v->img[EMEDI].filename = "resources/textures/medikit.xpm";
+	v->img[EPCLIP].filename = "resources/textures/clip.xpm";
+	v->img[EPSHELL].filename = "resources/textures/shells.xpm";
+	v->img[EPROCK].filename = "resources/textures/rocket.xpm";
+	v->img[EPCELL].filename = "resources/textures/cells.xpm";
+	v->img[EBKEY].filename = "resources/textures/bluekey.xpm";
+	v->img[EBSKEY].filename = "resources/textures/blueskull.xpm";
+	v->img[EYKEY].filename = "resources/textures/yellowkey.xpm";
+	v->img[EYSKEY].filename = "resources/textures/yellowskull.xpm";
+	v->img[ERKEY].filename = "resources/textures/redkey.xpm";
+	v->img[ERSKEY].filename = "resources/textures/redskull.xpm";
 	v->img[EGUARDW].filename = "resources/textures/general.xpm";
 	v->img[EGUARDDEATH].filename = "resources/textures/generaldeath.xpm";
 	v->img[EGUARDATTR].filename = "resources/textures/generalattackrange.xpm";
@@ -45,6 +58,13 @@ void	initpathtext(t_vars *v)
 	v->img[EAMMUNTMP].filename = "resources/textures/Ammunitions.xpm";
 	v->img[ECARDSTMP].filename = "resources/textures/Cards.xpm";
 	v->img[ECARDSLOTTMP].filename = "resources/textures/CardsSlot.xpm";
+	v->img[EPBFG].filename = "resources/textures/pbfg.xpm";
+	v->img[EPSHOTGUN].filename = "resources/textures/pshotgun.xpm";
+	v->img[EPGATLIN].filename = "resources/textures/pgatlin.xpm";
+	v->img[EPROCKETL].filename = "resources/textures/procketl.xpm";
+	v->img[EPPLASMA].filename = "resources/textures/pplasma.xpm";
+	v->img[EPCHAINSAW].filename = "resources/textures/pchainsaw.xpm";
+	v->img[EPSUPERSHOTGUN].filename = "resources/textures/psupershotgun.xpm";
 }
 
 void	initanim(t_vars *v, int index, int b, int animnb)

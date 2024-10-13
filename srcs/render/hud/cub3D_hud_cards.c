@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 20:43:05 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/11 11:13:46 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/13 18:40:27 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	rendercards(t_vars *v, int xoff, int yoff, int *arr)
 	t = -1;
 	v->tmp[0] = v->img[ECARDS];
 	off[0] = xoff;
-	while (++t < 3)
+	while (++t < 6)
 	{
 		g.x = 0;
 		if (!arr[t])
