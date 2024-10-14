@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 09:51:53 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/13 23:22:15 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/14 12:54:58 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,19 @@ bool	give_card(t_vars *v, t_card card, char *mess)
 /// @brief 
 /// @param v 
 /// @param card 
-bool	give_cards(t_vars *v, t_sprite *sp)
+bool	give_cards(t_vars *v, t_actor *a)
 {
-	if (sp->img_i == EBKEY)
+	if (a->img_i == EBKEY)
 		return (give_card(v, it_bluecard, GOTBLUECARD));
-	else if (sp->img_i == EYKEY)
+	else if (a->img_i == EYKEY)
 		return (give_card(v, it_yellowcard, GOTYELWCARD));
-	else if (sp->img_i == ERKEY)
+	else if (a->img_i == ERKEY)
 		return (give_card(v, it_redcard, GOTREDCARD));
-	else if (sp->img_i == EBSKEY)
+	else if (a->img_i == EBSKEY)
 		return (give_card(v, it_blueskull, GOTBLUESKUL));
-	else if (sp->img_i == EYSKEY)
+	else if (a->img_i == EYSKEY)
 		return (give_card(v, it_yellowskull, GOTYELWSKUL));
-	else if (sp->img_i == ERSKEY)
+	else if (a->img_i == ERSKEY)
 		return (give_card(v, it_redskull, GOTREDSKULL));
 	return (true);
 }
@@ -77,15 +77,15 @@ bool	give_body(t_vars *v, int num, int sp)
 /// @param v 
 /// @param armortype 
 /// @return 
-bool	give_armor(t_vars *v, t_sprite *sp)
+bool	give_armor(t_vars *v, t_actor *a)
 {
 	int		hits;
 	int		armortype;
 
-	if (sp->img_i != EPARMOR && sp->img_i != EPARMOR1)
+	if (a->img_i != EPARMOR && a->img_i != EPARMOR1)
 		return (true);
 	armortype = 1;
-	if (sp->img_i == EPARMOR1)
+	if (a->img_i == EPARMOR1)
 		armortype = 2;
 	hits = armortype * 100;
 	if (v->player.armor >= hits)

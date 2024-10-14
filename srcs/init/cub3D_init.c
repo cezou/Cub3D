@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/13 23:51:56 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/14 16:12:02 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@
 // Arch-vile 			10 (3.13%) 		700
 // Barrel 				0 (0%) 			20
 
-#define NUM_OBJS 21
+#define NUM_OBJS 22
 
 /// @brief Array of objects
 ///	{x, y, sprite ID, scale factor, vertical position, hashitbox, pickable}
@@ -84,7 +84,8 @@ const t_obj	g_objs[NUM_OBJS] = {
 {14.0, 17.5, EPROCKETL, 2.0, 64.0, 1, 1},
 {14.0, 18.0, EPPLASMA, 2.0, 64.0, 1, 1},
 {14.0, 18.5, EPCHAINSAW, 2.0, 64.0, 1, 1},
-{14.0, 19.0, EPSUPERSHOTGUN, 2.0, 64.0, 1, 1}
+{14.0, 19.0, EPSUPERSHOTGUN, 2.0, 64.0, 1, 1},
+{15.0, 19.0, ESTIM, 5.0, 128.0, 1, 1}
 };
 
 /// @brief Init Weapon stats
@@ -171,7 +172,7 @@ void	init_doors(t_vars *v)
 	tmp = v->mapv.map;
 	v->door = (t_door *)malloc(sizeof(t_door) * (v->game.nb_door));
 	if (!v->door)
-		exit((prterr(v, ERRMALL, 1, 0), 1));
+		exit((prterr(v, ERRMALL, 1, 1), 1));
 	while (tmp)
 	{
 		if (tmp->val == 'D')
@@ -187,62 +188,66 @@ void	init_doors(t_vars *v)
 	}
 }
 
-void	init_objects(t_vars *v, int j)
+void	init_objects(t_vars *v, t_actor *a)
 {
-	int	i;
+	int		i;
 
 	i = -1;
-	while (++j < v->game.nb_sprites)
+	while (++i < NUM_OBJS)
 	{
-		v->sprites[j] = (t_sprite){0};
-		v->sprites[j].x = g_objs[++i].x;
-		v->sprites[j].y = g_objs[i].y;
-		v->sprites[j].img_i = g_objs[i].img_id;
-		v->sprites[j].vdiv = g_objs[i].uv;
-		v->sprites[j].udiv = g_objs[i].uv;
-		v->sprites[j].vmove = g_objs[i].v;
-		v->sprites[j].hashitbox = g_objs[i].h;
-		v->sprites[j].pickable = g_objs[i].pickable;
-		v->sprites[j].active = 1;
+		a = (t_actor *)ft_calloc(1, sizeof(t_actor));
+		if (!a)
+			exit((prterr(v, ERRMALL, 1, 1), 1));
+		a->x = g_objs[i].x;
+		a->y = g_objs[i].y;
+		a->img_i = g_objs[i].img_id;
+		a->vdiv = g_objs[i].uv;
+		a->udiv = g_objs[i].uv;
+		a->vmove = g_objs[i].v;
+		a->hashitbox = g_objs[i].h;
+		a->pickable = g_objs[i].pickable;
+		a->active = 1;
+		add_actor(v, &v->actors, &a);
 	}
 }
 
-int	init_guard(t_vars *v, int j, t_map *tmp)
+void	init_guard(t_vars *v, t_map *tmp, t_actor *a)
 {
 	while (tmp)
 	{
 		if (tmp->val == 'G')
 		{
-			v->sprites[++j] = (t_sprite){0};
-			v->sprites[j].x = tmp->x;
-			v->sprites[j].y = tmp->y;
-			v->sprites[j].hp = 60;
-			v->sprites[j].img_i = EGUARDW;
-			v->sprites[j].vdiv = 1.0;
-			v->sprites[j].udiv = 1.0;
-			v->sprites[j].isguard = 1;
-			v->sprites[j].ms = 2.2;
-			v->sprites[j].painchance = 40;
-			v->sprites[j].hasmelee = 0;
-			v->sprites[j].hasrange = 1;
-			v->sprites[j].hashitbox = 1;
-			v->sprites[j].dmg = 15;
-			v->sprites[j].active = 1;
+			a = (t_actor *)ft_calloc(1, sizeof(t_actor));
+			if (!a)
+				exit((prterr(v, ERRMALL, 1, 1), 1));
+			a->x = tmp->x;
+			a->y = tmp->y;
+			a->hp = 60;
+			a->img_i = EGUARDW;
+			a->vdiv = 1.0;
+			a->udiv = 1.0;
+			a->isguard = 1;
+			a->ms = 2.2;
+			a->painchance = 40;
+			a->hasrange = 1;
+			a->hashitbox = 1;
+			a->dmg = 15;
+			a->active = 1;
+			a->next = a;
+			a->prev = a;
+			add_actor(v, &v->actors, &a);
 		}
 		tmp = tmp->right;
 	}
-	return (j);
 }
 
-void	init_sprites(t_vars *v)
+void	init_actors(t_vars *v)
 {
-	int	j;
-
-	j = -1;
-	j = init_guard(v, j, v->mapv.map);
-	init_objects(v, j);
+	init_guard(v, v->mapv.map, NULL);
+	init_objects(v, NULL);
 }
 
+// v->game.nb_actors = v->game.nb_guard + NUM_OBJS;
 void	check_map(t_vars *v)
 {
 	init_random_melting_array(v);
@@ -251,12 +256,9 @@ void	check_map(t_vars *v)
 	v->player.y = v->player.player->y + 0.5;
 	v->player.animp = EIFIST;
 	v->player.animoff = 0;
-	v->game.nb_sprites = v->game.nb_guard + NUM_OBJS;
 	init_doors(v);
-	v->sprites = (t_sprite *)malloc(sizeof(t_sprite) * (v->game.nb_sprites));
-	if (!v->sprites)
-		exit((prterr(v, ERRMALL, 1, 0), 1));
-	init_sprites(v);
+	init_actors(v);
+	printactors(v);
 }
 
 void	init(t_vars *v, int argc, char **argv)

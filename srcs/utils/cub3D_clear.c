@@ -130,6 +130,8 @@ int	cleardata(t_vars *v, int b)
 		return (ft_printf(2, "ERROR Destroy Imgs/Win/Disp\n"), 1);
 	if (v->mapv.map && map_clear(v->mapv.map) < 0)
 		return (ft_printf(2, "ERROR Destroy Map\n"));
+	if (v->actors && actors_clear(v->actors) < 0)
+		return (ft_printf(2, "ERROR Destroy Actors\n"));
 	if (b && v->mlx)
 		free(v->mlx);
 	if (v->infos.map)
@@ -140,8 +142,6 @@ int	cleardata(t_vars *v, int b)
 		free(v->ray.zbuffer);
 	if (b && v->door)
 		free(v->door);
-	if (b && v->sprites)
-		free(v->sprites);
 	if (v->rand)
 		free(v->rand);
 	return (0);

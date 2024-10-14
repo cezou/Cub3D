@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 09:51:53 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/13 19:42:23 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/14 13:42:38 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,30 +61,30 @@ bool	give_ammo(t_vars *v, int img, int num, t_ammo ammo)
 
 /// @brief Interaction with things/items pickup
 /// @param v Vars
-/// @param sp Thing touched
-void	touch_thing(t_vars *v, t_sprite *sp)
+/// @param a Thing touched
+void	touch_thing(t_vars *v, t_actor *a)
 {
-	if (sp->img_i == ESTIM && !give_body(v, 10, 0))
+	if (a->img_i == ESTIM && !give_body(v, 10, 0))
 		return ;
-	else if (sp->img_i == EMEDI && !give_body(v, 25, 1))
+	else if (a->img_i == EMEDI && !give_body(v, 25, 1))
 		return ;
-	else if (sp->img_i == EPBFG && !give_weapon(v, EBFG, GOTBFG9000))
+	else if (a->img_i == EPBFG && !give_weapon(v, EBFG, GOTBFG9000))
 		return ;
-	else if (sp->img_i == EPSHOTGUN && !give_weapon(v, ESHOTGUN, GOTSHOTGUN))
+	else if (a->img_i == EPSHOTGUN && !give_weapon(v, ESHOTGUN, GOTSHOTGUN))
 		return ;
-	else if (sp->img_i == EPGATLIN && !give_weapon(v, EGATLIN, GOTCHAINGUN))
+	else if (a->img_i == EPGATLIN && !give_weapon(v, EGATLIN, GOTCHAINGUN))
 		return ;
-	else if (sp->img_i == EPROCKETL && !give_weapon(v, EROCKETL, GOTLAUNCHER))
+	else if (a->img_i == EPROCKETL && !give_weapon(v, EROCKETL, GOTLAUNCHER))
 		return ;
-	else if (sp->img_i == EPPLASMA && !give_weapon(v, EPLASMA, GOTPLASMA))
+	else if (a->img_i == EPPLASMA && !give_weapon(v, EPLASMA, GOTPLASMA))
 		return ;
-	else if (sp->img_i == EPCHAINSAW && !give_weapon(v, ECHAINSAW, GOTCHAINSAW))
+	else if (a->img_i == EPCHAINSAW && !give_weapon(v, ECHAINSAW, GOTCHAINSAW))
 		return ;
-	else if (sp->img_i == EPSUPERSHOTGUN
+	else if (a->img_i == EPSUPERSHOTGUN
 		&& !give_weapon(v, ESUPERSHOTGUN, GOTSHOTGUN2))
 		return ;
-	if (!give_armor(v, sp) || !give_ammo(v, sp->img_i, 1, 0)
-		|| !give_cards(v, sp))
+	if (!give_armor(v, a) || !give_ammo(v, a->img_i, 1, 0)
+		|| !give_cards(v, a))
 		return ;
 	ft_printf(1, "%s\n", v->game.message);
 }

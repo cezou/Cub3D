@@ -16,12 +16,12 @@ void	hotreload_clear(t_vars *v, char *filename)
 {
 	if (v->mapv.map)
 		map_clear(v->mapv.map);
+	if (v->actors)
+		actors_clear(v->actors);
 	if (v->infos.map)
 		freeall(v->infos.map);
 	if (v->door)
 		free(v->door);
-	if (v->sprites)
-		free(v->sprites);
 	if (v->rand)
 		free(v->rand);
 	v->infos = (t_infos){0};
@@ -29,12 +29,13 @@ void	hotreload_clear(t_vars *v, char *filename)
 	parsing(4, filename, v);
 	v->door = NULL;
 	v->exit = NULL;
-	v->sprites = NULL;
 	v->last = NULL;
 	v->rand = NULL;
+	v->actors = NULL;
 	v->sp = (t_sprite_data){0};
 	v->game = (t_game){0};
 	v->game.start = 2;
+	v->game.nb_actors = 0;
 	m_clearrandom(v);
 	clearimgs(v);
 }

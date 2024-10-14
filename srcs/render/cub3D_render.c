@@ -119,6 +119,7 @@ int	render(t_vars *v)
 	v->game.oldtime = v->game.time;
 	v->game.time = timestamp_in_ms(v);
 	v->game.frametime = (v->game.time - v->game.oldtime) / 1000.0;
+	// printf("%f\n", 1.0 / v->game.frametime);
 	return (displaytext(v, NULL, NULL), v->game.start++, 0);
 }
 // save_screen_to_buffer(v->img[EBUFF], v->img[EMAP], 0);

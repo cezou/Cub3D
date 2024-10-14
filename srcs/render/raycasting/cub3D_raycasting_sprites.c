@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/13 13:47:08 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/14 18:01:09 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@
 /// @param sp Sprite struct containing calcul datas
 /// @param g The actual sprite to draw
 // using 'transformY' instead of the real distance prevents fisheye 
-void	transform_sprite(t_vars *v, t_sprite_data *sp, t_sprite g)
+void	transform_sprite(t_vars *v, t_sprite_data *sp, t_actor *g)
 {
 	double		invdet;
 	double		spritex;
 	double		spritey;
 	double		transformx;
 
-	spritex = g.x - v->player.x;
-	spritey = g.y - v->player.y;
+	spritex = g->x - v->player.x;
+	spritey = g->y - v->player.y;
 	invdet = 1.0 / (v->player.plane_x * v->player.dir_y
 			- v->player.plane_y * v->player.dir_x);
 	transformx = invdet * (v->player.dir_y * spritex
@@ -34,16 +34,16 @@ void	transform_sprite(t_vars *v, t_sprite_data *sp, t_sprite g)
 			- v->player.plane_y * spritex);
 	sp->spritescreenx = (int)((v->screen.resw / 2)
 			* (1 + transformx / sp->transformy));
-	sp->vmovescreen = (int)(g.vmove / sp->transformy)
+	sp->vmovescreen = (int)(g->vmove / sp->transformy)
 		+ v->ray.pitch + v->player.z / sp->transformy;
-	sp->spriteheight = abs((int)(v->screen.gameh / sp->transformy)) / g.vdiv;
+	sp->spriteheight = abs((int)(v->screen.gameh / sp->transformy)) / g->vdiv;
 }
 
 /// @brief Set dimensions of the sprite
 /// @param v Vars
 /// @param sp Sprite struct containing calcul datas 
 /// @param g The actual sprite to draw
-void	set_sprite_boundaries(t_vars *v, t_sprite_data *sp, t_sprite g)
+void	set_sprite_boundaries(t_vars *v, t_sprite_data *sp, t_actor *g)
 {
 	sp->drawstarty = -sp->spriteheight / 2
 		+ v->screen.gameh / 2 + sp->vmovescreen;
@@ -52,7 +52,7 @@ void	set_sprite_boundaries(t_vars *v, t_sprite_data *sp, t_sprite g)
 	sp->drawendy = sp->spriteheight / 2 + v->screen.gameh / 2 + sp->vmovescreen;
 	if (sp->drawendy >= v->screen.gameh)
 		sp->drawendy = v->screen.gameh - 1;
-	sp->spritewidth = abs((int)(v->screen.gameh / sp->transformy)) / g.udiv;
+	sp->spritewidth = abs((int)(v->screen.gameh / sp->transformy)) / g->udiv;
 	sp->drawstartx = -sp->spritewidth / 2 + sp->spritescreenx;
 	if (sp->drawstartx < 0)
 		sp->drawstartx = 0;
@@ -65,39 +65,30 @@ void	set_sprite_boundaries(t_vars *v, t_sprite_data *sp, t_sprite g)
 /// @param v Vars
 /// @param i Increment variable =-1
 /// @param sort Integer used to sort =0
-void	sort_sprites(t_vars *v, int i, int sort)
+void	sort_sprites(t_vars *v)
 {
-	while (++i < v->game.nb_sprites)
+	t_actor	*head;
+	t_actor	*tmp;
+	int		i;
+
+	i = -1;
+	head = v->actors;
+	tmp = v->actors->next;
+	while (++i < v->game.nb_actors)
 	{
-		v->sprites[i].dist = pow((v->player.x - v->sprites[i].x), 2)
-			+ pow((v->player.y - v->sprites[i].y), 2);
+		tmp->dist = pow((v->player.x - tmp->x), 2)
+			+ pow((v->player.y - tmp->y), 2);
+		tmp = tmp->next;
 	}
-	i = 0;
-	while (true)
-	{
-		if (i < v->game.nb_sprites - 1)
-		{
-			if (v->sprites[i].dist < v->sprites[i + 1].dist)
-				ft_swaps((sort = 1, &v->sprites[i]), &v->sprites[i + 1]);
-			else
-				sort++;
-			if (sort == v->game.nb_sprites - 1)
-				break ;
-			i++;
-		}
-		else
-		{
-			i = 0;
-			sort = 0;
-		}
-	}
+	i = -1;
+	sort_descending(&v->actors);
 }
 
 /// @brief Add pixels of the sprite to the buffer
 /// @param v Vars
 /// @param sp Sprite struct containing calcul datas 
 /// @param p The actual sprite to draw
-void	draw_sprite(t_vars *v, t_sprite_data *sp, t_sprite *g, t_point p)
+void	draw_sprite(t_vars *v, t_sprite_data *sp, t_actor *g, t_point p)
 {
 	int		tx;
 	int		ty;
@@ -130,17 +121,25 @@ void	draw_sprite(t_vars *v, t_sprite_data *sp, t_sprite *g, t_point p)
 /// @param v Vars
 void	draw_sprites(t_vars *v)
 {
+	t_actor	*head;
+	t_actor	*tmp;
 	int		i;
 
 	i = -1;
-	sort_sprites(v, -1, 0);
-	while (++i < v->game.nb_sprites)
+	head = v->actors;
+	tmp = v->actors->next;
+	sort_sprites(v);
+	while (++i < v->game.nb_actors)
 	{
-		if (!v->sprites[i].active)
+		if (!tmp->active)
+		{
+			tmp = tmp->next;
 			continue ;
-		v->tmp[0] = v->img[v->sprites[i].img_i];
-		transform_sprite(v, &v->sp, v->sprites[i]);
-		set_sprite_boundaries(v, &v->sp, v->sprites[i]);
-		draw_sprite(v, &v->sp, &v->sprites[i], (t_point){0});
+		}
+		v->tmp[0] = v->img[tmp->img_i];
+		transform_sprite(v, &v->sp, tmp);
+		set_sprite_boundaries(v, &v->sp, tmp);
+		draw_sprite(v, &v->sp, tmp, (t_point){0});
+		tmp = tmp->next;
 	}
 }

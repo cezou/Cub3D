@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/13 13:46:31 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/14 15:59:33 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 /// @brief Update sprite animations attack range
 /// @param v Vars
-/// @param sp Sprite to update
-inline void	update_sprite_anim_attackr(t_vars *v, t_sprite *sp)
+/// @param a Sprite to update
+inline void	update_sprite_anim_attackr(t_vars *v, t_actor *a)
 {
 	int	d;
 
-	if (sp->animoff >= v->img[sp->img_i].width)
+	if (a->animoff >= v->img[a->img_i].width)
 	{
-		sp->justattack = 1;
-		sp->animoff = 0;
-		sp->state = ECHASE;
-		sp->img_i = EGUARDW;
-		sp->timestate = 0;
+		a->justattack = 1;
+		a->animoff = 0;
+		a->state = ECHASE;
+		a->img_i = EGUARDW;
+		a->timestate = 0;
 	}
-	else if (sp->animoff == v->img[sp->img_i].animx)
+	else if (a->animoff == v->img[a->img_i].animx)
 	{
-		d = sp->dmg / (p_random(v) % 5 + 1);
+		d = a->dmg / (p_random(v) % 5 + 1);
 		v->player.hit += d;
 		v->game.pain = d * 5;
 	}
@@ -37,41 +37,41 @@ inline void	update_sprite_anim_attackr(t_vars *v, t_sprite *sp)
 
 /// @brief Update sprite animation pain
 /// @param v Vars
-/// @param sp Sprite to update
-inline void	update_sprite_anim_pain(t_vars *v, t_sprite *sp)
+/// @param a Sprite to update
+inline void	update_sprite_anim_pain(t_vars *v, t_actor *a)
 {
-	sp->animoff = 0;
-	if (timestamp_in_ms(v) - sp->timestate > 500)
+	a->animoff = 0;
+	if (timestamp_in_ms(v) - a->timestate > 500)
 	{
-		sp->state = ECHASE;
-		sp->img_i = EGUARDW;
-		sp->timestate = 0;
+		a->state = ECHASE;
+		a->img_i = EGUARDW;
+		a->timestate = 0;
 	}
 }
 
 /// @brief Update sprite animation death
 /// @param v Vars
-/// @param sp Sprite to update
-inline void	update_sprite_anim_death(t_vars *v, t_sprite *sp)
+/// @param a Sprite to update
+inline void	update_sprite_anim_death(t_vars *v, t_actor *a)
 {
-	if (sp->animoff >= v->img[sp->img_i].width - v->img[sp->img_i].animx)
+	if (a->animoff >= v->img[a->img_i].width - v->img[a->img_i].animx)
 	{
-		sp->state = EDEAD;
-		sp->hashitbox = 0;
-		sp->stop = 1;
-		sp->animoff = v->img[sp->img_i].width - v->img[sp->img_i].animx;
+		a->state = EDEAD;
+		a->hashitbox = 0;
+		a->stop = 1;
+		a->animoff = v->img[a->img_i].width - v->img[a->img_i].animx;
 	}
 }
 
 /// @brief Update sprite animation chase
 /// @param v Vars
-/// @param sp Sprite to update
-inline void	update_sprite_anim_chase(t_vars *v, t_sprite *sp)
+/// @param a Sprite to update
+inline void	update_sprite_anim_chase(t_vars *v, t_actor *a)
 {
-	if (sp->animoff >= v->img[sp->img_i].width)
+	if (a->animoff >= v->img[a->img_i].width)
 	{
-		sp->justattack = 0;
-		sp->animoff = 0;
+		a->justattack = 0;
+		a->animoff = 0;
 	}
 }
 
@@ -84,27 +84,35 @@ inline void	update_sprite_anim_chase(t_vars *v, t_sprite *sp)
 /// @param v Vars
 void	update_sprites_animations(t_vars *v)
 {
-	int	i;
+	t_actor	*head;
+	t_actor	*tmp;
+	int		i;
 
 	i = -1;
-	while (++i < v->game.nb_sprites)
+	head = v->actors;
+	tmp = v->actors->next;
+	while (++i < v->game.nb_actors)
 	{
-		if (!v->sprites[i].active || !v->sprites[i].isguard)
+		if (!tmp->active || !tmp->isguard)
+		{
+			tmp = tmp->next;
 			continue ;
-		if (timestamp_in_ms(v) - v->sprites[i].time
+		}
+		if (timestamp_in_ms(v) - tmp->time
 			>= (uint64_t)(5000 / v->game.fps))
 		{
-			if (v->sprites[i].state != EIDLE && !v->sprites[i].stop)
-				v->sprites[i].animoff += v->img[v->sprites[i].img_i].animx;
-			v->sprites[i].time = timestamp_in_ms(v);
-			if (v->sprites[i].state == EDEAD)
-				update_sprite_anim_death(v, &v->sprites[i]);
-			else if (v->sprites[i].state == EPAIN)
-				update_sprite_anim_pain(v, &v->sprites[i]);
-			else if (v->sprites[i].state == EATTACKR)
-				update_sprite_anim_attackr(v, &v->sprites[i]);
-			if (v->sprites[i].state == ECHASE)
-				update_sprite_anim_chase(v, &v->sprites[i]);
+			if (tmp->state != EIDLE && !tmp->stop)
+				tmp->animoff += v->img[tmp->img_i].animx;
+			tmp->time = timestamp_in_ms(v);
+			if (tmp->state == EDEAD)
+				update_sprite_anim_death(v, tmp);
+			else if (tmp->state == EPAIN)
+				update_sprite_anim_pain(v, tmp);
+			else if (tmp->state == EATTACKR)
+				update_sprite_anim_attackr(v, tmp);
+			if (tmp->state == ECHASE)
+				update_sprite_anim_chase(v, tmp);
 		}
+		tmp = tmp->next;
 	}
 }

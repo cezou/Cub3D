@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/13 23:51:09 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/14 18:03:41 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -423,6 +423,7 @@ typedef enum s_components
 	EPPLASMA,
 	EPCHAINSAW,
 	EPSUPERSHOTGUN,
+	EPLASMABOLT,
 	EMENUSELECT,
 	EMENU,
 	EMENUIG,
@@ -480,6 +481,17 @@ typedef struct s_point3
 	double					v;
 }							t_point3;
 
+typedef struct s_point4
+{
+	double					x;
+	double					y;
+	double					vectorx;
+	double					vectory;
+	double					uv;
+	double					v;
+	int						img_id;
+}							t_point4;
+
 typedef struct s_obj
 {
 	double					x;
@@ -507,6 +519,39 @@ typedef struct s_map
 	struct s_map			*up;
 	struct s_map			*down;
 }							t_map;
+
+typedef struct s_actor
+{
+	int						active;
+	double					x;
+	double					y;
+	int						hp;
+	int						dmg;
+	int						hashitbox;
+	int						justattack;
+	int						hasrange;
+	int						hasmelee;
+	int						painchance;
+	int						isguard;
+	int						pickable;
+	int						stop;
+	int						state;
+	int						img_i;
+	int						xdelta;
+	int						animoff;
+	double					ms;
+	double					vdiv;
+	double					udiv;
+	double					vmove;
+	double					dist;
+	double					vectorx;
+	double					vectory;
+	uint64_t				timestate;
+	uint64_t				time;
+	uint64_t				timem;
+	struct s_actor			*prev;
+	struct s_actor			*next;
+}							t_actor;
 
 typedef struct s_imga
 {
@@ -744,6 +789,8 @@ typedef struct s_sprite
 	double					udiv;
 	double					vmove;
 	double					dist;
+	double					vectorx;
+	double					vectory;
 	uint64_t				timestate;
 	uint64_t				time;
 	uint64_t				timem;
@@ -764,13 +811,6 @@ typedef struct s_mapv
 	int						shifty;
 	char					*filename;
 }							t_mapv;
-
-typedef struct s_proj
-{
-	int						atttravel;
-	int						atttravelframe;
-	int						dirproj;
-}							t_proj;
 
 typedef struct s_menu
 {
@@ -811,16 +851,10 @@ typedef struct s_game
 	t_imga					skybox;
 	int						nb_door;
 	int						nb_guard;
-	int						nb_sprites;
+	int						nb_actors;
 	int						canhit;
 	char					*message;
 }							t_game;
-
-// images: verifier que le path finit bien par .xpm, que le fichier existe,
-// 		qu'on a les permissions pour louvrir.
-// couleur: entre 0 et 255
-
-// Map: - Ne peut pas avoir de
 
 typedef struct s_boolimage
 {
@@ -855,6 +889,7 @@ typedef struct s_vars
 	bool					mouses[MAX_MOUSE];
 	Cursor					cursor;
 	Pixmap					blank;
+	t_actor					*actors;
 	t_imga					*img;
 	t_mouse					mouse;
 	t_map					*exit;
@@ -864,9 +899,7 @@ typedef struct s_vars
 	t_game					game;
 	t_screen				screen;
 	t_menu					menu;
-	t_proj					proj;
 	t_door					*door;
-	t_sprite				*sprites;
 	t_mapv					mapv;
 	t_player				player;
 	t_ray					ray;
@@ -900,27 +933,32 @@ int							myrand(int nb);
 t_point2					get_90_angle(int dir, double x, double y);
 float						deg_to_rad(float deg);
 float						rad_to_deg(float rad);
-void						ft_swaps(t_sprite *a, t_sprite *b);
 int							find_door(t_vars *v, int x, int y);
 int							find_guard(t_vars *v, t_map *tmp);
-void						hitguard(t_vars *v, t_sprite_data *sp, t_sprite *g);
+void						hitguard(t_vars *v, t_sprite_data *sp, t_actor *g);
 void						guardattack(t_vars *v, t_sprite_data *sp,
-								t_sprite *g);
+								t_actor *g);
 int							m_random(t_vars *v);
 int							p_random(t_vars *v);
 void						m_clearrandom(t_vars *v);
 void						save_screen_to_buffer(t_imga dest, t_imga src,
 								size_t offset);
+t_actor						*new_actor(t_vars *v, t_sprite p);
+void						add_actor(t_vars *v, t_actor **actors,
+								t_actor **node);
+int							printactors(t_vars *v);
+void						sort_descending(t_actor **head);
+void						ft_swaps(t_actor **head, t_actor *a, t_actor *b);
 
 // Interactions
 
-void						touch_thing(t_vars *v, t_sprite *sp);
+void						touch_thing(t_vars *v, t_actor *a);
 bool						give_weapon(t_vars *v, t_weapons weapon,
 								char *mess);
 bool						give_ammo(t_vars *v, int img, int num, t_ammo ammo);
-bool						give_armor(t_vars *v, t_sprite *sp);
+bool						give_armor(t_vars *v, t_actor *a);
 bool						give_body(t_vars *v, int num, int sp);
-bool						give_cards(t_vars *v, t_sprite *sp);
+bool						give_cards(t_vars *v, t_actor *a);
 
 // Time
 
@@ -934,6 +972,7 @@ int							clearimgs(t_vars *v);
 int							freeall(char **tab);
 int							cleardata(t_vars *vars, int b);
 int							map_clear(t_map *lst);
+int							actors_clear(t_actor *lst);
 
 // Init
 void						init(t_vars *v, int argc, char **argv);
@@ -1011,12 +1050,12 @@ void						draw_floor_ceiling(t_vars *v);
 
 void						draw_sprites(t_vars *v);
 void						draw_sprite(t_vars *v, t_sprite_data *sp,
-								t_sprite *g, t_point p);
+								t_actor *g, t_point p);
 void						transform_sprite(t_vars *v, t_sprite_data *sp,
-								t_sprite g);
+								t_actor *g);
 void						set_sprite_boundaries(t_vars *v, t_sprite_data *sp,
-								t_sprite g);
-void						sort_sprites(t_vars *v, int i, int sort);
+								t_actor *g);
+void						sort_sprites(t_vars *v);
 
 void						draw_skybox(t_vars *v, t_point p, int *t);
 

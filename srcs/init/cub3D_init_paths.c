@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/14 00:24:38 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/14 18:09:40 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	initpathtext(t_vars *v)
 	v->img[EPPLASMA].filename = "resources/textures/pplasma.xpm";
 	v->img[EPCHAINSAW].filename = "resources/textures/pchainsaw.xpm";
 	v->img[EPSUPERSHOTGUN].filename = "resources/textures/psupershotgun.xpm";
+	v->img[EPLASMABOLT].filename = "resources/textures/plasmabolt.xpm";
 }
 
 void	initanim(t_vars *v, int index, int b, int animnb)
@@ -98,17 +99,17 @@ void	initplayerpathanim(t_vars *v)
 	v->img[EIGUN].filename = "resources/textures/gun.xpm";
 	initanim(v, EIGUN, 1, 7);
 	v->img[EISHOTGUN].filename = "resources/textures/shotgun.xpm";
-	initanim(v, EISHOTGUN, 0, 8);
+	initanim(v, EISHOTGUN, 1, 8);
 	v->img[EIGATLIN].filename = "resources/textures/gatlin.xpm";
-	initanim(v, EIGATLIN, 0, 3);
+	initanim(v, EIGATLIN, 1, 3);
 	v->img[EIROCKl].filename = "resources/textures/rocketl.xpm";
-	initanim(v, EIROCKl, 0, 6);
+	initanim(v, EIROCKl, 1, 6);
 	v->img[EIPLASMA].filename = "resources/textures/plasma.xpm";
-	initanim(v, EIPLASMA, 0, 4);
+	initanim(v, EIPLASMA, 1, 4);
 	v->img[EICHAINSAW].filename = "resources/textures/chainsaw.xpm";
-	initanim(v, EICHAINSAW, 0, 4);
+	initanim(v, EICHAINSAW, 1, 4);
 	v->img[EISUPERSHOTGUN].filename = "resources/textures/supershotgun.xpm";
-	initanim(v, EISUPERSHOTGUN, 0, 10);
+	initanim(v, EISUPERSHOTGUN, 1, 10);
 	v->img[EIBFG].filename = "resources/textures/bfg.xpm";
 	initanim(v, EIBFG, 0, 4);
 }

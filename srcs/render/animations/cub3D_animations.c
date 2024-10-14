@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/11 16:28:46 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/14 15:59:54 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,25 +44,33 @@ void	update_door_animations(t_vars *v, int i)
 /// @param v 
 void	update_guard_movement(t_vars *v)
 {
-	int	i;
+	t_actor	*head;
+	t_actor	*tmp;
+	int		i;
 
 	i = -1;
-	while (++i < v->game.nb_sprites)
+	head = v->actors;
+	tmp = v->actors->next;
+	while (++i < v->game.nb_actors)// TODO Fuse with update_sprites_animations() to optimize
 	{
-		if (!v->sprites[i].isguard)
+		if (!tmp->isguard)
+		{
+			tmp = tmp->next;
 			continue ;
-		if (timestamp_in_ms(v) - v->sprites[i].timem
+		}
+		if (timestamp_in_ms(v) - tmp->timem
 			>= (uint64_t)(5000 / v->game.fps))
 		{
-			v->sprites[i].timem = timestamp_in_ms(v);
-			if (v->sprites[i].state == ECHASE)
+			tmp->timem = timestamp_in_ms(v);
+			if (tmp->state == ECHASE)
 			{
-				v->sprites[i].x = v->sprites[i].x + v->sprites[i].ms
-					* v->game.frametime * (v->player.x + 0.5 - v->sprites[i].x);
-				v->sprites[i].y = v->sprites[i].y + v->sprites[i].ms
-					* v->game.frametime * (v->player.y + 0.5 - v->sprites[i].y);
+				tmp->x = tmp->x + tmp->ms
+					* v->game.frametime * (v->player.x + 0.5 - tmp->x);
+				tmp->y = tmp->y + tmp->ms
+					* v->game.frametime * (v->player.y + 0.5 - tmp->y);
 			}
 		}
+		tmp = tmp->next;
 	}
 }
 

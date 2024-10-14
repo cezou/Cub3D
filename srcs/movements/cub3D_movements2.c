@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 18:24:52 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/13 17:03:26 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/14 15:59:12 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,29 @@
 /// @brief 
 /// @param v 
 /// @return 
-bool	sprites_collisions(t_vars *v, t_point2 p)
+bool	sprites_collisions(t_vars *v, t_point2 p, t_actor *head, t_actor *tmp)
 {
-	int		i;
 	double	d;
+	int		i;
 
 	i = -1;
-	while (++i < v->game.nb_sprites)
+	head = v->actors;
+	tmp = v->actors->next;
+	while (++i < v->game.nb_actors)
 	{
-		if ((!v->sprites[i].hashitbox) || !v->sprites[i].active)
+		if ((!tmp->hashitbox) || !tmp->active)
+		{
+			tmp = tmp->next;
 			continue ;
-		d = pow((p.x - v->sprites[i].x), 2)
-			+ pow((p.y - v->sprites[i].y), 2);
+		}
+		d = pow((p.x - tmp->x), 2) + pow((p.y - tmp->y), 2);
 		if (d < 0.20)
 		{
-			if (v->sprites[i].pickable)
-			{
-				v->sprites[i].active = 0;
-				touch_thing(v, &v->sprites[i]);
-			}
+			if (tmp->pickable)
+				touch_thing((tmp->active = 0, v), tmp);
 			return (false);
 		}
+		tmp = tmp->next;
 	}
 	return (true);
 }
@@ -71,8 +73,8 @@ static bool	is_valid_pos(t_vars *v, t_map *pos, t_point2 p, int d)
 	}
 	else if (pos->val != '1')
 		o = 1;
-	return (o && sprites_collisions(v, p) && pos->x == p.z && pos->y == p.t
-		&& pos->x >= 0 && pos->y >= 0);
+	return (o && sprites_collisions(v, p, NULL, NULL) && pos->x == p.z
+		&& pos->y == p.t && pos->x >= 0 && pos->y >= 0);
 }
 
 /// @brief Function to update the player's position
