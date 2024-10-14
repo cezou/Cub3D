@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D_scenes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 09:51:53 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/08 17:59:13 by cviegas          ###   ########.fr       */
+/*   Updated: 2024/10/14 19:30:33 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int	transition_melt_screen(t_vars *v)
 	static int	delta = 0;
 
 	done = true;
+	(void)delta;
 	// if (!delta && timestamp_in_ms(v) - v->game.updated_at < (uint64_t)5000)
 	// 	return (mlx_put_image_to_window(v->mlx, v->screen.win,
 	// 			v->img[COMP_N].img, 0, 0), delta = 0, 1);

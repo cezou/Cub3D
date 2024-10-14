@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/09 12:59:27 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/09 21:51:07 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static bool	is_bad_res(t_vars *v)
 void	initwindow(t_vars *v, int argc, char **argv)
 {
 	mlx_get_screen_size(v->mlx, &v->screen.screenw, &v->screen.screenh);
+	printf("%d:%d\n", v->screen.screenw, v->screen.screenh);
 	v->screen.screenw--;
 	v->screen.screenh -= TOOLBAR_LINUX_H;
 	v->screen.resw = v->screen.screenw;
@@ -51,9 +52,9 @@ void	initwindow(t_vars *v, int argc, char **argv)
 		v->screen.resh = ft_atol(argv[3]);
 		if (is_bad_res(v))
 			exit((prterr(v, ERRRES, 1, 0), 1));
-		if (v->screen.resw > v->screen.screenw
-			|| v->screen.resh > v->screen.screenh)
-			exit((prterr(v, "Resolution is bigger than your screen", 1, 0), 1));
+		// if (v->screen.resw > v->screen.screenw
+		// 	|| v->screen.resh > v->screen.screenh)
+		// 	exit((prterr(v, "Resolution is bigger than your screen", 1, 0), 1));
 	}
 	initmainimage(v);
 	v->screen.win = mlx_new_window(v->mlx, (int)v->screen.resw,

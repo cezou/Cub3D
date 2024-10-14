@@ -71,6 +71,8 @@ t_actor	*new_actor(t_vars *v, t_sprite sp)
 	if (!node)
 		return (NULL);
 	node->active = sp.active;
+	node->isprojectile = sp.isprojectile;
+	node->state = sp.state;
 	node->x = sp.x;
 	node->y = sp.y;
 	node->next = node;

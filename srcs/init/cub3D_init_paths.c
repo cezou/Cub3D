@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/14 18:09:40 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:21:00 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,8 @@ void	initguardpathanim(t_vars *v)
 	v->img[EGUARDW].animx = v->img[EGUARDW].width / 4;
 	v->img[EGUARDDEATH].animx = v->img[EGUARDDEATH].width / 4;
 	v->img[EGUARDATTR].animx = v->img[EGUARDATTR].width / 4;
+
+	v->img[EPLASMABOLT].animx = v->img[EPLASMABOLT].width / 7;
 }
 
 // void	initprojectilepathanim(t_vars *v)

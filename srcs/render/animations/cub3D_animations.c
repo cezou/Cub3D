@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/14 15:59:54 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:12:25 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,10 @@ void	update_door_animations(t_vars *v, int i)
 /// @param v 
 void	update_guard_movement(t_vars *v)
 {
-	t_actor	*head;
 	t_actor	*tmp;
 	int		i;
 
 	i = -1;
-	head = v->actors;
 	tmp = v->actors->next;
 	while (++i < v->game.nb_actors)// TODO Fuse with update_sprites_animations() to optimize
 	{

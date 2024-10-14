@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/14 18:01:09 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:12:12 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,10 @@ void	set_sprite_boundaries(t_vars *v, t_sprite_data *sp, t_actor *g)
 /// @param sort Integer used to sort =0
 void	sort_sprites(t_vars *v)
 {
-	t_actor	*head;
 	t_actor	*tmp;
 	int		i;
 
 	i = -1;
-	head = v->actors;
 	tmp = v->actors->next;
 	while (++i < v->game.nb_actors)
 	{
@@ -121,12 +119,10 @@ void	draw_sprite(t_vars *v, t_sprite_data *sp, t_actor *g, t_point p)
 /// @param v Vars
 void	draw_sprites(t_vars *v)
 {
-	t_actor	*head;
 	t_actor	*tmp;
 	int		i;
 
 	i = -1;
-	head = v->actors;
 	tmp = v->actors->next;
 	sort_sprites(v);
 	while (++i < v->game.nb_actors)

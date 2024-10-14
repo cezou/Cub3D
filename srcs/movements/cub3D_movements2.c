@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 18:24:52 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/14 15:59:12 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:12:50 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,12 @@
 /// @brief 
 /// @param v 
 /// @return 
-bool	sprites_collisions(t_vars *v, t_point2 p, t_actor *head, t_actor *tmp)
+bool	sprites_collisions(t_vars *v, t_point2 p, t_actor *tmp)
 {
 	double	d;
 	int		i;
 
 	i = -1;
-	head = v->actors;
 	tmp = v->actors->next;
 	while (++i < v->game.nb_actors)
 	{
@@ -73,7 +72,7 @@ static bool	is_valid_pos(t_vars *v, t_map *pos, t_point2 p, int d)
 	}
 	else if (pos->val != '1')
 		o = 1;
-	return (o && sprites_collisions(v, p, NULL, NULL) && pos->x == p.z
+	return (o && sprites_collisions(v, p, NULL) && pos->x == p.z
 		&& pos->y == p.t && pos->x >= 0 && pos->y >= 0);
 }
 

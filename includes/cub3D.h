@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/14 18:03:41 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:23:02 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -533,6 +533,7 @@ typedef struct s_actor
 	int						hasmelee;
 	int						painchance;
 	int						isguard;
+	int						isprojectile;
 	int						pickable;
 	int						stop;
 	int						state;
@@ -778,6 +779,7 @@ typedef struct s_sprite
 	int						hasmelee;
 	int						painchance;
 	int						isguard;
+	int						isprojectile;
 	int						pickable;
 	int						stop;
 	int						state;

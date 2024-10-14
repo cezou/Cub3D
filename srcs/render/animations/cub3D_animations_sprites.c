@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/14 15:59:33 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:27:16 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,16 +84,14 @@ inline void	update_sprite_anim_chase(t_vars *v, t_actor *a)
 /// @param v Vars
 void	update_sprites_animations(t_vars *v)
 {
-	t_actor	*head;
 	t_actor	*tmp;
 	int		i;
 
 	i = -1;
-	head = v->actors;
 	tmp = v->actors->next;
 	while (++i < v->game.nb_actors)
 	{
-		if (!tmp->active || !tmp->isguard)
+		if (!tmp->active || (!tmp->isguard && !tmp->isprojectile))
 		{
 			tmp = tmp->next;
 			continue ;
