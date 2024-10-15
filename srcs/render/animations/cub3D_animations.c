@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/14 19:12:25 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/15 10:09:39 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,38 +40,6 @@ void	update_door_animations(t_vars *v, int i)
 // 	timestamp_in_ms(v));
 // printf("Guard: %d, x: %f, y: %f\n", i, v->sprites[i].x, v->sprites[i].y);
 
-/// @brief 
-/// @param v 
-void	update_guard_movement(t_vars *v)
-{
-	t_actor	*tmp;
-	int		i;
-
-	i = -1;
-	tmp = v->actors->next;
-	while (++i < v->game.nb_actors)// TODO Fuse with update_sprites_animations() to optimize
-	{
-		if (!tmp->isguard)
-		{
-			tmp = tmp->next;
-			continue ;
-		}
-		if (timestamp_in_ms(v) - tmp->timem
-			>= (uint64_t)(5000 / v->game.fps))
-		{
-			tmp->timem = timestamp_in_ms(v);
-			if (tmp->state == ECHASE)
-			{
-				tmp->x = tmp->x + tmp->ms
-					* v->game.frametime * (v->player.x + 0.5 - tmp->x);
-				tmp->y = tmp->y + tmp->ms
-					* v->game.frametime * (v->player.y + 0.5 - tmp->y);
-			}
-		}
-		tmp = tmp->next;
-	}
-}
-
 /// @brief Update animations
 /// @param v Vars
 void	update_animations(t_vars *v)
@@ -81,5 +49,4 @@ void	update_animations(t_vars *v)
 	update_sprites_animations(v);
 	update_door_animations(v, -1);
 	update_player(v);
-	update_guard_movement(v);
 }

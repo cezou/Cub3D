@@ -58,33 +58,30 @@ int	mouse_up(int button, int x, int y, t_vars *p)
 	}
 	return (0);
 }
-		// printf("x: %d y: %d\n", x, y);
-		// // if ()
 
 int	mouse_move(int x, int y, t_vars *p)
 {
 	t_point2	f;
 
+	if (p->game.pause || p->game.start < 2 || !p->game.god)
+		return (0);
 	f.z = p->screen.gamew / 2;
 	f.t = p->screen.gameh / 2;
-	if (!p->game.pause && p->game.start > 1 && p->game.god)
-	{
-		if (x == f.z && y == f.t)
-			return (0);
-		p->game.canhit = 0;
-		p->mouse.prevx = x - f.z;
-		p->mouse.prevy = y - f.t;
-		f.x = (double)p->mouse.prevx / (double)p->screen.gamew * p->mouse.sensx;
-		f.y = (double)p->mouse.prevy / (double)p->screen.gameh * p->mouse.sensy;
-		if (x < p->mouse.prevx)
-			rotatecamx(p, RIGHT, f.x * p->player.mouserotspeed);
-		else if (x > p->mouse.prevx)
-			rotatecamx(p, LEFT, f.x * p->player.mouserotspeed);
-		if (y < p->mouse.prevy)
-			rotatecamy(p, UP, f.y * p->player.mouserotspeed, 400);
-		else if (y > p->mouse.prevy)
-			rotatecamy(p, DOWN, f.y * p->player.mouserotspeed, 400);
-		mlx_mouse_move(p->mlx, p->screen.win, f.z, f.t);
-	}
+	if (x == f.z && y == f.t)
+		return (0);
+	p->game.canhit = 0;
+	p->mouse.prevx = x - f.z;
+	p->mouse.prevy = y - f.t;
+	f.x = (double)p->mouse.prevx / (double)p->screen.gamew * p->mouse.sensx;
+	f.y = (double)p->mouse.prevy / (double)p->screen.gameh * p->mouse.sensy;
+	if (x < p->mouse.prevx)
+		rotatecamx(p, RIGHT, f.x * p->player.mouserotspeed);
+	else if (x > p->mouse.prevx)
+		rotatecamx(p, LEFT, f.x * p->player.mouserotspeed);
+	if (y < p->mouse.prevy)
+		rotatecamy(p, UP, f.y * p->player.mouserotspeed, 400);
+	else if (y > p->mouse.prevy)
+		rotatecamy(p, DOWN, f.y * p->player.mouserotspeed, 400);
+	mlx_mouse_move(p->mlx, p->screen.win, f.z, f.t);
 	return (0);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3D_hud_ammun.c                                  :+:      :+:    :+:   */
+/*   cub3D_hud_fps.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 20:43:05 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/15 11:40:52 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/15 11:47:24 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,16 @@
 /// @param i 
 /// @param j 
 /// @param xoff {xoff, i, j}
-void	rendersmalldigit(t_vars *v, int res[4], t_point g, int yoff)
+void	rendersmalldigitfps(t_vars *v, int res[4], t_point g, int yoff)
 {
 	t_point	p;
 	int		w;
 	int		delta;
 	int		d;
 
-	d = yoff - v->tmp[0].animy + (12 / v->hud.img.ratioy);
-	if (v->tmp[1].id == v->img[EBUFF].id)
-		d = v->screen.gameh + yoff - v->tmp[0].animy
-			+ (12 / v->hud.img.ratioy);
-	delta = (g.x / v->hud.img.ratiox)
-		- v->tmp[0].animx * res[g.z] - ((g.y + 1) - g.z) * v->tmp[0].animx
+	d = yoff - v->tmp[0].animy;
+	delta = g.x - v->tmp[0].animx * res[g.z]
+		- ((g.y + 1) - g.z) * v->tmp[0].animx
 		+ (3 / v->hud.img.ratiox) * ((g.y - 1) - g.z);
 	p.x = res[g.z] * (v->tmp[0].animx) - 1;
 	w = p.x + v->tmp[0].animx;
@@ -47,33 +44,30 @@ void	rendersmalldigit(t_vars *v, int res[4], t_point g, int yoff)
 	}
 }
 
-/// @brief 
-/// @param v 
-void	renderammun(t_vars *v, int xoff, int arr[4])
+void	render_fps(t_vars *v, double fps)
 {
 	int	res[4];
 	int	i;
 	int	j;
-	int	t;
+	int	xoff;
 
-	t = -1;
+	if (!v->hud.refreshfps)
+		return ;
 	v->tmp[0] = v->img[ESMALLNUMBERS];
-	while (++t < 4)
-	{
-		i = 0;
-		number_to_digits(v, arr[t], res, &i);
-		j = i;
+	i = 0;
+	number_to_digits(v, (int)fps, res, &i);
+	xoff = v->screen.gamew;
+	j = i;
+	res[j] = -1;
+	while (++j <= 3)
 		res[j] = -1;
-		while (++j <= 3)
-			res[j] = -1;
-		i--;
-		j = 4;
-		while (--j > -1)
-		{
-			if (res[j] == -1)
-				continue ;
-			rendersmalldigit(v, res, (t_point){xoff, i, j, v->tmp[0].height},
-				(v->tmp[0].animy - 4) * t);
-		}
+	i--;
+	j = 4;
+	while (--j > -1)
+	{
+		if (res[j] == -1)
+			continue ;
+		rendersmalldigitfps(v, res, (t_point){xoff, i, j, v->tmp[0].height}, 0);
 	}
+	v->hud.refreshfps = 0;
 }

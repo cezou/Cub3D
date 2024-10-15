@@ -6,7 +6,7 @@
 #    By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 11:28:17 by pmagnero          #+#    #+#              #
-#    Updated: 2024/10/14 16:52:22 by pmagnero         ###   ########.fr        #
+#    Updated: 2024/10/15 11:41:06 by pmagnero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -92,6 +92,7 @@ SRCS =	srcs/cub3D.c \
 		srcs/render/animations/cub3D_animations_sprites.c \
 		srcs/render/animations/cub3D_animations_player.c \
 		srcs/render/hud/cub3D_hud.c \
+		srcs/render/hud/cub3D_hud_fps.c \
 		srcs/render/hud/cub3D_hud_ammun.c \
 		srcs/render/hud/cub3D_hud_arms.c \
 		srcs/render/hud/cub3D_hud_cards.c \

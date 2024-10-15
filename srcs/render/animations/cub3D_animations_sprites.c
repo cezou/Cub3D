@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/14 19:27:16 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/15 11:48:12 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,12 @@ void	update_sprites_animations(t_vars *v)
 	tmp = v->actors->next;
 	while (++i < v->game.nb_actors)
 	{
-		if (!tmp->active || (!tmp->isguard && !tmp->isprojectile))
+		if (!tmp->active)//|| (!tmp->isguard && !tmp->isprojectile)
 		{
-			tmp = tmp->next;
+			(tmp = tmp->next);
 			continue ;
 		}
-		if (timestamp_in_ms(v) - tmp->time
+		if (tmp->isguard && timestamp_in_ms(v) - tmp->time
 			>= (uint64_t)(5000 / v->game.fps))
 		{
 			if (tmp->state != EIDLE && !tmp->stop)
@@ -110,6 +110,21 @@ void	update_sprites_animations(t_vars *v)
 				update_sprite_anim_attackr(v, tmp);
 			if (tmp->state == ECHASE)
 				update_sprite_anim_chase(v, tmp);
+			if (tmp->state == ECHASE)
+			{
+				tmp->x = tmp->x + tmp->ms
+					* v->game.frametime * (v->player.x + 0.5 - tmp->x);
+				tmp->y = tmp->y + tmp->ms
+					* v->game.frametime * (v->player.y + 0.5 - tmp->y);
+			}
+		}
+		else if (tmp->isprojectile && timestamp_in_ms(v) - tmp->time
+			>= (uint64_t)(7000 / v->game.fps))
+		{
+			tmp->animoff += v->img[tmp->img_i].animx;
+			if (tmp->animoff >= v->img[tmp->img_i].width)
+				tmp->animoff = 0;
+			tmp->time = timestamp_in_ms(v);
 		}
 		tmp = tmp->next;
 	}

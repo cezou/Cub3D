@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 20:43:05 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/11 17:18:59 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/15 11:40:00 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void	render_hud_parts(t_vars *v)
 	{
 		renderemptyzone(v, v->img[EWEAPON], 234);
 		renderarmsdigits((v->hud.refreshweapon = 0, v), 234);
-	}	
+	}
 }
 
 /// @brief Render the HUD
@@ -143,6 +143,7 @@ void	renderhud(t_vars *v, t_imga dest)
 	v->tmp[1] = v->img[EBUFF];
 	rendercrosshair(v, (t_point){v->tmp[0].width / 2 - 10, 0, 0, 0},
 		v->tmp[0].width / 2 + 10, v->tmp[0].height / 2 + 2);
+	render_fps(v, 1.0 / v->game.frametime);
 	v->tmp[1] = dest;
 	if (v->hud.refresh)
 		save_screen_to_buffer(v->img[EHUD], v->hud.img, 0);

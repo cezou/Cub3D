@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/14 19:23:02 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/15 11:41:35 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -751,6 +751,7 @@ typedef struct s_player
 typedef struct s_hud
 {
 	bool					refresh;
+	bool					refreshfps;
 	bool					refreshdh;
 	bool					refreshhealth;
 	bool					refresharmor;
@@ -1069,9 +1070,12 @@ void						renderelement(t_vars *v, int xoff, int nb,
 void						number_to_digits(t_vars *v, int n, int res[4],
 								int *i);
 void						renderarmsdigits(t_vars *v, int xoff);
+void						rendersmalldigit(t_vars *v, int res[4],
+								t_point g, int yoff);
 void						renderammun(t_vars *v, int xoff, int arr[4]);
 void						rendercards(t_vars *v, int xoff, int yoff,
 								int *arr);
+void						render_fps(t_vars *v, double fps);
 
 void						render_player(t_vars *v, t_point c);
 

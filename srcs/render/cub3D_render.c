@@ -22,12 +22,12 @@ void	displaytext(t_vars *v, char *str, char *str2)
 	(void)str2;
 	if (v->game.god)
 	{
-		mlx_string_put(v->mlx, v->screen.win, 50, 50, W_P, "[ESC] Exit");
-		mlx_string_put(v->mlx, v->screen.win, 50, 70, W_P, "Zoom: Mouse wheel");
-		mlx_string_put(v->mlx, v->screen.win, 50, 90, W_P, "Drag: Mouse");
-		mlx_string_put(v->mlx, v->screen.win, 50, 110, W_P, "[r] Reset view");
-		mlx_string_put(v->mlx, v->screen.win, 50, 170, W_P, "[F5] Hotreload");
-		mlx_string_put(v->mlx, v->screen.win, 50, 190, W_P, "[F1] GOD mode");
+		// mlx_string_put(v->mlx, v->screen.win, 50, 50, W_P, "[ESC] Exit");
+		// mlx_string_put(v->mlx, v->screen.win, 50, 70, W_P, "Zoom: Mouse wheel");
+		// mlx_string_put(v->mlx, v->screen.win, 50, 90, W_P, "Drag: Mouse");
+		// mlx_string_put(v->mlx, v->screen.win, 50, 110, W_P, "[r] Reset view");
+		// mlx_string_put(v->mlx, v->screen.win, 50, 170, W_P, "[F5] Hotreload");
+		// mlx_string_put(v->mlx, v->screen.win, 50, 190, W_P, "[F1] GOD mode");
 	}
 }
 
@@ -99,8 +99,8 @@ void	melting(t_vars *v, bool *done, int x)
 /// @return
 int	render(t_vars *v)
 {
-	if (v->game.god)
-		v->game.fps = 30;
+	v->hud.refreshfps = 1;
+	v->game.fps = 60;
 	if (!v->screen.win || v->game.won > 0 || !v->game.start
 		|| timestamp_in_ms(v) - v->game.updated_at < (uint64_t)(1000
 		/ v->game.fps))
