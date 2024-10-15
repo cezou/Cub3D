@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3D_animations_sprites.c                         :+:      :+:    :+:   */
+/*   cub3D_animations_guards.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/15 11:48:12 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/15 19:36:36 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,52 +80,32 @@ inline void	update_sprite_anim_chase(t_vars *v, t_actor *a)
 // 	&& v->sprites[i].animoff >= v->img[v->sprites[i].img_i].width)
 // 	v->sprites[i].animoff = 0;
 
-/// @brief Update sprites animations
+/// @brief Update guards movement/animations
 /// @param v Vars
-void	update_sprites_animations(t_vars *v)
+///	@param actor Actor guard
+void	update_guards(t_vars *v, t_actor **actor)
 {
 	t_actor	*tmp;
-	int		i;
 
-	i = -1;
-	tmp = v->actors->next;
-	while (++i < v->game.nb_actors)
+	tmp = *actor;
+	if (!tmp->isguard)
+		return ;
+	if (tmp->state != EIDLE && !tmp->stop)
+		tmp->animoff += v->img[tmp->img_i].animx;
+	tmp->time = timestamp_in_ms(v);
+	if (tmp->state == EDEAD)
+		update_sprite_anim_death(v, tmp);
+	else if (tmp->state == EPAIN)
+		update_sprite_anim_pain(v, tmp);
+	else if (tmp->state == EATTACKR)
+		update_sprite_anim_attackr(v, tmp);
+	if (tmp->state == ECHASE)
+		update_sprite_anim_chase(v, tmp);
+	if (tmp->state == ECHASE)
 	{
-		if (!tmp->active)//|| (!tmp->isguard && !tmp->isprojectile)
-		{
-			(tmp = tmp->next);
-			continue ;
-		}
-		if (tmp->isguard && timestamp_in_ms(v) - tmp->time
-			>= (uint64_t)(5000 / v->game.fps))
-		{
-			if (tmp->state != EIDLE && !tmp->stop)
-				tmp->animoff += v->img[tmp->img_i].animx;
-			tmp->time = timestamp_in_ms(v);
-			if (tmp->state == EDEAD)
-				update_sprite_anim_death(v, tmp);
-			else if (tmp->state == EPAIN)
-				update_sprite_anim_pain(v, tmp);
-			else if (tmp->state == EATTACKR)
-				update_sprite_anim_attackr(v, tmp);
-			if (tmp->state == ECHASE)
-				update_sprite_anim_chase(v, tmp);
-			if (tmp->state == ECHASE)
-			{
-				tmp->x = tmp->x + tmp->ms
-					* v->game.frametime * (v->player.x + 0.5 - tmp->x);
-				tmp->y = tmp->y + tmp->ms
-					* v->game.frametime * (v->player.y + 0.5 - tmp->y);
-			}
-		}
-		else if (tmp->isprojectile && timestamp_in_ms(v) - tmp->time
-			>= (uint64_t)(7000 / v->game.fps))
-		{
-			tmp->animoff += v->img[tmp->img_i].animx;
-			if (tmp->animoff >= v->img[tmp->img_i].width)
-				tmp->animoff = 0;
-			tmp->time = timestamp_in_ms(v);
-		}
-		tmp = tmp->next;
+		tmp->x += tmp->ms * v->game.frametime
+			* (v->player.x + 0.5 - tmp->x);
+		tmp->y += tmp->ms * v->game.frametime
+			* (v->player.y + 0.5 - tmp->y);
 	}
 }

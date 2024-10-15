@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/14 16:12:02 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/15 19:07:47 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,33 +90,33 @@ const t_obj	g_objs[NUM_OBJS] = {
 
 /// @brief Init Weapon stats
 /// @param v Vars
-/// {active, ammo, maxammo, typeammo, dmg, soundid, range, img}
+/// {active, ammo, maxammo, typeammo, dmg, soundid, isprojectile, range, img}
 void	initweapon(t_vars *v)
 {
-	v->player.weapon[EFIST] = (t_weapon){1, -1, -1, -1, 20, 0, 2.0,
+	v->player.weapon[EFIST] = (t_weapon){1, -1, -1, -1, 20, 0, 0, 2.0,
 		v->img[EIFIST]};
-	v->player.weapon[EGUN] = (t_weapon){1, 50, 200, EBULL, 15, 0, 1000.0,
+	v->player.weapon[EGUN] = (t_weapon){1, 50, 200, EBULL, 15, 0, 0, 1000.0,
 		v->img[EIGUN]};
-	v->player.weapon[ESHOTGUN] = (t_weapon){1, 8, 50, ESHELL, 100, 0, 1000.0,
+	v->player.weapon[ESHOTGUN] = (t_weapon){1, 8, 50, ESHELL, 100, 0, 0, 1000.0,
 		v->img[EISHOTGUN]};
-	v->player.weapon[EGATLIN] = (t_weapon){1, 20, 200, EBULL, 15, 0, 1000.0,
+	v->player.weapon[EGATLIN] = (t_weapon){1, 20, 200, EBULL, 15, 0, 0, 1000.0,
 		v->img[EIGATLIN]};
-	v->player.weapon[EROCKETL] = (t_weapon){1, 2, 50, EROCK, 160, 0, 1000.0,
+	v->player.weapon[EROCKETL] = (t_weapon){1, 2, 50, EROCK, 160, 0, 1, 1000.0,
 		v->img[EIROCKl]};
-	v->player.weapon[EPLASMA] = (t_weapon){1, 40, 300, ECELL, 40, 0, 1000.0,
+	v->player.weapon[EPLASMA] = (t_weapon){1, 40, 300, ECELL, 40, 0, 1, 1000.0,
 		v->img[EIPLASMA]};
-	v->player.weapon[ECHAINSAW] = (t_weapon){1, -1, -1, -1, 20, 0, 2.0,
+	v->player.weapon[ECHAINSAW] = (t_weapon){1, -1, -1, -1, 20, 0, 0, 2.0,
 		v->img[EICHAINSAW]};
-	v->player.weapon[ESUPERSHOTGUN] = (t_weapon){1, 8, 50, ESHELL, 245, 0,
+	v->player.weapon[ESUPERSHOTGUN] = (t_weapon){1, 8, 50, ESHELL, 0, 245, 0,
 		1000.0, v->img[EISUPERSHOTGUN]};
-	v->player.weapon[EBFG] = (t_weapon){1, 40, 300, ECELL, 800, 0, 1000.0,
+	v->player.weapon[EBFG] = (t_weapon){1, 40, 300, ECELL, 800, 0, 1, 1000.0,
 		v->img[EIBFG]};
 	v->player.currweapon = v->player.weapon[EFIST];
 }
 
 void	initvars(t_vars *v)
 {
-	v->game.fps = 60;
+	v->game.fps = 300;
 	v->hud.refresh = 1;
 	v->hud.refreshhealth = 1;
 	v->hud.refresharmor = 1;

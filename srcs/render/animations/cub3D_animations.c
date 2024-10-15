@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/15 10:09:39 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/15 19:35:55 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	update_animations(t_vars *v)
 {
 	if (v->game.pause)
 		return ;
-	update_sprites_animations(v);
+	update_actors(v);
 	update_door_animations(v, -1);
 	update_player(v);
 }

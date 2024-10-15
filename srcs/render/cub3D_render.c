@@ -100,7 +100,6 @@ void	melting(t_vars *v, bool *done, int x)
 int	render(t_vars *v)
 {
 	v->hud.refreshfps = 1;
-	v->game.fps = 60;
 	if (!v->screen.win || v->game.won > 0 || !v->game.start
 		|| timestamp_in_ms(v) - v->game.updated_at < (uint64_t)(1000
 		/ v->game.fps))

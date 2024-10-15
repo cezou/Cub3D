@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:58:10 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/11 16:29:52 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/15 19:34:48 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,8 @@ void	set_dda(t_vars *v)
 
 /// @brief Check if the ray at x,y position hit a wall or a door
 /// @param v Vars
-/// @param x X coordinate
-/// @param y Y coordinate
-/// @param d
+///	@param tmp Grid coordinates
+/// @param i Iterable of doors
 /// @return 0 did not hit a wall/door, 1 hit a wall/door
 int	hashit(t_vars *v, t_map *tmp, int i)
 {

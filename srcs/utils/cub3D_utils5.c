@@ -62,7 +62,7 @@ void	add_actor(t_vars *v, t_actor **actors, t_actor **node)
 /// @param a Pointer of the current node
 /// @param p Node data
 /// @return The new node to add to the linked list
-t_actor	*new_actor(t_vars *v, t_sprite sp)
+t_actor	*new_actor(t_vars *v)
 {
 	t_actor	*node;
 
@@ -70,19 +70,6 @@ t_actor	*new_actor(t_vars *v, t_sprite sp)
 	node = (t_actor *)ft_calloc(1, sizeof(t_actor));
 	if (!node)
 		return (NULL);
-	node->active = sp.active;
-	node->isprojectile = sp.isprojectile;
-	node->state = sp.state;
-	node->x = sp.x;
-	node->y = sp.y;
-	node->next = node;
-	node->prev = node;
-	node->img_i = sp.img_i;
-	node->udiv = sp.udiv;
-	node->vdiv = sp.vdiv;
-	node->vmove = sp.vmove;
-	node->vectorx = sp.vectorx;
-	node->vectory = sp.vectory;
 	return (node);
 }
 

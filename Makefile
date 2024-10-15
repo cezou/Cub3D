@@ -6,7 +6,7 @@
 #    By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 11:28:17 by pmagnero          #+#    #+#              #
-#    Updated: 2024/10/15 11:41:06 by pmagnero         ###   ########.fr        #
+#    Updated: 2024/10/15 19:31:37 by pmagnero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,6 +73,7 @@ COLOR_OK	=	32
 SRCS =	srcs/cub3D.c \
 		srcs/cub3D_interactions.c \
 		srcs/cub3D_interactions2.c \
+		srcs/cub3D_interactions3.c \
 		srcs/controls/cub3D_hooks.c \
 		srcs/controls/cub3D_hooks_utils.c \
 		srcs/controls/cub3D_controls.c \
@@ -89,7 +90,9 @@ SRCS =	srcs/cub3D.c \
 		srcs/render/raycasting/cub3D_raycasting_floor_ceiling.c \
 		srcs/render/raycasting/cub3D_raycasting_skybox.c \
 		srcs/render/animations/cub3D_animations.c \
-		srcs/render/animations/cub3D_animations_sprites.c \
+		srcs/render/animations/cub3D_animations_actors.c \
+		srcs/render/animations/cub3D_animations_guards.c \
+		srcs/render/animations/cub3D_animations_projectiles.c \
 		srcs/render/animations/cub3D_animations_player.c \
 		srcs/render/hud/cub3D_hud.c \
 		srcs/render/hud/cub3D_hud_fps.c \

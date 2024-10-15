@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/15 11:41:35 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/15 19:35:55 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@
 // Sounds
 
 # ifndef MANDATORY
-#  define ACTIVATE_SOUND 1
+#  define ACTIVATE_SOUND 0
 #  define MANDATORY 0
 #  define VALID " \t\n\v\f\r10NSWEDG"
 # else
@@ -339,7 +339,9 @@ typedef enum s_guard_states
 	EATTACKM,
 	EATTACKR,
 	EPAIN,
-	EDEAD
+	EDEAD,
+	ETRAVEL,
+	EHIT
 }							t_guard_states;
 
 typedef enum s_door_state
@@ -540,6 +542,8 @@ typedef struct s_actor
 	int						img_i;
 	int						xdelta;
 	int						animoff;
+	double					targetdist;
+	double					norm;
 	double					ms;
 	double					vdiv;
 	double					udiv;
@@ -547,6 +551,7 @@ typedef struct s_actor
 	double					dist;
 	double					vectorx;
 	double					vectory;
+	t_map					*target;
 	uint64_t				timestate;
 	uint64_t				time;
 	uint64_t				timem;
@@ -617,8 +622,11 @@ typedef struct s_ray
 	int						dy;
 	int						dty;
 	int						ty0;
-	int						hitx;
+	int						hitside;
+	double					hitx;
+	double					centerdist;
 	t_map					*hit;
+	t_map					*centerhit;
 	t_imga					img;
 	t_door					door;
 	int						lim;
@@ -698,6 +706,7 @@ typedef struct s_weapon
 	int					typeammo;
 	int					dmg;
 	int					idsound;
+	int					isprojectile;
 	double				range;
 	t_imga				img;
 }						t_weapon;
@@ -946,7 +955,7 @@ int							p_random(t_vars *v);
 void						m_clearrandom(t_vars *v);
 void						save_screen_to_buffer(t_imga dest, t_imga src,
 								size_t offset);
-t_actor						*new_actor(t_vars *v, t_sprite p);
+t_actor						*new_actor(t_vars *v);
 void						add_actor(t_vars *v, t_actor **actors,
 								t_actor **node);
 int							printactors(t_vars *v);
@@ -962,6 +971,7 @@ bool						give_ammo(t_vars *v, int img, int num, t_ammo ammo);
 bool						give_armor(t_vars *v, t_actor *a);
 bool						give_body(t_vars *v, int num, int sp);
 bool						give_cards(t_vars *v, t_actor *a);
+void						fire_projectile(t_vars *v);
 
 // Time
 
@@ -1045,8 +1055,11 @@ void						update_texture_pixels(t_vars *v, t_point p, int *t);
 
 // Animations
 void						update_door_animations(t_vars *v, int i);
-void						update_sprites_animations(t_vars *v);
+void						update_actors(t_vars *v);
 void						update_player(t_vars *v);
+void						update_guards(t_vars *v, t_actor **actor);
+int							update_projectiles(t_vars *v, t_actor **actor,
+								int i);
 
 void						draw_floor_ceiling(t_vars *v);
 // void					set_floor_ceiling_vert(t_vars *v, t_point p);

@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/14 13:27:31 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/15 19:34:41 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@ void	init_raycasting_info(int x, t_vars *v)
 /// @brief Calculate the distance and height of the wall
 ///	from the player position
 /// @param v Vars
+// printf("wallx: %d, wally: %d, hitx: %f, hity: %f, deltax: %f, deltay: %f,
+// raywallx: %f, side: %d\n", v->ray.hit->x, v->ray.hit->y, v->ray.sidedist_x,
+// v->ray.sidedist_y, v->ray.deltadist_x, v->ray.deltadist_y, v->ray.wall_x,
+// v->ray.side);
 void	calculate_line_height(t_vars *v)
 {
 	v->ray.line_height = (int)(v->screen.gameh / v->ray.wall_dist);
@@ -45,6 +49,13 @@ void	calculate_line_height(t_vars *v)
 	else
 		v->ray.wall_x = v->player.x + v->ray.wall_dist * v->ray.dir_x;
 	v->ray.wall_x -= floor(v->ray.wall_x);
+	if (v->ray.x == v->screen.gamew / 2)
+	{
+		v->ray.centerhit = v->ray.hit;
+		v->ray.hitx = v->ray.wall_x;
+		v->ray.hitside = v->ray.side;
+		v->ray.centerdist = v->ray.wall_dist;
+	}
 }
 
 /// @brief Get texture from paths in file

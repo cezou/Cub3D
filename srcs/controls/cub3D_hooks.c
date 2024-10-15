@@ -16,28 +16,10 @@
 /// @param v Vars
 void	attack(t_vars *v)
 {
-	t_actor		*a;
-	t_sprite	sp;
-
-	if (v->player.currweapon.img.id == v->player.weapon[EPLASMA].img.id)
-	{
-		sp = (t_sprite){0};
-		sp.active = 1;
-		sp.x = v->player.x;
-		sp.y = v->player.y;
-		sp.udiv = 5.0;
-		sp.vdiv = 5.0;
-		sp.vmove = 128.0;
-		sp.vectorx = 1.0;
-		sp.vectory = 1.0;
-		sp.isprojectile = 1;
-		sp.state = EPATROL;
-		// sp.hashitbox = 1;
-		sp.img_i = EPLASMABOLT;
-		ft_printf(1, "FIRE PLASMA !!\n");
-		a = new_actor(v, sp);
-		add_actor(v, &v->actors, &a);
-	}
+	if (v->player.currweapon.isprojectile
+		&& v->player.ammo[v->player.currweapon.typeammo] > 0
+		&& v->player.currweapon.img.id == v->player.weapon[EPLASMA].img.id)
+		fire_projectile(v);
 	v->player.pattack = 1;
 	v->player.attack = 1;
 	v->hud.refreshammo = 1;
