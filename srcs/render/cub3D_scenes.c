@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 09:51:53 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/15 18:20:15 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:27:50 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,12 +103,12 @@ int	transition_melt_screen(t_vars *v)
 
 	done = true;
 	(void)delta;
-	// if (!delta && timestamp_in_ms(v) - v->game.updated_at < (uint64_t)5000)
-	// 	return (mlx_put_image_to_window(v->mlx, v->screen.win,
-	// 			v->img[COMP_N].img, 0, 0), delta = 0, 1);
-	// if (!v->screen.win || timestamp_in_ms(v)
-	// 	- v->game.updated_at < (uint64_t)(10000 / v->game.fps))
-	// 	return (delta = 1, 1);
+	if (!delta && timestamp_in_ms(v) - v->game.updated_at < (uint64_t)5000)
+		return (mlx_put_image_to_window(v->mlx, v->screen.win,
+				v->img[COMP_N].img, 0, 0), delta = 0, 1);
+	if (!v->screen.win || timestamp_in_ms(v)
+		- v->game.updated_at < (uint64_t)(10000 / v->game.fps))
+		return (delta = 1, 1);
 	delta = 1;
 	v->game.updated_at = timestamp_in_ms(v);
 	ft_bzero(v->img[EBUFF].addr, v->screen.resw * v->screen.resh

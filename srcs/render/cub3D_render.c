@@ -12,24 +12,24 @@
 
 #include "../../includes/cub3D.h"
 
-/// @brief Display strings on the screen
-/// @param v Vars
-/// @param str String
-/// @param str2 String
-void	displaytext(t_vars *v, char *str, char *str2)
-{
-	(void)str;
-	(void)str2;
-	if (v->game.god)
-	{
-		// mlx_string_put(v->mlx, v->screen.win, 50, 50, W_P, "[ESC] Exit");
-		// mlx_string_put(v->mlx, v->screen.win, 50, 70, W_P, "Zoom: Mouse wheel");
-		// mlx_string_put(v->mlx, v->screen.win, 50, 90, W_P, "Drag: Mouse");
-		// mlx_string_put(v->mlx, v->screen.win, 50, 110, W_P, "[r] Reset view");
-		// mlx_string_put(v->mlx, v->screen.win, 50, 170, W_P, "[F5] Hotreload");
-		// mlx_string_put(v->mlx, v->screen.win, 50, 190, W_P, "[F1] GOD mode");
-	}
-}
+// /// @brief Display strings on the screen
+// /// @param v Vars
+// /// @param str String
+// /// @param str2 String
+// void	displaytext(t_vars *v, char *str, char *str2)
+// {
+// 	(void)str;
+// 	(void)str2;
+// 	if (v->game.god)
+// 	{
+// 		// mlx_string_put(v->mlx, v->screen.win, 50, 50, W_P, "[ESC] Exit");
+// 	// mlx_string_put(v->mlx, v->screen.win, 50, 70, W_P, "Zoom: Mouse wheel");
+// 	// mlx_string_put(v->mlx, v->screen.win, 50, 90, W_P, "Drag: Mouse");
+// 	// mlx_string_put(v->mlx, v->screen.win, 50, 110, W_P, "[r] Reset view");
+// 	// mlx_string_put(v->mlx, v->screen.win, 50, 170, W_P, "[F5] Hotreload");
+// 	// mlx_string_put(v->mlx, v->screen.win, 50, 190, W_P, "[F1] GOD mode");
+// 	}
+// }
 
 /// @brief Init the random melting array that store the delay of each columns
 /// @param v Vars
@@ -118,9 +118,9 @@ int	render(t_vars *v)
 	v->game.oldtime = v->game.time;
 	v->game.time = timestamp_in_ms(v);
 	v->game.frametime = (v->game.time - v->game.oldtime) / 1000.0;
-	// printf("%f\n", 1.0 / v->game.frametime);
-	return (displaytext(v, NULL, NULL), v->game.start++, 0);
+	return (v->game.start++, 0);
 }
+//	displaytext(v, NULL, NULL)
 // save_screen_to_buffer(v->img[EBUFF], v->img[EMAP], 0);
 // mlx_clear_window(v->mlx, v->screen.win);
 // mlx_put_image_to_window(v->mlx, v->screen.win, v->img[EHUD].img, 0, 0);

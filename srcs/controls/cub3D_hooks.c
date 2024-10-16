@@ -14,8 +14,10 @@
 
 /// @brief Attack action. Change animations offset in the sprite sheet.
 /// @param v Vars
-void	attack(t_vars *v)
+void	attack(t_vars *v, int kd)
 {
+	if (v->game.won > 4 || kd != XK_x)
+		return ;
 	if (v->player.currweapon.isprojectile
 		&& v->player.ammo[v->player.currweapon.typeammo] > 0
 		&& v->player.currweapon.img.id == v->player.weapon[EPLASMA].img.id)
@@ -64,61 +66,29 @@ void	handle_movement(t_vars *v)
 /// @param v Vars
 void	actions(t_vars *v, int kd)
 {
-	if (!v->game.god && v->game.won < 4 && kd == XK_x)
-		attack(v);
+	attack(v, kd);
 	if (v->game.won < 4 && kd == XK_Shift_L && !v->player.injump)
 		v->player.jumping = 1;
-	if (v->game.won < 4 && kd == XK_1 && v->player.animoff == 0
-		&& !v->player.weapons[ECHAINSAW])
+	if (v->game.won < 4 && !v->player.animoff)
 	{
-		v->player.currweapon = v->player.weapon[EFIST];
-		v->hud.refreshammo = 1;
-	}
-	if (v->game.won < 4 && kd == XK_1 && v->player.animoff == 0
-		&& v->player.weapons[ECHAINSAW])
-	{
-		v->player.currweapon = v->player.weapon[ECHAINSAW];
-		v->hud.refreshammo = 1;
-	}
-	if (v->game.won < 4 && kd == XK_2 && v->player.animoff == 0)
-	{
-		v->player.currweapon = v->player.weapon[EGUN];
-		v->hud.refreshammo = 1;
-	}
-	if (v->game.won < 4 && kd == XK_3 && v->player.animoff == 0
-		&& v->player.weapons[ESHOTGUN])
-	{
-		v->player.currweapon = v->player.weapon[ESHOTGUN];
-		v->hud.refreshammo = 1;
-	}
-	if (v->game.won < 4 && kd == XK_3 && v->player.animoff == 0
-		&& v->player.weapons[ESUPERSHOTGUN])
-	{
-		v->player.currweapon = v->player.weapon[ESUPERSHOTGUN];
-		v->hud.refreshammo = 1;
-	}
-	if (v->game.won < 4 && kd == XK_4 && v->player.animoff == 0
-		&& v->player.weapons[EGATLIN])
-	{
-		v->player.currweapon = v->player.weapon[EGATLIN];
-		v->hud.refreshammo = 1;
-	}
-	if (v->game.won < 4 && kd == XK_5 && v->player.animoff == 0
-		&& v->player.weapons[EROCKETL])
-	{
-		v->player.currweapon = v->player.weapon[EROCKETL];
-		v->hud.refreshammo = 1;
-	}
-	if (v->game.won < 4 && kd == XK_6 && v->player.animoff == 0
-		&& v->player.weapons[EPLASMA])
-	{
-		v->player.currweapon = v->player.weapon[EPLASMA];
-		v->hud.refreshammo = 1;
-	}
-	if (v->game.won < 4 && kd == XK_7 && v->player.animoff == 0
-		&& v->player.weapons[EBFG])
-	{
-		v->player.currweapon = v->player.weapon[EBFG];
+		if (kd == XK_1 && !v->player.weapons[ECHAINSAW])
+			v->player.currweapon = v->player.weapon[EFIST];
+		if (kd == XK_1 && v->player.weapons[ECHAINSAW])
+			v->player.currweapon = v->player.weapon[ECHAINSAW];
+		if (kd == XK_2)
+			v->player.currweapon = v->player.weapon[EGUN];
+		if (kd == XK_3 && v->player.weapons[ESHOTGUN])
+			v->player.currweapon = v->player.weapon[ESHOTGUN];
+		if (kd == XK_3 && v->player.weapons[ESUPERSHOTGUN])
+			v->player.currweapon = v->player.weapon[ESUPERSHOTGUN];
+		if (kd == XK_4 && v->player.weapons[EGATLIN])
+			v->player.currweapon = v->player.weapon[EGATLIN];
+		if (kd == XK_5 && v->player.weapons[EROCKETL])
+			v->player.currweapon = v->player.weapon[EROCKETL];
+		if (kd == XK_6 && v->player.weapons[EPLASMA])
+			v->player.currweapon = v->player.weapon[EPLASMA];
+		if (kd == XK_7 && v->player.weapons[EBFG])
+			v->player.currweapon = v->player.weapon[EBFG];
 		v->hud.refreshammo = 1;
 	}
 }

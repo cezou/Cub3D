@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/14 15:24:18 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/16 12:28:24 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,22 +88,8 @@ void	hitguard(t_vars *v, t_sprite_data *sp, t_actor *g)
 		|| sp->transformy > v->ray.zbuffer[v->screen.gamew / 2])
 		return ;
 	if (v->player.attack && g->dist <= v->player.currweapon.range
-		&& g->state != EDEAD)
-	{
-		g->hp -= v->player.currweapon.dmg / (p_random(v) % 5 + 1);
-		g->animoff = 0;
-		g->img_i = EGUARDDEATH;
-		if (p_random(v) >= g->painchance)
-		{
-			g->state = EPAIN;
-			g->timestate = timestamp_in_ms(v);
-		}
-		if (g->hp <= 0)
-		{
-			g->hp = 0;
-			g->state = EDEAD;
-		}
-	}
+		&& g->state != EDEAD && !v->player.currweapon.isprojectile)
+		apply_damage(v, g);
 	else if (g->dist <= v->player.currweapon.range)
 		v->game.canhit = 1;
 }

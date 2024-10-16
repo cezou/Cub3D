@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 09:51:53 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/15 19:18:28 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:44:29 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ void	calc_target(t_vars *v, t_actor **actor)
 	a->vectory /= norm;
 	a->target = v->ray.centerhit;
 	a->targetdist = v->ray.centerdist;
-	a->norm = sqrt(pow((a->ms * v->game.frametime * a->vectorx), 2)
-			+ pow((a->ms * v->game.frametime * a->vectory), 2));
+	a->norm = sqrt(pow((a->ms * a->vectorx), 2) + pow((a->ms * a->vectory), 2));
 }
 
 /// @brief Init a new projectile actor
@@ -56,10 +55,30 @@ void	fire_projectile(t_vars *v)
 	a->isprojectile = 1;
 	a->state = ETRAVEL;
 	a->img_i = EPLASMABOLT;
-	a->ms = 30.0;
+	a->ms = 0.5;
 	calc_target(v, &a);
 	add_actor(v, &v->actors, &a);
 }
 	// printf("FIRE PLASMA !!x: %f, y: %d, rayhitx: %f, norm: %f,
 	// targetdist: %f\n", (double)(a->target->x) + v->ray.hitx, a->target->y,
 	// v->ray.hitx, norm, a->targetdist);
+
+/// @brief Apply damages to the actor
+/// @param v Vars
+/// @param g Actor
+void	apply_damage(t_vars *v, t_actor *g)
+{
+	g->hp -= v->player.currweapon.dmg / (p_random(v) % 5 + 1);
+	g->animoff = 0;
+	g->img_i = EGUARDDEATH;
+	if (p_random(v) >= g->painchance)
+	{
+		g->state = EPAIN;
+		g->timestate = timestamp_in_ms(v);
+	}
+	if (g->hp <= 0)
+	{
+		g->hp = 0;
+		g->state = EDEAD;
+	}
+}

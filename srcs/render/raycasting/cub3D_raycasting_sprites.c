@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/14 19:12:12 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:57:34 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	sort_sprites(t_vars *v)
 	int		i;
 
 	i = -1;
-	tmp = v->actors->next;
+	tmp = v->actors;
 	while (++i < v->game.nb_actors)
 	{
 		tmp->dist = pow((v->player.x - tmp->x), 2)
@@ -123,11 +123,11 @@ void	draw_sprites(t_vars *v)
 	int		i;
 
 	i = -1;
-	tmp = v->actors->next;
+	tmp = v->actors;
 	sort_sprites(v);
 	while (++i < v->game.nb_actors)
 	{
-		if (!tmp->active)
+		if (!tmp->active || tmp->dist > 200)
 		{
 			tmp = tmp->next;
 			continue ;

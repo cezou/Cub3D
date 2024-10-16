@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/15 19:35:55 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:02:17 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -554,7 +554,6 @@ typedef struct s_actor
 	t_map					*target;
 	uint64_t				timestate;
 	uint64_t				time;
-	uint64_t				timem;
 	struct s_actor			*prev;
 	struct s_actor			*next;
 }							t_actor;
@@ -707,6 +706,7 @@ typedef struct s_weapon
 	int					dmg;
 	int					idsound;
 	int					isprojectile;
+	int					dmgtic;
 	double				range;
 	t_imga				img;
 }						t_weapon;
@@ -775,38 +775,6 @@ typedef struct s_hud
 	size_t					map_zoom;
 	uint64_t				time;
 }							t_hud;
-
-typedef struct s_sprite
-{
-	int						active;
-	double					x;
-	double					y;
-	int						hp;
-	int						dmg;
-	int						hashitbox;
-	int						justattack;
-	int						hasrange;
-	int						hasmelee;
-	int						painchance;
-	int						isguard;
-	int						isprojectile;
-	int						pickable;
-	int						stop;
-	int						state;
-	int						img_i;
-	int						xdelta;
-	int						animoff;
-	double					ms;
-	double					vdiv;
-	double					udiv;
-	double					vmove;
-	double					dist;
-	double					vectorx;
-	double					vectory;
-	uint64_t				timestate;
-	uint64_t				time;
-	uint64_t				timem;
-}							t_sprite;
 
 typedef struct s_mapv
 {
@@ -972,6 +940,7 @@ bool						give_armor(t_vars *v, t_actor *a);
 bool						give_body(t_vars *v, int num, int sp);
 bool						give_cards(t_vars *v, t_actor *a);
 void						fire_projectile(t_vars *v);
+void						apply_damage(t_vars *v, t_actor *g);
 
 // Time
 
@@ -1029,7 +998,7 @@ int							keys_release(int keycode, t_vars *v);
 void						menuexit(t_vars *v);
 void						menuarrow(t_vars *v, int d);
 void						menuoptions(t_vars *v);
-void						attack(t_vars *v);
+void						attack(t_vars *v, int kd);
 
 // Controls
 
@@ -1039,6 +1008,8 @@ void						moveplayery(t_vars *v, int d);
 void						rotatecamx(t_vars *v, int d, double speed);
 void						rotatecamy(t_vars *v, int d, double speed, int mul);
 t_map						*set_pos(t_vars *v, t_point2 k, t_map *m, int d);
+bool						can_move(t_vars *v, t_point2 p,
+								t_actor *tmp, t_actor *actor);
 void						open_door(t_vars *v);
 
 // Rendering
@@ -1058,8 +1029,8 @@ void						update_door_animations(t_vars *v, int i);
 void						update_actors(t_vars *v);
 void						update_player(t_vars *v);
 void						update_guards(t_vars *v, t_actor **actor);
-int							update_projectiles(t_vars *v, t_actor **actor,
-								int i);
+t_actor						*update_projectiles(t_vars *v, t_actor **actor,
+								int *i);
 
 void						draw_floor_ceiling(t_vars *v);
 // void					set_floor_ceiling_vert(t_vars *v, t_point p);

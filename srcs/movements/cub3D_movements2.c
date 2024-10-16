@@ -6,25 +6,27 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 18:24:52 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/14 19:12:50 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:03:00 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
 
-/// @brief 
-/// @param v 
-/// @return 
-bool	sprites_collisions(t_vars *v, t_point2 p, t_actor *tmp)
+/// @brief Check if an actor can move to its next position
+/// @param v Vars
+/// @param p New position
+/// @param tmp Actor list
+/// @param actor Actor to to skip in the list
+/// @return true/false
+bool	can_move(t_vars *v, t_point2 p, t_actor *tmp, t_actor *actor)
 {
 	double	d;
-	int		i;
 
-	i = -1;
-	tmp = v->actors->next;
-	while (++i < v->game.nb_actors)
+	tmp = v->actors;
+	while (++p.z < v->game.nb_actors)
 	{
-		if ((!tmp->hashitbox) || !tmp->active)
+		if (!tmp->hashitbox || !tmp->active || tmp->isprojectile
+			|| tmp == actor)
 		{
 			tmp = tmp->next;
 			continue ;
@@ -32,8 +34,11 @@ bool	sprites_collisions(t_vars *v, t_point2 p, t_actor *tmp)
 		d = pow((p.x - tmp->x), 2) + pow((p.y - tmp->y), 2);
 		if (d < 0.20)
 		{
-			if (tmp->pickable)
+			if (((actor && !actor->isprojectile) || !actor) && tmp->pickable)
 				touch_thing((tmp->active = 0, v), tmp);
+			else if (v->player.currweapon.isprojectile && tmp->hp > 0
+				&& tmp->dist <= v->player.currweapon.range)
+				apply_damage(v, tmp);
 			return (false);
 		}
 		tmp = tmp->next;
@@ -72,8 +77,8 @@ static bool	is_valid_pos(t_vars *v, t_map *pos, t_point2 p, int d)
 	}
 	else if (pos->val != '1')
 		o = 1;
-	return (o && sprites_collisions(v, p, NULL) && pos->x == p.z
-		&& pos->y == p.t && pos->x >= 0 && pos->y >= 0);
+	return (o && can_move(v, (t_point2){p.x, p.y, -1, 0}, NULL, NULL)
+		&& pos->x == p.z && pos->y == p.t && pos->x >= 0 && pos->y >= 0);
 }
 
 /// @brief Function to update the player's position

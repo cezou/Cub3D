@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/15 18:20:05 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:28:48 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,11 @@ inline void	update_player_hp(t_vars *v)
 	{
 		v->player.hp--;
 		if (v->player.hp < 0)
+		{
 			v->player.hp = 0;
+			v->game.won = 2;
+			mlx_loop_end(v->mlx);
+		}
 		v->player.hit--;
 	}
 	if (v->game.pain > 0)
