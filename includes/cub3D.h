@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/16 17:02:17 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/20 19:38:40 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@
 // #  define ERR(...) printf("[\x1B[31mERR\x1B[0m] " __VA_ARGS__)
 #  define DEBUG 1
 # endif
+
+# define THREAD_COUNT 10
 
 // Sounds
 
@@ -647,6 +649,10 @@ typedef struct s_sprite_data
 
 typedef struct s_floor
 {
+	double					dir_x;
+	double					dir_x1;
+	double					dir_y;
+	double					dir_y1;
 	double					fstepx;
 	double					fstepy;
 	double					fx;
@@ -861,6 +867,33 @@ typedef struct s_infos
 
 }							t_infos;
 
+typedef struct s_thread_pool{
+	// char				*buffer;
+	int					thread_count;
+	pthread_t			*threads;
+	pthread_barrier_t	tbarrier;
+	pthread_barrier_t	mbarrier;
+	pthread_mutex_t		job_mutex;
+	pthread_cond_t		job_cond;
+	int					*jobs;
+	int					work_available;
+	volatile int		stop;
+}	t_thread_pool;
+
+// Structure to hold each thread's data
+typedef struct s_thread_data{
+	struct s_vars	*v;
+	int				thread_id;
+	int				y_start;
+	int				y_end;
+	t_thread_pool	*pool;
+	t_floor			f;
+	int				job;
+	// int				stop;
+	t_imga			tmp[2];
+	pthread_mutex_t	data_mutex;
+}	t_thread_data;
+
 typedef struct s_vars
 {
 	t_infos					infos;
@@ -872,7 +905,6 @@ typedef struct s_vars
 	t_actor					*actors;
 	t_imga					*img;
 	t_mouse					mouse;
-	t_map					*exit;
 	t_map					*last;
 	t_trig					trig;
 	t_sound					sound;
@@ -891,6 +923,10 @@ typedef struct s_vars
 	int						rndindex;
 	int						prndindex;
 	uint32_t				tex[8][4160];
+	t_thread_pool			pool;
+	t_thread_data			threads_data[THREAD_COUNT];
+	int						frame;
+	int						exit;
 }							t_vars;
 
 // Parsing
@@ -1023,6 +1059,11 @@ void						calculate_line_height(t_vars *v);
 void						check_door(t_vars *v);
 int							door_extend_ray(t_vars *v, t_point p, int *t);
 void						update_texture_pixels(t_vars *v, t_point p, int *t);
+
+// Threading
+
+void						*job(void *v);
+void						update(t_vars *v, t_imga dest);
 
 // Animations
 void						update_door_animations(t_vars *v, int i);

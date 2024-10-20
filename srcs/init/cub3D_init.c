@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/16 11:56:00 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/20 19:06:35 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,38 @@ void	initvars(t_vars *v)
 	v->player.ammo[0] = 50;
 }
 
+void	init_thread_pool(t_vars *v, int i)
+{
+	if (!MANDATORY)
+	{
+		v->pool.thread_count = THREAD_COUNT;
+		v->pool.threads = (pthread_t *)malloc(sizeof(pthread_t) * THREAD_COUNT);
+		v->pool.jobs = (int *)malloc(sizeof(int) * THREAD_COUNT);
+		pthread_barrier_init(&v->pool.tbarrier, NULL, THREAD_COUNT);
+		pthread_barrier_init(&v->pool.mbarrier, NULL, THREAD_COUNT + 1);
+		pthread_mutex_init(&v->pool.job_mutex, NULL);
+		pthread_cond_init(&v->pool.job_cond, NULL);
+		v->pool.work_available = 0;
+		v->pool.stop = 0;
+		while (++i < THREAD_COUNT)
+		{
+			pthread_mutex_init(&v->threads_data[i].data_mutex, NULL);
+			v->threads_data[i].thread_id = i;
+			v->threads_data[i].pool = &v->pool;
+			v->threads_data[i].v = v;
+			v->threads_data[i].y_start = 0;
+			v->threads_data[i].y_end = 0;
+			v->threads_data[i].f = (t_floor){0};
+			v->threads_data[i].job = 0;
+			// v->threads_data[i].stop = 0;
+			v->threads_data[i].tmp[0] = (t_imga){0};
+			v->threads_data[i].tmp[1] = (t_imga){0};
+			pthread_create(&v->pool.threads[i], NULL, job, &v->threads_data[i]);
+			// pthread_detach(v->pool.threads[i]);
+		}
+	}
+}
+
 void	initmodes(t_vars *v, int argc)
 {
 	v->img->fontname = FONT1;
@@ -260,6 +292,7 @@ void	check_map(t_vars *v)
 	init_doors(v);
 	init_actors(v);
 	printactors(v);
+	init_thread_pool(v, -1);
 }
 
 void	init(t_vars *v, int argc, char **argv)

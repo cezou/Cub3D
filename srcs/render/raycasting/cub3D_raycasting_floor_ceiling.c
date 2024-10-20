@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:38:17 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/11 17:23:19 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/20 20:04:08 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ static void	init_data_floor(t_vars *v, t_floor *f, int y)
 	int		d;
 	double	posz;
 
-	v->ray.dir_x = v->player.dir_x - v->player.plane_x;
-	v->ray.dir_y = v->player.dir_y - v->player.plane_y;
-	v->ray.dir_x1 = v->player.dir_x + v->player.plane_x;
-	v->ray.dir_y1 = v->player.dir_y + v->player.plane_y;
+	f->dir_x = v->player.dir_x - v->player.plane_x;
+	f->dir_y = v->player.dir_y - v->player.plane_y;
+	f->dir_x1 = v->player.dir_x + v->player.plane_x;
+	f->dir_y1 = v->player.dir_y + v->player.plane_y;
 	f->isfloor = y > v->screen.gameh / 2 + v->ray.pitch;
 	d = v->screen.gameh / 2 - y + v->ray.pitch;
 	posz = 0.5 * v->screen.gameh - v->player.z;
@@ -36,43 +36,61 @@ static void	init_data_floor(t_vars *v, t_floor *f, int y)
 		posz = 0.5 * v->screen.gameh + v->player.z;
 	}
 	f->rowdist = posz / d;
-	f->fstepx = f->rowdist * (v->ray.dir_x1 - v->ray.dir_x) / v->screen.resw;
-	f->fstepy = f->rowdist * (v->ray.dir_y1 - v->ray.dir_y) / v->screen.resw;
-	f->fx = v->player.x + f->rowdist * v->ray.dir_x;
-	f->fy = v->player.y + f->rowdist * v->ray.dir_y;
+	f->fstepx = f->rowdist * (f->dir_x1 - f->dir_x) / v->screen.resw;
+	f->fstepy = f->rowdist * (f->dir_y1 - f->dir_y) / v->screen.resw;
+	f->fx = v->player.x + f->rowdist * f->dir_x;
+	f->fy = v->player.y + f->rowdist * f->dir_y;
 }
 
 // color = v->tex[4][64 * ty + tx];
+
+void	add_pix_threaded(t_vars *v, t_point p, t_point3 fog, t_point opt, t_imga *tmp)
+{
+	if (!opt.y && p.z > -1 && tmp[0].addr[p.z + 3] == 0)
+	{
+		p.color = getcolorpix(v, tmp[0].addr, p.z);
+		if (opt.x)
+			p.color = (p.color >> 1) & 8355711;
+		if (fog.x)
+			p.color = color_lerp(p.color, fog.z, fog.y / 29 * fog.uv);
+		img_pix_put(&tmp[1], p, v);
+	}
+	else if (opt.y)
+	{
+		if (fog.x)
+			p.color = color_lerp(p.color, fog.z, fog.y / 29 * fog.uv);
+		img_pix_put(&tmp[1], p, v);
+	}
+}
 
 /// @brief Add the pixel from the texture to the buffer
 /// @param v Vars
 /// @param f Floor structure
 /// @param p Pixel coordinate to add to the buffer
 /// @param img Texture to use
-static void	update_floor_ceil_texture_pixels(t_vars *v, t_floor *f, t_point p)
+static void	update_floor_ceil_texture_pixels(t_vars *v, t_floor *f, t_point p,
+	t_imga *tmp)
 {
 	while (p.x < v->screen.resw)
 	{
 		f->cx = (int)(f->fx);
 		f->cy = (int)(f->fy);
-		f->tx = (int)(v->tmp[0].width * (f->fx - f->cx)) & (v->tmp[0].width
-				- 1);
-		f->ty = (int)(v->tmp[0].width * (f->fy - f->cy)) & (v->tmp[0].width
-				- 1);
+		f->tx = (int)(tmp[0].width * (f->fx - f->cx)) & (tmp[0].width - 1);
+		f->ty = (int)(tmp[0].width * (f->fy - f->cy)) & (tmp[0].width - 1);
 		f->fx += f->fstepx;
 		f->fy += f->fstepy;
-		p.z = (f->ty * v->tmp[0].len) + (f->tx * 4);
+		p.z = (f->ty * tmp[0].len) + (f->tx * 4);
 		if (MANDATORY)
 			p.color = v->infos.floor;
 		if (f->isfloor)
-			add_pix(v, p, (t_point3){1.0, f->rowdist, FOGC, FOGL, 0},
-				(t_point){0, p.color, 0, 0});
+			add_pix_threaded(v, p, (t_point3){1.0, f->rowdist, FOGC, FOGL, 0},
+				(t_point){0, p.color, 0, 0}, tmp);
 		else if (f->cx < 10 || f->cx > 16)
 		{
 			if (MANDATORY)
 				p.color = v->infos.ceil;
-			add_pix(v, p, (t_point3){1.0, f->rowdist, FOGC, FOGL, 0},
-				(t_point){0, p.color, 0, 0});
+			add_pix_threaded(v, p, (t_point3){1.0, f->rowdist, FOGC, FOGL, 0},
+				(t_point){0, p.color, 0, 0}, tmp);
 		}
 		p.x++;
 	}
@@ -89,8 +107,120 @@ void	draw_floor_ceiling(t_vars *v)
 	while (y < v->screen.gameh)
 	{
 		init_data_floor(v, &v->floor, y);
-		update_floor_ceil_texture_pixels(v, &v->floor, (t_point){0, y, 0, 0});
+		update_floor_ceil_texture_pixels(v, &v->floor, (t_point){0, y, 0, 0},
+			v->tmp);
 		y++;
+	}
+}
+
+
+void	*job(void *arg)
+{
+	t_thread_data	*d;
+	int				id;
+	t_thread_pool	*pool;
+	t_vars			*v;
+
+	d = (t_thread_data *)arg;
+	id = d->thread_id;
+	pool = d->pool;
+	v = d->v;
+	while (!pool->stop)
+	{
+		if (pool->stop)
+		{
+			printf("Thread %d stopping...\n", id);
+			break ;
+		}
+		printf("id: %d, stop: %lld\n", id, pool->job_cond.__align);
+		pthread_mutex_lock(&pool->job_mutex);
+		while (!pool->work_available && !pool->stop)
+			pthread_cond_wait(&pool->job_cond, &pool->job_mutex);
+		if (pool->stop)
+		{
+			pthread_mutex_unlock(&pool->job_mutex);
+			printf("Thread %d stopping...\n", id);
+			break ;
+		}
+		pthread_mutex_unlock(&pool->job_mutex);
+		if (pool->stop)
+		{
+			printf("Thread %d stopping...\n", id);
+			break ;
+		}
+		pthread_mutex_lock(&d->data_mutex);
+		if (d->job)
+		{
+			while (d->y_start < d->y_end)
+			{
+				init_data_floor(v, &d->f, d->y_start);
+				update_floor_ceil_texture_pixels(v, &d->f,
+					(t_point){0, d->y_start, 0, 0}, d->tmp);
+				d->y_start++;
+			}
+		}
+		d->job = 0;
+		pthread_mutex_unlock(&d->data_mutex);
+		if (pool->stop)
+		{
+			printf("Thread %d stopping...\n", id);
+			break ;
+		}
+		pthread_barrier_wait(&pool->tbarrier);
+		if (pool->stop)
+		{
+			printf("Thread %d stopping...\n", id);
+			break ;
+		}
+		pthread_barrier_wait(&pool->mbarrier);
+		if (pool->stop)
+		{
+			printf("Thread %d stopping...\n", id);
+			break ;
+		}
+	}
+	return (NULL);
+}
+
+void	update(t_vars *v, t_imga dest)
+{
+	int	i;
+	int	len;
+
+	len = v->screen.gameh / v->pool.thread_count;
+	i = -1;
+	while (++i < v->pool.thread_count)
+	{
+		pthread_mutex_lock(&v->threads_data[i].data_mutex);
+		v->threads_data[i].job = 1;
+		if (v->game.pause)
+			v->threads_data[i].job = 0;
+		// if (v->exit)
+		// 	v->threads_data[i].stop = 1;
+		v->threads_data[i].tmp[0] = v->img[ESPACE];
+		v->threads_data[i].tmp[1] = dest;
+		v->threads_data[i].y_start = i * (len);
+		v->threads_data[i].y_end = (i + 1) * (len);
+		if (i == v->pool.thread_count - 1)
+			v->threads_data[i].y_end = v->screen.gameh;
+		pthread_mutex_unlock(&v->threads_data[i].data_mutex);
+	}
+	pthread_mutex_lock(&v->pool.job_mutex);
+	v->pool.work_available = 1;
+	pthread_cond_broadcast(&v->pool.job_cond);
+	pthread_mutex_unlock(&v->pool.job_mutex);
+	pthread_barrier_wait(&v->pool.mbarrier);
+	pthread_mutex_lock(&v->pool.job_mutex);
+	v->pool.work_available = 0;
+	pthread_mutex_unlock(&v->pool.job_mutex);
+	i = -1;
+	while (++i < v->pool.thread_count)
+	{
+		pthread_mutex_lock(&v->threads_data[i].data_mutex);
+		v->threads_data[i].y_start = 0;
+		v->threads_data[i].y_end = 0;
+		v->threads_data[i].job = 0;
+		pthread_mutex_unlock(&v->threads_data[i].data_mutex);
 	}
 }
 

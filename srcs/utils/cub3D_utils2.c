@@ -42,7 +42,7 @@ int	printmap(t_vars *v, int i)
 	}
 	ft_printf(1, "player pos: %d %d\n", v->player.player->x,
 		v->player.player->y);
-	return (ft_printf(1, "exit pos: %d %d\n", v->exit->x, v->exit->y), 0);
+	return (0);
 }
 
 /// @brief Add a new element to the linked list

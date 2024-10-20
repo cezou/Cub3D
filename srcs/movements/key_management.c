@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 16:14:16 by cviegas           #+#    #+#             */
-/*   Updated: 2024/10/11 17:22:46 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/20 20:09:05 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,16 @@ int	returnkey(t_vars *v)
 {
 	if ((v->menu.menu == 1 && v->menu.menui == 3) || (v->menu.menu == 2
 			&& v->menu.menui == 3))
+	{
+		v->exit = 1;
+		pthread_mutex_lock(&v->pool.job_mutex);
+		v->pool.stop = 1;
+		// v->pool.work_available = 1;
+		pthread_cond_broadcast(&v->pool.job_cond);
+		pthread_mutex_unlock(&v->pool.job_mutex);
+		printf("Enterq!\n");
 		exit((cleardata(v, 1), 0));
+	}
 	if ((v->menu.menu == 2 && v->menu.menui == 0))
 		menuoptions(v);
 	v->game.start++;
