@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/20 19:06:35 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/21 19:31:54 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	initweapon(t_vars *v)
 
 void	initvars(t_vars *v)
 {
-	v->game.fps = 300;
+	v->game.fps = 1000;
 	v->hud.refresh = 1;
 	v->hud.refreshhealth = 1;
 	v->hud.refresharmor = 1;
@@ -157,7 +157,8 @@ void	init_thread_pool(t_vars *v, int i)
 	{
 		v->pool.thread_count = THREAD_COUNT;
 		v->pool.threads = (pthread_t *)malloc(sizeof(pthread_t) * THREAD_COUNT);
-		v->pool.jobs = (int *)malloc(sizeof(int) * THREAD_COUNT);
+		if (!v->pool.threads)
+			exit((prterr(v, ERRMALL, 1, 1), 1));
 		pthread_barrier_init(&v->pool.tbarrier, NULL, THREAD_COUNT);
 		pthread_barrier_init(&v->pool.mbarrier, NULL, THREAD_COUNT + 1);
 		pthread_mutex_init(&v->pool.job_mutex, NULL);
@@ -170,15 +171,13 @@ void	init_thread_pool(t_vars *v, int i)
 			v->threads_data[i].thread_id = i;
 			v->threads_data[i].pool = &v->pool;
 			v->threads_data[i].v = v;
-			v->threads_data[i].y_start = 0;
-			v->threads_data[i].y_end = 0;
+			v->threads_data[i].start = 0;
+			v->threads_data[i].end = 0;
 			v->threads_data[i].f = (t_floor){0};
 			v->threads_data[i].job = 0;
-			// v->threads_data[i].stop = 0;
 			v->threads_data[i].tmp[0] = (t_imga){0};
 			v->threads_data[i].tmp[1] = (t_imga){0};
 			pthread_create(&v->pool.threads[i], NULL, job, &v->threads_data[i]);
-			// pthread_detach(v->pool.threads[i]);
 		}
 	}
 }
@@ -240,6 +239,8 @@ void	init_objects(t_vars *v, t_actor *a)
 		a->hashitbox = g_objs[i].h;
 		a->pickable = g_objs[i].pickable;
 		a->active = 1;
+		a->next = a;
+		a->prev = a;
 		add_actor(v, &v->actors, &a);
 	}
 }
@@ -260,7 +261,7 @@ void	init_guard(t_vars *v, t_map *tmp, t_actor *a)
 			a->vdiv = 1.0;
 			a->udiv = 1.0;
 			a->isguard = 1;
-			a->ms = 2.2;
+			a->ms = 0.05;
 			a->painchance = 40;
 			a->hasrange = 1;
 			a->hashitbox = 1;
@@ -281,6 +282,7 @@ void	init_actors(t_vars *v)
 }
 
 // v->game.nb_actors = v->game.nb_guard + NUM_OBJS;
+// printactors(v);
 void	check_map(t_vars *v)
 {
 	init_random_melting_array(v);
@@ -291,7 +293,6 @@ void	check_map(t_vars *v)
 	v->player.animoff = 0;
 	init_doors(v);
 	init_actors(v);
-	printactors(v);
 	init_thread_pool(v, -1);
 }
 

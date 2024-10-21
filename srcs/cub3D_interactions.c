@@ -6,27 +6,19 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 09:51:53 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/14 13:42:38 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/21 15:47:40 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3D.h"
 
-/// @brief 
-/// @param v 
-/// @param sp 
-/// @param num 
-/// @return 
-// Num is the number of clip loads,
-// not the individual count (0= 1/2 clip).
-// Returns false if the ammo can't be picked up at all
-bool	give_ammo(t_vars *v, int img, int num, t_ammo ammo)
+/// @brief Should be a switch case but you know this fcking norm
+/// @param v Vars
+/// @param img Image id
+/// @param ammo Ammot type id
+/// @return Ammot type
+t_ammo	give_ammo_switch(t_vars *v, int img, t_ammo ammo)
 {
-	if (img != 0)
-		ammo = NOAMMO;
-	if (img != 0 && img != EPCLIP && img != EPSHELL && img != EPROCK
-		&& img != EPCELL)
-		return (true);
 	if (img == EPCLIP)
 	{
 		ammo = EBULL;
@@ -47,6 +39,26 @@ bool	give_ammo(t_vars *v, int img, int num, t_ammo ammo)
 		ammo = ECELL;
 		v->game.message = GOTCELL;
 	}
+	return (ammo);
+}
+
+/// @brief Give ammo
+/// @param v Vars
+/// @param img Image id
+/// @param num Number of clip load
+/// @param ammo Ammo type id
+/// @return Boolean true if can give ammo
+// Num is the number of clip loads,
+// not the individual count (0= 1/2 clip).
+// Returns false if the ammo can't be picked up at all
+bool	give_ammo(t_vars *v, int img, int num, t_ammo ammo)
+{
+	if (img != 0)
+		ammo = NOAMMO;
+	if (img != 0 && img != EPCLIP && img != EPSHELL && img != EPROCK
+		&& img != EPCELL)
+		return (true);
+	ammo = give_ammo_switch(v, img, ammo);
 	if (v->player.ammo[ammo] == v->player.maxammo[ammo] || ammo == NOAMMO)
 		return (false);
 	if (num)

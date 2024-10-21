@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/16 17:28:48 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/21 19:18:09 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ inline void	update_player_animations(t_vars *v)
 	if (!v->player.pattack)
 		return ;
 	if (timestamp_in_ms(v) - v->player.timerplayer
-		>= (uint64_t)(20000 / v->game.fps))
+		>= (uint64_t)(60))
 	{
 		v->player.animoff += v->player.currweapon.img.animx;
 		v->player.timerplayer = timestamp_in_ms(v);

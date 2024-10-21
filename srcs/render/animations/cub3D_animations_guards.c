@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/15 19:36:36 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/21 19:37:56 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ inline void	update_sprite_anim_death(t_vars *v, t_actor *a)
 	{
 		a->state = EDEAD;
 		a->hashitbox = 0;
+		a->hp = 0;
 		a->stop = 1;
 		a->animoff = v->img[a->img_i].width - v->img[a->img_i].animx;
 	}
@@ -79,6 +80,7 @@ inline void	update_sprite_anim_chase(t_vars *v, t_actor *a)
 // 	&& v->sprites[i].state != ECHASE && v->sprites[i].state != EATTACKR
 // 	&& v->sprites[i].animoff >= v->img[v->sprites[i].img_i].width)
 // 	v->sprites[i].animoff = 0;
+//tmp->ms * v->game.frametime
 
 /// @brief Update guards movement/animations
 /// @param v Vars
@@ -103,9 +105,7 @@ void	update_guards(t_vars *v, t_actor **actor)
 		update_sprite_anim_chase(v, tmp);
 	if (tmp->state == ECHASE)
 	{
-		tmp->x += tmp->ms * v->game.frametime
-			* (v->player.x + 0.5 - tmp->x);
-		tmp->y += tmp->ms * v->game.frametime
-			* (v->player.y + 0.5 - tmp->y);
+		tmp->x += tmp->ms * (v->player.x + 0.5 - tmp->x);
+		tmp->y += tmp->ms * (v->player.y + 0.5 - tmp->y);
 	}
 }

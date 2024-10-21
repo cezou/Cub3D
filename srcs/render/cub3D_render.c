@@ -100,11 +100,6 @@ void	melting(t_vars *v, bool *done, int x)
 int	render(t_vars *v)
 {
 	v->hud.refreshfps = 1;
-	if (!v->screen.win || v->game.won > 0 || !v->game.start
-		|| timestamp_in_ms(v) - v->game.updated_at < (uint64_t)(1000
-		/ v->game.fps))
-		return (1);
-	v->game.updated_at = timestamp_in_ms(v);
 	key_management(v);
 	raycasting(v, v->img[EBUFF]);
 	render_player(v, (t_point){0});
@@ -118,8 +113,16 @@ int	render(t_vars *v)
 	v->game.oldtime = v->game.time;
 	v->game.time = timestamp_in_ms(v);
 	v->game.frametime = (v->game.time - v->game.oldtime) / 1000.0;
+	if (v->game.frametime > 0.0f)
+		v->game.fps = (int)(1.0 / v->game.frametime);
 	return (v->game.start++, 0);
 }
+
+// if (!v->screen.win || v->game.won > 0 || !v->game.start
+// 	|| timestamp_in_ms(v) - v->game.updated_at < (uint64_t)(1000
+// 	/ v->game.fps))
+// 	return (1);
+// v->game.updated_at = timestamp_in_ms(v);
 //	displaytext(v, NULL, NULL)
 // save_screen_to_buffer(v->img[EBUFF], v->img[EMAP], 0);
 // mlx_clear_window(v->mlx, v->screen.win);

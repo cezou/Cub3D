@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/20 19:38:40 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/21 18:40:23 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,12 @@
 #  define DEBUG 1
 # endif
 
-# define THREAD_COUNT 10
+# define THREAD_COUNT 20
 
 // Sounds
 
 # ifndef MANDATORY
-#  define ACTIVATE_SOUND 0
+#  define ACTIVATE_SOUND 1
 #  define MANDATORY 0
 #  define VALID " \t\n\v\f\r10NSWEDG"
 # else
@@ -660,8 +660,14 @@ typedef struct s_floor
 	double					rowdist;
 	int						tx;
 	int						ty;
+	int						tx1;
+	int						ty1;
 	int						cx;
 	int						cy;
+	int						dcx;
+	int						dcy;
+	int						lim;
+	int						t[2];
 	bool					isfloor;
 }							t_floor;
 
@@ -868,14 +874,12 @@ typedef struct s_infos
 }							t_infos;
 
 typedef struct s_thread_pool{
-	// char				*buffer;
 	int					thread_count;
 	pthread_t			*threads;
 	pthread_barrier_t	tbarrier;
 	pthread_barrier_t	mbarrier;
 	pthread_mutex_t		job_mutex;
 	pthread_cond_t		job_cond;
-	int					*jobs;
 	int					work_available;
 	volatile int		stop;
 }	t_thread_pool;
@@ -884,12 +888,11 @@ typedef struct s_thread_pool{
 typedef struct s_thread_data{
 	struct s_vars	*v;
 	int				thread_id;
-	int				y_start;
-	int				y_end;
+	int				start;
+	int				end;
 	t_thread_pool	*pool;
 	t_floor			f;
 	int				job;
-	// int				stop;
 	t_imga			tmp[2];
 	pthread_mutex_t	data_mutex;
 }	t_thread_data;
@@ -963,7 +966,8 @@ t_actor						*new_actor(t_vars *v);
 void						add_actor(t_vars *v, t_actor **actors,
 								t_actor **node);
 int							printactors(t_vars *v);
-void						sort_descending(t_actor **head);
+void						sort_descending(t_actor **head, int bound,
+								bool swapped, t_actor *last_sorted);
 void						ft_swaps(t_actor **head, t_actor *a, t_actor *b);
 
 // Interactions
@@ -991,6 +995,7 @@ int							freeall(char **tab);
 int							cleardata(t_vars *vars, int b);
 int							map_clear(t_map *lst);
 int							actors_clear(t_actor *lst);
+void						stop_threads_pool(t_vars *v);
 
 // Init
 void						init(t_vars *v, int argc, char **argv);
@@ -1063,7 +1068,10 @@ void						update_texture_pixels(t_vars *v, t_point p, int *t);
 // Threading
 
 void						*job(void *v);
-void						update(t_vars *v, t_imga dest);
+void						draw_floor_ceiling_threaded(t_vars *v, t_imga dest);
+void						add_pix_custom(t_vars *v, t_point p, t_point3 fog,
+								t_imga *tmp);
+void						draw_skybox_threaded(t_vars *v, t_imga dest);
 
 // Animations
 void						update_door_animations(t_vars *v, int i);
@@ -1074,7 +1082,9 @@ t_actor						*update_projectiles(t_vars *v, t_actor **actor,
 								int *i);
 
 void						draw_floor_ceiling(t_vars *v);
-// void					set_floor_ceiling_vert(t_vars *v, t_point p);
+void						init_data_floor(t_vars *v, t_floor *f, int y);
+void						update_floor_ceil_texture_pixels(t_vars *v,
+								t_floor *f, t_point p, t_imga *tmp);
 
 void						draw_sprites(t_vars *v);
 void						draw_sprite(t_vars *v, t_sprite_data *sp,
@@ -1085,7 +1095,10 @@ void						set_sprite_boundaries(t_vars *v, t_sprite_data *sp,
 								t_actor *g);
 void						sort_sprites(t_vars *v);
 
-void						draw_skybox(t_vars *v, t_point p, int *t);
+void						draw_skybox(t_vars *v, t_point p, t_floor *f);
+void						set_skybox(t_vars *v, t_floor *f, int w, int xs);
+void						surf_rows(t_vars *v, t_point p, t_floor *f,
+								t_imga *tmp);
 
 // HUD
 

@@ -66,15 +66,7 @@ void	hotreload(t_vars *v)
 void	menuexit(t_vars *v)
 {
 	if (v->game.won < 4 && (MANDATORY || v->game.won > 0))
-	{
-		pthread_mutex_lock(&v->pool.job_mutex);
-		v->exit = 1;
-		v->pool.stop = 1;
-		v->pool.work_available = 1;
-		pthread_cond_broadcast(&v->pool.job_cond);
-		pthread_mutex_unlock(&v->pool.job_mutex);
 		exit((mlx_do_key_autorepeaton(v->mlx), cleardata(v, 1), 0));
-	}
 	v->hud.refreshammo = 1;
 	v->hud.refreshcards = 1;
 	v->hud.refreshammun = 1;

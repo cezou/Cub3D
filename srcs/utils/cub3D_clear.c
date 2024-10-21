@@ -114,29 +114,6 @@ int	clear_sounds(t_vars *v)
 	return (1);
 }
 
-void	stop_threads_pool(t_vars *v)
-{
-	int	i;
-
-	i = -1;
-	(void)v;
-	printf("Stopping...\n");
-	while (++i < THREAD_COUNT)
-		// pthread_cancel(v->pool.threads[i]);
-		pthread_join(v->pool.threads[i], NULL);
-	// pthread_mutex_lock(&v->pool.job_mutex);
-	// v->exit = 1;
-	// v->pool.stop = 1;
-	// pthread_mutex_unlock(&v->pool.job_mutex);
-	// pthread_mutex_lock(&v->pool.job_mutex);
-	// pthread_cond_broadcast(&v->pool.job_cond);
-	// pthread_mutex_unlock(&v->pool.job_mutex);
-	// pthread_barrier_wait(&v->pool.mbarrier);
-	// while (++i < THREAD_COUNT)
-	// 	pthread_join(v->pool.threads[i], NULL);
-	printf("THREADS POOL STOPPED\n");
-}
-
 /// @brief Clear all the datas from the program
 /// and reset the xset keyboard input delay
 /// @param v Vars
@@ -145,19 +122,6 @@ void	stop_threads_pool(t_vars *v)
 /// @return
 int	cleardata(t_vars *v, int b)
 {
-	int	i;
-
-	i = -1;
-	stop_threads_pool(v);
-	free(v->pool.threads);
-	free(v->pool.jobs);
-	// pthread_barrier_destroy(&v->pool.tbarrier);
-	// pthread_barrier_destroy(&v->pool.mbarrier);
-	pthread_mutex_destroy(&v->pool.job_mutex);
-	while (++i < THREAD_COUNT)
-		pthread_mutex_destroy(&v->threads_data[i].data_mutex);
-	pthread_cond_destroy(&v->pool.job_cond);
-	printf("THREADS POOL KEK\n");
 	mlx_do_key_autorepeaton(v->mlx);
 	clear_sounds(v);
 	if (b && v->mlx && (clearimgs(v) < 0 || (v->screen.win
@@ -170,6 +134,8 @@ int	cleardata(t_vars *v, int b)
 		return (ft_printf(2, "ERROR Destroy Actors\n"));
 	if (b && v->mlx)
 		free(v->mlx);
+	if (v->pool.threads)
+		stop_threads_pool(v);
 	if (v->infos.map)
 		freeall(v->infos.map);
 	if (v->img)

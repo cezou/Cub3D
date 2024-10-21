@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 21:44:07 by cviegas           #+#    #+#             */
-/*   Updated: 2024/10/09 13:03:15 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/21 19:32:19 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	s(void)
 	int			num_colors;
 
 	num_colors = sizeof(colors) / sizeof(colors[0]);
-	printf("%sSquid: %d\033[0m\n", colors[color_index], count);
+	ft_printf(1, "%sSquid: %d\033[0m\n", colors[color_index], count);
 	count++;
 	color_index = (color_index + 1) % num_colors;
 }

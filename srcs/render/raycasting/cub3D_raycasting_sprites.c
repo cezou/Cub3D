@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/20 11:00:46 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/21 13:10:23 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	sort_sprites(t_vars *v)
 		tmp = tmp->next;
 	}
 	i = -1;
-	sort_descending(&v->actors);
+	sort_descending(&v->actors, -1, true, NULL);
 }
 
 /// @brief Add pixels of the sprite to the buffer

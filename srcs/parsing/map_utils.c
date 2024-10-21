@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 17:22:11 by cviegas           #+#    #+#             */
-/*   Updated: 2024/10/08 18:43:19 by cviegas          ###   ########.fr       */
+/*   Updated: 2024/10/21 19:32:11 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,5 @@ void	print_map(char **s)
 
 	i = 0;
 	while (s[i])
-		printf("%s\n", s[i++]);
+		ft_printf(1, "%s\n", s[i++]);
 }

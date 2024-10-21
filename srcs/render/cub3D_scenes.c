@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 09:51:53 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/20 10:58:51 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/21 19:28:56 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 int	win(t_vars *v)
 {
 	if (!v->screen.win || timestamp_in_ms(v)
-		- v->game.updated_at < (uint64_t)(1000 / v->game.fps))
+		- v->game.updated_at < (uint64_t)(100))
 		return (1);
 	v->game.updated_at = timestamp_in_ms(v);
-	if (ACTIVATE_SOUND && v->game.updated_at >= (uint64_t)(1000 / v->game.fps))
+	if (ACTIVATE_SOUND && v->game.updated_at >= (uint64_t)(100))
 	{
 		if (ma_sound_is_playing(&v->sound.sound[2]))
 			ma_sound_stop(&v->sound.sound[2]);
@@ -43,10 +43,10 @@ int	win(t_vars *v)
 int	lose(t_vars *v)
 {
 	if (!v->screen.win || timestamp_in_ms(v)
-		- v->game.updated_at < (uint64_t)(1000 / v->game.fps))
+		- v->game.updated_at < (uint64_t)(100))
 		return (1);
 	v->game.updated_at = timestamp_in_ms(v);
-	if (ACTIVATE_SOUND && v->game.updated_at >= (uint64_t)(1000 / v->game.fps))
+	if (ACTIVATE_SOUND && v->game.updated_at >= (uint64_t)(100))
 	{
 		if (ma_sound_is_playing(&v->sound.sound[2]))
 			ma_sound_stop(&v->sound.sound[2]);
@@ -72,7 +72,7 @@ int	credits(t_vars *v)
 
 	rh = v->screen.resh;
 	if (!v->screen.win || timestamp_in_ms(v)
-		- v->game.updated_at < (uint64_t)(1000 / v->game.fps))
+		- v->game.updated_at < (uint64_t)(100))
 		return (1);
 	v->game.updated_at = timestamp_in_ms(v);
 	mlx_do_sync((mlx_clear_window(v->mlx, v->screen.win), v->mlx));
@@ -94,6 +94,9 @@ int	credits(t_vars *v)
 	return (scrolling(v, &h, "STAFF", (t_point2){0.45f, rh, 1, R_P}), 0);
 }
 
+// if (!delta && timestamp_in_ms(v) - v->game.updated_at < (uint64_t)5000)
+// 	return (mlx_put_image_to_window(v->mlx, v->screen.win,
+// 			v->img[COMP_N].img, 0, 0), delta = 0, 1);
 /// @brief Transition screen to display
 /// @param v Vars
 int	transition_melt_screen(t_vars *v)
@@ -103,12 +106,9 @@ int	transition_melt_screen(t_vars *v)
 
 	done = true;
 	(void)delta;
-	// if (!delta && timestamp_in_ms(v) - v->game.updated_at < (uint64_t)5000)
-	// 	return (mlx_put_image_to_window(v->mlx, v->screen.win,
-	// 			v->img[COMP_N].img, 0, 0), delta = 0, 1);
-	// if (!v->screen.win || timestamp_in_ms(v)
-	// 	- v->game.updated_at < (uint64_t)(10000 / v->game.fps))
-	// 	return (delta = 1, 1);
+	if (!v->screen.win || timestamp_in_ms(v)
+		- v->game.updated_at < (uint64_t)(40))
+		return (delta = 1, 1);
 	delta = 1;
 	v->game.updated_at = timestamp_in_ms(v);
 	ft_bzero(v->img[EBUFF].addr, v->screen.resw * v->screen.resh
@@ -136,7 +136,7 @@ int	transition_melt_screen(t_vars *v)
 int	maintitleanim(t_vars *v)
 {
 	if (!v->screen.win || timestamp_in_ms(v)
-		- v->game.updated_at < (uint64_t)(3000 / v->game.fps))
+		- v->game.updated_at < (uint64_t)(10))
 		return (1);
 	v->game.updated_at = timestamp_in_ms(v);
 	mlx_set_font(v->mlx, v->screen.win, v->img->fontname2);

@@ -68,18 +68,13 @@ void	ft_swaps(t_actor **head, t_actor *node1, t_actor *node2)
 
 /// @brief Sort in descending order the two ways circular linked list
 /// @param head Head
-void	sort_descending(t_actor **head)
+void	sort_descending(t_actor **head, int bound, bool swapped,
+		t_actor *last_sorted)
 {
-	bool	swapped;
 	t_actor	*current;
-	t_actor	*last_sorted;
-	int		bound;
 
-	bound = -1;
 	if (*head == NULL || (*head)->next == *head)
 		return ;
-	swapped = true;
-	last_sorted = NULL;
 	while (swapped && last_sorted != *head)
 	{
 		swapped = false;
@@ -143,7 +138,6 @@ void	sort_descending(t_actor **head)
 // 	}
 // 	*list = pFst;                       /* update ptr to list */
 // }
-
 
 // t_actor	*list_merge(t_actor *pLft, t_actor *pRgt, t_actor *pEnd)
 // {

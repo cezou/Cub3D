@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:38:17 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/20 20:04:08 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/21 16:33:50 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 /// @param v Vars
 /// @param f Floor structure
 /// @param y Y coordinate
-static void	init_data_floor(t_vars *v, t_floor *f, int y)
+void	init_data_floor(t_vars *v, t_floor *f, int y)
 {
 	int		d;
 	double	posz;
@@ -43,19 +43,23 @@ static void	init_data_floor(t_vars *v, t_floor *f, int y)
 }
 
 // color = v->tex[4][64 * ty + tx];
-
-void	add_pix_threaded(t_vars *v, t_point p, t_point3 fog, t_point opt, t_imga *tmp)
+/// @brief Same as add_pixel but with the image source/dest as parameter
+///	for thread safety
+/// @param v Vars
+/// @param p Pixel datas {x, y, k, color}
+///	@param fog Fog datas {bool, dist, fog color, fog level,
+/// bool to get color of pixels or not}
+///	@param tmp Image source/dest
+void	add_pix_custom(t_vars *v, t_point p, t_point3 fog, t_imga *tmp)
 {
-	if (!opt.y && p.z > -1 && tmp[0].addr[p.z + 3] == 0)
+	if (!fog.v && p.z > -1 && tmp[0].addr[p.z + 3] == 0)
 	{
 		p.color = getcolorpix(v, tmp[0].addr, p.z);
-		if (opt.x)
-			p.color = (p.color >> 1) & 8355711;
 		if (fog.x)
 			p.color = color_lerp(p.color, fog.z, fog.y / 29 * fog.uv);
 		img_pix_put(&tmp[1], p, v);
 	}
-	else if (opt.y)
+	else if (fog.v)
 	{
 		if (fog.x)
 			p.color = color_lerp(p.color, fog.z, fog.y / 29 * fog.uv);
@@ -68,7 +72,7 @@ void	add_pix_threaded(t_vars *v, t_point p, t_point3 fog, t_point opt, t_imga *t
 /// @param f Floor structure
 /// @param p Pixel coordinate to add to the buffer
 /// @param img Texture to use
-static void	update_floor_ceil_texture_pixels(t_vars *v, t_floor *f, t_point p,
+void	update_floor_ceil_texture_pixels(t_vars *v, t_floor *f, t_point p,
 	t_imga *tmp)
 {
 	while (p.x < v->screen.resw)
@@ -83,14 +87,14 @@ static void	update_floor_ceil_texture_pixels(t_vars *v, t_floor *f, t_point p,
 		if (MANDATORY)
 			p.color = v->infos.floor;
 		if (f->isfloor)
-			add_pix_threaded(v, p, (t_point3){1.0, f->rowdist, FOGC, FOGL, 0},
-				(t_point){0, p.color, 0, 0}, tmp);
+			add_pix_custom(v, p,
+				(t_point3){1.0, f->rowdist, FOGC, FOGL, p.color}, tmp);
 		else if (f->cx < 10 || f->cx > 16)
 		{
 			if (MANDATORY)
 				p.color = v->infos.ceil;
-			add_pix_threaded(v, p, (t_point3){1.0, f->rowdist, FOGC, FOGL, 0},
-				(t_point){0, p.color, 0, 0}, tmp);
+			add_pix_custom(v, p,
+				(t_point3){1.0, f->rowdist, FOGC, FOGL, p.color}, tmp);
 		}
 		p.x++;
 	}
@@ -110,117 +114,6 @@ void	draw_floor_ceiling(t_vars *v)
 		update_floor_ceil_texture_pixels(v, &v->floor, (t_point){0, y, 0, 0},
 			v->tmp);
 		y++;
-	}
-}
-
-
-void	*job(void *arg)
-{
-	t_thread_data	*d;
-	int				id;
-	t_thread_pool	*pool;
-	t_vars			*v;
-
-	d = (t_thread_data *)arg;
-	id = d->thread_id;
-	pool = d->pool;
-	v = d->v;
-	while (!pool->stop)
-	{
-		if (pool->stop)
-		{
-			printf("Thread %d stopping...\n", id);
-			break ;
-		}
-		printf("id: %d, stop: %lld\n", id, pool->job_cond.__align);
-		pthread_mutex_lock(&pool->job_mutex);
-		while (!pool->work_available && !pool->stop)
-			pthread_cond_wait(&pool->job_cond, &pool->job_mutex);
-		if (pool->stop)
-		{
-			pthread_mutex_unlock(&pool->job_mutex);
-			printf("Thread %d stopping...\n", id);
-			break ;
-		}
-		pthread_mutex_unlock(&pool->job_mutex);
-		if (pool->stop)
-		{
-			printf("Thread %d stopping...\n", id);
-			break ;
-		}
-		pthread_mutex_lock(&d->data_mutex);
-		if (d->job)
-		{
-			while (d->y_start < d->y_end)
-			{
-				init_data_floor(v, &d->f, d->y_start);
-				update_floor_ceil_texture_pixels(v, &d->f,
-					(t_point){0, d->y_start, 0, 0}, d->tmp);
-				d->y_start++;
-			}
-		}
-		d->job = 0;
-		pthread_mutex_unlock(&d->data_mutex);
-		if (pool->stop)
-		{
-			printf("Thread %d stopping...\n", id);
-			break ;
-		}
-		pthread_barrier_wait(&pool->tbarrier);
-		if (pool->stop)
-		{
-			printf("Thread %d stopping...\n", id);
-			break ;
-		}
-		pthread_barrier_wait(&pool->mbarrier);
-		if (pool->stop)
-		{
-			printf("Thread %d stopping...\n", id);
-			break ;
-		}
-	}
-	return (NULL);
-}
-
-void	update(t_vars *v, t_imga dest)
-{
-	int	i;
-	int	len;
-
-	len = v->screen.gameh / v->pool.thread_count;
-	i = -1;
-	while (++i < v->pool.thread_count)
-	{
-		pthread_mutex_lock(&v->threads_data[i].data_mutex);
-		v->threads_data[i].job = 1;
-		if (v->game.pause)
-			v->threads_data[i].job = 0;
-		// if (v->exit)
-		// 	v->threads_data[i].stop = 1;
-		v->threads_data[i].tmp[0] = v->img[ESPACE];
-		v->threads_data[i].tmp[1] = dest;
-		v->threads_data[i].y_start = i * (len);
-		v->threads_data[i].y_end = (i + 1) * (len);
-		if (i == v->pool.thread_count - 1)
-			v->threads_data[i].y_end = v->screen.gameh;
-		pthread_mutex_unlock(&v->threads_data[i].data_mutex);
-	}
-	pthread_mutex_lock(&v->pool.job_mutex);
-	v->pool.work_available = 1;
-	pthread_cond_broadcast(&v->pool.job_cond);
-	pthread_mutex_unlock(&v->pool.job_mutex);
-	pthread_barrier_wait(&v->pool.mbarrier);
-	pthread_mutex_lock(&v->pool.job_mutex);
-	v->pool.work_available = 0;
-	pthread_mutex_unlock(&v->pool.job_mutex);
-	i = -1;
-	while (++i < v->pool.thread_count)
-	{
-		pthread_mutex_lock(&v->threads_data[i].data_mutex);
-		v->threads_data[i].y_start = 0;
-		v->threads_data[i].y_end = 0;
-		v->threads_data[i].job = 0;
-		pthread_mutex_unlock(&v->threads_data[i].data_mutex);
 	}
 }
 

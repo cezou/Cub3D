@@ -1,45 +1,1371 @@
-==635909== Memcheck, a memory error detector
-==635909== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==635909== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==635909== Command: ./cub3D_bonus resources/maps/subject.cub 800 600
-==635909== Parent PID: 635905
-==635909== 
-==635909== 
-==635909== FILE DESCRIPTORS: 7 open (3 std) at exit.
-==635909== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
-==635909==    <inherited from parent>
-==635909== 
-==635909== Open file descriptor 39: /home/pmagnero/.config/Code/logs/20241020T105732/ptyhost.log
-==635909==    <inherited from parent>
-==635909== 
-==635909== Open file descriptor 38: /usr/share/code/resources/app/node_modules.asar
-==635909==    <inherited from parent>
-==635909== 
-==635909== Open file descriptor 3: /home/pmagnero/repo/cub/valgrind_bonus.log
-==635909==    <inherited from parent>
-==635909== 
-==635909== 
-==635909== HEAP SUMMARY:
-==635909==     in use at exit: 2,880 bytes in 10 blocks
-==635909==   total heap usage: 115,628 allocs, 115,618 frees, 8,873,494 bytes allocated
-==635909== 
-==635909== 2,880 bytes in 10 blocks are possibly lost in loss record 1 of 1
-==635909==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==635909==    by 0x40147D9: calloc (rtld-malloc.h:44)
-==635909==    by 0x40147D9: allocate_dtv (dl-tls.c:375)
-==635909==    by 0x40147D9: _dl_allocate_tls (dl-tls.c:634)
-==635909==    by 0x4C6E7B4: allocate_stack (allocatestack.c:430)
-==635909==    by 0x4C6E7B4: pthread_create@@GLIBC_2.34 (pthread_create.c:647)
-==635909==    by 0x40F650: init_thread_pool (cub3D_init.c:180)
-==635909==    by 0x40FD2A: init (cub3D_init.c:323)
-==635909==    by 0x403CD7: main (cub3D.c:51)
-==635909== 
-==635909== LEAK SUMMARY:
-==635909==    definitely lost: 0 bytes in 0 blocks
-==635909==    indirectly lost: 0 bytes in 0 blocks
-==635909==      possibly lost: 2,880 bytes in 10 blocks
-==635909==    still reachable: 0 bytes in 0 blocks
-==635909==         suppressed: 0 bytes in 0 blocks
-==635909== 
-==635909== For lists of detected and suppressed errors, rerun with: -s
-==635909== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 1 from 1)
+==1000403== Memcheck, a memory error detector
+==1000403== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==1000403== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==1000403== Command: ./cub3D_bonus resources/maps/subject.cub 800 600
+==1000403== Parent PID: 1000399
+==1000403== 
+==1000403== 
+==1000403== Process terminating with default action of signal 2 (SIGINT)
+==1000403==    at 0x4C6CA1A: futex_wait (futex-internal.h:146)
+==1000403==    by 0x4C6CA1A: futex_wait_simple (futex-internal.h:177)
+==1000403==    by 0x4C6CA1A: pthread_barrier_wait@@GLIBC_2.34 (pthread_barrier_wait.c:184)
+==1000403==    by 0x40E86D: stop_threads_pool (cub3D_clear.c:128)
+==1000403==    by 0x40EA11: cleardata (cub3D_clear.c:164)
+==1000403==    by 0x4125D1: returnkey (key_management.c:26)
+==1000403==    by 0x404A48: keys (cub3D_hooks.c:107)
+==1000403==    by 0x4D7C35: mlx_loop (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x403D11: main (cub3D.c:70)
+==1000403== 
+==1000403== FILE DESCRIPTORS: 8 open (3 std) at exit.
+==1000403== Open AF_UNIX socket 4: <unknown>
+==1000403==    at 0x4D01B3B: socket (syscall-template.S:120)
+==1000403==    by 0x4E1034D: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==1000403==    by 0x4E12797: xcb_connect_to_display_with_auth_info (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==1000403==    by 0x48C9EE9: _XConnectXCB (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x48B9B68: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D7837: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==1000403==    <inherited from parent>
+==1000403== 
+==1000403== Open file descriptor 39: /home/pmagnero/.config/Code/logs/20241021T110925/ptyhost.log
+==1000403==    <inherited from parent>
+==1000403== 
+==1000403== Open file descriptor 38: /usr/share/code/resources/app/node_modules.asar
+==1000403==    <inherited from parent>
+==1000403== 
+==1000403== Open file descriptor 3: /home/pmagnero/repo/cub/valgrind_bonus.log
+==1000403==    <inherited from parent>
+==1000403== 
+==1000403== 
+==1000403== HEAP SUMMARY:
+==1000403==     in use at exit: 239,938 bytes in 1,920 blocks
+==1000403==   total heap usage: 105,820 allocs, 103,900 frees, 8,634,065 bytes allocated
+==1000403== 
+==1000403== 2 bytes in 1 blocks are still reachable in loss record 1 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4DC143: stash_to_line (get_next_line_utils.c:48)
+==1000403==    by 0x4DBD9E: get_next_line_aux (get_next_line.c:30)
+==1000403==    by 0x4DC0A0: get_next_line (get_next_line.c:56)
+==1000403==    by 0x4136F1: store_map (map.c:89)
+==1000403==    by 0x412BC5: parse_map (parsing.c:47)
+==1000403==    by 0x412BC5: parsing (parsing.c:66)
+==1000403==    by 0x40FC4C: init (cub3D_init.c:306)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 2 bytes in 1 blocks are still reachable in loss record 2 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x40E1E4: dupspace (cub3D_utils4.c:50)
+==1000403==    by 0x413779: store_map (map.c:95)
+==1000403==    by 0x412BC5: parse_map (parsing.c:47)
+==1000403==    by 0x412BC5: parsing (parsing.c:66)
+==1000403==    by 0x40FC4C: init (cub3D_init.c:306)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 3 bytes in 1 blocks are still reachable in loss record 3 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4C8258E: strdup (strdup.c:42)
+==1000403==    by 0x48B9B45: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D7837: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 7 bytes in 1 blocks are still reachable in loss record 4 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4C8258E: strdup (strdup.c:42)
+==1000403==    by 0x48B69AE: XInitExtension (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4AD16AF: XFixesFindDisplay (in /usr/lib/x86_64-linux-gnu/libXfixes.so.3.1.0)
+==1000403==    by 0x4AD1F72: XFixesHideCursor (in /usr/lib/x86_64-linux-gnu/libXfixes.so.3.1.0)
+==1000403==    by 0x40E246: mouse_hide (cub3D_utils4.c:70)
+==1000403==    by 0x40FCDA: init (cub3D_init.c:313)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 8 bytes in 1 blocks are still reachable in loss record 5 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4C8258E: strdup (strdup.c:42)
+==1000403==    by 0x48B69AE: XInitExtension (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x487B820: XextAddDisplay (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x48809E2: XShmQueryVersion (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D7673: mlx_int_deal_shm (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D78F1: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 8 bytes in 1 blocks are still reachable in loss record 6 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4879B34: ??? (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x487B9DF: XextAddDisplay (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x48809E2: XShmQueryVersion (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D7673: mlx_int_deal_shm (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D78F1: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 10 bytes in 1 blocks are still reachable in loss record 7 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4C8258E: strdup (strdup.c:42)
+==1000403==    by 0x48B69AE: XInitExtension (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4920213: XkbUseExtension (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x48BA6A8: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D7837: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 16 bytes in 1 blocks are still reachable in loss record 8 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4E122EE: xcb_connect_to_fd (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==1000403==    by 0x4E12E6B: xcb_connect_to_display_with_auth_info (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==1000403==    by 0x48C9EE9: _XConnectXCB (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x48B9B68: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D7837: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 21 bytes in 1 blocks are still reachable in loss record 9 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x48BA03E: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D7837: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 24 bytes in 1 blocks are still reachable in loss record 10 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487B041: XextCreateExtension (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x487B4CC: ??? (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x487B9C8: XextAddDisplay (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x48809E2: XShmQueryVersion (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D7673: mlx_int_deal_shm (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D78F1: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 24 bytes in 1 blocks are still reachable in loss record 11 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4C8258E: strdup (strdup.c:42)
+==1000403==    by 0x48B69AE: XInitExtension (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x487B820: XextAddDisplay (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x487B50A: ??? (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x487B9C8: XextAddDisplay (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x48809E2: XShmQueryVersion (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D7673: mlx_int_deal_shm (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D78F1: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 24 bytes in 1 blocks are still reachable in loss record 12 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487B9F5: XextAddDisplay (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x48809E2: XShmQueryVersion (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D7673: mlx_int_deal_shm (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D78F1: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 24 bytes in 1 blocks are still reachable in loss record 13 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x48C7A65: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x48D02C6: _XReply (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x48D077E: XSync (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D7BC7: mlx_loop (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x403D11: main (cub3D.c:70)
+==1000403== 
+==1000403== 24 bytes in 12 blocks are still reachable in loss record 14 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4DBEF1: buff_to_char (get_next_line.c:70)
+==1000403==    by 0x4DC012: get_next_line (get_next_line.c:50)
+==1000403==    by 0x413747: store_map (map.c:89)
+==1000403==    by 0x412BC5: parse_map (parsing.c:47)
+==1000403==    by 0x412BC5: parsing (parsing.c:66)
+==1000403==    by 0x40FC4C: init (cub3D_init.c:306)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 29 bytes in 1 blocks are still reachable in loss record 15 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x48B30CD: _XUpdateAtomCache (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x48B5929: XInternAtom (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D78E2: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 32 bytes in 1 blocks are still reachable in loss record 16 of 131
+==1000403==    at 0x48487A9: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4E1615E: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==1000403==    by 0x4E16237: xcb_get_extension_data (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==1000403==    by 0x4E162EE: xcb_prefetch_maximum_request_length (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==1000403==    by 0x4E16364: xcb_get_maximum_request_length (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==1000403==    by 0x48BA52B: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D7837: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 32 bytes in 1 blocks are still reachable in loss record 17 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4E0F1B7: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==1000403==    by 0x4E0FA08: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==1000403==    by 0x4E0FEB0: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==1000403==    by 0x4E10E44: xcb_wait_for_reply (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==1000403==    by 0x4E16292: xcb_get_extension_data (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==1000403==    by 0x4E162EE: xcb_prefetch_maximum_request_length (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==1000403==    by 0x4E16364: xcb_get_maximum_request_length (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==1000403==    by 0x48BA52B: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D7837: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 32 bytes in 1 blocks are still reachable in loss record 18 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487B7FF: XextAddDisplay (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x48809E2: XShmQueryVersion (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D7673: mlx_int_deal_shm (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D78F1: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 32 bytes in 1 blocks are still reachable in loss record 19 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487B7FF: XextAddDisplay (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x487B50A: ??? (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x487B9C8: XextAddDisplay (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x48809E2: XShmQueryVersion (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D7673: mlx_int_deal_shm (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D78F1: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 32 bytes in 1 blocks are still reachable in loss record 20 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4AD1694: XFixesFindDisplay (in /usr/lib/x86_64-linux-gnu/libXfixes.so.3.1.0)
+==1000403==    by 0x4AD1F72: XFixesHideCursor (in /usr/lib/x86_64-linux-gnu/libXfixes.so.3.1.0)
+==1000403==    by 0x40E246: mouse_hide (cub3D_utils4.c:70)
+==1000403==    by 0x40FCDA: init (cub3D_init.c:313)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 33 bytes in 1 blocks are still reachable in loss record 21 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x48B30CD: _XUpdateAtomCache (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x48B5929: XInternAtom (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D78CB: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 40 bytes in 1 blocks are still reachable in loss record 22 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x48CA1F1: _XPollfdCacheInit (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x48B9E71: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D7837: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 48 bytes in 1 blocks are still reachable in loss record 23 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x48C9E71: _XConnectXCB (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x48B9B68: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D7837: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 48 bytes in 1 blocks are still reachable in loss record 24 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x48C9E87: _XConnectXCB (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x48B9B68: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D7837: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 48 bytes in 1 blocks are still reachable in loss record 25 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x49184C0: XkbGetMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4918542: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x49188AF: XkbKeycodeToKeysym (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D95F7: mlx_int_param_KeyPress (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D7C35: mlx_loop (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x403D11: main (cub3D.c:70)
+==1000403== 
+==1000403== 72 bytes in 1 blocks are still reachable in loss record 26 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x48B9F20: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D7837: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 72 bytes in 1 blocks are still reachable in loss record 27 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x49184A4: XkbGetMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4918542: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x49188AF: XkbKeycodeToKeysym (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D95F7: mlx_int_param_KeyPress (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D7C35: mlx_loop (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x403D11: main (cub3D.c:70)
+==1000403== 
+==1000403== 80 bytes in 1 blocks are still reachable in loss record 28 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x40F524: init_thread_pool (cub3D_init.c:159)
+==1000403==    by 0x40FD8A: init (cub3D_init.c:322)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 88 bytes in 1 blocks are still reachable in loss record 29 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D7FFB: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8CE7: mlx_int_parse_xpm (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D9121: mlx_xpm_file_to_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x41331A: init_xpm (clean_and_imgs.c:35)
+==1000403==    by 0x412EDC: set_value (ids.c:19)
+==1000403==    by 0x412EDC: set_texture (ids.c:28)
+==1000403==    by 0x412ACD: parse_ids (parsing.c:35)
+==1000403==    by 0x412ACD: parsing (parsing.c:65)
+==1000403==    by 0x40FC4C: init (cub3D_init.c:306)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 88 bytes in 1 blocks are still reachable in loss record 30 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D7FFB: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8CE7: mlx_int_parse_xpm (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D9121: mlx_xpm_file_to_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x41331A: init_xpm (clean_and_imgs.c:35)
+==1000403==    by 0x412F06: set_value (ids.c:19)
+==1000403==    by 0x412F06: set_texture (ids.c:30)
+==1000403==    by 0x412ACD: parse_ids (parsing.c:35)
+==1000403==    by 0x412ACD: parsing (parsing.c:65)
+==1000403==    by 0x40FC4C: init (cub3D_init.c:306)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 88 bytes in 1 blocks are still reachable in loss record 31 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D7FFB: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8CE7: mlx_int_parse_xpm (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D9121: mlx_xpm_file_to_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x41331A: init_xpm (clean_and_imgs.c:35)
+==1000403==    by 0x412F47: set_value (ids.c:19)
+==1000403==    by 0x412F47: set_texture (ids.c:32)
+==1000403==    by 0x412ACD: parse_ids (parsing.c:35)
+==1000403==    by 0x412ACD: parsing (parsing.c:65)
+==1000403==    by 0x40FC4C: init (cub3D_init.c:306)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 88 bytes in 1 blocks are still reachable in loss record 32 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D7FFB: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8CE7: mlx_int_parse_xpm (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D9121: mlx_xpm_file_to_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x41331A: init_xpm (clean_and_imgs.c:35)
+==1000403==    by 0x412EAE: set_value (ids.c:19)
+==1000403==    by 0x412EAE: set_texture (ids.c:33)
+==1000403==    by 0x412ACD: parse_ids (parsing.c:35)
+==1000403==    by 0x412ACD: parsing (parsing.c:65)
+==1000403==    by 0x40FC4C: init (cub3D_init.c:306)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 88 bytes in 1 blocks are still reachable in loss record 33 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D7FFB: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x403A6F: inittextures (cub3D.c:35)
+==1000403==    by 0x40FCF1: init (cub3D_init.c:315)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 88 bytes in 1 blocks are still reachable in loss record 34 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D7FFB: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x403A8A: inittextures (cub3D.c:36)
+==1000403==    by 0x40FCF1: init (cub3D_init.c:315)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 88 bytes in 1 blocks are still reachable in loss record 35 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D7FFB: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x403AA5: inittextures (cub3D.c:37)
+==1000403==    by 0x40FCF1: init (cub3D_init.c:315)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 88 bytes in 1 blocks are still reachable in loss record 36 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D7FFB: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x410002: inithud (cub3D_init_anim.c:49)
+==1000403==    by 0x40FD6A: init (cub3D_init.c:318)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 88 bytes in 1 blocks are still reachable in loss record 37 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D7FFB: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x41001B: inithud (cub3D_init_anim.c:50)
+==1000403==    by 0x40FD6A: init (cub3D_init.c:318)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 88 bytes in 1 blocks are still reachable in loss record 38 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D7FFB: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x4100E9: init_elem (cub3D_init_anim.c:32)
+==1000403==    by 0x4100E9: inithud (cub3D_init_anim.c:53)
+==1000403==    by 0x40FD6A: init (cub3D_init.c:318)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 88 bytes in 1 blocks are still reachable in loss record 39 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D7FFB: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x4101EA: init_elem (cub3D_init_anim.c:32)
+==1000403==    by 0x4101EA: inithud (cub3D_init_anim.c:57)
+==1000403==    by 0x40FD6A: init (cub3D_init.c:318)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 88 bytes in 1 blocks are still reachable in loss record 40 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D7FFB: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x410279: init_elem (cub3D_init_anim.c:32)
+==1000403==    by 0x410279: inithud (cub3D_init_anim.c:58)
+==1000403==    by 0x40FD6A: init (cub3D_init.c:318)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 88 bytes in 1 blocks are still reachable in loss record 41 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D7FFB: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x41031E: init_elem (cub3D_init_anim.c:32)
+==1000403==    by 0x41031E: inithud (cub3D_init_anim.c:59)
+==1000403==    by 0x40FD6A: init (cub3D_init.c:318)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 88 bytes in 1 blocks are still reachable in loss record 42 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D7FFB: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x41038A: init_elem (cub3D_init_anim.c:32)
+==1000403==    by 0x41038A: inithud (cub3D_init_anim.c:60)
+==1000403==    by 0x40FD6A: init (cub3D_init.c:318)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 88 bytes in 1 blocks are still reachable in loss record 43 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D7FFB: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x4103F6: init_elem (cub3D_init_anim.c:32)
+==1000403==    by 0x4103F6: inithud (cub3D_init_anim.c:61)
+==1000403==    by 0x40FD6A: init (cub3D_init.c:318)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 88 bytes in 1 blocks are still reachable in loss record 44 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D7FFB: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x410462: init_elem (cub3D_init_anim.c:32)
+==1000403==    by 0x410462: inithud (cub3D_init_anim.c:62)
+==1000403==    by 0x40FD6A: init (cub3D_init.c:318)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 88 bytes in 1 blocks are still reachable in loss record 45 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D7FFB: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x4104CE: init_elem (cub3D_init_anim.c:32)
+==1000403==    by 0x4104CE: inithud (cub3D_init_anim.c:63)
+==1000403==    by 0x40FD6A: init (cub3D_init.c:318)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 88 bytes in 1 blocks are still reachable in loss record 46 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D7FFB: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x41053A: init_elem (cub3D_init_anim.c:32)
+==1000403==    by 0x41053A: inithud (cub3D_init_anim.c:64)
+==1000403==    by 0x40FD6A: init (cub3D_init.c:318)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 88 bytes in 1 blocks are still reachable in loss record 47 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D7FFB: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x4105DC: init_elem (cub3D_init_anim.c:32)
+==1000403==    by 0x4105DC: inithud (cub3D_init_anim.c:65)
+==1000403==    by 0x40FD6A: init (cub3D_init.c:318)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 88 bytes in 1 blocks are still reachable in loss record 48 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D7FFB: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x410B4A: initanim (cub3D_init_paths.c:86)
+==1000403==    by 0x410B4A: initplayerpathanim (cub3D_init_paths.c:97)
+==1000403==    by 0x40FD72: init (cub3D_init.c:319)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 88 bytes in 1 blocks are still reachable in loss record 49 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D7FFB: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x410CF3: initanim (cub3D_init_paths.c:86)
+==1000403==    by 0x410CF3: initplayerpathanim (cub3D_init_paths.c:100)
+==1000403==    by 0x40FD72: init (cub3D_init.c:319)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 88 bytes in 1 blocks are still reachable in loss record 50 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D7FFB: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x410E3A: initanim (cub3D_init_paths.c:86)
+==1000403==    by 0x410E3A: initplayerpathanim (cub3D_init_paths.c:102)
+==1000403==    by 0x40FD72: init (cub3D_init.c:319)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 88 bytes in 1 blocks are still reachable in loss record 51 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D7FFB: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x410F74: initanim (cub3D_init_paths.c:86)
+==1000403==    by 0x410F74: initplayerpathanim (cub3D_init_paths.c:104)
+==1000403==    by 0x40FD72: init (cub3D_init.c:319)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 88 bytes in 1 blocks are still reachable in loss record 52 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D7FFB: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x4110B8: initanim (cub3D_init_paths.c:86)
+==1000403==    by 0x4110B8: initplayerpathanim (cub3D_init_paths.c:106)
+==1000403==    by 0x40FD72: init (cub3D_init.c:319)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 88 bytes in 1 blocks are still reachable in loss record 53 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D7FFB: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x4111FC: initanim (cub3D_init_paths.c:86)
+==1000403==    by 0x4111FC: initplayerpathanim (cub3D_init_paths.c:108)
+==1000403==    by 0x40FD72: init (cub3D_init.c:319)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 88 bytes in 1 blocks are still reachable in loss record 54 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D7FFB: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x411336: initanim (cub3D_init_paths.c:86)
+==1000403==    by 0x411336: initplayerpathanim (cub3D_init_paths.c:110)
+==1000403==    by 0x40FD72: init (cub3D_init.c:319)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 88 bytes in 1 blocks are still reachable in loss record 55 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D7FFB: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x411470: initanim (cub3D_init_paths.c:86)
+==1000403==    by 0x411470: initplayerpathanim (cub3D_init_paths.c:112)
+==1000403==    by 0x40FD72: init (cub3D_init.c:319)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 88 bytes in 1 blocks are still reachable in loss record 56 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D7FFB: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8CE7: mlx_int_parse_xpm (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D9121: mlx_xpm_file_to_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4039F3: inittexture (cub3D.c:20)
+==1000403==    by 0x41155C: initanim (cub3D_init_paths.c:83)
+==1000403==    by 0x41155C: initplayerpathanim (cub3D_init_paths.c:114)
+==1000403==    by 0x40FD72: init (cub3D_init.c:319)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 88 bytes in 1 blocks are still reachable in loss record 57 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D7FFB: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x4115B7: initanim (cub3D_init_paths.c:86)
+==1000403==    by 0x4115B7: initplayerpathanim (cub3D_init_paths.c:114)
+==1000403==    by 0x40FD72: init (cub3D_init.c:319)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 112 bytes in 1 blocks are still reachable in loss record 58 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x48C9D72: _XConnectXCB (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x48B9B68: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D7837: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 112 bytes in 1 blocks are still reachable in loss record 59 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x48BA200: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D7837: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 128 bytes in 1 blocks are still reachable in loss record 60 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x48BA12E: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D7837: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 128 bytes in 1 blocks are still reachable in loss record 61 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x48B699E: XInitExtension (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4920213: XkbUseExtension (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x48BA6A8: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D7837: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 128 bytes in 1 blocks are still reachable in loss record 62 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x48B699E: XInitExtension (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x487B820: XextAddDisplay (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x48809E2: XShmQueryVersion (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D7673: mlx_int_deal_shm (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D78F1: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 128 bytes in 1 blocks are still reachable in loss record 63 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x48B699E: XInitExtension (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x487B820: XextAddDisplay (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x487B50A: ??? (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x487B9C8: XextAddDisplay (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x48809E2: XShmQueryVersion (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D7673: mlx_int_deal_shm (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D78F1: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 128 bytes in 1 blocks are still reachable in loss record 64 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x48B699E: XInitExtension (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4AD16AF: XFixesFindDisplay (in /usr/lib/x86_64-linux-gnu/libXfixes.so.3.1.0)
+==1000403==    by 0x4AD1F72: XFixesHideCursor (in /usr/lib/x86_64-linux-gnu/libXfixes.so.3.1.0)
+==1000403==    by 0x40E246: mouse_hide (cub3D_utils4.c:70)
+==1000403==    by 0x40FCDA: init (cub3D_init.c:313)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 136 bytes in 1 blocks are still reachable in loss record 65 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D781F: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 136 bytes in 1 blocks are still reachable in loss record 66 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487A0C3: XShmCreateImage (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D8026: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8CE7: mlx_int_parse_xpm (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D9121: mlx_xpm_file_to_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x41331A: init_xpm (clean_and_imgs.c:35)
+==1000403==    by 0x412EDC: set_value (ids.c:19)
+==1000403==    by 0x412EDC: set_texture (ids.c:28)
+==1000403==    by 0x412ACD: parse_ids (parsing.c:35)
+==1000403==    by 0x412ACD: parsing (parsing.c:65)
+==1000403==    by 0x40FC4C: init (cub3D_init.c:306)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 136 bytes in 1 blocks are still reachable in loss record 67 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487A0C3: XShmCreateImage (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D8026: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8CE7: mlx_int_parse_xpm (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D9121: mlx_xpm_file_to_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x41331A: init_xpm (clean_and_imgs.c:35)
+==1000403==    by 0x412F06: set_value (ids.c:19)
+==1000403==    by 0x412F06: set_texture (ids.c:30)
+==1000403==    by 0x412ACD: parse_ids (parsing.c:35)
+==1000403==    by 0x412ACD: parsing (parsing.c:65)
+==1000403==    by 0x40FC4C: init (cub3D_init.c:306)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 136 bytes in 1 blocks are still reachable in loss record 68 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487A0C3: XShmCreateImage (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D8026: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8CE7: mlx_int_parse_xpm (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D9121: mlx_xpm_file_to_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x41331A: init_xpm (clean_and_imgs.c:35)
+==1000403==    by 0x412F47: set_value (ids.c:19)
+==1000403==    by 0x412F47: set_texture (ids.c:32)
+==1000403==    by 0x412ACD: parse_ids (parsing.c:35)
+==1000403==    by 0x412ACD: parsing (parsing.c:65)
+==1000403==    by 0x40FC4C: init (cub3D_init.c:306)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 136 bytes in 1 blocks are still reachable in loss record 69 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487A0C3: XShmCreateImage (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D8026: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8CE7: mlx_int_parse_xpm (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D9121: mlx_xpm_file_to_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x41331A: init_xpm (clean_and_imgs.c:35)
+==1000403==    by 0x412EAE: set_value (ids.c:19)
+==1000403==    by 0x412EAE: set_texture (ids.c:33)
+==1000403==    by 0x412ACD: parse_ids (parsing.c:35)
+==1000403==    by 0x412ACD: parsing (parsing.c:65)
+==1000403==    by 0x40FC4C: init (cub3D_init.c:306)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 136 bytes in 1 blocks are still reachable in loss record 70 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487A0C3: XShmCreateImage (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D8026: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x403A6F: inittextures (cub3D.c:35)
+==1000403==    by 0x40FCF1: init (cub3D_init.c:315)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 136 bytes in 1 blocks are still reachable in loss record 71 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487A0C3: XShmCreateImage (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D8026: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x403A8A: inittextures (cub3D.c:36)
+==1000403==    by 0x40FCF1: init (cub3D_init.c:315)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 136 bytes in 1 blocks are still reachable in loss record 72 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487A0C3: XShmCreateImage (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D8026: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x403AA5: inittextures (cub3D.c:37)
+==1000403==    by 0x40FCF1: init (cub3D_init.c:315)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 136 bytes in 1 blocks are still reachable in loss record 73 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487A0C3: XShmCreateImage (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D8026: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x410002: inithud (cub3D_init_anim.c:49)
+==1000403==    by 0x40FD6A: init (cub3D_init.c:318)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 136 bytes in 1 blocks are still reachable in loss record 74 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487A0C3: XShmCreateImage (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D8026: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x41001B: inithud (cub3D_init_anim.c:50)
+==1000403==    by 0x40FD6A: init (cub3D_init.c:318)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 136 bytes in 1 blocks are still reachable in loss record 75 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487A0C3: XShmCreateImage (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D8026: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x4100E9: init_elem (cub3D_init_anim.c:32)
+==1000403==    by 0x4100E9: inithud (cub3D_init_anim.c:53)
+==1000403==    by 0x40FD6A: init (cub3D_init.c:318)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 136 bytes in 1 blocks are still reachable in loss record 76 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487A0C3: XShmCreateImage (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D8026: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x4101EA: init_elem (cub3D_init_anim.c:32)
+==1000403==    by 0x4101EA: inithud (cub3D_init_anim.c:57)
+==1000403==    by 0x40FD6A: init (cub3D_init.c:318)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 136 bytes in 1 blocks are still reachable in loss record 77 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487A0C3: XShmCreateImage (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D8026: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x410279: init_elem (cub3D_init_anim.c:32)
+==1000403==    by 0x410279: inithud (cub3D_init_anim.c:58)
+==1000403==    by 0x40FD6A: init (cub3D_init.c:318)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 136 bytes in 1 blocks are still reachable in loss record 78 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487A0C3: XShmCreateImage (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D8026: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x41031E: init_elem (cub3D_init_anim.c:32)
+==1000403==    by 0x41031E: inithud (cub3D_init_anim.c:59)
+==1000403==    by 0x40FD6A: init (cub3D_init.c:318)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 136 bytes in 1 blocks are still reachable in loss record 79 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487A0C3: XShmCreateImage (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D8026: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x41038A: init_elem (cub3D_init_anim.c:32)
+==1000403==    by 0x41038A: inithud (cub3D_init_anim.c:60)
+==1000403==    by 0x40FD6A: init (cub3D_init.c:318)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 136 bytes in 1 blocks are still reachable in loss record 80 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487A0C3: XShmCreateImage (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D8026: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x4103F6: init_elem (cub3D_init_anim.c:32)
+==1000403==    by 0x4103F6: inithud (cub3D_init_anim.c:61)
+==1000403==    by 0x40FD6A: init (cub3D_init.c:318)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 136 bytes in 1 blocks are still reachable in loss record 81 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487A0C3: XShmCreateImage (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D8026: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x410462: init_elem (cub3D_init_anim.c:32)
+==1000403==    by 0x410462: inithud (cub3D_init_anim.c:62)
+==1000403==    by 0x40FD6A: init (cub3D_init.c:318)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 136 bytes in 1 blocks are still reachable in loss record 82 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487A0C3: XShmCreateImage (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D8026: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x4104CE: init_elem (cub3D_init_anim.c:32)
+==1000403==    by 0x4104CE: inithud (cub3D_init_anim.c:63)
+==1000403==    by 0x40FD6A: init (cub3D_init.c:318)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 136 bytes in 1 blocks are still reachable in loss record 83 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487A0C3: XShmCreateImage (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D8026: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x41053A: init_elem (cub3D_init_anim.c:32)
+==1000403==    by 0x41053A: inithud (cub3D_init_anim.c:64)
+==1000403==    by 0x40FD6A: init (cub3D_init.c:318)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 136 bytes in 1 blocks are still reachable in loss record 84 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487A0C3: XShmCreateImage (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D8026: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x4105DC: init_elem (cub3D_init_anim.c:32)
+==1000403==    by 0x4105DC: inithud (cub3D_init_anim.c:65)
+==1000403==    by 0x40FD6A: init (cub3D_init.c:318)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 136 bytes in 1 blocks are still reachable in loss record 85 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487A0C3: XShmCreateImage (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D8026: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x410B4A: initanim (cub3D_init_paths.c:86)
+==1000403==    by 0x410B4A: initplayerpathanim (cub3D_init_paths.c:97)
+==1000403==    by 0x40FD72: init (cub3D_init.c:319)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 136 bytes in 1 blocks are still reachable in loss record 86 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487A0C3: XShmCreateImage (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D8026: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x410CF3: initanim (cub3D_init_paths.c:86)
+==1000403==    by 0x410CF3: initplayerpathanim (cub3D_init_paths.c:100)
+==1000403==    by 0x40FD72: init (cub3D_init.c:319)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 136 bytes in 1 blocks are still reachable in loss record 87 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487A0C3: XShmCreateImage (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D8026: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x410E3A: initanim (cub3D_init_paths.c:86)
+==1000403==    by 0x410E3A: initplayerpathanim (cub3D_init_paths.c:102)
+==1000403==    by 0x40FD72: init (cub3D_init.c:319)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 136 bytes in 1 blocks are still reachable in loss record 88 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487A0C3: XShmCreateImage (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D8026: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x410F74: initanim (cub3D_init_paths.c:86)
+==1000403==    by 0x410F74: initplayerpathanim (cub3D_init_paths.c:104)
+==1000403==    by 0x40FD72: init (cub3D_init.c:319)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 136 bytes in 1 blocks are still reachable in loss record 89 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487A0C3: XShmCreateImage (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D8026: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x4110B8: initanim (cub3D_init_paths.c:86)
+==1000403==    by 0x4110B8: initplayerpathanim (cub3D_init_paths.c:106)
+==1000403==    by 0x40FD72: init (cub3D_init.c:319)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 136 bytes in 1 blocks are still reachable in loss record 90 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487A0C3: XShmCreateImage (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D8026: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x4111FC: initanim (cub3D_init_paths.c:86)
+==1000403==    by 0x4111FC: initplayerpathanim (cub3D_init_paths.c:108)
+==1000403==    by 0x40FD72: init (cub3D_init.c:319)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 136 bytes in 1 blocks are still reachable in loss record 91 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487A0C3: XShmCreateImage (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D8026: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x411336: initanim (cub3D_init_paths.c:86)
+==1000403==    by 0x411336: initplayerpathanim (cub3D_init_paths.c:110)
+==1000403==    by 0x40FD72: init (cub3D_init.c:319)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 136 bytes in 1 blocks are still reachable in loss record 92 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487A0C3: XShmCreateImage (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D8026: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x411470: initanim (cub3D_init_paths.c:86)
+==1000403==    by 0x411470: initplayerpathanim (cub3D_init_paths.c:112)
+==1000403==    by 0x40FD72: init (cub3D_init.c:319)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 136 bytes in 1 blocks are still reachable in loss record 93 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487A0C3: XShmCreateImage (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D8026: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8CE7: mlx_int_parse_xpm (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D9121: mlx_xpm_file_to_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4039F3: inittexture (cub3D.c:20)
+==1000403==    by 0x41155C: initanim (cub3D_init_paths.c:83)
+==1000403==    by 0x41155C: initplayerpathanim (cub3D_init_paths.c:114)
+==1000403==    by 0x40FD72: init (cub3D_init.c:319)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 136 bytes in 1 blocks are still reachable in loss record 94 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487A0C3: XShmCreateImage (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D8026: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40D5B7: initimage (cub3D_utils.c:87)
+==1000403==    by 0x4115B7: initanim (cub3D_init_paths.c:86)
+==1000403==    by 0x4115B7: initplayerpathanim (cub3D_init_paths.c:114)
+==1000403==    by 0x40FD72: init (cub3D_init.c:319)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 149 bytes in 1 blocks are still reachable in loss record 95 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x48BA710: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D7837: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 152 bytes in 1 blocks are still reachable in loss record 96 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x492040E: XkbUseExtension (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x48BA6A8: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D7837: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 160 bytes in 1 blocks are still reachable in loss record 97 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x48A89EF: XCreateGC (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x48BA5A4: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D7837: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 160 bytes in 1 blocks are still reachable in loss record 98 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x48A89EF: XCreateGC (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D7A6E: mlx_new_window (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x41186E: initwindow (cub3D_init_window.c:60)
+==1000403==    by 0x40FCDA: init (cub3D_init.c:313)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 160 bytes in 1 blocks are still reachable in loss record 99 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x40FB3F: init_doors (cub3D_init.c:205)
+==1000403==    by 0x40FB3F: check_map (cub3D_init.c:291)
+==1000403==    by 0x40FD8A: init (cub3D_init.c:322)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 168 bytes in 1 blocks are still reachable in loss record 100 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x48BA0B2: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D7837: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 208 bytes in 1 blocks are still reachable in loss record 101 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4879AE9: ??? (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x487B9DF: XextAddDisplay (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x48809E2: XShmQueryVersion (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D7673: mlx_int_deal_shm (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D78F1: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 208 bytes in 1 blocks are still reachable in loss record 102 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x48CBFAE: _XEnq (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x48CEBB6: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x48CFEC0: _XReadEvents (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x48D0205: XWindowEvent (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D7D75: mlx_int_wait_first_expose (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D7AAD: mlx_new_window (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x41186E: initwindow (cub3D_init_window.c:60)
+==1000403==    by 0x40FCDA: init (cub3D_init.c:313)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 256 bytes in 1 blocks are still reachable in loss record 103 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x491D55D: XkbAllocClientMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x49180DE: _XkbReadGetMapReply (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x491841E: XkbGetUpdatedMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x49184F4: XkbGetMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4918542: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x49188AF: XkbKeycodeToKeysym (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D95F7: mlx_int_param_KeyPress (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D7C35: mlx_loop (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x403D11: main (cub3D.c:70)
+==1000403== 
+==1000403== 344 bytes in 6 blocks are still reachable in loss record 104 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x49178F5: _XkbReadGetMapReply (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x491841E: XkbGetUpdatedMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x49184F4: XkbGetMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4918542: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x49188AF: XkbKeycodeToKeysym (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D95F7: mlx_int_param_KeyPress (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D7C35: mlx_loop (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x403D11: main (cub3D.c:70)
+==1000403== 
+==1000403== 472 bytes in 1 blocks are still reachable in loss record 105 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x41366F: store_map (map.c:77)
+==1000403==    by 0x412BC5: parse_map (parsing.c:47)
+==1000403==    by 0x412BC5: parsing (parsing.c:66)
+==1000403==    by 0x40FC4C: init (cub3D_init.c:306)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 512 bytes in 1 blocks are still reachable in loss record 106 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x48B546A: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x48B584E: XInternAtom (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D78CB: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 600 bytes in 3 blocks are still reachable in loss record 107 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D9EF5: ft_calloc (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40F9F1: init_guard (cub3D_init.c:252)
+==1000403==    by 0x40FBC3: init_actors (cub3D_init.c:278)
+==1000403==    by 0x40FBC3: check_map (cub3D_init.c:292)
+==1000403==    by 0x40FD8A: init (cub3D_init.c:322)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 624 bytes in 3 blocks are still reachable in loss record 108 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x48CBFAE: _XEnq (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x48CEBB6: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x48CFEC0: _XReadEvents (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x48D01D0: XWindowEvent (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D7D75: mlx_int_wait_first_expose (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D7AAD: mlx_new_window (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x41186E: initwindow (cub3D_init_window.c:60)
+==1000403==    by 0x40FCDA: init (cub3D_init.c:313)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 640 bytes in 1 blocks are still reachable in loss record 109 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x405E09: init_random_melting_array (cub3D_render.c:46)
+==1000403==    by 0x40FADB: check_map (cub3D_init.c:285)
+==1000403==    by 0x40FD8A: init (cub3D_init.c:322)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 832 bytes in 4 blocks are still reachable in loss record 110 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x48CBFAE: _XEnq (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x48CEBB6: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x48D040C: _XReply (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x48C2B16: XQueryExtension (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x48B6976: XInitExtension (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4AD16AF: XFixesFindDisplay (in /usr/lib/x86_64-linux-gnu/libXfixes.so.3.1.0)
+==1000403==    by 0x4AD1F72: XFixesHideCursor (in /usr/lib/x86_64-linux-gnu/libXfixes.so.3.1.0)
+==1000403==    by 0x40E246: mouse_hide (cub3D_utils4.c:70)
+==1000403==    by 0x40FCDA: init (cub3D_init.c:313)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 936 bytes in 1 blocks are still reachable in loss record 111 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D79D0: mlx_new_window (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x41186E: initwindow (cub3D_init_window.c:60)
+==1000403==    by 0x40FCDA: init (cub3D_init.c:313)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 1,024 bytes in 1 blocks are still reachable in loss record 112 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4C58BA3: _IO_file_doallocate (filedoalloc.c:101)
+==1000403==    by 0x4C67CDF: _IO_doallocbuf (genops.c:347)
+==1000403==    by 0x4C66F5F: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:744)
+==1000403==    by 0x4C656D4: _IO_new_file_xsputn (fileops.c:1243)
+==1000403==    by 0x4C656D4: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1196)
+==1000403==    by 0x4C4FCA8: outstring_func (vfprintf-internal.c:239)
+==1000403==    by 0x4C4FCA8: __vfprintf_internal (vfprintf-internal.c:1516)
+==1000403==    by 0x4C3A79E: printf (printf.c:33)
+==1000403==    by 0x4116F7: initwindow (cub3D_init_window.c:44)
+==1000403==    by 0x40FCDA: init (cub3D_init.c:313)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 1,120 bytes in 1 blocks are still reachable in loss record 113 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x491D619: XkbAllocClientMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4917EB7: _XkbReadGetMapReply (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x491841E: XkbGetUpdatedMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x49184F4: XkbGetMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4918542: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x49188AF: XkbKeycodeToKeysym (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D95F7: mlx_int_param_KeyPress (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D7C35: mlx_loop (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x403D11: main (cub3D.c:70)
+==1000403== 
+==1000403== 1,646 bytes in 44 blocks are still reachable in loss record 114 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4DC143: stash_to_line (get_next_line_utils.c:48)
+==1000403==    by 0x4DBD9E: get_next_line_aux (get_next_line.c:30)
+==1000403==    by 0x4DC0A0: get_next_line (get_next_line.c:56)
+==1000403==    by 0x413747: store_map (map.c:89)
+==1000403==    by 0x412BC5: parse_map (parsing.c:47)
+==1000403==    by 0x412BC5: parsing (parsing.c:66)
+==1000403==    by 0x40FC4C: init (cub3D_init.c:306)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 1,664 bytes in 8 blocks are still reachable in loss record 115 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x48CBFAE: _XEnq (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x48CEBB6: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x48CFF01: _XReadEvents (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x48D0205: XWindowEvent (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D7D75: mlx_int_wait_first_expose (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D7AAD: mlx_new_window (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x41186E: initwindow (cub3D_init_window.c:60)
+==1000403==    by 0x40FCDA: init (cub3D_init.c:313)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 2,016 bytes in 27 blocks are still reachable in loss record 116 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x49177DD: _XkbReadGetMapReply (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x491841E: XkbGetUpdatedMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x49184F4: XkbGetMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4918542: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x49188AF: XkbKeycodeToKeysym (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D95F7: mlx_int_param_KeyPress (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D7C35: mlx_loop (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x403D11: main (cub3D.c:70)
+==1000403== 
+==1000403== 2,048 bytes in 1 blocks are still reachable in loss record 117 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4917914: _XkbReadGetMapReply (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x491841E: XkbGetUpdatedMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x49184F4: XkbGetMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4918542: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x49188AF: XkbKeycodeToKeysym (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D95F7: mlx_int_param_KeyPress (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D7C35: mlx_loop (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x403D11: main (cub3D.c:70)
+==1000403== 
+==1000403== 2,080 bytes in 10 blocks are still reachable in loss record 118 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x48CBFAE: _XEnq (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x48CEBB6: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x48CFF01: _XReadEvents (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x48D01D0: XWindowEvent (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D7D75: mlx_int_wait_first_expose (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D7AAD: mlx_new_window (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x41186E: initwindow (cub3D_init_window.c:60)
+==1000403==    by 0x40FCDA: init (cub3D_init.c:313)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 2,880 bytes in 10 blocks are possibly lost in loss record 119 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x40147D9: calloc (rtld-malloc.h:44)
+==1000403==    by 0x40147D9: allocate_dtv (dl-tls.c:375)
+==1000403==    by 0x40147D9: _dl_allocate_tls (dl-tls.c:634)
+==1000403==    by 0x4C6F7B4: allocate_stack (allocatestack.c:430)
+==1000403==    by 0x4C6F7B4: pthread_create@@GLIBC_2.34 (pthread_create.c:647)
+==1000403==    by 0x40F690: init_thread_pool (cub3D_init.c:180)
+==1000403==    by 0x40FD8A: init (cub3D_init.c:322)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 3,200 bytes in 1 blocks are still reachable in loss record 120 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x40F7CB: initmodes (cub3D_init.c:190)
+==1000403==    by 0x40FCE4: init (cub3D_init.c:314)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 4,136 bytes in 47 blocks are still reachable in loss record 121 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D7FFB: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8CE7: mlx_int_parse_xpm (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D9121: mlx_xpm_file_to_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4039F3: inittexture (cub3D.c:20)
+==1000403==    by 0x403C84: inittextures (cub3D.c:43)
+==1000403==    by 0x40FCF1: init (cub3D_init.c:315)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 4,400 bytes in 22 blocks are still reachable in loss record 122 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4D9EF5: ft_calloc (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40F8FE: init_objects (cub3D_init.c:230)
+==1000403==    by 0x40FBCD: init_actors (cub3D_init.c:279)
+==1000403==    by 0x40FBCD: check_map (cub3D_init.c:292)
+==1000403==    by 0x40FD8A: init (cub3D_init.c:322)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 4,704 bytes in 1 blocks are still reachable in loss record 123 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x48B9B31: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D7837: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 6,144 bytes in 1 blocks are still reachable in loss record 124 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x491813E: _XkbReadGetMapReply (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x491841E: XkbGetUpdatedMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x49184F4: XkbGetMap (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4918542: ??? (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x49188AF: XkbKeycodeToKeysym (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D95F7: mlx_int_param_KeyPress (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D7C35: mlx_loop (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x403D11: main (cub3D.c:70)
+==1000403== 
+==1000403== 6,392 bytes in 47 blocks are still reachable in loss record 125 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x487A0C3: XShmCreateImage (in /usr/lib/x86_64-linux-gnu/libXext.so.6.4.0)
+==1000403==    by 0x4D8026: mlx_int_new_xshm_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8322: mlx_new_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D8CE7: mlx_int_parse_xpm (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4D9121: mlx_xpm_file_to_image (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x4039F3: inittexture (cub3D.c:20)
+==1000403==    by 0x403C84: inittextures (cub3D.c:43)
+==1000403==    by 0x40FCF1: init (cub3D_init.c:315)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 8,512 bytes in 1 blocks are still reachable in loss record 126 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x40FC56: init (cub3D_init.c:307)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 14,612 bytes in 1 blocks are still reachable in loss record 127 of 131
+==1000403==    at 0x484DCD3: realloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4E124FB: xcb_connect_to_fd (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==1000403==    by 0x4E12E6B: xcb_connect_to_display_with_auth_info (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==1000403==    by 0x48C9EE9: _XConnectXCB (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x48B9B68: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D7837: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 16,384 bytes in 1 blocks are still reachable in loss record 128 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x48B9EBE: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D7837: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 21,168 bytes in 1 blocks are still reachable in loss record 129 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x4E12204: xcb_connect_to_fd (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==1000403==    by 0x4E12E6B: xcb_connect_to_display_with_auth_info (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==1000403==    by 0x48C9EE9: _XConnectXCB (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x48B9B68: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D7837: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 33,600 bytes in 2 blocks are still reachable in loss record 130 of 131
+==1000403==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x48BA290: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==1000403==    by 0x4D7837: mlx_init (in /home/pmagnero/repo/cub/cub3D_bonus)
+==1000403==    by 0x40FC2E: init (cub3D_init.c:303)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== 87,304 bytes in 1,559 blocks are still reachable in loss record 131 of 131
+==1000403==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1000403==    by 0x40D7F7: new_point (cub3D_utils2.c:78)
+==1000403==    by 0x4128DF: populate_map (cub3D_parse.c:50)
+==1000403==    by 0x4128DF: parse (cub3D_parse.c:67)
+==1000403==    by 0x40FAEA: check_map (cub3D_init.c:286)
+==1000403==    by 0x40FD8A: init (cub3D_init.c:322)
+==1000403==    by 0x403CD7: main (cub3D.c:51)
+==1000403== 
+==1000403== LEAK SUMMARY:
+==1000403==    definitely lost: 0 bytes in 0 blocks
+==1000403==    indirectly lost: 0 bytes in 0 blocks
+==1000403==      possibly lost: 2,880 bytes in 10 blocks
+==1000403==    still reachable: 237,058 bytes in 1,910 blocks
+==1000403==         suppressed: 0 bytes in 0 blocks
+==1000403== 
+==1000403== For lists of detected and suppressed errors, rerun with: -s
+==1000403== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 1 from 1)

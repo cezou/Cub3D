@@ -55,8 +55,7 @@ void	create_textures(t_vars *v, t_point c)
 /// @param v Vars
 /// @param p Pixel datas {x, y, k, color}
 ///	@param fog Fog datas {bool, dist, fog color, fog level}
-///	@param dark Darken the pixel
-///	@param options Options {dark, transparence, 0, 0}
+///	@param options Options {darken pixels, transparence, 0, 0}
 void	add_pix(t_vars *v, t_point p, t_point3 fog, t_point opt)
 {
 	if (!opt.y && p.z > -1 && v->tmp[0].addr[p.z + 3] == 0)

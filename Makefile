@@ -6,7 +6,7 @@
 #    By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 11:28:17 by pmagnero          #+#    #+#              #
-#    Updated: 2024/10/20 13:07:26 by pmagnero         ###   ########.fr        #
+#    Updated: 2024/10/21 13:00:04 by pmagnero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ HEADER_MINIAUDIO = ./includes/miniaudio
 OBJS_DIR	= objs/
 OBJS_DIR_B	= objs_b/
 
-FLAG = -Wall -Wextra -Werror -g -O3
+FLAG = -Wall -Wextra -Werror -g -O3 #-fsanitize=thread -fPIE
 
 MLX_FLAG = -lXext -lX11 -lz -lm -pthread -ldl -lpthread -lXfixes -lasound
 
@@ -88,6 +88,7 @@ SRCS =	srcs/cub3D.c \
 		srcs/render/raycasting/cub3D_raycasting_dda.c \
 		srcs/render/raycasting/cub3D_raycasting_dda_utils.c \
 		srcs/render/raycasting/cub3D_raycasting_floor_ceiling.c \
+		srcs/render/raycasting/cub3D_raycasting_floor_ceiling_threaded.c \
 		srcs/render/raycasting/cub3D_raycasting_skybox.c \
 		srcs/render/animations/cub3D_animations.c \
 		srcs/render/animations/cub3D_animations_actors.c \
@@ -110,6 +111,7 @@ SRCS =	srcs/cub3D.c \
 		srcs/utils/cub3D_utils5.c \
 		srcs/utils/cub3D_utils6.c \
 		srcs/utils/cub3D_clear.c \
+		srcs/utils/cub3D_clear_thread.c \
 		srcs/utils/cub3D_random.c \
 		srcs/init/cub3D_init.c \
 		srcs/init/cub3D_init_player.c \

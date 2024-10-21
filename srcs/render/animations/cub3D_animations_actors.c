@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/16 17:05:45 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/21 19:24:00 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	update_actors(t_vars *v)
 			continue ;
 		}
 		if (timestamp_in_ms(v) - tmp->time
-			< (uint64_t)(30000 / v->game.fps))
+			< (uint64_t)(100))
 			return ;
 		tmp->time = timestamp_in_ms(v);
 		update_guards(v, &tmp);
