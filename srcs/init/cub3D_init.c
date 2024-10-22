@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/21 19:31:54 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:54:28 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,6 +256,7 @@ void	init_guard(t_vars *v, t_map *tmp, t_actor *a)
 				exit((prterr(v, ERRMALL, 1, 1), 1));
 			a->x = tmp->x;
 			a->y = tmp->y;
+			a->map_pos = tmp;
 			a->hp = 60;
 			a->img_i = EGUARDW;
 			a->vdiv = 1.0;

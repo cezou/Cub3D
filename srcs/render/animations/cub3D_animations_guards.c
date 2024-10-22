@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/21 19:37:56 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:57:37 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ inline void	update_sprite_anim_attackr(t_vars *v, t_actor *a)
 {
 	int	d;
 
-	if (a->animoff >= v->img[a->img_i].width)
+	if (a->animoffy >= v->img[a->img_i].height)
 	{
 		a->justattack = 1;
-		a->animoff = 0;
+		a->animoffy = 0;
 		a->state = ECHASE;
 		a->img_i = EGUARDW;
 		a->timestate = 0;
 	}
-	else if (a->animoff == v->img[a->img_i].animx)
+	else if (a->animoffy == v->img[a->img_i].animy)
 	{
 		d = a->dmg / (p_random(v) % 5 + 1);
 		v->player.hit += d;
@@ -40,7 +40,7 @@ inline void	update_sprite_anim_attackr(t_vars *v, t_actor *a)
 /// @param a Sprite to update
 inline void	update_sprite_anim_pain(t_vars *v, t_actor *a)
 {
-	a->animoff = 0;
+	a->animoffy = 0;
 	if (timestamp_in_ms(v) - a->timestate > 500)
 	{
 		a->state = ECHASE;
@@ -54,13 +54,13 @@ inline void	update_sprite_anim_pain(t_vars *v, t_actor *a)
 /// @param a Sprite to update
 inline void	update_sprite_anim_death(t_vars *v, t_actor *a)
 {
-	if (a->animoff >= v->img[a->img_i].width - v->img[a->img_i].animx)
+	if (a->animoffy >= v->img[a->img_i].height - v->img[a->img_i].animy)
 	{
 		a->state = EDEAD;
 		a->hashitbox = 0;
 		a->hp = 0;
 		a->stop = 1;
-		a->animoff = v->img[a->img_i].width - v->img[a->img_i].animx;
+		a->animoffy = v->img[a->img_i].height - v->img[a->img_i].animy;
 	}
 }
 
@@ -69,10 +69,10 @@ inline void	update_sprite_anim_death(t_vars *v, t_actor *a)
 /// @param a Sprite to update
 inline void	update_sprite_anim_chase(t_vars *v, t_actor *a)
 {
-	if (a->animoff >= v->img[a->img_i].width)
+	if (a->animoffy >= v->img[a->img_i].height)
 	{
 		a->justattack = 0;
-		a->animoff = 0;
+		a->animoffy = 0;
 	}
 }
 
@@ -93,7 +93,7 @@ void	update_guards(t_vars *v, t_actor **actor)
 	if (!tmp->isguard)
 		return ;
 	if (tmp->state != EIDLE && !tmp->stop)
-		tmp->animoff += v->img[tmp->img_i].animx;
+		tmp->animoffy += v->img[tmp->img_i].animy;
 	tmp->time = timestamp_in_ms(v);
 	if (tmp->state == EDEAD)
 		update_sprite_anim_death(v, tmp);
@@ -105,7 +105,7 @@ void	update_guards(t_vars *v, t_actor **actor)
 		update_sprite_anim_chase(v, tmp);
 	if (tmp->state == ECHASE)
 	{
-		tmp->x += tmp->ms * (v->player.x + 0.5 - tmp->x);
-		tmp->y += tmp->ms * (v->player.y + 0.5 - tmp->y);
+		// tmp->x += tmp->ms * (v->player.x + 0.5 - tmp->x);
+		// tmp->y += tmp->ms * (v->player.y + 0.5 - tmp->y);
 	}
 }

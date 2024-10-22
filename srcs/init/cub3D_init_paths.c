@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/15 09:56:44 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:25:20 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	initpath2(t_vars *v)
 	v->img[EYSKEY].filename = "resources/textures/yellowskull.xpm";
 	v->img[ERKEY].filename = "resources/textures/redkey.xpm";
 	v->img[ERSKEY].filename = "resources/textures/redskull.xpm";
-	v->img[EGUARDW].filename = "resources/textures/general.xpm";
+	v->img[EGUARDW].filename = "resources/textures/monster_walk.xpm";
+	// v->img[EGUARDW].filename = "resources/textures/general.xpm";
 	v->img[EGUARDDEATH].filename = "resources/textures/generaldeath.xpm";
 	v->img[EGUARDATTR].filename = "resources/textures/generalattackrange.xpm";
 	v->img[ESKYBOX].filename = "resources/textures/skybox.xpm";
@@ -87,6 +88,7 @@ void	initanim(t_vars *v, int index, int b, int animnb)
 	scale_img((t_point){0}, &v->img[ETMP], &v->img[index]);
 	v->img[index].animx = v->img[ETMP].width / animnb * (1.0
 			/ v->img[index].ratiox);
+	v->img[index].animy = v->img[index].height;
 	if (b)
 		mlx_destroy_image(v->mlx, v->img[ETMP].img);
 }
@@ -116,10 +118,13 @@ void	initplayerpathanim(t_vars *v)
 
 void	initguardpathanim(t_vars *v)
 {
-	v->img[EGUARDW].animx = v->img[EGUARDW].width / 4;
+	// v->img[EGUARDW].animx = v->img[EGUARDW].width / 4;
+	v->img[EGUARDW].animy = v->img[EGUARDW].height / 4;
+	v->img[EGUARDW].animx = v->img[EGUARDW].width / 8;
 	v->img[EGUARDDEATH].animx = v->img[EGUARDDEATH].width / 4;
 	v->img[EGUARDATTR].animx = v->img[EGUARDATTR].width / 4;
 	v->img[EPLASMABOLT].animx = v->img[EPLASMABOLT].width / 7;
+	v->img[EPLASMABOLT].animy = v->img[EPLASMABOLT].height;
 }
 
 // void	initprojectilepathanim(t_vars *v)

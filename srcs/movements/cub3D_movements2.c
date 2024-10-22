@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 18:24:52 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/21 19:38:51 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:44:26 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ bool	can_move(t_vars *v, t_point2 p, t_actor *tmp, t_actor *actor)
 		{
 			if (((actor && !actor->isprojectile) || !actor) && tmp->pickable)
 				touch_thing((tmp->active = 0, v), tmp);
-			else if (v->player.currweapon.isprojectile && tmp->hp > 0
+			else if ((actor && actor->isprojectile)
+				&& v->player.currweapon.isprojectile && tmp->hp > 0
 				&& tmp->dist <= v->player.currweapon.range)
 				apply_damage(v, tmp);
 			return (false);
@@ -49,7 +50,7 @@ bool	can_move(t_vars *v, t_point2 p, t_actor *tmp, t_actor *actor)
 /// @brief Helper function to check if a given map position is valid
 /// @param v Vars
 /// @param pos Map square position to check
-/// @param p 
+/// @param p
 /// @return 1 is valid, 0 not valid
 //  && pos->x < p.x && pos->y < p.y
 static bool	is_valid_pos(t_vars *v, t_map *pos, t_point2 p, int d)
@@ -82,7 +83,7 @@ static bool	is_valid_pos(t_vars *v, t_map *pos, t_point2 p, int d)
 }
 
 /// @brief Function to update the player's position
-/// @param v Vars
+/// @param actor Vars
 /// @param pos Map square position
 /// @param k New position coordinates
 static t_map	*update_player_pos(t_vars *v, t_map *pos, t_point2 k, int d)
@@ -124,7 +125,7 @@ t_map	*set_pos(t_vars *v, t_point2 k, t_map *m, int d)
 		return (update_player_pos(v, m->left, k, d));
 	else if (is_valid_pos(v, m->right, k, d))
 		return (update_player_pos(v, m->right, k, d));
-	return (v->player.player);
+	return (m);
 }
 
 /// @brief Set the door state to opening of the door around the player

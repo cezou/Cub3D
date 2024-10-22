@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/16 17:04:24 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:20:23 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	update_travel(t_vars *v, t_actor *tmp)
 {
-	if (tmp->animoff >= v->img[tmp->img_i].animx * 2)
-		tmp->animoff = 0;
+	if (tmp->animoffx >= v->img[tmp->img_i].animx * 2)
+		tmp->animoffx = 0;
 	tmp->x += tmp->ms * tmp->vectorx;
 	tmp->y += tmp->ms * tmp->vectory;
 	tmp->targetdist -= tmp->norm;
@@ -40,10 +40,10 @@ t_actor	*update_projectiles(t_vars *v, t_actor **actor, int *i)
 	next = tmp->next;
 	if (!tmp->isprojectile)
 		return (next);
-	tmp->animoff += v->img[tmp->img_i].animx;
+	tmp->animoffx += v->img[tmp->img_i].animx;
 	if (tmp->state == ETRAVEL)
 		update_travel(v, tmp);
-	else if (tmp->state == EHIT && tmp->animoff >= v->img[tmp->img_i].width)
+	else if (tmp->state == EHIT && tmp->animoffx >= v->img[tmp->img_i].width)
 	{
 		del = tmp;
 		if (!v->actors || !del)

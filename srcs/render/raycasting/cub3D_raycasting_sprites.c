@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/21 13:10:23 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:22:39 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,11 @@ void	draw_sprite(t_vars *v, t_sprite_data *sp, t_actor *g, t_point p)
 	int		ty;
 
 	p.x = sp->drawstartx - 1;
-	hitguard(v, sp, g);
-	guardattack(v, sp, g);
+	guardattack((hitguard(v, sp, g), v), sp, g);
 	while (++p.x < sp->drawendx)
 	{
 		tx = (int)(256 * (p.x - (sp->spritescreenx - sp->spritewidth / 2))
-				* 64 / sp->spritewidth) / 256 + g->animoff;
+				* 64 / sp->spritewidth) / 256 + g->animoffx;
 		p.y = sp->drawstarty - 1;
 		if (sp->transformy > 0 && p.x > 0 && p.x < v->screen.resw
 			&& sp->transformy < v->ray.zbuffer[p.x])
@@ -106,7 +105,8 @@ void	draw_sprite(t_vars *v, t_sprite_data *sp, t_actor *g, t_point p)
 			{
 				p.z = (p.y - sp->vmovescreen) * 256 - v->screen.gameh * 128
 					+ sp->spriteheight * 128;
-				ty = ((p.z * v->tmp[0].height) / sp->spriteheight) / 256;
+				ty = ((p.z * v->tmp[0].animy) / sp->spriteheight) / 256
+					+ g->animoffy;
 				p.z = (ty * v->tmp[0].len) + (tx * 4);
 				add_pix(v, p, (t_point3){1, sp->transformy, FOGC, FOGL, 0},
 					(t_point){0});

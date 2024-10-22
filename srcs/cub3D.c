@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 09:51:53 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/08 17:58:40 by cviegas          ###   ########.fr       */
+/*   Updated: 2024/10/22 14:18:57 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	inittexture(t_vars *v, t_imga *img, int i)
 	img->img = mlx_xpm_file_to_image(v->mlx, img->filename, &img->width,
 			&img->height);
 	img->id = i;
+	img->animy = img->height;
 	if (!img->img)
 		exit((prterr(v, "Error mlx texture image\n", 1, 1), 1));
 	img->addr = mlx_get_data_addr(img->img, &img->bpp, &img->len, &img->endian);

@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/21 18:40:23 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/22 19:30:23 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -524,6 +524,15 @@ typedef struct s_map
 	struct s_map			*down;
 }							t_map;
 
+typedef struct s_pathfinding
+{
+	double					f;
+	int						i;
+	int						j;
+	struct s_pathfinding	*next;
+	struct s_pathfinding	*prev;
+}	t_pathfinding;
+
 typedef struct s_actor
 {
 	int						active;
@@ -543,7 +552,9 @@ typedef struct s_actor
 	int						state;
 	int						img_i;
 	int						xdelta;
-	int						animoff;
+	int						animoffx;
+	int						animoffy;
+	int						nb_astar;
 	double					targetdist;
 	double					norm;
 	double					ms;
@@ -553,11 +564,13 @@ typedef struct s_actor
 	double					dist;
 	double					vectorx;
 	double					vectory;
+	t_map					*map_pos;
 	t_map					*target;
 	uint64_t				timestate;
 	uint64_t				time;
 	struct s_actor			*prev;
 	struct s_actor			*next;
+	t_pathfinding			*astar;
 }							t_actor;
 
 typedef struct s_imga
@@ -965,6 +978,8 @@ void						save_screen_to_buffer(t_imga dest, t_imga src,
 t_actor						*new_actor(t_vars *v);
 void						add_actor(t_vars *v, t_actor **actors,
 								t_actor **node);
+void						add_cell(t_vars *v, t_pathfinding **astar,
+								t_pathfinding **node, t_actor *a);
 int							printactors(t_vars *v);
 void						sort_descending(t_actor **head, int bound,
 								bool swapped, t_actor *last_sorted);
@@ -1049,6 +1064,8 @@ void						moveplayery(t_vars *v, int d);
 void						rotatecamx(t_vars *v, int d, double speed);
 void						rotatecamy(t_vars *v, int d, double speed, int mul);
 t_map						*set_pos(t_vars *v, t_point2 k, t_map *m, int d);
+t_map						*set_pos_guards(t_vars *v, t_point2 k, t_map *m,
+								t_actor *a);
 bool						can_move(t_vars *v, t_point2 p,
 								t_actor *tmp, t_actor *actor);
 void						open_door(t_vars *v);
