@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 14:32:25 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/09/20 12:14:14 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/23 23:31:09 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ static t_map	*populate_map(char *tab, t_vars *v, t_map *p, t_map *prev)
 			prev = n;
 		add_element((v->mapv.tmpx += 1, &v->mapv.map), &n, &tmp, &left);
 	}
+	if (i > v->mapv.mapw)
+		v->mapv.mapw = i;
 	return ((map_trunc(v, &tmp, &left), prev));
 }
 
@@ -67,6 +69,6 @@ int	parse(t_vars *v, int j, t_map *p)
 		p = populate_map((j++, v->infos.map[i]), v, p, NULL);
 		v->mapv.tmpy += 1;
 	}
-	v->mapv.maph = j + 1;
+	v->mapv.maph = v->mapv.tmpy;
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/23 20:18:20 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/23 23:28:12 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@
 #  define DEBUG 1
 # endif
 
-# define THREAD_COUNT 200
+# define THREAD_COUNT 20
 
 // Sounds
 
@@ -528,6 +528,26 @@ typedef struct s_map
 	struct s_map			*down;
 }							t_map;
 
+/**
+ * @struct s_cell
+ * @brief Structure reprensenting a cell in the grid
+ * @tparam	parent_i 	Row index of its parent, 0 <= i >= ROW-1
+ * @tparam	parent_j 	Column index of its parent, 0 <= j >= COLUMN-1
+ * @tparam	f 			Sum of g and h
+ * @tparam	g 			Value of the movement cost from the starting
+ * 	point to a given tile on the grid, following the generated path to get there
+ * @tparam	h 			Value of the estimated movement cost to move
+ * 	from that given tile to the target. Referred as "heuristic"
+ */
+typedef struct s_cell
+{
+	int		parent_i;
+	int		parent_j;
+	double	f;
+	double	g;
+	double	h;
+}	t_cell;
+
 /** @struct s_pathfinding
  *  @brief Open list having information as <f, <i, j>>
  *  where f = g + h,
@@ -554,20 +574,21 @@ typedef struct s_pathfinding
  *  @tparam i 				Row index
  * 	@tparam j 				Column index
  * 	@tparam	finddst 		Boolean to inform if we found the destination
- * 	@tparam	gnew			New value of the movement cost from the starting
+ * 	@tparam	gnew 			New value of the movement cost from the starting
  * 	point to a given tile on the grid, following the generated path to get there
- * 	@tparam	hnew			New value of the estimated movement cost to move
+ * 	@tparam	hnew 			New value of the estimated movement cost to move
  * 	from that given tile to the target. Referred as "heuristic"
- *	@tparam fnew			New value of gnew + hnew
- *	@tparam	closedlst		List 
- *	@tparam	curr			Reference to the current node in the map to test the
+ *	@tparam fnew 			New value of gnew + hnew
+ *	@tparam	closedlst 		Boolean array representing cells that have already
+ *	been tested
+ *	@tparam	curr 			Reference to the current node in the map to test the
  *	position
- *	@tparam	target			Reference to the target position in the map
- *	@tparam	celldetails		Array holding the datas of the cells 
- *	@tparam	tmp				Reference of the node in the pathfinding linked list
- *	@tparam	del				Reference to the node that will be delete in the
+ *	@tparam	target 			Reference to the target position in the map
+ *	@tparam	celldetails 	Array holding the datas of the cells 
+ *	@tparam	tmp 			Reference of the node in the pathfinding linked list
+ *	@tparam	del 			Reference to the node that will be delete in the
  *	pathfinding linked list 
- *	@tparam	next			Reference of the next node in the pathfinding linked
+ *	@tparam	next 			Reference of the next node in the pathfinding linked
  *	list
  */
 typedef struct s_astar
@@ -624,7 +645,7 @@ typedef struct s_actor
 	uint64_t				time;
 	struct s_actor			*prev;
 	struct s_actor			*next;
-	t_pathfinding			*astar;
+	t_astar					astar;
 }							t_actor;
 
 typedef struct s_imga

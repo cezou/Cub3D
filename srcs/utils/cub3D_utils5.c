@@ -91,7 +91,7 @@ t_pathfinding	*new_cell(double f, int i, int j)
 	node = (t_pathfinding *)ft_calloc(1, sizeof(t_pathfinding));
 	if (!node)
 		return (NULL);
-	node->f = 0.0;
+	node->f = f;
 	node->i = i;
 	node->j = j;
 	node->next = node;

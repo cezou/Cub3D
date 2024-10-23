@@ -6,24 +6,11 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 18:16:14 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/23 19:51:55 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/23 23:36:52 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
-
-// A structure to hold the necessary parameters
-typedef struct s_cell
-{
-	// Row and Column index of its parent
-	// Note that 0 <= i <= ROW-1 & 0 <= j <= COL-1
-	int		parent_i;
-	int		parent_j;
-	// f = g + h
-	double	f;
-	double	g;
-	double	h;
-}	t_cell;
 
 /// @brief 
 /// @param src 
@@ -48,6 +35,28 @@ double calculateHValue(t_map *s, t_map *d)
         (s->x - d->x) * (s->x - d->x)
         + (s->y - d->y) * (s->y - d->y)));
 }
+
+/*
+Generating all the 8 successor of this cell
+
+	  N.W  N  N.E
+	    \  |  /
+		 \ | /
+	W----Cell----E
+		 / | \
+	    /  |  \
+	  S.W  S  S.E
+
+Cell-->Popped Cell (i, j)
+N -->  North       (i-1, j)
+S -->  South       (i+1, j)
+E -->  East        (i, j+1)
+W -->  West           (i, j-1)
+N.E--> North-East  (i-1, j+1)
+N.W--> North-West  (i-1, j-1)
+S.E--> South-East  (i+1, j+1)
+S.W--> South-West  (i+1, j-1)
+*/
 
 void	generate_successor(t_map *map, t_cell **celldetails, bool **closedlst, int i, int j)
 {
@@ -150,28 +159,6 @@ bool	astar(t_vars *v, t_actor *actor, t_map *src, t_map *dst)
 		free((actor->nb_astar--, del));
 
 		closedlst[i][j] = true;
-/*
-Generating all the 8 successor of this cell
-
-	  N.W  N  N.E
-	    \  |  /
-		 \ | /
-	W----Cell----E
-		 / | \
-	    /  |  \
-	  S.W  S  S.E
-
-Cell-->Popped Cell (i, j)
-N -->  North       (i-1, j)
-S -->  South       (i+1, j)
-E -->  East        (i, j+1)
-W -->  West           (i, j-1)
-N.E--> North-East  (i-1, j+1)
-N.W--> North-West  (i-1, j-1)
-S.E--> South-East  (i+1, j+1)
-S.W--> South-West  (i+1, j-1)
-*/
-
 //----------- 1st Successor (North) ------------
 		generate_successor();
 	}
