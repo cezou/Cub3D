@@ -6,7 +6,7 @@
 #    By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 11:28:17 by pmagnero          #+#    #+#              #
-#    Updated: 2024/10/21 13:00:04 by pmagnero         ###   ########.fr        #
+#    Updated: 2024/10/23 15:17:30 by pmagnero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ OBJS_DIR_B	= objs_b/
 
 FLAG = -Wall -Wextra -Werror -g -O3 #-fsanitize=thread -fPIE
 
-MLX_FLAG = -lXext -lX11 -lz -lm -pthread -ldl -lpthread -lXfixes -lasound
+MLX_FLAG = -lXext -lX11 -lz -lm -pthread -ldl -lpthread -lXfixes# -lasound
 
 OPTION = -I$(HEADER) -I$(HEADER_MINIAUDIO) -I./includes/printf -I./includes/printf/libft -I./includes/mlx_linux/minilibx-linux
 

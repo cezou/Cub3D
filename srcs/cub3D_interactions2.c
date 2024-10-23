@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 09:51:53 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/14 12:54:58 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:14:22 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ bool	give_weapon(t_vars *v, t_weapons weapon, char *mess)
 	bool	gaveweapon;
 
 	gaveammo = true;
-	if (v->player.weapon[weapon].typeammo > -1)
+	if (v->player.weapon[weapon].typeammo != NOAMMO)
 		gaveammo = give_ammo(v, 0, 2, v->player.weapon[weapon].typeammo);
 	if (v->player.weapons[weapon])
 		gaveweapon = false;

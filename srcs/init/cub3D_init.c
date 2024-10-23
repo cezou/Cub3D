@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/22 15:54:28 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/23 17:52:19 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ const t_obj	g_objs[NUM_OBJS] = {
 // 	dmgtic, range, img}
 void	initweapon(t_vars *v)
 {
-	v->player.weapon[EFIST] = (t_weapon){1, -1, -1, -1, 20, 0, 0, 4, 2.0,
+	v->player.weapon[EFIST] = (t_weapon){1, -1, -1, NOAMMO, 20, 0, 0, 4, 2.0,
 		v->img[EIFIST]};
 	v->player.weapon[EGUN] = (t_weapon){1, 50, 200, EBULL, 15, 0, 0, 4, 1000.0,
 		v->img[EIGUN]};
@@ -106,7 +106,7 @@ void	initweapon(t_vars *v)
 		1000.0, v->img[EIROCKl]};
 	v->player.weapon[EPLASMA] = (t_weapon){1, 40, 300, ECELL, 40, 0, 1, -1,
 		1000.0, v->img[EIPLASMA]};
-	v->player.weapon[ECHAINSAW] = (t_weapon){1, -1, -1, -1, 20, 0, 0, 4, 2.0,
+	v->player.weapon[ECHAINSAW] = (t_weapon){1, -1, -1, NOAMMO, 20, 0, 0, 4, 2.0,
 		v->img[EICHAINSAW]};
 	v->player.weapon[ESUPERSHOTGUN] = (t_weapon){1, 8, 50, ESHELL, 0, 245, 0, 4,
 		1000.0, v->img[EISUPERSHOTGUN]};

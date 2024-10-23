@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/22 19:30:23 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/23 20:18:20 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@
 #  define DEBUG 1
 # endif
 
-# define THREAD_COUNT 20
+# define THREAD_COUNT 200
 
 // Sounds
 
@@ -158,8 +158,12 @@
 
 # ifndef WSL
 #  define WSL 0
-#  define FONT1 "-sony-fixed-medium-r-normal--17-120-100-100-c-0-iso8859-1"
-#  define FONT2 "-sony-fixed-medium-r-normal--24-230-75-75-c-0-iso8859-1"
+// #  define FONT1 "-sony-fixed-medium-r-normal--17-120-100-100-c-0-iso8859-1"
+// #  define FONT2 "-sony-fixed-medium-r-normal--24-230-75-75-c-0-iso8859-1"
+#  define FONT1 "-misc-fixed-medium-r-semicondensed\
+--13-120-75-75-c-60-iso8859-1"
+#  define FONT2 "-misc-fixed-medium-r-semicondensed\
+--13-120-75-75-c-60-iso8859-1"
 # else
 #  define WSL 1
 #  define FONT1 "-misc-fixed-medium-r-semicondensed\
@@ -524,6 +528,17 @@ typedef struct s_map
 	struct s_map			*down;
 }							t_map;
 
+/** @struct s_pathfinding
+ *  @brief Open list having information as <f, <i, j>>
+ *  where f = g + h,
+ *  and i, j are the row and column index of that cell
+ *  Note that 0 <= i <= ROW-1 & 0 <= j <= COL-1
+ *  @tparam f 		Sum of g + h
+ *  @tparam i 		Row index
+ *  @tparam j 		Column index
+ *  @tparam *next 	Next node in the linked list
+ *  @tparam *prev 	Previous node in the linked list
+*/
 typedef struct s_pathfinding
 {
 	double					f;
@@ -532,6 +547,45 @@ typedef struct s_pathfinding
 	struct s_pathfinding	*next;
 	struct s_pathfinding	*prev;
 }	t_pathfinding;
+
+/** @struct s_astar
+ *  @brief Structure holding all the datas necessary for the
+ *  pathfinding algorithm
+ *  @tparam i 				Row index
+ * 	@tparam j 				Column index
+ * 	@tparam	finddst 		Boolean to inform if we found the destination
+ * 	@tparam	gnew			New value of the movement cost from the starting
+ * 	point to a given tile on the grid, following the generated path to get there
+ * 	@tparam	hnew			New value of the estimated movement cost to move
+ * 	from that given tile to the target. Referred as "heuristic"
+ *	@tparam fnew			New value of gnew + hnew
+ *	@tparam	closedlst		List 
+ *	@tparam	curr			Reference to the current node in the map to test the
+ *	position
+ *	@tparam	target			Reference to the target position in the map
+ *	@tparam	celldetails		Array holding the datas of the cells 
+ *	@tparam	tmp				Reference of the node in the pathfinding linked list
+ *	@tparam	del				Reference to the node that will be delete in the
+ *	pathfinding linked list 
+ *	@tparam	next			Reference of the next node in the pathfinding linked
+ *	list
+ */
+typedef struct s_astar
+{
+	int				i;
+	int				j;
+	bool			finddst;
+	double			gnew;
+	double			hnew;
+	double			fnew;
+	bool			**closedlst;
+	t_map			*curr;
+	t_map			*target;
+	t_cell			**celldetails;
+	t_pathfinding	*tmp;
+	t_pathfinding	*del;
+	t_pathfinding	*next;
+}	t_astar;
 
 typedef struct s_actor
 {
@@ -727,7 +781,7 @@ typedef struct s_weapon
 	int					active;
 	int					ammo;
 	int					maxammo;
-	int					typeammo;
+	u_int8_t			typeammo;
 	int					dmg;
 	int					idsound;
 	int					isprojectile;
@@ -978,8 +1032,9 @@ void						save_screen_to_buffer(t_imga dest, t_imga src,
 t_actor						*new_actor(t_vars *v);
 void						add_actor(t_vars *v, t_actor **actors,
 								t_actor **node);
-void						add_cell(t_vars *v, t_pathfinding **astar,
+void						add_cell(t_pathfinding **astar,
 								t_pathfinding **node, t_actor *a);
+t_pathfinding				*new_cell(double f, int i, int j);
 int							printactors(t_vars *v);
 void						sort_descending(t_actor **head, int bound,
 								bool swapped, t_actor *last_sorted);

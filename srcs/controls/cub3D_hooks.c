@@ -14,7 +14,7 @@
 
 /// @brief Attack action. Change animations offset in the sprite sheet.
 /// @param v Vars
-void	attack(t_vars *v, int kd)
+inline void	attack(t_vars *v, int kd)
 {
 	if (v->game.won > 4 || kd != XK_x)
 		return ;
@@ -26,11 +26,11 @@ void	attack(t_vars *v, int kd)
 	v->player.attack = 1;
 	v->hud.refreshammo = 1;
 	v->hud.refreshammun = 1;
-	if (v->player.currweapon.typeammo != -1)
+	if (v->player.currweapon.typeammo != NOAMMO)
 		v->player.ammo[v->player.currweapon.typeammo] -= 1;
 	v->player.animoff = v->player.currweapon.img.animx;
-	if (v->player.ammo[v->player.currweapon.typeammo] < 0
-		&& v->player.currweapon.typeammo != -1)
+	if (v->player.currweapon.typeammo != NOAMMO
+		&& v->player.ammo[v->player.currweapon.typeammo] < 0)
 	{
 		v->player.ammo[v->player.currweapon.typeammo] = 0;
 		v->player.pattack = 0;
@@ -64,7 +64,7 @@ void	handle_movement(t_vars *v)
 
 /// @brief Toggle god/debug mode
 /// @param v Vars
-void	actions(t_vars *v, int kd)
+inline void	actions(t_vars *v, int kd)
 {
 	attack(v, kd);
 	if (v->game.won < 4 && kd == XK_Shift_L && !v->player.injump)

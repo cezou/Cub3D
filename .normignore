@@ -7,6 +7,8 @@ includes/printf/*.o
 includes/printf/libft/*.o
 includes/printf/libftprintf.a
 includes/printf/libft/libft.a
+includes/mlx_linux/
+includes/miniaudio/
 cub3D_bonus
 cub3D
 DOOM

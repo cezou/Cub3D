@@ -61,7 +61,7 @@ void	add_actor(t_vars *v, t_actor **actors, t_actor **node)
 /// @param v 
 /// @param actors 
 /// @param node 
-void	add_cell(t_vars *v, t_pathfinding **astar, t_pathfinding **node,
+void	add_cell(t_pathfinding **astar, t_pathfinding **node,
 			t_actor *actor)
 {
 	actor->nb_astar++;
@@ -78,6 +78,27 @@ void	add_cell(t_vars *v, t_pathfinding **astar, t_pathfinding **node,
 		(*astar)->prev = (*node);
 	}
 }
+
+/// @brief Create a new node in the linked list
+/// @param v Vars
+/// @param a Pointer of the current node
+/// @param p Node data
+/// @return The new node to add to the linked list
+t_pathfinding	*new_cell(double f, int i, int j)
+{
+	t_pathfinding	*node;
+
+	node = (t_pathfinding *)ft_calloc(1, sizeof(t_pathfinding));
+	if (!node)
+		return (NULL);
+	node->f = 0.0;
+	node->i = i;
+	node->j = j;
+	node->next = node;
+	node->prev = node;
+	return (node);
+}
+
 
 /// @brief Create a new node in the linked list
 /// @param v Vars
