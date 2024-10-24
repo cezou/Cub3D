@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/23 23:32:40 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/24 19:50:01 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,10 +247,13 @@ void	init_objects(t_vars *v, t_actor *a)
 
 void	init_guard(t_vars *v, t_map *tmp, t_actor *a)
 {
+	int	i;
+
 	while (tmp)
 	{
 		if (tmp->val == 'G')
 		{
+			i = -1;
 			a = (t_actor *)ft_calloc(1, sizeof(t_actor));
 			if (!a)
 				exit((prterr(v, ERRMALL, 1, 1), 1));
@@ -270,6 +273,25 @@ void	init_guard(t_vars *v, t_map *tmp, t_actor *a)
 			a->active = 1;
 			a->next = a;
 			a->prev = a;
+			a->astar.celld = (t_cell **)ft_calloc(v->mapv.maph, sizeof(t_cell *));
+			if (!a->astar.celld)
+				exit((prterr(v, ERRMALL, 1, 1), 1));
+			while (++i < v->mapv.maph)
+			{
+				a->astar.celld[i] = (t_cell *)ft_calloc(v->mapv.mapw, sizeof(t_cell));
+				if (!a->astar.celld[i])
+					exit((prterr(v, ERRMALL, 1, 1), 1));
+			}
+			i = -1;
+			a->astar.closedlst = (bool **)ft_calloc(v->mapv.maph, sizeof(bool *));
+			if (!a->astar.closedlst)
+				exit((prterr(v, ERRMALL, 1, 1), 1));
+			while (++i < v->mapv.maph)
+			{
+				a->astar.closedlst[i] = (bool *)ft_calloc(v->mapv.mapw, sizeof(bool));
+				if (!a->astar.closedlst[i])
+					exit((prterr(v, ERRMALL, 1, 1), 1));
+			}
 			add_actor(v, &v->actors, &a);
 		}
 		tmp = tmp->right;

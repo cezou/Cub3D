@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/23 23:28:12 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/24 15:13:50 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -564,6 +564,7 @@ typedef struct s_pathfinding
 	double					f;
 	int						i;
 	int						j;
+	t_map					*curr;
 	struct s_pathfinding	*next;
 	struct s_pathfinding	*prev;
 }	t_pathfinding;
@@ -584,7 +585,7 @@ typedef struct s_pathfinding
  *	@tparam	curr 			Reference to the current node in the map to test the
  *	position
  *	@tparam	target 			Reference to the target position in the map
- *	@tparam	celldetails 	Array holding the datas of the cells 
+ *	@tparam	celld 	Array holding the datas of the cells 
  *	@tparam	tmp 			Reference of the node in the pathfinding linked list
  *	@tparam	del 			Reference to the node that will be delete in the
  *	pathfinding linked list 
@@ -595,6 +596,7 @@ typedef struct s_astar
 {
 	int				i;
 	int				j;
+	int				nb_astar;
 	bool			finddst;
 	double			gnew;
 	double			hnew;
@@ -602,8 +604,8 @@ typedef struct s_astar
 	bool			**closedlst;
 	t_map			*curr;
 	t_map			*target;
-	t_cell			**celldetails;
-	t_pathfinding	*tmp;
+	t_cell			**celld;
+	t_pathfinding	*open;
 	t_pathfinding	*del;
 	t_pathfinding	*next;
 }	t_astar;
@@ -629,7 +631,6 @@ typedef struct s_actor
 	int						xdelta;
 	int						animoffx;
 	int						animoffy;
-	int						nb_astar;
 	double					targetdist;
 	double					norm;
 	double					ms;
@@ -1053,8 +1054,7 @@ void						save_screen_to_buffer(t_imga dest, t_imga src,
 t_actor						*new_actor(t_vars *v);
 void						add_actor(t_vars *v, t_actor **actors,
 								t_actor **node);
-void						add_cell(t_pathfinding **astar,
-								t_pathfinding **node, t_actor *a);
+void						add_cell(t_astar *astar, t_pathfinding **node);
 t_pathfinding				*new_cell(double f, int i, int j);
 int							printactors(t_vars *v);
 void						sort_descending(t_actor **head, int bound,
@@ -1157,6 +1157,10 @@ void						calculate_line_height(t_vars *v);
 void						check_door(t_vars *v);
 int							door_extend_ray(t_vars *v, t_point p, int *t);
 void						update_texture_pixels(t_vars *v, t_point p, int *t);
+
+// Pathfinding
+
+bool						astar(t_vars *v, t_astar *astar);
 
 // Threading
 

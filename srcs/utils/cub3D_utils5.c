@@ -61,21 +61,20 @@ void	add_actor(t_vars *v, t_actor **actors, t_actor **node)
 /// @param v 
 /// @param actors 
 /// @param node 
-void	add_cell(t_pathfinding **astar, t_pathfinding **node,
-			t_actor *actor)
+void	add_cell(t_astar *astar, t_pathfinding **node)
 {
-	actor->nb_astar++;
-	if (!(*astar))
-		(*astar) = (*node);
+	astar->nb_astar++;
+	if (!astar->open)
+		astar->open = (*node);
 	else
 	{
-		(*node)->next = (*astar);
-		(*node)->prev = (*astar)->prev;
-		if ((*astar)->next == (*astar))
-			(*astar)->next = (*node);
+		(*node)->next = astar->open;
+		(*node)->prev = astar->open->prev;
+		if (astar->open->next == astar->open)
+			astar->open->next = (*node);
 		else
-			(*astar)->prev->next = (*node);
-		(*astar)->prev = (*node);
+			astar->open->prev->next = (*node);
+		astar->open->prev = (*node);
 	}
 }
 
