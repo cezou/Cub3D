@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D_animations.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/15 19:35:55 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/25 02:06:44 by cviegas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ void	update_door_animations(t_vars *v, int i)
 				v->door[i].xdelta -= 4;
 			else if (v->door[i].state == ECLOSING)
 				v->door[i].xdelta += 4;
-			if (v->door[i].state == EOPENING
-				&& v->door[i].xdelta <= 0)
+			if (v->door[i].state == EOPENING && v->door[i].xdelta <= 0)
 				v->door[i].state = EOPEN;
 			else if (v->door[i].state == ECLOSING
 				&& v->door[i].xdelta >= v->img[EDOOR].width)
@@ -46,7 +45,7 @@ void	update_animations(t_vars *v)
 {
 	if (v->game.pause)
 		return ;
-	update_actors(v);
+	// update_actors(v);
 	update_door_animations(v, -1);
 	update_player(v);
 }

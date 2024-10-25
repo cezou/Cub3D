@@ -64,7 +64,7 @@ void	handle_movement(t_vars *v)
 
 /// @brief Toggle god/debug mode
 /// @param v Vars
-inline void	actions(t_vars *v, int kd)
+void	actions(t_vars *v, int kd)
 {
 	attack(v, kd);
 	if (v->game.won < 4 && kd == XK_Shift_L && !v->player.injump)
@@ -107,8 +107,8 @@ int	keys(int kd, t_vars *v)
 		returnkey(v);
 	if (v->game.pause)
 		menuarrow(v, kd);
-	if (!v->game.pause && !v->game.won && v->game.start > 1
-		&& is_pressed(XK_F1, v) && !MANDATORY)
+	if (!v->game.pause && !v->game.won && v->game.start > 1 && is_pressed(XK_F1,
+			v) && !MANDATORY)
 	{
 		if (v->game.god == 0)
 			v->game.god = 1;

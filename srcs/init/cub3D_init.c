@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/24 19:50:01 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/25 08:13:17 by cviegas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 // Mancubus 		600 	8 	(Per Fireball) 	64 (Per Fireball)
 // Cacodemon 		400 	10 	(Melee) 5 (Ranged) 	60 (Melee) 40 (Ranged)
 // Spiderdemon 		3,000 	3 	(Per Pellet) 	15 (Per Pellet)
-// Cyberdemon 		4,000 	20 	(Direct Hit) 0 (Blast Damage) 
+// Cyberdemon 		4,000 	20 	(Direct Hit) 0 (Blast Damage)
 // 160 (Direct Hit) 128 (Blast Damage)
 // Arch-Vile 		700 	20 	(Direct Hit) 0 (Blast Damage)
 // 20 (Direct Hit) 70 (Blast Damage)
@@ -63,30 +63,29 @@
 
 /// @brief Array of objects
 ///	{x, y, sprite ID, scale factor, vertical position, hashitbox, pickable}
-const t_obj	g_objs[NUM_OBJS] = {
-{14.0, 9.0, EPARMOR, 5.0, 128.0, 1, 1}, // Scaled down
-{14.0, 9.5, EPARMOR1, 5.0, 128.0, 1, 1},
-{14.0, 10.0, ESTIM, 5.0, 128.0, 1, 1},
-{14.0, 10.5, EMEDI, 5.0, 128.0, 1, 1},
-{14.0, 11.0, EPCLIP, 5.0, 128.0, 1, 1},
-{14.0, 11.5, EPSHELL, 5.0, 128.0, 1, 1},
-{14.0, 12.0, EPROCK, 5.0, 128.0, 1, 1},
-{14.0, 12.5, EPCELL, 5.0, 128.0, 1, 1},
-{14.0, 13.0, EBKEY, 5.0, 128.0, 1, 1},
-{14.0, 13.5, EYKEY, 5.0, 128.0, 1, 1},
-{14.0, 14.0, ERKEY, 5.0, 128.0, 1, 1},
-{14.0, 14.5, EBSKEY, 5.0, 128.0, 1, 1},
-{14.0, 15.0, EYSKEY, 5.0, 128.0, 1, 1},
-{14.0, 15.5, ERSKEY, 5.0, 128.0, 1, 1},
-{14.0, 16.0, EPBFG, 2.0, 64.0, 1, 1},
-{14.0, 16.5, EPSHOTGUN, 2.0, 64.0, 1, 1},
-{14.0, 17.0, EPGATLIN, 2.0, 64.0, 1, 1},
-{14.0, 17.5, EPROCKETL, 2.0, 64.0, 1, 1},
-{14.0, 18.0, EPPLASMA, 2.0, 64.0, 1, 1},
-{14.0, 18.5, EPCHAINSAW, 2.0, 64.0, 1, 1},
-{14.0, 19.0, EPSUPERSHOTGUN, 2.0, 64.0, 1, 1},
-{15.0, 19.0, ESTIM, 5.0, 128.0, 1, 1}
-};
+const t_obj	g_objs[NUM_OBJS] = {{14.0, 9.0, EPARMOR, 5.0, 128.0, 1, 1},
+								// Scaled down
+								{14.0, 9.5, EPARMOR1, 5.0, 128.0, 1, 1},
+								{14.0, 10.0, ESTIM, 5.0, 128.0, 1, 1},
+								{14.0, 10.5, EMEDI, 5.0, 128.0, 1, 1},
+								{14.0, 11.0, EPCLIP, 5.0, 128.0, 1, 1},
+								{14.0, 11.5, EPSHELL, 5.0, 128.0, 1, 1},
+								{14.0, 12.0, EPROCK, 5.0, 128.0, 1, 1},
+								{14.0, 12.5, EPCELL, 5.0, 128.0, 1, 1},
+								{14.0, 13.0, EBKEY, 5.0, 128.0, 1, 1},
+								{14.0, 13.5, EYKEY, 5.0, 128.0, 1, 1},
+								{14.0, 14.0, ERKEY, 5.0, 128.0, 1, 1},
+								{14.0, 14.5, EBSKEY, 5.0, 128.0, 1, 1},
+								{14.0, 15.0, EYSKEY, 5.0, 128.0, 1, 1},
+								{14.0, 15.5, ERSKEY, 5.0, 128.0, 1, 1},
+								{14.0, 16.0, EPBFG, 2.0, 64.0, 1, 1},
+								{14.0, 16.5, EPSHOTGUN, 2.0, 64.0, 1, 1},
+								{14.0, 17.0, EPGATLIN, 2.0, 64.0, 1, 1},
+								{14.0, 17.5, EPROCKETL, 2.0, 64.0, 1, 1},
+								{14.0, 18.0, EPPLASMA, 2.0, 64.0, 1, 1},
+								{14.0, 18.5, EPCHAINSAW, 2.0, 64.0, 1, 1},
+								{14.0, 19.0, EPSUPERSHOTGUN, 2.0, 64.0, 1, 1},
+								{15.0, 19.0, ESTIM, 5.0, 128.0, 1, 1}};
 
 /// @brief Init Weapon stats
 /// @param v Vars
@@ -106,8 +105,8 @@ void	initweapon(t_vars *v)
 		1000.0, v->img[EIROCKl]};
 	v->player.weapon[EPLASMA] = (t_weapon){1, 40, 300, ECELL, 40, 0, 1, -1,
 		1000.0, v->img[EIPLASMA]};
-	v->player.weapon[ECHAINSAW] = (t_weapon){1, -1, -1, NOAMMO, 20, 0, 0, 4, 2.0,
-		v->img[EICHAINSAW]};
+	v->player.weapon[ECHAINSAW] = (t_weapon){1, -1, -1, NOAMMO, 20, 0, 0, 4,
+		2.0, v->img[EICHAINSAW]};
 	v->player.weapon[ESUPERSHOTGUN] = (t_weapon){1, 8, 50, ESHELL, 0, 245, 0, 4,
 		1000.0, v->img[EISUPERSHOTGUN]};
 	v->player.weapon[EBFG] = (t_weapon){1, 40, 300, ECELL, 800, 0, 1, -1,
@@ -191,8 +190,8 @@ void	initmodes(t_vars *v, int argc)
 	if (!v->ray.zbuffer)
 		exit((prterr(v, ERRMALL, 1, 1), 1));
 	initpathtext(v);
-	if (argc < 2 || argc > 4)
-		exit((prterr(v, "Too many/few arguments\n", 1, 1), 1));
+	if (argc > 5)
+		exit((prterr(v, "Too many arguments\n", 1, 1), 1));
 }
 
 void	init_doors(t_vars *v)
@@ -222,7 +221,7 @@ void	init_doors(t_vars *v)
 
 void	init_objects(t_vars *v, t_actor *a)
 {
-	int		i;
+	int	i;
 
 	i = -1;
 	while (++i < NUM_OBJS)
@@ -230,14 +229,14 @@ void	init_objects(t_vars *v, t_actor *a)
 		a = (t_actor *)ft_calloc(1, sizeof(t_actor));
 		if (!a)
 			exit((prterr(v, ERRMALL, 1, 1), 1));
-		a->x = g_objs[i].x;
-		a->y = g_objs[i].y;
-		a->img_i = g_objs[i].img_id;
-		a->vdiv = g_objs[i].uv;
-		a->udiv = g_objs[i].uv;
-		a->vmove = g_objs[i].v;
-		a->hashitbox = g_objs[i].h;
-		a->pickable = g_objs[i].pickable;
+		a->x = v->g_objs[i].x;
+		a->y = v->g_objs[i].y;
+		a->img_i = v->g_objs[i].img_id;
+		a->vdiv = v->g_objs[i].uv;
+		a->udiv = v->g_objs[i].uv;
+		a->vmove = v->g_objs[i].v;
+		a->hashitbox = v->g_objs[i].h;
+		a->pickable = v->g_objs[i].pickable;
 		a->active = 1;
 		a->next = a;
 		a->prev = a;
@@ -273,22 +272,26 @@ void	init_guard(t_vars *v, t_map *tmp, t_actor *a)
 			a->active = 1;
 			a->next = a;
 			a->prev = a;
-			a->astar.celld = (t_cell **)ft_calloc(v->mapv.maph, sizeof(t_cell *));
+			a->astar.celld = (t_cell **)ft_calloc(v->mapv.maph,
+					sizeof(t_cell *));
 			if (!a->astar.celld)
 				exit((prterr(v, ERRMALL, 1, 1), 1));
 			while (++i < v->mapv.maph)
 			{
-				a->astar.celld[i] = (t_cell *)ft_calloc(v->mapv.mapw, sizeof(t_cell));
+				a->astar.celld[i] = (t_cell *)ft_calloc(v->mapv.mapw,
+						sizeof(t_cell));
 				if (!a->astar.celld[i])
 					exit((prterr(v, ERRMALL, 1, 1), 1));
 			}
 			i = -1;
-			a->astar.closedlst = (bool **)ft_calloc(v->mapv.maph, sizeof(bool *));
+			a->astar.closedlst = (bool **)ft_calloc(v->mapv.maph,
+					sizeof(bool *));
 			if (!a->astar.closedlst)
 				exit((prterr(v, ERRMALL, 1, 1), 1));
 			while (++i < v->mapv.maph)
 			{
-				a->astar.closedlst[i] = (bool *)ft_calloc(v->mapv.mapw, sizeof(bool));
+				a->astar.closedlst[i] = (bool *)ft_calloc(v->mapv.mapw,
+						sizeof(bool));
 				if (!a->astar.closedlst[i])
 					exit((prterr(v, ERRMALL, 1, 1), 1));
 			}
@@ -329,6 +332,8 @@ void	init(t_vars *v, int argc, char **argv)
 	if (!v->mlx)
 		exit((perr("MLX init failed"), FAIL));
 	parsing(argc, argv[1], v);
+	if (argc == 3 || argc == 5)
+		parsing_csv(argv[2], v);
 	v->img = (t_imga *)malloc(sizeof(t_imga) * (COMP_N + 1));
 	if (!v->img)
 		exit((prterr(v, ERRMALL, 1, 1), 1));

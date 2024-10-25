@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_and_imgs.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 17:22:28 by cviegas           #+#    #+#             */
-/*   Updated: 2024/09/27 16:08:06 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/25 07:57:31 by cviegas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ void	init_infos(t_vars *v, char *file, int *fd)
 	v->infos.west.is_set = NULL;
 	v->infos.f = 0;
 	v->infos.c = 0;
+	v->infos.map = NULL;
+	v->sprite_map = NULL;
+	v->infos.ceil_botright = (t_v2i){0, 0};
+	v->infos.ceil_topleft = (t_v2i){0, 0};
 }
 
 int	init_xpm(t_imga *img, char *path, void *mlx, int i)
@@ -57,11 +61,13 @@ void	clean_exit(char **l, int fd, t_vars *v, bool free_line)
 		close(fd);
 	if (free_line)
 		freeall(l);
+	free_sprite_map(&v->sprite_map);
 	pfree_img(&v->infos.east.imga, v);
 	pfree_img(&v->infos.west.imga, v);
 	pfree_img(&v->infos.south.imga, v);
 	pfree_img(&v->infos.north.imga, v);
 	mlx_destroy_display(v->mlx);
 	free(v->mlx);
+	freeall(v->infos.map);
 	exit(FAIL);
 }

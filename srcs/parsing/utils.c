@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 17:22:46 by cviegas           #+#    #+#             */
-/*   Updated: 2024/09/19 19:05:12 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/25 06:41:20 by cviegas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,9 @@ char	**tab_dup(char **tab)
 	}
 	dup[i] = 0;
 	return (dup);
+}
+
+size_t	len(const char *s)
+{
+	return (ft_strlen(s));
 }

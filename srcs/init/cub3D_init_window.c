@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D_init_window.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/21 19:32:02 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/25 08:12:24 by cviegas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ void	initwindow(t_vars *v, int argc, char **argv)
 	v->screen.screenh -= TOOLBAR_LINUX_H;
 	v->screen.resw = v->screen.screenw;
 	v->screen.resh = v->screen.screenh;
-	if (argc == 4)
+	if (argc == 4 || argc == 5)
 	{
-		v->screen.resw = ft_atol(argv[2]);
-		v->screen.resh = ft_atol(argv[3]);
+		v->screen.resw = ft_atol(argv[argc - 2]);
+		v->screen.resh = ft_atol(argv[argc - 1]);
 		if (is_bad_res(v))
 			exit((prterr(v, ERRRES, 1, 0), 1));
 		if (!WSL && (v->screen.resw > v->screen.screenw

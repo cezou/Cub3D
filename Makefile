@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+         #
+#    By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 11:28:17 by pmagnero          #+#    #+#              #
-#    Updated: 2024/10/24 13:45:48 by pmagnero         ###   ########.fr        #
+#    Updated: 2024/10/25 08:21:09 by cviegas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -135,6 +135,10 @@ SRCS =	srcs/cub3D.c \
 		srcs/parsing/print_utils.c \
 		srcs/parsing/doors.c \
 		srcs/parsing/map_floodfill.c \
+		srcs/parsing/csv/csv.c \
+		srcs/parsing/csv/csv_utils.c \
+		srcs/parsing/csv/sprite_map.c \
+		srcs/parsing/csv/entries.c \
 		srcs/render/minimap/minimap.c \
 		srcs/render/minimap/utils.c
 
@@ -156,6 +160,7 @@ $(OBJS_DIR)%.o : %.c includes/cub3D.h
 	@mkdir -p $(OBJS_DIR)srcs/movements
 	@mkdir -p $(OBJS_DIR)srcs/utils
 	@mkdir -p $(OBJS_DIR)srcs/parsing
+	@mkdir -p $(OBJS_DIR)srcs/parsing/csv
 ifeq ($(d),1)
 	@$(CC) -DDEBUG=1 -DMANDATORY=1 $(DEBUG) $(WSL) $(PG) $(FLAG) -c $< -o $@
 else
@@ -174,6 +179,7 @@ $(OBJS_DIR_B)%.o : %.c includes/cub3D.h
 	@mkdir -p $(OBJS_DIR_B)srcs/menus
 	@mkdir -p $(OBJS_DIR_B)srcs/movements
 	@mkdir -p $(OBJS_DIR_B)srcs/parsing
+	@mkdir -p $(OBJS_DIR_B)srcs/parsing/csv
 	@mkdir -p $(OBJS_DIR_B)srcs/utils
 	
 ifeq ($(d),1)

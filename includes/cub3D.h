@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/24 15:13:50 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/25 08:15:41 by cviegas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,22 @@
 # define CUB3D_H
 
 # define _XOPEN_SOURCE 600
-# include <limits.h>
-# include <stdarg.h>
-# include <stdlib.h>
-# include <unistd.h>
 # include "mlx_linux/minilibx-linux/mlx.h"
 # include "mlx_linux/minilibx-linux/mlx_int.h"
 # include "printf/ft_printf.h"
-# include <X11/keysym.h>
+# include "uthash.h"
 # include <X11/extensions/Xfixes.h>
+# include <X11/keysym.h>
 # include <errno.h>
+# include <limits.h>
 # include <math.h>
+# include <stdarg.h>
 # include <stdbool.h>
 # include <stdint.h>
+# include <stdlib.h>
 # include <sys/time.h>
 # include <sys/wait.h>
+# include <unistd.h>
 
 # define FAIL EXIT_FAILURE
 # define SUCCESS EXIT_SUCCESS
@@ -121,6 +122,7 @@
 # define ERRDUP "Duplicate player/exit in the map\n"
 # define ERROR "Error"
 # define ERRFF "Exit unreachable / All Collectibles can\'t be collected\n"
+# define ECEIL "Ceil: Need 4 coordinates (topleft[x,y] and botright[x,y] drawing a rectangle)"
 
 // Resolutions
 
@@ -160,21 +162,26 @@
 #  define WSL 0
 // #  define FONT1 "-sony-fixed-medium-r-normal--17-120-100-100-c-0-iso8859-1"
 // #  define FONT2 "-sony-fixed-medium-r-normal--24-230-75-75-c-0-iso8859-1"
-#  define FONT1 "-misc-fixed-medium-r-semicondensed\
+#  define FONT1 \
+	"-misc-fixed-medium-r-semicondensed\
 --13-120-75-75-c-60-iso8859-1"
-#  define FONT2 "-misc-fixed-medium-r-semicondensed\
+#  define FONT2 \
+	"-misc-fixed-medium-r-semicondensed\
 --13-120-75-75-c-60-iso8859-1"
 # else
 #  define WSL 1
-#  define FONT1 "-misc-fixed-medium-r-semicondensed\
+#  define FONT1 \
+	"-misc-fixed-medium-r-semicondensed\
 --13-120-75-75-c-60-iso8859-1"
-#  define FONT2 "-misc-fixed-medium-r-semicondensed\
+#  define FONT2 \
+	"-misc-fixed-medium-r-semicondensed\
 --13-120-75-75-c-60-iso8859-1"
 # endif
 // # define FONT2 "-sun-open look glyph-----19-190-75-75-p-154-sunolglyph-1"
 
 // Mr. Potato-Head by Joan Stark
-# define POTATO "\
+# define POTATO \
+	"\
 \t\t\t\t\t\t\t              .-\"'\"-.\n\
 \t\t\t\t\t\t\t             |       |  \n\
 \t\t\t\t\t\t\t           (`-._____.-')\n\
@@ -194,7 +201,8 @@
 \t\t\t\t\t\t\t\\|||    (`.___.')-(`.___.')    |||/ \n\
 \t\t\t\t\t\t\t '\"'     `-----'   `-----'     '\"' \n"
 
-# define CUB3D "\
+# define CUB3D \
+	"\
  _____  _   _ ______  _____ ______ \n\
 /  __ \\| | | || ___ \\|____ ||  _  \\ \n\
 | /  \\/| | | || |_/ /    / /| | | |\n\
@@ -202,7 +210,8 @@
 | \\__/\\| |_| || |_/ /.___/ /| |/ / \n\
  \\____/ \\___/ \\____/ \\____/ |___/  \n"
 
-# define BONUS "\
+# define BONUS \
+	"\
 \t\t\t\t          )      )         (     \n\
 \t\t\t\t   (   ( /(   ( /(         )\\ )  \n\
 \t\t\t\t ( )\\  )\\())  )\\())    (  (()/(  \n\
@@ -216,70 +225,79 @@
 // # define M_PI 3.14
 
 # define SOUND_GENERIC "resources/sounds/1-01. Main Menu.mp3"
-# define SOUND_FOOTSTEPWALK "resources/sounds/Horror/\
+# define SOUND_FOOTSTEPWALK \
+	"resources/sounds/Horror/\
 Character/Footsteps_walking.wav"
 # define SOUND_AMBIENT "resources/sounds/03.E1M1-AtDoomsGate.mp3"
-# define SOUND_BABYLAUGH1 "resources/sounds/Horror\
+# define SOUND_BABYLAUGH1 \
+	"resources/sounds/Horror\
 /Monsters & Ghosts/Child laugh_6.wav"
-# define SOUND_BABYLAUGH2 "resources/sounds/Horror\
+# define SOUND_BABYLAUGH2 \
+	"resources/sounds/Horror\
 /Monsters & Ghosts/Child laugh.wav"
-# define SOUND_BABYLAUGH3 "resources/sounds/Horror\
+# define SOUND_BABYLAUGH3 \
+	"resources/sounds/Horror\
 /Monsters & Ghosts/Child laugh_7.wav"
-# define SOUND_BUTTONCLICK1 "resources/sounds/Horror\
+# define SOUND_BUTTONCLICK1 \
+	"resources/sounds/Horror\
 /House & Office/Can_clink_4.wav"
-# define SOUND_BUTTONCLICK2 "resources/sounds/Horror\
+# define SOUND_BUTTONCLICK2 \
+	"resources/sounds/Horror\
 /House & Office/switch3.wav"
-# define SOUND_GUARDINJURED "resources/sounds/Horror\
+# define SOUND_GUARDINJURED \
+	"resources/sounds/Horror\
 /Monsters & Ghosts/Zombie.wav"
-# define SOUND_GUARDDEATH "resources/sounds/Horror\
+# define SOUND_GUARDDEATH \
+	"resources/sounds/Horror\
 /Monsters & Ghosts/Zombie_8.wav"
-# define SOUND_ATTACK "resources/sounds/Horror\
+# define SOUND_ATTACK \
+	"resources/sounds/Horror\
 /Monsters & Ghosts/Injured.wav"
 # define SOUND_CREDITS "resources/sounds/musics/wav/Ambient 2.wav"
 # define SOUND_GAMEOVER "resources/sounds/musics/wav/Fx 3.wav"
 # define SOUND_WIN "resources/sounds/musics/wav/Fx 1.wav"
 
-# define GOTARMOR	"Picked up the armor."
-# define GOTMEGA	"Picked up the MegaArmor!"
-# define GOTHTHBONUS	"Picked up a health bonus."
-# define GOTARMBONUS	"Picked up an armor bonus."
-# define GOTSTIM	"Picked up a stimpack."
-# define GOTMEDINEED	"Picked up a medikit that you REALLY need!"
-# define GOTMEDIKIT	"Picked up a medikit."
-# define GOTSUPER	"Supercharge!"
+# define GOTARMOR "Picked up the armor."
+# define GOTMEGA "Picked up the MegaArmor!"
+# define GOTHTHBONUS "Picked up a health bonus."
+# define GOTARMBONUS "Picked up an armor bonus."
+# define GOTSTIM "Picked up a stimpack."
+# define GOTMEDINEED "Picked up a medikit that you REALLY need!"
+# define GOTMEDIKIT "Picked up a medikit."
+# define GOTSUPER "Supercharge!"
 
-# define GOTBLUECARD	"Picked up a blue keycard."
-# define GOTYELWCARD	"Picked up a yellow keycard."
-# define GOTREDCARD	"Picked up a red keycard."
-# define GOTBLUESKUL	"Picked up a blue skull key."
-# define GOTYELWSKUL	"Picked up a yellow skull key."
-# define GOTREDSKULL	"Picked up a red skull key."
+# define GOTBLUECARD "Picked up a blue keycard."
+# define GOTYELWCARD "Picked up a yellow keycard."
+# define GOTREDCARD "Picked up a red keycard."
+# define GOTBLUESKUL "Picked up a blue skull key."
+# define GOTYELWSKUL "Picked up a yellow skull key."
+# define GOTREDSKULL "Picked up a red skull key."
 
-# define GOTINVUL	"Invulnerability!"
-# define GOTBERSERK	"Berserk!"
-# define GOTINVIS	"Partial Invisibility"
-# define GOTSUIT	"Radiation Shielding Suit"
-# define GOTMAP	"Computer Area Map"
-# define GOTVISOR	"Light Amplification Visor"
-# define GOTMSPHERE	"MegaSphere!"
+# define GOTINVUL "Invulnerability!"
+# define GOTBERSERK "Berserk!"
+# define GOTINVIS "Partial Invisibility"
+# define GOTSUIT "Radiation Shielding Suit"
+# define GOTMAP "Computer Area Map"
+# define GOTVISOR "Light Amplification Visor"
+# define GOTMSPHERE "MegaSphere!"
 
-# define GOTCLIP	"Picked up a clip."
-# define GOTCLIPBOX	"Picked up a box of bullets."
-# define GOTROCKET	"Picked up a rocket."
-# define GOTROCKBOX	"Picked up a box of rockets."
-# define GOTCELL	"Picked up an energy cell."
-# define GOTCELLBOX	"Picked up an energy cell pack."
-# define GOTSHELLS	"Picked up 4 shotgun shells."
-# define GOTSHELLBOX	"Picked up a box of shotgun shells."
-# define GOTBACKPACK	"Picked up a backpack full of ammo!"
+# define GOTCLIP "Picked up a clip."
+# define GOTCLIPBOX "Picked up a box of bullets."
+# define GOTROCKET "Picked up a rocket."
+# define GOTROCKBOX "Picked up a box of rockets."
+# define GOTCELL "Picked up an energy cell."
+# define GOTCELLBOX "Picked up an energy cell pack."
+# define GOTSHELLS "Picked up 4 shotgun shells."
+# define GOTSHELLBOX "Picked up a box of shotgun shells."
+# define GOTBACKPACK "Picked up a backpack full of ammo!"
 
-# define GOTBFG9000	"You got the BFG9000!  Oh, yes."
-# define GOTCHAINGUN	"You got the chaingun!"
-# define GOTCHAINSAW	"A chainsaw!  Find some meat!"
-# define GOTLAUNCHER	"You got the rocket launcher!"
-# define GOTPLASMA	"You got the plasma gun!"
-# define GOTSHOTGUN	"You got the shotgun!"
-# define GOTSHOTGUN2	"You got the super shotgun!"
+# define GOTBFG9000 "You got the BFG9000!  Oh, yes."
+# define GOTCHAINGUN "You got the chaingun!"
+# define GOTCHAINSAW "A chainsaw!  Find some meat!"
+# define GOTLAUNCHER "You got the rocket launcher!"
+# define GOTPLASMA "You got the plasma gun!"
+# define GOTSHOTGUN "You got the shotgun!"
+# define GOTSHOTGUN2 "You got the super shotgun!"
 
 # define MAXHEALTH 100
 
@@ -462,6 +480,21 @@ typedef enum s_components
 	COMP_N
 }							t_comp;
 
+typedef struct s_sprite_entry
+{
+	const char				*name;
+	int						id;
+}							t_sprite_entry;
+
+typedef struct s_sprite_map
+{
+	const char				*key;
+	int						value;
+	UT_hash_handle			hh;
+}							t_sprite_map;
+
+int							get_sprite_id(t_sprite_map *map, const char *key);
+
 typedef int					i;
 
 typedef struct s_point
@@ -511,9 +544,9 @@ typedef struct s_obj
 	int						pickable;
 }							t_obj;
 
-typedef float				t_v2f __attribute__((vector_size(8)));
-typedef unsigned int		t_v2u __attribute__((vector_size(8)));
-typedef int					t_v2i __attribute__((vector_size(8)));
+typedef float t_v2f			__attribute__((vector_size(8)));
+typedef unsigned int t_v2u	__attribute__((vector_size(8)));
+typedef int t_v2i			__attribute__((vector_size(8)));
 
 typedef struct s_map
 {
@@ -541,12 +574,12 @@ typedef struct s_map
  */
 typedef struct s_cell
 {
-	int		parent_i;
-	int		parent_j;
-	double	f;
-	double	g;
-	double	h;
-}	t_cell;
+	int						parent_i;
+	int						parent_j;
+	double					f;
+	double					g;
+	double					h;
+}							t_cell;
 
 /** @struct s_pathfinding
  *  @brief Open list having information as <f, <i, j>>
@@ -558,7 +591,7 @@ typedef struct s_cell
  *  @tparam j 		Column index
  *  @tparam *next 	Next node in the linked list
  *  @tparam *prev 	Previous node in the linked list
-*/
+ */
 typedef struct s_pathfinding
 {
 	double					f;
@@ -567,7 +600,7 @@ typedef struct s_pathfinding
 	t_map					*curr;
 	struct s_pathfinding	*next;
 	struct s_pathfinding	*prev;
-}	t_pathfinding;
+}							t_pathfinding;
 
 /** @struct s_astar
  *  @brief Structure holding all the datas necessary for the
@@ -585,30 +618,30 @@ typedef struct s_pathfinding
  *	@tparam	curr 			Reference to the current node in the map to test the
  *	position
  *	@tparam	target 			Reference to the target position in the map
- *	@tparam	celld 	Array holding the datas of the cells 
+ *	@tparam	celld 	Array holding the datas of the cells
  *	@tparam	tmp 			Reference of the node in the pathfinding linked list
  *	@tparam	del 			Reference to the node that will be delete in the
- *	pathfinding linked list 
+ *	pathfinding linked list
  *	@tparam	next 			Reference of the next node in the pathfinding linked
  *	list
  */
 typedef struct s_astar
 {
-	int				i;
-	int				j;
-	int				nb_astar;
-	bool			finddst;
-	double			gnew;
-	double			hnew;
-	double			fnew;
-	bool			**closedlst;
-	t_map			*curr;
-	t_map			*target;
-	t_cell			**celld;
-	t_pathfinding	*open;
-	t_pathfinding	*del;
-	t_pathfinding	*next;
-}	t_astar;
+	int						i;
+	int						j;
+	int						nb_astar;
+	bool					finddst;
+	double					gnew;
+	double					hnew;
+	double					fnew;
+	bool					**closedlst;
+	t_map					*curr;
+	t_map					*target;
+	t_cell					**celld;
+	t_pathfinding			*open;
+	t_pathfinding			*del;
+	t_pathfinding			*next;
+}							t_astar;
 
 typedef struct s_actor
 {
@@ -800,63 +833,63 @@ typedef struct s_sound
 
 typedef struct s_weapon
 {
-	int					active;
-	int					ammo;
-	int					maxammo;
-	u_int8_t			typeammo;
-	int					dmg;
-	int					idsound;
-	int					isprojectile;
-	int					dmgtic;
-	double				range;
-	t_imga				img;
-}						t_weapon;
+	int						active;
+	int						ammo;
+	int						maxammo;
+	u_int8_t				typeammo;
+	int						dmg;
+	int						idsound;
+	int						isprojectile;
+	int						dmgtic;
+	double					range;
+	t_imga					img;
+}							t_weapon;
 
 typedef struct s_player
 {
-	t_map				*player;
-	int					pattack;
-	int					attack;
-	int					animp;
-	int					animoff;
-	int					moving;
-	int					movingy;
-	int					jumping;
-	int					injump;
-	int					dir;
-	int					hp;
-	int					hit;
-	int					armor;
-	int					armortype;
-	int					ammo[4];
-	int					maxammo[4];
-	int					clipammo[4];
-	int					weapons[NUMWEAPONS];
-	int					cards[3];
-	t_weapon			currweapon;
-	t_weapon			weapon[NUMWEAPONS];
-	double				x;
-	double				y;
-	double				z;
-	double				dir_x;
-	double				dir_y;
-	double				plane_x;
-	double				plane_y;
-	double				angle;
-	double				motionx;
-	double				motiony;
-	double				accx;
-	double				accy;
-	double				deccx;
-	double				deccy;
-	double				maxspeedx;
-	double				maxspeedy;
-	double				movespeedx;
-	double				movespeedy;
-	double				rotspeed;
-	double				mouserotspeed;
-	uint64_t			timerplayer;
-}						t_player;
+	t_map					*player;
+	int						pattack;
+	int						attack;
+	int						animp;
+	int						animoff;
+	int						moving;
+	int						movingy;
+	int						jumping;
+	int						injump;
+	int						dir;
+	int						hp;
+	int						hit;
+	int						armor;
+	int						armortype;
+	int						ammo[4];
+	int						maxammo[4];
+	int						clipammo[4];
+	int						weapons[NUMWEAPONS];
+	int						cards[3];
+	t_weapon				currweapon;
+	t_weapon				weapon[NUMWEAPONS];
+	double					x;
+	double					y;
+	double					z;
+	double					dir_x;
+	double					dir_y;
+	double					plane_x;
+	double					plane_y;
+	double					angle;
+	double					motionx;
+	double					motiony;
+	double					accx;
+	double					accy;
+	double					deccx;
+	double					deccy;
+	double					maxspeedx;
+	double					maxspeedy;
+	double					movespeedx;
+	double					movespeedy;
+	double					rotspeed;
+	double					mouserotspeed;
+	uint64_t				timerplayer;
+}							t_player;
 
 typedef struct s_hud
 {
@@ -960,35 +993,45 @@ typedef struct s_infos
 	uint32_t				ceil;
 	uint32_t				floor;
 
+	t_v2i					ceil_topleft;
+	t_v2i					ceil_botright;
+
 }							t_infos;
 
-typedef struct s_thread_pool{
-	int					thread_count;
-	pthread_t			*threads;
-	pthread_barrier_t	tbarrier;
-	pthread_barrier_t	mbarrier;
-	pthread_mutex_t		job_mutex;
-	pthread_cond_t		job_cond;
-	int					work_available;
-	volatile int		stop;
-}	t_thread_pool;
+typedef struct s_thread_pool
+{
+	int						thread_count;
+	pthread_t				*threads;
+	pthread_barrier_t		tbarrier;
+	pthread_barrier_t		mbarrier;
+	pthread_mutex_t			job_mutex;
+	pthread_cond_t			job_cond;
+	int						work_available;
+	volatile int			stop;
+}							t_thread_pool;
 
-// Structure to hold each thread's data
-typedef struct s_thread_data{
-	struct s_vars	*v;
-	int				thread_id;
-	int				start;
-	int				end;
-	t_thread_pool	*pool;
-	t_floor			f;
-	int				job;
-	t_imga			tmp[2];
-	pthread_mutex_t	data_mutex;
-}	t_thread_data;
+// Structure to hold each thread's datat
+typedef struct s_thread_data
+{
+	struct s_vars			*v;
+	int						thread_id;
+	int						start;
+	int						end;
+	t_thread_pool			*pool;
+	t_floor					f;
+	int						job;
+	t_imga					tmp[2];
+	pthread_mutex_t			data_mutex;
+}							t_thread_data;
 
 typedef struct s_vars
 {
 	t_infos					infos;
+	t_obj					g_objs[200];
+	size_t					num_objs;
+	t_sprite_entry			entries[COMP_N];
+	t_sprite_map			*sprite_map;
+
 	t_xvar					*mlx;
 	bool					keys[MAX_KEYS];
 	bool					mouses[MAX_MOUSE];
@@ -1142,8 +1185,8 @@ void						rotatecamy(t_vars *v, int d, double speed, int mul);
 t_map						*set_pos(t_vars *v, t_point2 k, t_map *m, int d);
 t_map						*set_pos_guards(t_vars *v, t_point2 k, t_map *m,
 								t_actor *a);
-bool						can_move(t_vars *v, t_point2 p,
-								t_actor *tmp, t_actor *actor);
+bool						can_move(t_vars *v, t_point2 p, t_actor *tmp,
+								t_actor *actor);
 void						open_door(t_vars *v);
 
 // Rendering
@@ -1205,8 +1248,8 @@ void						renderelement(t_vars *v, int xoff, int nb,
 void						number_to_digits(t_vars *v, int n, int res[4],
 								int *i);
 void						renderarmsdigits(t_vars *v, int xoff);
-void						rendersmalldigit(t_vars *v, int res[4],
-								t_point g, int yoff);
+void						rendersmalldigit(t_vars *v, int res[4], t_point g,
+								int yoff);
 void						renderammun(t_vars *v, int xoff, int arr[4]);
 void						rendercards(t_vars *v, int xoff, int yoff,
 								int *arr);
@@ -1240,6 +1283,18 @@ int							maintitleanim(t_vars *v);
 void						melting(t_vars *v, bool *done, int x);
 
 /* FUNCTIONS */
+void						free_sprite_map(t_sprite_map **map);
+t_sprite_entry				*create_entries(void);
+void						free_sprite_map(t_sprite_map **map);
+void						print_sprite_map(t_sprite_map *map);
+void						init_sprite_map(t_vars *v, t_sprite_map **map);
+void						store_an_obj(char **l, int line, int fd, t_vars *v);
+void						eerr(const char *s, int i);
+int							get_sprite_id(t_sprite_map *map, const char *key);
+void						parsing_csv(char *filename, t_vars *v);
+void						eerr(const char *s, int i);
+bool						isnt_ended_by(const char *s, const char *ext);
+size_t						len(const char *s);
 char						*dupspace(char *s);
 char						*skip_whitespaces(t_vars *v, int fd, int *i);
 void						calculate_mapsize_checking(char *line, t_vars *v,
