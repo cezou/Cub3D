@@ -6,7 +6,7 @@
 /*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 08:16:53 by cviegas           #+#    #+#             */
-/*   Updated: 2024/10/25 08:20:17 by cviegas          ###   ########.fr       */
+/*   Updated: 2024/10/25 09:20:06 by cviegas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,41 @@ void	store_ceil_infos(char **l, int fd, t_vars *v)
 	v->infos.ceil_botright[1] = y;
 }
 
+bool	is_bad_coordinates(int x, int y, char **map, t_vars *v)
+{
+	return (y >= (int)v->infos.map_height || x >= (int)len(map[y])
+		|| (map[x][y] != '0' && map[x][y] != 'G'));
+}
+
 void	store_an_obj(char **l, int line, int fd, t_vars *v)
 {
 	static int	i = 0;
+	double		x;
+	double		y;
 
 	if (i >= 200)
 		return ;
 	if (tab_len(l) != 7)
 		(eerr("Bad object: Not 7 values", line), clean_exit(l, fd, v, 1));
 	v->g_objs[i].img_id = get_sprite_id(v->sprite_map, l[0]);
-	v->g_objs[i].x = ft_atoi(l[1]);
-	v->g_objs[i].y = ft_atoi(l[2]);
+	x = ft_atoi(l[1]);
+	y = ft_atoi(l[2]);
+	v->g_objs[i].x = x;
+	v->g_objs[i].y = y;
 	v->g_objs[i].uv = ft_atoi(l[3]);
 	v->g_objs[i].v = ft_atoi(l[4]);
 	v->g_objs[i].h = ft_atoi(l[5]);
 	v->g_objs[i].pickable = ft_atoi(l[6]);
 	i++;
 }
+
+// if (is_bad_coordinates(x, y, v->infos.map, v))
+// {
+// 	printf("X= %f\nY= %f\n", x, y);
+// 	printf("%c\n", v->infos.map[(int)x][(int)y]);
+// 	(eerr("Bad Coordinates: not on a free block.", line), clean_exit(l, fd,
+// 			v, 1));
+// }
 
 void	parse_extension(int fd, t_vars *v)
 {

@@ -6,7 +6,7 @@
 /*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/25 08:15:41 by cviegas          ###   ########.fr       */
+/*   Updated: 2024/10/25 08:42:32 by cviegas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1028,7 +1028,7 @@ typedef struct s_vars
 {
 	t_infos					infos;
 	t_obj					g_objs[200];
-	size_t					num_objs;
+	int						num_objs;
 	t_sprite_entry			entries[COMP_N];
 	t_sprite_map			*sprite_map;
 

@@ -6,7 +6,7 @@
 /*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/25 08:13:17 by cviegas          ###   ########.fr       */
+/*   Updated: 2024/10/25 08:41:30 by cviegas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,34 +58,6 @@
 // Cyberdemon 			20 (5.47%) 		4000
 // Arch-vile 			10 (3.13%) 		700
 // Barrel 				0 (0%) 			20
-
-#define NUM_OBJS 22
-
-/// @brief Array of objects
-///	{x, y, sprite ID, scale factor, vertical position, hashitbox, pickable}
-const t_obj	g_objs[NUM_OBJS] = {{14.0, 9.0, EPARMOR, 5.0, 128.0, 1, 1},
-								// Scaled down
-								{14.0, 9.5, EPARMOR1, 5.0, 128.0, 1, 1},
-								{14.0, 10.0, ESTIM, 5.0, 128.0, 1, 1},
-								{14.0, 10.5, EMEDI, 5.0, 128.0, 1, 1},
-								{14.0, 11.0, EPCLIP, 5.0, 128.0, 1, 1},
-								{14.0, 11.5, EPSHELL, 5.0, 128.0, 1, 1},
-								{14.0, 12.0, EPROCK, 5.0, 128.0, 1, 1},
-								{14.0, 12.5, EPCELL, 5.0, 128.0, 1, 1},
-								{14.0, 13.0, EBKEY, 5.0, 128.0, 1, 1},
-								{14.0, 13.5, EYKEY, 5.0, 128.0, 1, 1},
-								{14.0, 14.0, ERKEY, 5.0, 128.0, 1, 1},
-								{14.0, 14.5, EBSKEY, 5.0, 128.0, 1, 1},
-								{14.0, 15.0, EYSKEY, 5.0, 128.0, 1, 1},
-								{14.0, 15.5, ERSKEY, 5.0, 128.0, 1, 1},
-								{14.0, 16.0, EPBFG, 2.0, 64.0, 1, 1},
-								{14.0, 16.5, EPSHOTGUN, 2.0, 64.0, 1, 1},
-								{14.0, 17.0, EPGATLIN, 2.0, 64.0, 1, 1},
-								{14.0, 17.5, EPROCKETL, 2.0, 64.0, 1, 1},
-								{14.0, 18.0, EPPLASMA, 2.0, 64.0, 1, 1},
-								{14.0, 18.5, EPCHAINSAW, 2.0, 64.0, 1, 1},
-								{14.0, 19.0, EPSUPERSHOTGUN, 2.0, 64.0, 1, 1},
-								{15.0, 19.0, ESTIM, 5.0, 128.0, 1, 1}};
 
 /// @brief Init Weapon stats
 /// @param v Vars
@@ -224,7 +196,7 @@ void	init_objects(t_vars *v, t_actor *a)
 	int	i;
 
 	i = -1;
-	while (++i < NUM_OBJS)
+	while (++i < v->num_objs)
 	{
 		a = (t_actor *)ft_calloc(1, sizeof(t_actor));
 		if (!a)
