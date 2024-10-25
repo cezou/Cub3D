@@ -1,6 +1,6 @@
 Ceil coordinates,,,,,,
 TopLeft x,TopLeft y,BottomRight x,BottomRight y,,,
-0,0,10,10,,,
+10,0,16,20,,,
 ,,,,,,
 Objects,,,,,,
 Sprite ID,x,y,Scale factor,Vertical Position,Has hitbox?,Pickable?
