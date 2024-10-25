@@ -39,3 +39,10 @@
     ...
     fun:_XrmInitParseInfo
 }
+
+{
+    minilibx shit
+    Memcheck:Param
+    writev(vector[0])
+    fun:writev
+}

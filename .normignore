@@ -9,6 +9,9 @@ includes/printf/libftprintf.a
 includes/printf/libft/libft.a
 includes/mlx_linux/
 includes/miniaudio/
+includes/uthash.h
+ressources/
+ressources/*
 cub3D_bonus
 cub3D
 DOOM

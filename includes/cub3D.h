@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/25 08:42:32 by cviegas          ###   ########.fr       */
+/*   Updated: 2024/10/25 17:20:30 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@
 // Sounds
 
 # ifndef MANDATORY
-#  define ACTIVATE_SOUND 1
+#  define ACTIVATE_SOUND 0
 #  define MANDATORY 0
 #  define VALID " \t\n\v\f\r10NSWEDG"
 # else
@@ -636,9 +636,11 @@ typedef struct s_astar
 	double					fnew;
 	bool					**closedlst;
 	t_map					*curr;
+	t_map					*dir;
 	t_map					*target;
 	t_cell					**celld;
 	t_pathfinding			*open;
+	t_pathfinding			*trace;
 	t_pathfinding			*del;
 	t_pathfinding			*next;
 }							t_astar;
@@ -1097,8 +1099,9 @@ void						save_screen_to_buffer(t_imga dest, t_imga src,
 t_actor						*new_actor(t_vars *v);
 void						add_actor(t_vars *v, t_actor **actors,
 								t_actor **node);
-void						add_cell(t_astar *astar, t_pathfinding **node);
-t_pathfinding				*new_cell(double f, int i, int j);
+void						add_cell(t_astar *astar, t_pathfinding **node,
+								t_pathfinding **lst);
+t_pathfinding				*new_cell(double f, int i, int j, t_map *dir);
 int							printactors(t_vars *v);
 void						sort_descending(t_actor **head, int bound,
 								bool swapped, t_actor *last_sorted);
@@ -1129,6 +1132,8 @@ int							freeall(char **tab);
 int							cleardata(t_vars *vars, int b);
 int							map_clear(t_map *lst);
 int							actors_clear(t_actor *lst);
+int							booltab_clear(bool **tab);
+int							cells_clear(t_cell **tab);
 void						stop_threads_pool(t_vars *v);
 
 // Init

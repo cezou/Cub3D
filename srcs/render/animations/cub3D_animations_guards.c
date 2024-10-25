@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/24 15:04:12 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/25 20:12:52 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,11 @@ void	update_guards(t_vars *v, t_actor **actor)
 	{
 		tmp->astar.target = v->player.player;
 		tmp->astar.curr = tmp->map_pos;
-		printf("guard x: %d, y: %d\n", tmp->astar.curr->x, tmp->astar.curr->y);
-		printf("target x: %d, y: %d\n", tmp->astar.target->x, tmp->astar.target->y);
 		astar(v, &tmp->astar);
 		exit((prterr(v, ERRMALL, 1, 1), 1));
-		// tmp->x += tmp->ms * (v->player.x + 0.5 - tmp->x);
-		// tmp->y += tmp->ms * (v->player.y + 0.5 - tmp->y);
 	}
 }
+// tmp->x += tmp->ms * (v->player.x + 0.5 - tmp->x);
+// tmp->y += tmp->ms * (v->player.y + 0.5 - tmp->y);
+// printf("guard x: %d, y: %d\n", tmp->astar.curr->x, tmp->astar.curr->y);
+// printf("target x: %d, y: %d\n", tmp->astar.target->x, tmp->astar.target->y);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/25 08:41:30 by cviegas          ###   ########.fr       */
+/*   Updated: 2024/10/25 13:00:19 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,10 +244,12 @@ void	init_guard(t_vars *v, t_map *tmp, t_actor *a)
 			a->active = 1;
 			a->next = a;
 			a->prev = a;
-			a->astar.celld = (t_cell **)ft_calloc(v->mapv.maph,
+			a->astar = (t_astar){0};
+			a->astar.celld = (t_cell **)ft_calloc(v->mapv.maph + 1,
 					sizeof(t_cell *));
 			if (!a->astar.celld)
 				exit((prterr(v, ERRMALL, 1, 1), 1));
+			a->astar.celld[v->mapv.maph] = NULL;
 			while (++i < v->mapv.maph)
 			{
 				a->astar.celld[i] = (t_cell *)ft_calloc(v->mapv.mapw,
@@ -256,10 +258,11 @@ void	init_guard(t_vars *v, t_map *tmp, t_actor *a)
 					exit((prterr(v, ERRMALL, 1, 1), 1));
 			}
 			i = -1;
-			a->astar.closedlst = (bool **)ft_calloc(v->mapv.maph,
+			a->astar.closedlst = (bool **)ft_calloc(v->mapv.maph + 1,
 					sizeof(bool *));
 			if (!a->astar.closedlst)
 				exit((prterr(v, ERRMALL, 1, 1), 1));
+			a->astar.closedlst[v->mapv.maph] = NULL;
 			while (++i < v->mapv.maph)
 			{
 				a->astar.closedlst[i] = (bool *)ft_calloc(v->mapv.mapw,

@@ -61,20 +61,20 @@ void	add_actor(t_vars *v, t_actor **actors, t_actor **node)
 /// @param v 
 /// @param actors 
 /// @param node 
-void	add_cell(t_astar *astar, t_pathfinding **node)
+void	add_cell(t_astar *astar, t_pathfinding **node, t_pathfinding **lst)
 {
 	astar->nb_astar++;
-	if (!astar->open)
-		astar->open = (*node);
+	if (!(*lst))
+		(*lst) = (*node);
 	else
 	{
-		(*node)->next = astar->open;
-		(*node)->prev = astar->open->prev;
-		if (astar->open->next == astar->open)
-			astar->open->next = (*node);
+		(*node)->next = (*lst);
+		(*node)->prev = (*lst)->prev;
+		if ((*lst)->next == (*lst))
+			(*lst)->next = (*node);
 		else
-			astar->open->prev->next = (*node);
-		astar->open->prev = (*node);
+			(*lst)->prev->next = (*node);
+		(*lst)->prev = (*node);
 	}
 }
 
@@ -83,7 +83,7 @@ void	add_cell(t_astar *astar, t_pathfinding **node)
 /// @param a Pointer of the current node
 /// @param p Node data
 /// @return The new node to add to the linked list
-t_pathfinding	*new_cell(double f, int i, int j)
+t_pathfinding	*new_cell(double f, int i, int j, t_map *dir)
 {
 	t_pathfinding	*node;
 
@@ -93,11 +93,11 @@ t_pathfinding	*new_cell(double f, int i, int j)
 	node->f = f;
 	node->i = i;
 	node->j = j;
+	node->curr = dir;
 	node->next = node;
 	node->prev = node;
 	return (node);
 }
-
 
 /// @brief Create a new node in the linked list
 /// @param v Vars
@@ -129,6 +129,12 @@ int	actors_clear(t_actor *lst)
 	while (lst)
 	{
 		temp = (lst)->next;
+		if (lst->astar.celld)
+			cells_clear(lst->astar.celld);
+		if (lst->astar.closedlst)
+			booltab_clear(lst->astar.closedlst);
+		if (lst->astar.open)
+			free(lst->astar.open);
 		free(lst);
 		lst = temp;
 		if (temp == head)

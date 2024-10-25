@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+         #
+#    By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 11:28:17 by pmagnero          #+#    #+#              #
-#    Updated: 2024/10/25 08:21:09 by cviegas          ###   ########.fr        #
+#    Updated: 2024/10/25 17:04:34 by pmagnero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,7 @@ endif
 
 CC	=	cc
 
-VALGRIND_F	=	--leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes --suppressions=ignore.txt#--show-leak-kinds=all --log-fd=1 --trace-children=yes
+VALGRIND_F	=	--leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes --track-origins=yes --suppressions=ignore.txt# --gen-suppressions=all --show-leak-kinds=all --log-fd=1 --trace-children=yes
 
 NORME	=	srcs/**/*.c includes/*.h includes/printf/*.c includes/printf/*.h includes/printf/**/*.c includes/printf/**/*.h
 
@@ -256,7 +256,7 @@ valgrind:
 ifeq ($(b), 0)
 	@valgrind $(VALGRIND_F) --log-file=valgrind.log ./$(NAME) resources/maps/test.cub 800 600
 else
-	@valgrind $(VALGRIND_F) --log-file=valgrind_bonus.log ./$(NAME_BONUS) resources/maps/subject.cub 800 600
+	valgrind $(VALGRIND_F) --log-file=valgrind_bonus.log ./$(NAME_BONUS) resources/maps/subject.cub 800 600
 endif
 
 clean:

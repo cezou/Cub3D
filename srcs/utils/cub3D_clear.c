@@ -61,6 +61,34 @@ int	map_clear(t_map *lst)
 	return (1);
 }
 
+int	cells_clear(t_cell **tab)
+{
+	int	i;
+
+	i = -1;
+	if (!tab)
+		return (0);
+	while (tab[++i])
+		free(tab[i]);
+	free(tab);
+	tab = NULL;
+	return (0);
+}
+
+int	booltab_clear(bool **tab)
+{
+	int	i;
+
+	i = -1;
+	if (!tab)
+		return (0);
+	while (tab[++i])
+		free(tab[i]);
+	free(tab);
+	tab = NULL;
+	return (0);
+}
+
 /// @brief Clear all the images from the program
 /// @param v Vars
 /// @return -1 if an error occured or 0
