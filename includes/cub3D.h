@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/25 17:20:30 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/25 23:20:05 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1209,6 +1209,13 @@ void						update_texture_pixels(t_vars *v, t_point p, int *t);
 // Pathfinding
 
 bool						astar(t_vars *v, t_astar *astar);
+bool						isdestination(t_map *src, t_map *dst);
+bool						check_node_exist(t_astar *astar, int i, int j);
+void						tracepath(t_vars *v, t_astar *astar);
+void						clear_lst(t_astar *astar);
+t_pathfinding				*del_node(t_astar *astar, int *k,
+								t_pathfinding **head, t_pathfinding **node);
+void						erase_head(t_astar *astar);
 
 // Threading
 

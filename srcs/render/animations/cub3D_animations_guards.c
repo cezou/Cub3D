@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/25 20:12:52 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/25 22:17:29 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /// @brief Update sprite animations attack range
 /// @param v Vars
 /// @param a Sprite to update
-inline void	update_sprite_anim_attackr(t_vars *v, t_actor *a)
+void	update_sprite_anim_attackr(t_vars *v, t_actor *a)
 {
 	int	d;
 
@@ -38,7 +38,7 @@ inline void	update_sprite_anim_attackr(t_vars *v, t_actor *a)
 /// @brief Update sprite animation pain
 /// @param v Vars
 /// @param a Sprite to update
-inline void	update_sprite_anim_pain(t_vars *v, t_actor *a)
+void	update_sprite_anim_pain(t_vars *v, t_actor *a)
 {
 	a->animoffy = 0;
 	if (timestamp_in_ms(v) - a->timestate > 500)
@@ -103,15 +103,15 @@ void	update_guards(t_vars *v, t_actor **actor)
 		update_sprite_anim_attackr(v, tmp);
 	if (tmp->state == ECHASE)
 		update_sprite_anim_chase(v, tmp);
-	if (tmp->state == ECHASE)
-	{
-		tmp->astar.target = v->player.player;
-		tmp->astar.curr = tmp->map_pos;
-		astar(v, &tmp->astar);
-		exit((prterr(v, ERRMALL, 1, 1), 1));
-	}
+	// if (tmp->state == ECHASE)
+	// {
+	tmp->astar.target = v->player.player;
+	tmp->astar.curr = tmp->map_pos;
+	printf("guard x: %d, y: %d\n", tmp->astar.curr->x, tmp->astar.curr->y);
+	printf("target x: %d, y: %d\n", tmp->astar.target->x, tmp->astar.target->y);
+	astar(v, &tmp->astar);
+	exit((prterr(v, ERRMALL, 1, 1), 1));
+	// }
 }
 // tmp->x += tmp->ms * (v->player.x + 0.5 - tmp->x);
 // tmp->y += tmp->ms * (v->player.y + 0.5 - tmp->y);
-// printf("guard x: %d, y: %d\n", tmp->astar.curr->x, tmp->astar.curr->y);
-// printf("target x: %d, y: %d\n", tmp->astar.target->x, tmp->astar.target->y);
