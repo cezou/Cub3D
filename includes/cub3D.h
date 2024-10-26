@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/26 15:55:18 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/26 18:15:50 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -658,6 +658,8 @@ typedef struct s_actor
 	int						xdelta;
 	int						animoffx;
 	int						animoffy;
+	double					angletoplay;
+	double					angle;
 	double					targetdist;
 	double					norm;
 	double					ms;

@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 09:51:53 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/22 15:19:06 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/26 18:01:06 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	fire_projectile(t_vars *v)
 void	apply_damage(t_vars *v, t_actor *g)
 {
 	g->hp -= v->player.currweapon.dmg / (p_random(v) % 5 + 1);
-	g->animoffx = 0;
+	// g->animoffx = 0;
 	g->img_i = EGUARDDEATH;
 	if (p_random(v) >= g->painchance)
 	{

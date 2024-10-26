@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/26 15:58:21 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/26 19:49:54 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,37 @@ inline void	update_sprite_anim_chase(t_vars *v, t_actor *a)
 // 	&& v->sprites[i].animoff >= v->img[v->sprites[i].img_i].width)
 // 	v->sprites[i].animoff = 0;
 //tmp->ms * v->game.frametime
+enum	e_direction
+{
+	down,
+	left_down,
+	left,
+	left_up,
+	up,
+	right_up,
+	right,
+	right_down
+};
+
+int	get_direction(double angle)
+{
+	if (angle < -7 * M_PI / 8 || angle >= 7 * M_PI / 8)// -2.7475
+		return (up);
+	else if (angle < -5 * M_PI / 8)// -1.96
+		return (left_up);
+	else if (angle < -3 * M_PI / 8)// -1.1775
+		return (left);
+	else if (angle < -M_PI / 8)// -0.3925
+		return (left_down);
+	else if (angle < M_PI / 8)// 0.3925
+		return (down);
+	else if (angle < 3 * M_PI / 8)// 1.1775
+		return (right_down);
+	else if (angle < 5 * M_PI / 8)// 1.96
+		return (right);
+	else
+		return (right_up);
+}
 
 /// @brief Update guards movement/animations
 /// @param v Vars
@@ -90,9 +121,10 @@ void	update_guards(t_vars *v, t_actor **actor)
 	int (i) = -1;
 	t_actor (*tmp) = *actor;
 	t_pathfinding (*path) = NULL;
+	double (relative_angle) = 0.0;
 	if (!tmp->isguard)
 		return ;
-	if (tmp->state != EIDLE && !tmp->stop)
+	if (tmp->state != EIDLE && !tmp->stop && tmp->state != ECHASE)
 		tmp->animoffy += v->img[tmp->img_i].animy;
 	tmp->time = timestamp_in_ms(v);
 	if (tmp->state == EDEAD)
@@ -107,29 +139,45 @@ void	update_guards(t_vars *v, t_actor **actor)
 	{
 		tmp->astar.target = v->player.player;
 		tmp->astar.curr = tmp->map_pos;
-		printf("guard x: %d, y: %d\n", tmp->astar.curr->x, tmp->astar.curr->y);
+		ft_printf(1, "guard x: %d, y: %d\n", tmp->astar.curr->x,
+			tmp->astar.curr->y);
 		printf("guard tmpx: %f, tmpy: %f\n", tmp->x, tmp->y);
-		printf("target x: %d, y: %d\n", tmp->astar.target->x, tmp->astar.target->y);
+		ft_printf(1, "target x: %d, y: %d\n", tmp->astar.target->x, tmp->astar.target->y);
 		if (!tmp->astar.trace && !astar(v, &tmp->astar))
 			return (tmp->state = EIDLE, (void)v);
+		// path = tmp->astar.trace->prev;
+		// while (++i < tmp->astar.nb_astar && tmp->astar.trace)
+		// {
+		// 	ft_printf(1, "-> (%d,%d)\n", path->i, path->j);
+		// 	path = path->prev;
+		// }
 		path = tmp->astar.trace->prev;
-		while (++i < tmp->astar.nb_astar && tmp->astar.trace)
-		{
-			ft_printf(1, "-> (%d,%d)\n", path->i, path->j);
-			path = path->prev;
-		}
-		path = tmp->astar.trace->prev;
+		tmp->angle = atan2((double)(path->j) - tmp->y,
+				(double)(path->i) - tmp->x);
+		printf("kek: %f\n", tmp->angle);
 		tmp->x += tmp->ms * (path->j + 0.5 - tmp->x);
 		tmp->y += tmp->ms * (path->i + 0.5 - tmp->y);
 		if (path && tmp->astar.nb_astar > 0
 			&& (int)(tmp->x) == path->j && (int)(tmp->y) == path->i)
 		{
-			ft_printf(1, "Erasing head %d:%d, x:%d, y: %d!!\n", path->j, path->i, path->curr->x, path->curr->y);
+			// ft_printf(1, "Erasing head %d:%d, x:%d, y: %d!!\n", path->j, path->i, path->curr->x, path->curr->y);
 			tmp->map_pos = path->curr;
 			del_node(&tmp->astar, &i, &tmp->astar.trace, &path);
 			if (!tmp->astar.nb_astar)
+			{
 				tmp->astar.trace = NULL;
+				ft_printf(1, "OIIIII\n");
+			}
 		}
-		// exit((prterr(v, ERRMALL, 1, 1), 1));
 	}
+	tmp->angletoplay = atan2(v->player.y - tmp->y, v->player.x - tmp->x);
+	relative_angle = tmp->angletoplay - tmp->angle;
+	// if (relative_angle > M_PI)
+	// 	relative_angle -= 2 * M_PI;
+	// if (relative_angle < -M_PI)
+	// 	relative_angle += 2 * M_PI;
+	// if (relative_angle < 0)
+	// 	relative_angle += 2 * M_PI;
+	tmp->animoffx = get_direction(relative_angle) * v->img[tmp->img_i].animx;
+	printf("angle to player: %f, angle: %f, relative: %f, dir: %d\n", tmp->angletoplay, tmp->angle, relative_angle, tmp->animoffx);
 }

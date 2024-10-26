@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 18:16:14 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/26 16:04:40 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/26 17:31:25 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,7 @@ bool	gen_succ(t_vars *v, t_astar *astar, t_pair p, t_map *dir)
 	{
 		astar->celld[p.i][p.j].parent_i = astar->i;
 		astar->celld[p.i][p.j].parent_j = astar->j;
-		astar->celld[p.i][p.j].map = dir;
-		return (astar->finddst = true, true);
+		return (astar->celld[p.i][p.j].map = dir, astar->finddst = true, true);
 	}
 	else if (astar->closedlst[p.i][p.j] == false
 		&& dir->val != '1' && dir->val != 'D')
@@ -115,8 +114,6 @@ bool	generate_successors(t_vars *v, t_astar *astar)
 
 bool	init_astar(t_vars *v, t_astar *astar)
 {
-	astar->nb_astar = 0;
-	astar->finddst = false;
 	if (isdestination(astar->curr, astar->target))
 		return (ft_printf(1, "We are already at the destination\n"), false);
 	astar->i = -1;
@@ -141,8 +138,7 @@ bool	init_astar(t_vars *v, t_astar *astar)
 	astar->celld[astar->i][astar->j].h = 0.0;
 	astar->celld[astar->i][astar->j].parent_i = astar->i;
 	astar->celld[astar->i][astar->j].parent_j = astar->j;
-	astar->celld[astar->i][astar->j].map = astar->curr;
-	return (true);
+	return (astar->celld[astar->i][astar->j].map = astar->curr, true);
 }
 
 /// @brief Pathfinding algorithm
@@ -152,6 +148,8 @@ bool	astar(t_vars *v, t_astar *astar)
 {
 	t_pathfinding	*tmp;
 
+	astar->nb_astar = 0;
+	astar->finddst = false;
 	if (!init_astar(v, astar))
 		return (false);
 	tmp = new_cell(0.0, astar->i, astar->j, astar->curr);
@@ -162,10 +160,7 @@ bool	astar(t_vars *v, t_astar *astar)
 	{
 		astar->i = astar->open->i;
 		astar->j = astar->open->j;
-		ft_printf(1, "Running astar %d:%d!!\n", astar->i, astar->j);
 		astar->curr = astar->open->curr;
-		ft_printf(1 ,"Running astar curr %d:%d!!\n", astar->curr->x,
-			astar->curr->y);
 		astar->next = astar->open->next;
 		erase_head(astar, &astar->open);
 		astar->closedlst[astar->i][astar->j] = true;
