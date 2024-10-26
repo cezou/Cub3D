@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/25 22:17:29 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/26 15:58:21 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ inline void	update_sprite_anim_chase(t_vars *v, t_actor *a)
 ///	@param actor Actor guard
 void	update_guards(t_vars *v, t_actor **actor)
 {
-	t_actor	*tmp;
-
-	tmp = *actor;
+	int (i) = -1;
+	t_actor (*tmp) = *actor;
+	t_pathfinding (*path) = NULL;
 	if (!tmp->isguard)
 		return ;
 	if (tmp->state != EIDLE && !tmp->stop)
@@ -103,15 +103,33 @@ void	update_guards(t_vars *v, t_actor **actor)
 		update_sprite_anim_attackr(v, tmp);
 	if (tmp->state == ECHASE)
 		update_sprite_anim_chase(v, tmp);
-	// if (tmp->state == ECHASE)
-	// {
-	tmp->astar.target = v->player.player;
-	tmp->astar.curr = tmp->map_pos;
-	printf("guard x: %d, y: %d\n", tmp->astar.curr->x, tmp->astar.curr->y);
-	printf("target x: %d, y: %d\n", tmp->astar.target->x, tmp->astar.target->y);
-	astar(v, &tmp->astar);
-	exit((prterr(v, ERRMALL, 1, 1), 1));
-	// }
+	if (tmp->state == ECHASE)
+	{
+		tmp->astar.target = v->player.player;
+		tmp->astar.curr = tmp->map_pos;
+		printf("guard x: %d, y: %d\n", tmp->astar.curr->x, tmp->astar.curr->y);
+		printf("guard tmpx: %f, tmpy: %f\n", tmp->x, tmp->y);
+		printf("target x: %d, y: %d\n", tmp->astar.target->x, tmp->astar.target->y);
+		if (!tmp->astar.trace && !astar(v, &tmp->astar))
+			return (tmp->state = EIDLE, (void)v);
+		path = tmp->astar.trace->prev;
+		while (++i < tmp->astar.nb_astar && tmp->astar.trace)
+		{
+			ft_printf(1, "-> (%d,%d)\n", path->i, path->j);
+			path = path->prev;
+		}
+		path = tmp->astar.trace->prev;
+		tmp->x += tmp->ms * (path->j + 0.5 - tmp->x);
+		tmp->y += tmp->ms * (path->i + 0.5 - tmp->y);
+		if (path && tmp->astar.nb_astar > 0
+			&& (int)(tmp->x) == path->j && (int)(tmp->y) == path->i)
+		{
+			ft_printf(1, "Erasing head %d:%d, x:%d, y: %d!!\n", path->j, path->i, path->curr->x, path->curr->y);
+			tmp->map_pos = path->curr;
+			del_node(&tmp->astar, &i, &tmp->astar.trace, &path);
+			if (!tmp->astar.nb_astar)
+				tmp->astar.trace = NULL;
+		}
+		// exit((prterr(v, ERRMALL, 1, 1), 1));
+	}
 }
-// tmp->x += tmp->ms * (v->player.x + 0.5 - tmp->x);
-// tmp->y += tmp->ms * (v->player.y + 0.5 - tmp->y);

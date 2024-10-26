@@ -90,14 +90,14 @@ int	booltab_clear(bool **tab)
 
 /// @brief Clear a linked list 
 /// @param astar Structure holding datas of the pathfinding algorithm
-void	clear_lst(t_astar *astar)
+void	clear_lst(t_astar *astar, t_pathfinding **lst)
 {
 	int				i;
 	t_pathfinding	*tmp;
 
 	i = -1;
-	tmp = astar->open;
+	tmp = *lst;
 	while (++i < astar->nb_astar && tmp)
-		tmp = del_node(astar, &i, &astar->open, &tmp);
-	astar->open = NULL;
+		tmp = del_node(astar, &i, lst, &tmp);
+	*lst = NULL;
 }

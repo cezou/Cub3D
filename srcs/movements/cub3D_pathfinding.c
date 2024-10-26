@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 18:16:14 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/25 23:21:22 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/26 16:04:40 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,8 @@ double	calculatehvalue(t_map *s, t_map *d)
  * @brief Generating one successor of the cell
  * @param v 		Vars
  * @param astar 	Structure holding datas
- * @param tmp 		Current node of the open linked list
- * @param i 		Row index
- * @param j 		Column index
+ * @param p 		Pair value
+ * @param dir 		Map square to test
  * 
  * @code
  *   N.W  N  N.E
@@ -50,38 +49,31 @@ double	calculatehvalue(t_map *s, t_map *d)
  * S.W--> South-West  (i+1, j-1)
  * @endcode
 */
-bool	gen_succ(t_vars *v, t_astar *astar, int i, int j, t_map *dir)
+bool	gen_succ(t_vars *v, t_astar *astar, t_pair p, t_map *dir)
 {
-	t_pathfinding	*tmp;
-
 	if (isdestination(dir, astar->target))
 	{
-		astar->celld[i][j].parent_i = astar->i;
-		astar->celld[i][j].parent_j = astar->j;
-		ft_printf(1, "The destination has been reached\n");
-		return (tracepath(v, astar), astar->finddst = true, true);
+		astar->celld[p.i][p.j].parent_i = astar->i;
+		astar->celld[p.i][p.j].parent_j = astar->j;
+		astar->celld[p.i][p.j].map = dir;
+		return (astar->finddst = true, true);
 	}
-	else if (astar->closedlst[i][j] == false
+	else if (astar->closedlst[p.i][p.j] == false
 		&& dir->val != '1' && dir->val != 'D')
 	{
 		astar->gnew = astar->celld[astar->i][astar->j].g + 1.0;
 		astar->hnew = calculatehvalue(dir, astar->target);
 		astar->fnew = astar->gnew + astar->hnew;
-		if (astar->celld[i][j].f == __FLT_MAX__
-			|| astar->celld[i][j].f > astar->fnew)
+		if (astar->celld[p.i][p.j].f == __FLT_MAX__
+			|| astar->celld[p.i][p.j].f > astar->fnew)
 		{
-			if (!check_node_exist(astar, i, j))
-			{
-				tmp = new_cell(astar->fnew, i, j, dir);
-				if (!tmp)
-					exit((prterr(v, ERRMALL, 1, 1), 1));
-				add_cell(astar, &tmp, &astar->open);
-			}
-			astar->celld[i][j].f = astar->fnew;
-			astar->celld[i][j].g = astar->gnew;
-			astar->celld[i][j].h = astar->hnew;
-			astar->celld[i][j].parent_i = astar->i;
-			astar->celld[i][j].parent_j = astar->j;
+			check_and_insert_node(v, astar, p, dir);
+			astar->celld[p.i][p.j].f = astar->fnew;
+			astar->celld[p.i][p.j].g = astar->gnew;
+			astar->celld[p.i][p.j].h = astar->hnew;
+			astar->celld[p.i][p.j].parent_i = astar->i;
+			astar->celld[p.i][p.j].parent_j = astar->j;
+			astar->celld[p.i][p.j].map = dir;
 		}
 	}
 	return (false);
@@ -94,27 +86,36 @@ bool	gen_succ(t_vars *v, t_astar *astar, int i, int j, t_map *dir)
 /// @return 
 bool	generate_successors(t_vars *v, t_astar *astar)
 {
-	if (gen_succ(v, astar, astar->i - 1, astar->j, astar->curr->up))
+	if (gen_succ(v, astar, (t_pair){astar->i - 1, astar->j},
+		astar->curr->up))
 		return (true);
-	if (gen_succ(v, astar, astar->i + 1, astar->j, astar->curr->down))
+	if (gen_succ(v, astar, (t_pair){astar->i + 1, astar->j},
+		astar->curr->down))
 		return (true);
-	if (gen_succ(v, astar, astar->i, astar->j + 1, astar->curr->right))
+	if (gen_succ(v, astar, (t_pair){astar->i, astar->j + 1},
+		astar->curr->right))
 		return (true);
-	if (gen_succ(v, astar, astar->i, astar->j - 1, astar->curr->left))
+	if (gen_succ(v, astar, (t_pair){astar->i, astar->j - 1},
+		astar->curr->left))
 		return (true);
-	if (gen_succ(v, astar, astar->i - 1, astar->j + 1, astar->curr->up->right))
+	if (gen_succ(v, astar, (t_pair){astar->i - 1, astar->j + 1},
+		astar->curr->up->right))
 		return (true);
-	if (gen_succ(v, astar, astar->i - 1, astar->j - 1, astar->curr->up->left))
+	if (gen_succ(v, astar, (t_pair){astar->i - 1, astar->j - 1},
+		astar->curr->up->left))
 		return (true);
-	if (gen_succ(v, astar, astar->i + 1, astar->j + 1, astar->curr->down->right))
+	if (gen_succ(v, astar, (t_pair){astar->i + 1, astar->j + 1},
+		astar->curr->down->right))
 		return (true);
-	if (gen_succ(v, astar, astar->i + 1, astar->j - 1, astar->curr->down->left))
+	if (gen_succ(v, astar, (t_pair){astar->i + 1, astar->j - 1},
+		astar->curr->down->left))
 		return (true);
 	return (false);
 }
 
 bool	init_astar(t_vars *v, t_astar *astar)
 {
+	astar->nb_astar = 0;
 	astar->finddst = false;
 	if (isdestination(astar->curr, astar->target))
 		return (ft_printf(1, "We are already at the destination\n"), false);
@@ -124,11 +125,13 @@ bool	init_astar(t_vars *v, t_astar *astar)
 		astar->j = -1;
 		while (++astar->j < v->mapv.mapw)
 		{
+			astar->closedlst[astar->i][astar->j] = false;
 			astar->celld[astar->i][astar->j].f = __FLT_MAX__;
 			astar->celld[astar->i][astar->j].g = __FLT_MAX__;
 			astar->celld[astar->i][astar->j].h = __FLT_MAX__;
 			astar->celld[astar->i][astar->j].parent_i = -1;
 			astar->celld[astar->i][astar->j].parent_j = -1;
+			astar->celld[astar->i][astar->j].map = NULL;
 		}
 	}
 	astar->i = astar->curr->y;
@@ -138,6 +141,7 @@ bool	init_astar(t_vars *v, t_astar *astar)
 	astar->celld[astar->i][astar->j].h = 0.0;
 	astar->celld[astar->i][astar->j].parent_i = astar->i;
 	astar->celld[astar->i][astar->j].parent_j = astar->j;
+	astar->celld[astar->i][astar->j].map = astar->curr;
 	return (true);
 }
 
@@ -158,15 +162,18 @@ bool	astar(t_vars *v, t_astar *astar)
 	{
 		astar->i = astar->open->i;
 		astar->j = astar->open->j;
+		ft_printf(1, "Running astar %d:%d!!\n", astar->i, astar->j);
 		astar->curr = astar->open->curr;
+		ft_printf(1 ,"Running astar curr %d:%d!!\n", astar->curr->x,
+			astar->curr->y);
 		astar->next = astar->open->next;
-		erase_head(astar);
+		erase_head(astar, &astar->open);
 		astar->closedlst[astar->i][astar->j] = true;
 		if (generate_successors(v, astar))
-			return (true);
+			return (ft_printf(1, "The destination has been reached\n"),
+				clear_lst(astar, &astar->open), tracepath(v, astar), true);
 	}
 	if (!astar->finddst)
 		ft_printf(1, "Failed to find the Destination Cell\n");
-	clear_lst(astar);
-	return (false);
+	return (clear_lst(astar, &astar->open), false);
 }

@@ -92,7 +92,9 @@ int	actors_clear(t_actor *lst)
 		if (lst->astar.closedlst)
 			booltab_clear(lst->astar.closedlst);
 		if (lst->astar.open)
-			free(lst->astar.open);
+			clear_lst(&lst->astar, &lst->astar.open);
+		if (lst->astar.trace)
+			clear_lst(&lst->astar, &lst->astar.trace);
 		free(lst);
 		lst = temp;
 		if (temp == head)

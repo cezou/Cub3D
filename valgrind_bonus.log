@@ -1,26 +1,23 @@
-==19094== Memcheck, a memory error detector
-==19094== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==19094== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==19094== Command: ./cub3D_bonus resources/maps/subject.cub 800 600
-==19094== Parent PID: 19090
-==19094== 
-==19094== 
-==19094== FILE DESCRIPTORS: 6 open (3 std) at exit.
-==19094== Open file descriptor 20: /home/magnus/.vscode-server/data/logs/20241025T211356/remoteagent.log
-==19094==    <inherited from parent>
-==19094== 
-==19094== Open file descriptor 19: /home/magnus/.vscode-server/data/logs/20241025T211356/ptyhost.log
-==19094==    <inherited from parent>
-==19094== 
-==19094== Open file descriptor 3: /home/magnus/42/cursus/Cub3D/valgrind_bonus.log
-==19094==    <inherited from parent>
-==19094== 
-==19094== 
-==19094== HEAP SUMMARY:
-==19094==     in use at exit: 0 bytes in 0 blocks
-==19094==   total heap usage: 127,250 allocs, 127,250 frees, 49,585,855 bytes allocated
-==19094== 
-==19094== All heap blocks were freed -- no leaks are possible
-==19094== 
-==19094== For lists of detected and suppressed errors, rerun with: -s
-==19094== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
+==1371751== Memcheck, a memory error detector
+==1371751== Copyright (C) 2002-2024, and GNU GPL'd, by Julian Seward et al.
+==1371751== Using Valgrind-3.23.0 and LibVEX; rerun with -h for copyright info
+==1371751== Command: ./cub3D_bonus resources/maps/subject.cub 800 600
+==1371751== Parent PID: 1371747
+==1371751== 
+==1371751== 
+==1371751== FILE DESCRIPTORS: 5 open (3 std) at exit.
+==1371751== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==1371751==    <inherited from parent>
+==1371751== 
+==1371751== Open file descriptor 43: /home/pmagnero/.config/Code/logs/20241026T125744/ptyhost.log
+==1371751==    <inherited from parent>
+==1371751== 
+==1371751== 
+==1371751== HEAP SUMMARY:
+==1371751==     in use at exit: 0 bytes in 0 blocks
+==1371751==   total heap usage: 108,627 allocs, 108,627 frees, 9,184,934 bytes allocated
+==1371751== 
+==1371751== All heap blocks were freed -- no leaks are possible
+==1371751== 
+==1371751== For lists of detected and suppressed errors, rerun with: -s
+==1371751== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 1 from 1)

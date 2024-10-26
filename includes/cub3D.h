@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/25 23:20:05 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/26 15:55:18 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,8 @@
 # define ERRDUP "Duplicate player/exit in the map\n"
 # define ERROR "Error"
 # define ERRFF "Exit unreachable / All Collectibles can\'t be collected\n"
-# define ECEIL "Ceil: Need 4 coordinates (topleft[x,y] and botright[x,y] drawing a rectangle)"
+# define ECEIL "Ceil: Need 4 coordinates (topleft[x,y] and botright[x,y]\
+ drawing a rectangle)"
 
 // Resolutions
 
@@ -162,26 +163,21 @@
 #  define WSL 0
 // #  define FONT1 "-sony-fixed-medium-r-normal--17-120-100-100-c-0-iso8859-1"
 // #  define FONT2 "-sony-fixed-medium-r-normal--24-230-75-75-c-0-iso8859-1"
-#  define FONT1 \
-	"-misc-fixed-medium-r-semicondensed\
+#  define FONT1 "-misc-fixed-medium-r-semicondensed\
 --13-120-75-75-c-60-iso8859-1"
-#  define FONT2 \
-	"-misc-fixed-medium-r-semicondensed\
+#  define FONT2 "-misc-fixed-medium-r-semicondensed\
 --13-120-75-75-c-60-iso8859-1"
 # else
 #  define WSL 1
-#  define FONT1 \
-	"-misc-fixed-medium-r-semicondensed\
+#  define FONT1 "-misc-fixed-medium-r-semicondensed\
 --13-120-75-75-c-60-iso8859-1"
-#  define FONT2 \
-	"-misc-fixed-medium-r-semicondensed\
+#  define FONT2 "-misc-fixed-medium-r-semicondensed\
 --13-120-75-75-c-60-iso8859-1"
 # endif
 // # define FONT2 "-sun-open look glyph-----19-190-75-75-p-154-sunolglyph-1"
 
 // Mr. Potato-Head by Joan Stark
-# define POTATO \
-	"\
+# define POTATO "\
 \t\t\t\t\t\t\t              .-\"'\"-.\n\
 \t\t\t\t\t\t\t             |       |  \n\
 \t\t\t\t\t\t\t           (`-._____.-')\n\
@@ -201,8 +197,7 @@
 \t\t\t\t\t\t\t\\|||    (`.___.')-(`.___.')    |||/ \n\
 \t\t\t\t\t\t\t '\"'     `-----'   `-----'     '\"' \n"
 
-# define CUB3D \
-	"\
+# define CUB3D "\
  _____  _   _ ______  _____ ______ \n\
 /  __ \\| | | || ___ \\|____ ||  _  \\ \n\
 | /  \\/| | | || |_/ /    / /| | | |\n\
@@ -210,8 +205,7 @@
 | \\__/\\| |_| || |_/ /.___/ /| |/ / \n\
  \\____/ \\___/ \\____/ \\____/ |___/  \n"
 
-# define BONUS \
-	"\
+# define BONUS "\
 \t\t\t\t          )      )         (     \n\
 \t\t\t\t   (   ( /(   ( /(         )\\ )  \n\
 \t\t\t\t ( )\\  )\\())  )\\())    (  (()/(  \n\
@@ -225,33 +219,24 @@
 // # define M_PI 3.14
 
 # define SOUND_GENERIC "resources/sounds/1-01. Main Menu.mp3"
-# define SOUND_FOOTSTEPWALK \
-	"resources/sounds/Horror/\
+# define SOUND_FOOTSTEPWALK "resources/sounds/Horror/\
 Character/Footsteps_walking.wav"
 # define SOUND_AMBIENT "resources/sounds/03.E1M1-AtDoomsGate.mp3"
-# define SOUND_BABYLAUGH1 \
-	"resources/sounds/Horror\
+# define SOUND_BABYLAUGH1 "resources/sounds/Horror\
 /Monsters & Ghosts/Child laugh_6.wav"
-# define SOUND_BABYLAUGH2 \
-	"resources/sounds/Horror\
+# define SOUND_BABYLAUGH2 "resources/sounds/Horror\
 /Monsters & Ghosts/Child laugh.wav"
-# define SOUND_BABYLAUGH3 \
-	"resources/sounds/Horror\
+# define SOUND_BABYLAUGH3 "resources/sounds/Horror\
 /Monsters & Ghosts/Child laugh_7.wav"
-# define SOUND_BUTTONCLICK1 \
-	"resources/sounds/Horror\
+# define SOUND_BUTTONCLICK1 "resources/sounds/Horror\
 /House & Office/Can_clink_4.wav"
-# define SOUND_BUTTONCLICK2 \
-	"resources/sounds/Horror\
+# define SOUND_BUTTONCLICK2 "resources/sounds/Horror\
 /House & Office/switch3.wav"
-# define SOUND_GUARDINJURED \
-	"resources/sounds/Horror\
+# define SOUND_GUARDINJURED "resources/sounds/Horror\
 /Monsters & Ghosts/Zombie.wav"
-# define SOUND_GUARDDEATH \
-	"resources/sounds/Horror\
+# define SOUND_GUARDDEATH "resources/sounds/Horror\
 /Monsters & Ghosts/Zombie_8.wav"
-# define SOUND_ATTACK \
-	"resources/sounds/Horror\
+# define SOUND_ATTACK "resources/sounds/Horror\
 /Monsters & Ghosts/Injured.wav"
 # define SOUND_CREDITS "resources/sounds/musics/wav/Ambient 2.wav"
 # define SOUND_GAMEOVER "resources/sounds/musics/wav/Fx 3.wav"
@@ -533,6 +518,12 @@ typedef struct s_point4
 	int						img_id;
 }							t_point4;
 
+typedef struct s_pair
+{
+	int						i;
+	int						j;
+}							t_pair;
+
 typedef struct s_obj
 {
 	double					x;
@@ -544,9 +535,9 @@ typedef struct s_obj
 	int						pickable;
 }							t_obj;
 
-typedef float t_v2f			__attribute__((vector_size(8)));
-typedef unsigned int t_v2u	__attribute__((vector_size(8)));
-typedef int t_v2i			__attribute__((vector_size(8)));
+typedef float				t_v2f	__attribute__((vector_size(8)));
+typedef unsigned int		t_v2u	__attribute__((vector_size(8)));
+typedef int					t_v2i	__attribute__((vector_size(8)));
 
 typedef struct s_map
 {
@@ -579,6 +570,7 @@ typedef struct s_cell
 	double					f;
 	double					g;
 	double					h;
+	t_map					*map;
 }							t_cell;
 
 /** @struct s_pathfinding
@@ -1210,12 +1202,13 @@ void						update_texture_pixels(t_vars *v, t_point p, int *t);
 
 bool						astar(t_vars *v, t_astar *astar);
 bool						isdestination(t_map *src, t_map *dst);
-bool						check_node_exist(t_astar *astar, int i, int j);
+void						check_and_insert_node(t_vars *v,
+								t_astar *astar, t_pair p, t_map *dir);
 void						tracepath(t_vars *v, t_astar *astar);
-void						clear_lst(t_astar *astar);
+void						clear_lst(t_astar *astar, t_pathfinding **lst);
 t_pathfinding				*del_node(t_astar *astar, int *k,
 								t_pathfinding **head, t_pathfinding **node);
-void						erase_head(t_astar *astar);
+void						erase_head(t_astar *astar, t_pathfinding **lst);
 
 // Threading
 

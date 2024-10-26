@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 18:24:52 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/22 15:56:11 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/26 14:19:21 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,18 @@ bool	can_move_guards(t_vars *v, t_point2 p, t_actor *tmp, t_actor *actor)
 		d = pow((p.x - tmp->x), 2) + pow((p.y - tmp->y), 2);
 		if (d < 0.20)
 		{
-			// if (((actor && actor->isguard)) && tmp->pickable)
-			// 	touch_thing((tmp->active = 0, v), tmp);
-			// else if ((actor && actor->isprojectile)
-			// 	&& v->player.currweapon.isprojectile && tmp->hp > 0
-			// 	&& tmp->dist <= v->player.currweapon.range)
-			// 	apply_damage(v, tmp);
 			return (false);
 		}
 		tmp = tmp->next;
 	}
 	return (true);
 }
+// if (((actor && actor->isguard)) && tmp->pickable)
+// 	touch_thing((tmp->active = 0, v), tmp);
+// else if ((actor && actor->isprojectile)
+// 	&& v->player.currweapon.isprojectile && tmp->hp > 0
+// 	&& tmp->dist <= v->player.currweapon.range)
+// 	apply_damage(v, tmp);
 
 /// @brief Helper function to check if a given map position is valid
 /// @param v Vars
@@ -59,24 +59,6 @@ static bool	is_valid_pos(t_vars *v, t_map *pos, t_point2 p, t_actor *a)
 	int	o;
 
 	o = 0;
-	// if (pos->val == 'D')
-	// {
-	// 	i = v->game.nb_door;
-	// 	while (--i >= 0)
-	// 	{
-	// 		if (!d && v->door[i].x == pos->x && v->door[i].y == pos->y
-	// 			&& v->door[i].state == EOPEN)
-	// 		{
-	// 			o = 1;
-	// 			break ;
-	// 		}
-	// 		else if (d && v->door[i].state == ECLOSE && v->door[i].x == p.z
-	// 			&& p.z == pos->x && v->door[i].y == p.t
-	// 			&& p.t == pos->y)
-	// 			return (1);
-	// 	}
-	// }
-	// else if (pos->val != '1')
 	if (pos->val != '1')
 		o = 1;
 	return (o && can_move_guards(v, (t_point2){p.x, p.y, -1, 0}, NULL, a)
@@ -87,7 +69,8 @@ static bool	is_valid_pos(t_vars *v, t_map *pos, t_point2 p, t_actor *a)
 /// @param actor Vars
 /// @param pos Map square position
 /// @param k New position coordinates
-static t_map	*update_guards_pos(t_vars *v, t_map *pos, t_point2 k, t_actor *a)
+static t_map	*update_guards_pos(t_vars *v, t_map *pos, t_point2 k,
+					t_actor *a)
 {
 	// if (d)
 	// 	return (pos);

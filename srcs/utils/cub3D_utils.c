@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:59:52 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/03 14:53:20 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/26 13:53:04 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ int	printmap2(t_vars *v)
 	return (0);
 }
 
-/// @brief Print an error in red + show the usage + clear datas of the program +
-///	reset xset keyboard input delay
+/// @brief Print an error in red + show the usage + clear datas of the program
 /// @param v Vars
 /// @param err Error string to print
 /// @param cleardatab Boolean to clear the datas
