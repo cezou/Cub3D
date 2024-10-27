@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/26 19:49:54 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/27 17:59:05 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /// @brief Update sprite animations attack range
 /// @param v Vars
 /// @param a Sprite to update
-void	update_sprite_anim_attackr(t_vars *v, t_actor *a)
+inline void	update_sprite_anim_attackr(t_vars *v, t_actor *a)
 {
 	int	d;
 
@@ -38,7 +38,7 @@ void	update_sprite_anim_attackr(t_vars *v, t_actor *a)
 /// @brief Update sprite animation pain
 /// @param v Vars
 /// @param a Sprite to update
-void	update_sprite_anim_pain(t_vars *v, t_actor *a)
+inline void	update_sprite_anim_pain(t_vars *v, t_actor *a)
 {
 	a->animoffy = 0;
 	if (timestamp_in_ms(v) - a->timestate > 500)
@@ -64,67 +64,58 @@ inline void	update_sprite_anim_death(t_vars *v, t_actor *a)
 	}
 }
 
+//	a->norm = sqrt(a->vectorx * a->vectorx + a->vectory * a->vectory);
+
 /// @brief Update sprite animation chase
 /// @param v Vars
 /// @param a Sprite to update
 inline void	update_sprite_anim_chase(t_vars *v, t_actor *a)
 {
+	int (i) = -1;
+	t_pathfinding (*path) = NULL;
 	if (a->animoffy >= v->img[a->img_i].height)
 	{
 		a->justattack = 0;
 		a->animoffy = 0;
 	}
+	a->astar.target = v->player.player;
+	a->astar.curr = a->map_pos;
+	if (!a->astar.trace && !astar(v, &a->astar))
+		return (a->state = EIDLE, (void)v);
+	path = a->astar.trace->prev;
+	a->vectorx = path->j - a->x;
+	a->vectory = path->i - a->y;
+	a->angle = atan2(a->vectory, a->vectorx);
+	a->x += a->ms * (path->j + 0.5 - a->x);
+	a->y += a->ms * (path->i + 0.5 - a->y);
+	if (path && a->astar.nb_astar > 0
+		&& (int)(a->x) == path->j && (int)(a->y) == path->i)
+	{
+		del_node((a->map_pos = path->curr, &a->astar), &i,
+			&a->astar.trace, &path);
+		if (!a->astar.nb_astar)
+			a->astar.trace = NULL;
+	}
 }
 
-// if (v->sprites[i].state != EIDLE && v->sprites[i].state != EDEAD
-// 	&& v->sprites[i].state != ECHASE && v->sprites[i].state != EATTACKR
-// 	&& v->sprites[i].animoff >= v->img[v->sprites[i].img_i].width)
-// 	v->sprites[i].animoff = 0;
-//tmp->ms * v->game.frametime
-enum	e_direction
-{
-	down,
-	left_down,
-	left,
-	left_up,
-	up,
-	right_up,
-	right,
-	right_down
-};
-
-int	get_direction(double angle)
-{
-	if (angle < -7 * M_PI / 8 || angle >= 7 * M_PI / 8)// -2.7475
-		return (up);
-	else if (angle < -5 * M_PI / 8)// -1.96
-		return (left_up);
-	else if (angle < -3 * M_PI / 8)// -1.1775
-		return (left);
-	else if (angle < -M_PI / 8)// -0.3925
-		return (left_down);
-	else if (angle < M_PI / 8)// 0.3925
-		return (down);
-	else if (angle < 3 * M_PI / 8)// 1.1775
-		return (right_down);
-	else if (angle < 5 * M_PI / 8)// 1.96
-		return (right);
-	else
-		return (right_up);
-}
+// path = tmp->astar.trace->prev;
+// while (++i < tmp->astar.nb_astar && tmp->astar.trace)
+// {
+// 	ft_printf(1, "-> (%d,%d)\n", path->i, path->j);
+// 	path = path->prev;
+// }
+// tmp->angle = sqrt(((double)(path->j) - tmp->y) * ((double)(path->j) - tmp->y)
+// 		+ ((double)(path->i) - tmp->x) * ((double)(path->i) - tmp->x));
 
 /// @brief Update guards movement/animations
 /// @param v Vars
 ///	@param actor Actor guard
 void	update_guards(t_vars *v, t_actor **actor)
 {
-	int (i) = -1;
 	t_actor (*tmp) = *actor;
-	t_pathfinding (*path) = NULL;
-	double (relative_angle) = 0.0;
 	if (!tmp->isguard)
 		return ;
-	if (tmp->state != EIDLE && !tmp->stop && tmp->state != ECHASE)
+	if (tmp->state != EIDLE && !tmp->stop)
 		tmp->animoffy += v->img[tmp->img_i].animy;
 	tmp->time = timestamp_in_ms(v);
 	if (tmp->state == EDEAD)
@@ -135,49 +126,5 @@ void	update_guards(t_vars *v, t_actor **actor)
 		update_sprite_anim_attackr(v, tmp);
 	if (tmp->state == ECHASE)
 		update_sprite_anim_chase(v, tmp);
-	if (tmp->state == ECHASE)
-	{
-		tmp->astar.target = v->player.player;
-		tmp->astar.curr = tmp->map_pos;
-		ft_printf(1, "guard x: %d, y: %d\n", tmp->astar.curr->x,
-			tmp->astar.curr->y);
-		printf("guard tmpx: %f, tmpy: %f\n", tmp->x, tmp->y);
-		ft_printf(1, "target x: %d, y: %d\n", tmp->astar.target->x, tmp->astar.target->y);
-		if (!tmp->astar.trace && !astar(v, &tmp->astar))
-			return (tmp->state = EIDLE, (void)v);
-		// path = tmp->astar.trace->prev;
-		// while (++i < tmp->astar.nb_astar && tmp->astar.trace)
-		// {
-		// 	ft_printf(1, "-> (%d,%d)\n", path->i, path->j);
-		// 	path = path->prev;
-		// }
-		path = tmp->astar.trace->prev;
-		tmp->angle = atan2((double)(path->j) - tmp->y,
-				(double)(path->i) - tmp->x);
-		printf("kek: %f\n", tmp->angle);
-		tmp->x += tmp->ms * (path->j + 0.5 - tmp->x);
-		tmp->y += tmp->ms * (path->i + 0.5 - tmp->y);
-		if (path && tmp->astar.nb_astar > 0
-			&& (int)(tmp->x) == path->j && (int)(tmp->y) == path->i)
-		{
-			// ft_printf(1, "Erasing head %d:%d, x:%d, y: %d!!\n", path->j, path->i, path->curr->x, path->curr->y);
-			tmp->map_pos = path->curr;
-			del_node(&tmp->astar, &i, &tmp->astar.trace, &path);
-			if (!tmp->astar.nb_astar)
-			{
-				tmp->astar.trace = NULL;
-				ft_printf(1, "OIIIII\n");
-			}
-		}
-	}
-	tmp->angletoplay = atan2(v->player.y - tmp->y, v->player.x - tmp->x);
-	relative_angle = tmp->angletoplay - tmp->angle;
-	// if (relative_angle > M_PI)
-	// 	relative_angle -= 2 * M_PI;
-	// if (relative_angle < -M_PI)
-	// 	relative_angle += 2 * M_PI;
-	// if (relative_angle < 0)
-	// 	relative_angle += 2 * M_PI;
-	tmp->animoffx = get_direction(relative_angle) * v->img[tmp->img_i].animx;
-	printf("angle to player: %f, angle: %f, relative: %f, dir: %d\n", tmp->angletoplay, tmp->angle, relative_angle, tmp->animoffx);
+	calc_angle(v, tmp);
 }

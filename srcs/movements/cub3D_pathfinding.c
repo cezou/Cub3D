@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 18:16:14 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/26 17:31:25 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/27 14:48:03 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,15 @@ bool	generate_successors(t_vars *v, t_astar *astar)
 	return (false);
 }
 
+/// @brief Init astar algorithm datas 
+/// @param v Vars
+/// @param astar Structure holding datas
+/// @return 
+// ft_printf(1, "We are already at the destination\n"), 
 bool	init_astar(t_vars *v, t_astar *astar)
 {
 	if (isdestination(astar->curr, astar->target))
-		return (ft_printf(1, "We are already at the destination\n"), false);
+		return (false);
 	astar->i = -1;
 	while (++astar->i < v->mapv.maph)
 	{
@@ -165,10 +170,10 @@ bool	astar(t_vars *v, t_astar *astar)
 		erase_head(astar, &astar->open);
 		astar->closedlst[astar->i][astar->j] = true;
 		if (generate_successors(v, astar))
-			return (ft_printf(1, "The destination has been reached\n"),
-				clear_lst(astar, &astar->open), tracepath(v, astar), true);
+			return (clear_lst(astar, &astar->open), tracepath(v, astar), true);
 	}
-	if (!astar->finddst)
-		ft_printf(1, "Failed to find the Destination Cell\n");
 	return (clear_lst(astar, &astar->open), false);
 }
+// if (!astar->finddst)
+	// ft_printf(1, "Failed to find the Destination Cell\n");
+// ft_printf(1, "The destination has been reached\n"),

@@ -14,6 +14,8 @@
 
 void	hotreload_clear(t_vars *v, char *filename)
 {
+	// if (v->pool.threads)
+	// 	stop_threads_pool(v);
 	if (v->mapv.map)
 		map_clear(v->mapv.map);
 	if (v->actors)
@@ -24,6 +26,7 @@ void	hotreload_clear(t_vars *v, char *filename)
 		free(v->door);
 	if (v->rand)
 		free(v->rand);
+	v->player = (t_player){0};
 	v->infos = (t_infos){0};
 	v->mapv = (t_mapv){0};
 	parsing(4, filename, v);

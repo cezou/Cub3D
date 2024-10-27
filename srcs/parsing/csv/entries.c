@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   entries.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 08:16:36 by cviegas           #+#    #+#             */
-/*   Updated: 2024/10/25 08:16:36 by cviegas          ###   ########.fr       */
+/*   Updated: 2024/10/27 19:37:38 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ t_sprite_entry	*create_entries(void)
 	{"ERSKEY", ERSKEY}, {"EPBFG", EPBFG}, {"EPSHOTGUN", EPSHOTGUN},
 	{"EPGATLIN", EPGATLIN}, {"EPROCKETL", EPROCKETL},
 	{"EPPLASMA", EPPLASMA}, {"EPCHAINSAW", EPCHAINSAW},
-	{"EPSUPERSHOTGUN", EPSUPERSHOTGUN}, {NULL, -1}};
+	{"EPSUPERSHOTGUN", EPSUPERSHOTGUN}, {"EHANGCORPSE01", EHANGCORPSE01},
+	{"EHANGCORPSE02", EHANGCORPSE02}, {"EHANGCORPSE03", EHANGCORPSE03},
+	{"EFIRELAMP01", EFIRELAMP01}, {NULL, -1}};
 
 	return (entries);
 }

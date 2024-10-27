@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/25 13:00:19 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/27 19:44:44 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,8 @@ void	init_objects(t_vars *v, t_actor *a)
 		a->vmove = v->g_objs[i].v;
 		a->hashitbox = v->g_objs[i].h;
 		a->pickable = v->g_objs[i].pickable;
+		v->img[v->g_objs[i].img_id].animx = v->img[v->g_objs[i].img_id].width
+			/ v->g_objs[i].animx;
 		a->active = 1;
 		a->next = a;
 		a->prev = a;
@@ -236,7 +238,7 @@ void	init_guard(t_vars *v, t_map *tmp, t_actor *a)
 			a->vdiv = 1.0;
 			a->udiv = 1.0;
 			a->isguard = 1;
-			a->ms = 0.05;
+			a->ms = 0.2;
 			a->painchance = 40;
 			a->hasrange = 1;
 			a->hashitbox = 1;
@@ -294,7 +296,6 @@ void	check_map(t_vars *v)
 	v->player.animoff = 0;
 	init_doors(v);
 	init_actors(v);
-	init_thread_pool(v, -1);
 }
 
 void	init(t_vars *v, int argc, char **argv)
@@ -325,6 +326,7 @@ void	init(t_vars *v, int argc, char **argv)
 	initweapon(v);
 	initguardanim(v);
 	check_map(v);
+	init_thread_pool(v, -1);
 	init_player_dir(v);
 	mlx_do_key_autorepeatoff(v->mlx);
 }

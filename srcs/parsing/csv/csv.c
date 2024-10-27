@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   csv.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 08:16:53 by cviegas           #+#    #+#             */
-/*   Updated: 2024/10/25 09:20:06 by cviegas          ###   ########.fr       */
+/*   Updated: 2024/10/27 19:41:52 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,18 @@ void	store_an_obj(char **l, int line, int fd, t_vars *v)
 
 	if (i >= 200)
 		return ;
-	if (tab_len(l) != 7)
-		(eerr("Bad object: Not 7 values", line), clean_exit(l, fd, v, 1));
+	if (tab_len(l) != 8)
+		(eerr("Bad object: Not 8 values", line), clean_exit(l, fd, v, 1));
 	v->g_objs[i].img_id = get_sprite_id(v->sprite_map, l[0]);
-	x = ft_atoi(l[1]);
-	y = ft_atoi(l[2]);
+	x = ft_atod(l[1]);
+	y = ft_atod(l[2]);
 	v->g_objs[i].x = x;
 	v->g_objs[i].y = y;
-	v->g_objs[i].uv = ft_atoi(l[3]);
-	v->g_objs[i].v = ft_atoi(l[4]);
-	v->g_objs[i].h = ft_atoi(l[5]);
-	v->g_objs[i].pickable = ft_atoi(l[6]);
+	v->g_objs[i].uv = ft_atod(l[3]);
+	v->g_objs[i].v = ft_atod(l[4]);
+	v->g_objs[i].h = ft_atod(l[5]);
+	v->g_objs[i].pickable = ft_atod(l[6]);
+	v->g_objs[i].animx = ft_atod(l[7]);
 	i++;
 }
 

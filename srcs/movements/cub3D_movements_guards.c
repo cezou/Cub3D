@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 18:24:52 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/26 14:19:21 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/27 17:59:21 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ static bool	is_valid_pos(t_vars *v, t_map *pos, t_point2 p, t_actor *a)
 static t_map	*update_guards_pos(t_vars *v, t_map *pos, t_point2 k,
 					t_actor *a)
 {
-	// if (d)
-	// 	return (pos);
 	a->x = k.x;
 	a->y = k.y;
 	return (pos);

@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/21 19:24:00 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/27 19:59:39 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	update_actors(t_vars *v)
 	tmp = v->actors;
 	while (++i < v->game.nb_actors)
 	{
-		if (!tmp->active || (!tmp->isguard && !tmp->isprojectile))
+		if (!tmp->active)
 		{
 			tmp = tmp->next;
 			continue ;
@@ -37,6 +37,12 @@ void	update_actors(t_vars *v)
 			< (uint64_t)(100))
 			return ;
 		tmp->time = timestamp_in_ms(v);
+		if (!tmp->isguard && !tmp->isguard)
+		{
+			tmp->animoffx += v->img[tmp->img_i].animx;
+			if (tmp->animoffx >= v->img[tmp->img_i].width)
+				tmp->animoffx = 0;
+		}
 		update_guards(v, &tmp);
 		tmp = update_projectiles(v, &tmp, &i);
 	}

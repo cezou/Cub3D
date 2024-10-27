@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 18:16:14 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/26 16:04:26 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/27 14:53:17 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	tracepath(t_vars *v, t_astar *astar)
 	int (tmpcol) = 0;
 	t_pathfinding *(tmp) = astar->trace;
 	astar->nb_astar = 0;
-	ft_printf(1, "\nThe path is \n");
 	while (!(astar->celld[row][col].parent_i == row
 		&& astar->celld[row][col].parent_j == col))
 	{

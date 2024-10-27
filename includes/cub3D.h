@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/26 18:15:50 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/27 19:41:04 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -413,6 +413,10 @@ typedef enum s_components
 	EAMMUNTMP,
 	ECARDSLOTTMP,
 	ECARDSTMP,
+	EHANGCORPSE01,
+	EHANGCORPSE02,
+	EHANGCORPSE03,
+	EFIRELAMP01,
 	EPARMOR,
 	EPARMOR1,
 	ESTIM,
@@ -533,6 +537,7 @@ typedef struct s_obj
 	double					v;
 	int						h;
 	int						pickable;
+	int						animx;
 }							t_obj;
 
 typedef float				t_v2f	__attribute__((vector_size(8)));
@@ -1027,7 +1032,6 @@ typedef struct s_vars
 	int						num_objs;
 	t_sprite_entry			entries[COMP_N];
 	t_sprite_map			*sprite_map;
-
 	t_xvar					*mlx;
 	bool					keys[MAX_KEYS];
 	bool					mouses[MAX_MOUSE];
@@ -1080,6 +1084,7 @@ int							myrand(int nb);
 t_point2					get_90_angle(int dir, double x, double y);
 float						deg_to_rad(float deg);
 float						rad_to_deg(float rad);
+void						calc_angle(t_vars *v, t_actor *tmp);
 int							find_door(t_vars *v, int x, int y);
 int							find_guard(t_vars *v, t_map *tmp);
 void						hitguard(t_vars *v, t_sprite_data *sp, t_actor *g);
