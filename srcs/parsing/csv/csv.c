@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 08:16:53 by cviegas           #+#    #+#             */
-/*   Updated: 2024/10/27 19:41:52 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/28 17:44:37 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,27 +43,28 @@ bool	is_bad_coordinates(int x, int y, char **map, t_vars *v)
 		|| (map[x][y] != '0' && map[x][y] != 'G'));
 }
 
-void	store_an_obj(char **l, int line, int fd, t_vars *v)
+bool	store_an_obj(char **l, int *i, t_vars *v)
 {
-	static int	i = 0;
 	double		x;
 	double		y;
 
-	if (i >= 200)
-		return ;
+	if (++(*i) >= 200)
+		return (true);
 	if (tab_len(l) != 8)
-		(eerr("Bad object: Not 8 values", line), clean_exit(l, fd, v, 1));
-	v->g_objs[i].img_id = get_sprite_id(v->sprite_map, l[0]);
+		return (false);
+	v->g_objs[(*i)].img_id = get_sprite_id(v->sprite_map, l[0]);
 	x = ft_atod(l[1]);
 	y = ft_atod(l[2]);
-	v->g_objs[i].x = x;
-	v->g_objs[i].y = y;
-	v->g_objs[i].uv = ft_atod(l[3]);
-	v->g_objs[i].v = ft_atod(l[4]);
-	v->g_objs[i].h = ft_atod(l[5]);
-	v->g_objs[i].pickable = ft_atod(l[6]);
-	v->g_objs[i].animx = ft_atod(l[7]);
-	i++;
+	v->g_objs[(*i)].x = x;
+	v->g_objs[(*i)].y = y;
+	v->g_objs[(*i)].uv = ft_atod(l[3]);
+	v->g_objs[(*i)].v = ft_atod(l[4]);
+	v->g_objs[(*i)].h = ft_atod(l[5]);
+	v->g_objs[(*i)].pickable = ft_atod(l[6]);
+	v->g_objs[(*i)].animx = ft_atoi(l[7]);
+	if (v->g_objs[(*i)].animx <= 0)
+		v->g_objs[(*i)].animx = 1;
+	return (true);
 }
 
 // if (is_bad_coordinates(x, y, v->infos.map, v))
@@ -78,9 +79,9 @@ void	parse_extension(int fd, t_vars *v)
 {
 	char	*s;
 	char	**l;
-	int		i;
 
-	i = -1;
+	int (j) = -1;
+	int (i) = -1;
 	ft_bzero(v->g_objs, 200);
 	while (++i || 1)
 	{
@@ -94,11 +95,12 @@ void	parse_extension(int fd, t_vars *v)
 		if (i == 2)
 			store_ceil_infos(l, fd, v);
 		if (i > 5)
-			store_an_obj(l, i + 1, fd, v);
+			if (!store_an_obj(l, &(j), v))
+				(eerr("Bad object: Not 8 values", i + 1),
+					clean_exit(l, fd, v, 1));
 		freeall(l);
 	}
-	v->num_objs = i - 6;
-	close(fd);
+	close((v->num_objs = i - 6, fd));
 }
 
 void	parsing_csv(char *filename, t_vars *v)

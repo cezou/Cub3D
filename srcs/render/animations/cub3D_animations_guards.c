@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/28 11:33:39 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/28 20:31:00 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ inline void	update_sprite_anim_attackr(t_vars *v, t_actor *a)
 inline void	update_sprite_anim_pain(t_vars *v, t_actor *a)
 {
 	a->animoffy = 0;
+	// a->animoffx = 0;
 	if (timestamp_in_ms(v) - a->timestate > 500)
 	{
 		a->state = ECHASE;
@@ -86,8 +87,8 @@ void	update_sprite_anim_chase(t_vars *v, t_actor *a)
 	a->vectorx = path->j - a->x;
 	a->vectory = path->i - a->y;
 	a->angle = atan2(a->vectory, a->vectorx);
-	a->x += a->ms * (path->j + 0.5 - a->x);
-	a->y += a->ms * (path->i + 0.5 - a->y);
+	// a->x += a->ms * (path->j + 0.5 - a->x);
+	// a->y += a->ms * (path->i + 0.5 - a->y);
 	if (path && a->astar.nb_astar > 0
 		&& (int)(a->x) == path->j && (int)(a->y) == path->i)
 	{

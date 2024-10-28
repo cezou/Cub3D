@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/28 13:14:49 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:06:53 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -795,16 +795,6 @@ typedef struct s_floor
 	bool					isfloor;
 }							t_floor;
 
-typedef struct s_trig
-{
-	double					cosx;
-	double					sinx;
-	double					cosy;
-	double					siny;
-	double					cosz;
-	double					sinz;
-}							t_trig;
-
 typedef struct s_mouse
 {
 	int						button;
@@ -950,6 +940,7 @@ typedef struct s_screen
 
 typedef struct s_game
 {
+	char					*ext;
 	int						pause;
 	int						pain;
 	int						start;
@@ -1038,12 +1029,10 @@ typedef struct s_vars
 	bool					keys[MAX_KEYS];
 	bool					mouses[MAX_MOUSE];
 	Cursor					cursor;
-	Pixmap					blank;
 	t_actor					*actors;
 	t_imga					*img;
 	t_mouse					mouse;
 	t_map					*last;
-	t_trig					trig;
 	t_sound					sound;
 	t_game					game;
 	t_screen				screen;
@@ -1062,8 +1051,6 @@ typedef struct s_vars
 	uint32_t				tex[8][4160];
 	t_thread_pool			pool;
 	t_thread_data			threads_data[THREAD_COUNT];
-	int						frame;
-	int						exit;
 }							t_vars;
 
 // Parsing
@@ -1160,6 +1147,7 @@ void						inithud(t_vars *v);
 void						init_player_dir(t_vars *v);
 void						init_random_melting_array(t_vars *v);
 void						initanim(t_vars *v, int index, int b, int animnb);
+void						initweapon(t_vars *v);
 void						mouse_hide(t_vars *v);
 
 // Mouse
@@ -1302,7 +1290,7 @@ t_sprite_entry				*create_entries(void);
 void						free_sprite_map(t_sprite_map **map);
 void						print_sprite_map(t_sprite_map *map);
 void						init_sprite_map(t_vars *v, t_sprite_map **map);
-void						store_an_obj(char **l, int line, int fd, t_vars *v);
+bool						store_an_obj(char **l, int *i, t_vars *v);
 void						eerr(const char *s, int i);
 int							get_sprite_id(t_sprite_map *map, const char *key);
 void						parsing_csv(char *filename, t_vars *v);

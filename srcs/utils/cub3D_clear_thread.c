@@ -19,7 +19,6 @@ void	stop_threads_pool(t_vars *v)
 	int	i;
 
 	i = -1;
-	v->exit = 1;
 	ft_printf(1, "Broadcast stop\n");
 	pthread_mutex_lock(&v->pool.job_mutex);
 	v->pool.stop = 1;
@@ -43,7 +42,6 @@ void	stop_threads_pool(t_vars *v)
 }
 	// pthread_cancel(v->pool.threads[i]);
 	// pthread_mutex_lock(&v->pool.job_mutex);
-	// v->exit = 1;
 	// v->pool.stop = 1;
 	// pthread_mutex_unlock(&v->pool.job_mutex);
 	// pthread_mutex_lock(&v->pool.job_mutex);

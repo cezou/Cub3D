@@ -6,7 +6,7 @@
 #    By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 11:28:17 by pmagnero          #+#    #+#              #
-#    Updated: 2024/10/27 19:57:29 by pmagnero         ###   ########.fr        #
+#    Updated: 2024/10/28 17:47:05 by pmagnero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,6 +77,7 @@ SRCS =	srcs/cub3D.c \
 		srcs/controls/cub3D_hooks.c \
 		srcs/controls/cub3D_hooks_utils.c \
 		srcs/controls/cub3D_controls.c \
+		srcs/controls/cub3D_hotreload.c \
 		srcs/controls/cub3D_mouse.c \
 		srcs/render/cub3D_render_menus.c \
 		srcs/render/cub3D_render_player.c \

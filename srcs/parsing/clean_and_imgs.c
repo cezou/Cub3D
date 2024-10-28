@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_and_imgs.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 17:22:28 by cviegas           #+#    #+#             */
-/*   Updated: 2024/10/25 07:57:31 by cviegas          ###   ########.fr       */
+/*   Updated: 2024/10/28 17:23:34 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	init_infos(t_vars *v, char *file, int *fd)
 {
-	v->mapv.filename = file;
 	*fd = open(file, O_RDONLY);
 	if (*fd == -1)
 		exit((merr("file doesn't exist or open failed"), FAIL));

@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/27 19:44:44 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/28 19:39:16 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -307,9 +307,10 @@ void	init(t_vars *v, int argc, char **argv)
 	v->mlx = mlx_init();
 	if (!v->mlx)
 		exit((perr("MLX init failed"), FAIL));
-	parsing(argc, argv[1], v);
+	v->mapv.filename = argv[1];
+	parsing(argc, v->mapv.filename, v);
 	if (argc == 3 || argc == 5)
-		parsing_csv(argv[2], v);
+		parsing_csv((v->game.ext = argv[2], v->game.ext), v);
 	v->img = (t_imga *)malloc(sizeof(t_imga) * (COMP_N + 1));
 	if (!v->img)
 		exit((prterr(v, ERRMALL, 1, 1), 1));

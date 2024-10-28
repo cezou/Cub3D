@@ -12,60 +12,6 @@
 
 #include "../../includes/cub3D.h"
 
-void	hotreload_clear(t_vars *v, char *filename)
-{
-	// if (v->pool.threads)
-	// 	stop_threads_pool(v);
-	if (v->mapv.map)
-		map_clear(v->mapv.map);
-	if (v->actors)
-		actors_clear(v->actors);
-	if (v->infos.map)
-		freeall(v->infos.map);
-	if (v->door)
-		free(v->door);
-	if (v->rand)
-		free(v->rand);
-	v->player = (t_player){0};
-	v->infos = (t_infos){0};
-	v->mapv = (t_mapv){0};
-	parsing(4, filename, v);
-	v->door = NULL;
-	v->last = NULL;
-	v->rand = NULL;
-	v->actors = NULL;
-	v->sp = (t_sprite_data){0};
-	v->game = (t_game){0};
-	v->game.start = 2;
-	v->game.nb_actors = 0;
-	m_clearrandom(v);
-	clearimgs(v);
-}
-
-void	hotreload(t_vars *v)
-{
-	char	*filename;
-
-	filename = v->mapv.filename;
-	hotreload_clear(v, filename);
-	initvars(v);
-	initpathtext(v);
-	inittextures(v, 4);
-	v->game.skybox = v->img[ESKYBOX];
-	inithud(v);
-	initplayeranim(v);
-	initguardanim(v);
-	check_map(v);
-	init_player_dir(v);
-	ma_sound_stop(&v->sound.sound[ECRED]);
-	if (ACTIVATE_SOUND && !ma_sound_is_playing(&v->sound.sound[2]))
-	{
-		ma_sound_set_looping(&v->sound.sound[2], 1);
-		ma_sound_start(&v->sound.sound[2]);
-	}
-	mlx_loop_end((ft_printf(1, "hotreload\n"), v->game.won = 0, v->mlx));
-}
-
 void	menuexit(t_vars *v)
 {
 	if (v->game.won < 4 && (MANDATORY || v->game.won > 0))

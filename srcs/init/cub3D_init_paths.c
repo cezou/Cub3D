@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/28 13:44:48 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/28 20:27:38 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	cmpalpha(const void *const a, const void *const b)
 
 bool	load_file(t_vars *v, DIR *fd, struct dirent **f, const char *dir)
 {
-	static int (i) = -1;
+	int (i) = v->img[ESKYBOX].animnb;
 	if (!ft_strncmp((*f)->d_name, ".", 1) || !ft_strncmp((*f)->d_name, "..", 2)
 		|| ft_strncmp((*f)->d_name + (ft_strlen((*f)->d_name) - 4), ".xpm", 4))
 		return (*f = readdir(fd), false);
@@ -35,7 +35,6 @@ bool	load_file(t_vars *v, DIR *fd, struct dirent **f, const char *dir)
 	ft_strlcat(v->img[ESKYBOX].anim[i].filename, (*f)->d_name,
 		ft_strlen(v->img[ESKYBOX].anim[i].filename)
 		+ ft_strlen((*f)->d_name) + 1);
-	ft_printf(1, "Procession file: %s\n", v->img[ESKYBOX].anim[i].filename);
 	int (file) = open(v->img[ESKYBOX].anim[i].filename, O_RDONLY);
 	if (file == -1)
 		exit((prterr((closedir(fd), v),
@@ -44,29 +43,19 @@ bool	load_file(t_vars *v, DIR *fd, struct dirent **f, const char *dir)
 	*f = readdir(fd);
 	if (close(file) == -1)
 		exit((prterr((closedir(fd), v), "Error : Close file\n\n", 1, 1), 1));
-	v->img[ESKYBOX].animnb = i;
-	return (true);
+	return (v->img[ESKYBOX].animnb = i, true);
 }
 
-void	load_images_from_folder(t_vars *v, const char *dir)
+void	sort_files_alphabetically(t_vars *v, DIR *fd, struct dirent **f)
 {
-	DIR				*fd;
-	struct dirent	*in_file;
 	struct dirent	**lst;
 	int				i;
 
 	i = 1;
-	if (MANDATORY)
-		return ;
-	fd = opendir(dir);
-	if (!fd)
-		exit((prterr(v, "Error : Failed to open input directory\n", 1, 1), 1));
-	in_file = readdir(fd);
-	while (in_file)
-	{
-		in_file = readdir(fd);
-		++i;
-	}
+	v->img[ESKYBOX].animnb = -1;
+	*f = readdir(fd);
+	while (*f)
+		*f = readdir((++i, fd));
 	lst = malloc(sizeof(*lst) * i);
 	if (!lst)
 		exit((prterr((closedir(fd), v), ERRMALL, 1, 1), 1));
@@ -75,24 +64,37 @@ void	load_images_from_folder(t_vars *v, const char *dir)
 		exit((prterr((free(lst), closedir(fd), v), ERRMALL, 1, 1), 1));
 	rewinddir(fd);
 	i = -1;
-	in_file = readdir(fd);
-	while (in_file)
+	*f = readdir(fd);
+	while (*f)
 	{
-		lst[++i] = in_file;
-		in_file = readdir(fd);
+		lst[++i] = *f;
+		*f = readdir(fd);
 	}
 	qsort(lst, i, sizeof(*lst), cmpalpha);
 	free(lst);
+}
+
+void	load_images_from_folder(t_vars *v, const char *dir)
+{
+	DIR				*fd;
+	struct dirent	*in_file;
+
+	if (MANDATORY)
+		return ;
+	fd = opendir(dir);
+	if (!fd)
+		exit((prterr(v, "Error : Failed to open input directory\n", 1, 1), 1));
+	sort_files_alphabetically(v, fd, &in_file);
 	rewinddir(fd);
 	in_file = readdir(fd);
-	ft_printf(1, "Opening dir: %s\n", dir);
 	while (in_file)
 	{
 		if (!load_file(v, fd, &in_file, dir))
 			continue ;
 	}
+	v->img[ESKYBOX].animnb++;
 	if (closedir(fd) == -1)
-		exit((prterr((closedir(fd), v),
+		exit((prterr(v,
 					"Error : Close dir\n\n", 1, 1), 1));
 }
 
@@ -119,8 +121,8 @@ void	initpath2(t_vars *v)
 	v->img[ERKEY].filename = "resources/textures/redkey.xpm";
 	v->img[ERSKEY].filename = "resources/textures/redskull.xpm";
 	v->img[EGUARDW].filename = "resources/textures/monster_walk.xpm";
-	v->img[EGUARDDEATH].filename = "resources/textures/generaldeath.xpm";
-	v->img[EGUARDATTR].filename = "resources/textures/generalattackrange.xpm";
+	v->img[EGUARDDEATH].filename = "resources/textures/monster_death.xpm";
+	v->img[EGUARDATTR].filename = "resources/textures/monster_attack.xpm";
 	v->img[ESKYBOX].filename = "resources/textures/skybox.xpm";
 	v->img[EHUDIMG].filename = "resources/textures/HUDempty.xpm";
 	v->img[EMAPBORDER].filename = "resources/textures/MapBorder.xpm";
@@ -211,8 +213,10 @@ void	initguardpathanim(t_vars *v)
 	// v->img[EGUARDW].animx = v->img[EGUARDW].width / 4;
 	v->img[EGUARDW].animy = v->img[EGUARDW].height / 4;
 	v->img[EGUARDW].animx = v->img[EGUARDW].width / 8;
-	v->img[EGUARDDEATH].animx = v->img[EGUARDDEATH].width / 4;
-	v->img[EGUARDATTR].animx = v->img[EGUARDATTR].width / 4;
+	v->img[EGUARDDEATH].animx = 0;
+	v->img[EGUARDDEATH].animy = v->img[EGUARDDEATH].height / 8;
+	v->img[EGUARDATTR].animx = v->img[EGUARDATTR].width / 8;
+	v->img[EGUARDATTR].animy = v->img[EGUARDATTR].height / 4;
 	v->img[EPLASMABOLT].animx = v->img[EPLASMABOLT].width / 7;
 	v->img[EPLASMABOLT].animy = v->img[EPLASMABOLT].height;
 }

@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/27 18:00:14 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/28 20:32:41 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,11 @@ void	guardattack(t_vars *v, t_sprite_data *sp, t_actor *g)
 		|| sp->drawstartx <= 0 || sp->drawstartx >= v->screen.resw
 		|| sp->transformy > v->ray.zbuffer[sp->drawstartx])
 		return ;
-	// if (g->hasrange && !g->justattack && g->dist > 15 && g->state == ECHASE)
-	// {
-	// 	g->img_i = EGUARDATTR;
-	// 	g->state = EATTACKR;
-	// }
+	if (g->hasrange && !g->justattack && g->dist > 15 && g->state == ECHASE)
+	{
+		g->img_i = EGUARDATTR;
+		g->state = EATTACKR;
+	}
 }
 
 /// @brief Check if a guard is hit
