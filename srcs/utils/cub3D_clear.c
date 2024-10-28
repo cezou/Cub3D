@@ -66,10 +66,9 @@ int	map_clear(t_map *lst)
 /// @return -1 if an error occured or 0
 int	clearimgs(t_vars *v)
 {
-	int	i;
 	int	j;
 
-	i = -1;
+	int (i) = -1;
 	while (v->img && ++i <= COMP_N)
 	{
 		j = -1;
@@ -77,6 +76,8 @@ int	clearimgs(t_vars *v)
 		{
 			while (v->img[i].anim && ++j < v->img[i].animnb)
 			{
+				if (v->img[i].anim[j].filename)
+					free(v->img[i].anim[j].filename);
 				if (v->img[i].anim[j].img && mlx_destroy_image(v->mlx,
 						v->img[i].anim[j].img) < 0)
 					return (ft_printf(2, "ERROR Destroy Anim Image\n"), -1);

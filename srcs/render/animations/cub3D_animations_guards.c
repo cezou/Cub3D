@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/27 17:59:05 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/28 11:33:39 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ inline void	update_sprite_anim_death(t_vars *v, t_actor *a)
 /// @brief Update sprite animation chase
 /// @param v Vars
 /// @param a Sprite to update
-inline void	update_sprite_anim_chase(t_vars *v, t_actor *a)
+void	update_sprite_anim_chase(t_vars *v, t_actor *a)
 {
 	int (i) = -1;
 	t_pathfinding (*path) = NULL;

@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/25 10:09:49 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/28 13:44:28 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,21 @@ void	update_door_animations(t_vars *v, int i)
 		v->game.doortime -= 1.0 / v->img[EDOOR].width;
 	}
 }
+
+void	update_skybox(t_vars *v)
+{
+	if (MANDATORY)
+		return ;
+	static int (i) = -1;
+	if (timestamp_in_ms(v) - v->game.skyboxtime
+		>= (uint64_t)(100))
+	{
+		v->game.skybox = v->img[ESKYBOX].anim[++i];
+		if (i == v->img[ESKYBOX].animnb - 1)
+			i = -1;
+		v->game.skyboxtime = timestamp_in_ms(v);
+	}
+}
 // printf("%lu | %lu | %lu\n", v->sprites[i].time, v->sprites[i].timestate,
 // 	timestamp_in_ms(v));
 // printf("Guard: %d, x: %f, y: %f\n", i, v->sprites[i].x, v->sprites[i].y);
@@ -48,4 +63,5 @@ void	update_animations(t_vars *v)
 	update_actors(v);
 	update_door_animations(v, -1);
 	update_player(v);
+	update_skybox(v);
 }

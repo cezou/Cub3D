@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/27 19:41:04 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/28 13:14:49 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include <sys/time.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <dirent.h>
 
 # define FAIL EXIT_FAILURE
 # define SUCCESS EXIT_SUCCESS
@@ -964,6 +965,7 @@ typedef struct s_game
 	int						won;
 	int						god;
 	t_imga					skybox;
+	uint64_t				skyboxtime;
 	int						nb_door;
 	int						nb_guard;
 	int						nb_actors;

@@ -13,6 +13,7 @@
     "string_view": "c",
     "ranges": "c",
     "span": "c",
-    "format": "c"
+    "format": "c",
+    "algorithm": "c"
   }
 }
