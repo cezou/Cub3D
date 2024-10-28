@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/28 20:32:41 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/28 22:35:04 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,11 @@ void	hitguard(t_vars *v, t_sprite_data *sp, t_actor *g)
 		return ;
 	if (v->player.attack && g->dist <= v->player.currweapon.range
 		&& g->state != EDEAD && !v->player.currweapon.isprojectile)
+	{
 		apply_damage(v, g);
+		printf("HIT %d, x: %f, y: %f, dist: %f, state: %d\n", g->hp, g->x, g->y,
+			g->dist, g->state);
+	}
 	else if (g->dist <= v->player.currweapon.range)
 		v->game.canhit = 1;
 }

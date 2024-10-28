@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 09:51:53 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/22 14:18:57 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/28 23:20:20 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	inittextures(t_vars *v, int i)
 	while (++i < EBUFF)
 		inittexture(v, &v->img[i], i);
 	scale_img((t_point){0}, &v->img[EKEK], &v->img[COMP_N]);
+	v->game.skybox = v->img[ESKYBOX];
 }
 
 int	main(int ac, char **av)

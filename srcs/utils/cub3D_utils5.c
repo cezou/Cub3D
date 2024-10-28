@@ -70,6 +70,8 @@ t_actor	*new_actor(t_vars *v)
 	node = (t_actor *)ft_calloc(1, sizeof(t_actor));
 	if (!node)
 		return (NULL);
+	node->next = node;
+	node->prev = node;
 	return (node);
 }
 

@@ -6,7 +6,7 @@
 #    By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 11:28:17 by pmagnero          #+#    #+#              #
-#    Updated: 2024/10/28 17:47:05 by pmagnero         ###   ########.fr        #
+#    Updated: 2024/10/28 23:17:47 by pmagnero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -116,6 +116,8 @@ SRCS =	srcs/cub3D.c \
 		srcs/utils/cub3D_clear_thread.c \
 		srcs/utils/cub3D_random.c \
 		srcs/init/cub3D_init.c \
+		srcs/init/cub3D_init_actors.c \
+		srcs/init/cub3D_init_threads.c \
 		srcs/init/cub3D_init_player.c \
 		srcs/init/cub3D_init_anim.c \
 		srcs/init/cub3D_init_paths.c \

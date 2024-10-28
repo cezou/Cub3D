@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/28 18:06:53 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/28 23:27:09 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1126,6 +1126,7 @@ void						stop_threads_pool(t_vars *v);
 
 // Init
 void						init(t_vars *v, int argc, char **argv);
+void						init_actors(t_vars *v);
 void						check_map(t_vars *v);
 void						inittextures(t_vars *v, int i);
 void						inittexture(t_vars *v, t_imga *img, int i);
@@ -1138,6 +1139,7 @@ void						initsounds(t_vars *v);
 void						initimage(t_vars *v, int index, int width,
 								int height);
 void						initvars(t_vars *v);
+void						init_player_datas(t_vars *v);
 void						initwindow(t_vars *v, int argc, char **argv);
 void						initpathtext(t_vars *v);
 void						initplayerpathanim(t_vars *v);
@@ -1149,6 +1151,7 @@ void						init_random_melting_array(t_vars *v);
 void						initanim(t_vars *v, int index, int b, int animnb);
 void						initweapon(t_vars *v);
 void						mouse_hide(t_vars *v);
+void						init_thread_pool(t_vars *v, int i);
 
 // Mouse
 

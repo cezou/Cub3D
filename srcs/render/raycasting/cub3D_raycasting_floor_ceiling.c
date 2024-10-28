@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:38:17 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/28 16:23:47 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/28 23:26:55 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,14 @@ void	add_pix_custom(t_vars *v, t_point p, t_point3 fog, t_imga *tmp)
 	}
 }
 
+bool	is_ceiling(t_vars *v, t_floor *f)
+{
+	return (f->cx > v->infos.ceil_topleft[0]
+		&& f->cx < v->infos.ceil_botright[0]
+		&& f->cy > v->infos.ceil_topleft[1]
+		&& f->cy < v->infos.ceil_botright[1]);
+}
+
 /// @brief Add the pixel from the texture to the buffer
 /// @param v Vars
 /// @param f Floor structure
@@ -89,10 +97,7 @@ void	update_floor_ceil_texture_pixels(t_vars *v, t_floor *f, t_point p,
 		if (f->isfloor)
 			add_pix_custom(v, p, (t_point3){1.0, f->rowdist, FOGC, FOGL,
 				p.color}, tmp);
-		else if (f->cx > v->infos.ceil_topleft[0]
-			&& f->cx < v->infos.ceil_botright[0]
-			&& f->cy > v->infos.ceil_topleft[1]
-			&& f->cy < v->infos.ceil_botright[1])
+		else if (is_ceiling(v, f))
 		{
 			if (MANDATORY)
 				p.color = v->infos.ceil;

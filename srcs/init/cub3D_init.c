@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/28 19:39:16 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/28 23:23:55 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,33 +59,6 @@
 // Arch-vile 			10 (3.13%) 		700
 // Barrel 				0 (0%) 			20
 
-/// @brief Init Weapon stats
-/// @param v Vars
-/// {active, ammo, maxammo, typeammo, dmg, soundid, isprojectile,
-// 	dmgtic, range, img}
-void	initweapon(t_vars *v)
-{
-	v->player.weapon[EFIST] = (t_weapon){1, -1, -1, NOAMMO, 20, 0, 0, 4, 2.0,
-		v->img[EIFIST]};
-	v->player.weapon[EGUN] = (t_weapon){1, 50, 200, EBULL, 15, 0, 0, 4, 1000.0,
-		v->img[EIGUN]};
-	v->player.weapon[ESHOTGUN] = (t_weapon){1, 8, 50, ESHELL, 100, 0, 0, 4,
-		1000.0, v->img[EISHOTGUN]};
-	v->player.weapon[EGATLIN] = (t_weapon){1, 20, 200, EBULL, 15, 0, 0, 3,
-		1000.0, v->img[EIGATLIN]};
-	v->player.weapon[EROCKETL] = (t_weapon){1, 2, 50, EROCK, 160, 0, 1, -1,
-		1000.0, v->img[EIROCKl]};
-	v->player.weapon[EPLASMA] = (t_weapon){1, 40, 300, ECELL, 40, 0, 1, -1,
-		1000.0, v->img[EIPLASMA]};
-	v->player.weapon[ECHAINSAW] = (t_weapon){1, -1, -1, NOAMMO, 20, 0, 0, 4,
-		2.0, v->img[EICHAINSAW]};
-	v->player.weapon[ESUPERSHOTGUN] = (t_weapon){1, 8, 50, ESHELL, 0, 245, 0, 4,
-		1000.0, v->img[EISUPERSHOTGUN]};
-	v->player.weapon[EBFG] = (t_weapon){1, 40, 300, ECELL, 800, 0, 1, -1,
-		1000.0, v->img[EIBFG]};
-	v->player.currweapon = v->player.weapon[EFIST];
-}
-
 void	initvars(t_vars *v)
 {
 	v->game.fps = 1000;
@@ -97,60 +70,7 @@ void	initvars(t_vars *v)
 	v->hud.refreshweapon = 1;
 	v->hud.refreshcards = 1;
 	v->hud.refreshdh = 1;
-	v->player.movespeedx = 3.0;
-	v->player.rotspeed = 1.0;
-	v->player.mouserotspeed = 0.1;
-	v->player.accx = 5.0;
-	v->player.accy = 0.08;
-	v->player.maxspeedx = 0.1;
-	v->player.maxspeedy = 5.0;
-	v->player.deccx = 0.1;
-	v->player.deccy = 0.2;
-	v->mouse.sensx = 20.0;
-	v->mouse.sensy = 10.0;
-	v->player.hp = 100;
-	v->player.maxammo[EBULL] = 200;
-	v->player.maxammo[ESHELL] = 50;
-	v->player.maxammo[EROCK] = 50;
-	v->player.maxammo[ECELL] = 300;
-	v->player.clipammo[EBULL] = 10;
-	v->player.clipammo[ESHELL] = 4;
-	v->player.clipammo[EROCK] = 1;
-	v->player.clipammo[ECELL] = 20;
-	v->player.weapons[0] = 1;
-	v->player.weapons[1] = 1;
-	v->player.ammo[0] = 50;
-}
-
-void	init_thread_pool(t_vars *v, int i)
-{
-	if (!MANDATORY)
-	{
-		v->pool.thread_count = THREAD_COUNT;
-		v->pool.threads = (pthread_t *)malloc(sizeof(pthread_t) * THREAD_COUNT);
-		if (!v->pool.threads)
-			exit((prterr(v, ERRMALL, 1, 1), 1));
-		pthread_barrier_init(&v->pool.tbarrier, NULL, THREAD_COUNT);
-		pthread_barrier_init(&v->pool.mbarrier, NULL, THREAD_COUNT + 1);
-		pthread_mutex_init(&v->pool.job_mutex, NULL);
-		pthread_cond_init(&v->pool.job_cond, NULL);
-		v->pool.work_available = 0;
-		v->pool.stop = 0;
-		while (++i < THREAD_COUNT)
-		{
-			pthread_mutex_init(&v->threads_data[i].data_mutex, NULL);
-			v->threads_data[i].thread_id = i;
-			v->threads_data[i].pool = &v->pool;
-			v->threads_data[i].v = v;
-			v->threads_data[i].start = 0;
-			v->threads_data[i].end = 0;
-			v->threads_data[i].f = (t_floor){0};
-			v->threads_data[i].job = 0;
-			v->threads_data[i].tmp[0] = (t_imga){0};
-			v->threads_data[i].tmp[1] = (t_imga){0};
-			pthread_create(&v->pool.threads[i], NULL, job, &v->threads_data[i]);
-		}
-	}
+	init_player_datas(v);
 }
 
 void	initmodes(t_vars *v, int argc)
@@ -166,124 +86,6 @@ void	initmodes(t_vars *v, int argc)
 		exit((prterr(v, "Too many arguments\n", 1, 1), 1));
 }
 
-void	init_doors(t_vars *v)
-{
-	int		i;
-	t_map	*tmp;
-
-	i = -1;
-	tmp = v->mapv.map;
-	v->door = (t_door *)malloc(sizeof(t_door) * (v->game.nb_door));
-	if (!v->door)
-		exit((prterr(v, ERRMALL, 1, 1), 1));
-	while (tmp)
-	{
-		if (tmp->val == 'D')
-		{
-			v->door[++i].x = tmp->x;
-			v->door[i].y = tmp->y;
-			v->door[i].time = 0;
-			v->door[i].state = ECLOSE;
-			v->door[i].img_i = EDOOR;
-			v->door[i].xdelta = v->img[v->door[i].img_i].width;
-		}
-		tmp = tmp->right;
-	}
-}
-
-void	init_objects(t_vars *v, t_actor *a)
-{
-	int	i;
-
-	i = -1;
-	while (++i < v->num_objs)
-	{
-		a = (t_actor *)ft_calloc(1, sizeof(t_actor));
-		if (!a)
-			exit((prterr(v, ERRMALL, 1, 1), 1));
-		a->x = v->g_objs[i].x;
-		a->y = v->g_objs[i].y;
-		a->img_i = v->g_objs[i].img_id;
-		a->vdiv = v->g_objs[i].uv;
-		a->udiv = v->g_objs[i].uv;
-		a->vmove = v->g_objs[i].v;
-		a->hashitbox = v->g_objs[i].h;
-		a->pickable = v->g_objs[i].pickable;
-		v->img[v->g_objs[i].img_id].animx = v->img[v->g_objs[i].img_id].width
-			/ v->g_objs[i].animx;
-		a->active = 1;
-		a->next = a;
-		a->prev = a;
-		add_actor(v, &v->actors, &a);
-	}
-}
-
-void	init_guard(t_vars *v, t_map *tmp, t_actor *a)
-{
-	int	i;
-
-	while (tmp)
-	{
-		if (tmp->val == 'G')
-		{
-			i = -1;
-			a = (t_actor *)ft_calloc(1, sizeof(t_actor));
-			if (!a)
-				exit((prterr(v, ERRMALL, 1, 1), 1));
-			a->x = tmp->x;
-			a->y = tmp->y;
-			a->map_pos = tmp;
-			a->hp = 60;
-			a->img_i = EGUARDW;
-			a->vdiv = 1.0;
-			a->udiv = 1.0;
-			a->isguard = 1;
-			a->ms = 0.2;
-			a->painchance = 40;
-			a->hasrange = 1;
-			a->hashitbox = 1;
-			a->dmg = 15;
-			a->active = 1;
-			a->next = a;
-			a->prev = a;
-			a->astar = (t_astar){0};
-			a->astar.celld = (t_cell **)ft_calloc(v->mapv.maph + 1,
-					sizeof(t_cell *));
-			if (!a->astar.celld)
-				exit((prterr(v, ERRMALL, 1, 1), 1));
-			a->astar.celld[v->mapv.maph] = NULL;
-			while (++i < v->mapv.maph)
-			{
-				a->astar.celld[i] = (t_cell *)ft_calloc(v->mapv.mapw,
-						sizeof(t_cell));
-				if (!a->astar.celld[i])
-					exit((prterr(v, ERRMALL, 1, 1), 1));
-			}
-			i = -1;
-			a->astar.closedlst = (bool **)ft_calloc(v->mapv.maph + 1,
-					sizeof(bool *));
-			if (!a->astar.closedlst)
-				exit((prterr(v, ERRMALL, 1, 1), 1));
-			a->astar.closedlst[v->mapv.maph] = NULL;
-			while (++i < v->mapv.maph)
-			{
-				a->astar.closedlst[i] = (bool *)ft_calloc(v->mapv.mapw,
-						sizeof(bool));
-				if (!a->astar.closedlst[i])
-					exit((prterr(v, ERRMALL, 1, 1), 1));
-			}
-			add_actor(v, &v->actors, &a);
-		}
-		tmp = tmp->right;
-	}
-}
-
-void	init_actors(t_vars *v)
-{
-	init_guard(v, v->mapv.map, NULL);
-	init_objects(v, NULL);
-}
-
 // v->game.nb_actors = v->game.nb_guard + NUM_OBJS;
 // printactors(v);
 void	check_map(t_vars *v)
@@ -292,10 +94,21 @@ void	check_map(t_vars *v)
 	parse(v, -1, NULL);
 	v->player.x = v->player.player->x + 0.5;
 	v->player.y = v->player.player->y + 0.5;
-	v->player.animp = EIFIST;
-	v->player.animoff = 0;
-	init_doors(v);
 	init_actors(v);
+}
+
+void	init2(t_vars *v)
+{
+	inittextures(v, 4);
+	initsounds(v);
+	inithud(v);
+	initplayeranim(v);
+	initweapon(v);
+	initguardanim(v);
+	check_map(v);
+	init_thread_pool(v, -1);
+	init_player_dir(v);
+	mlx_do_key_autorepeatoff(v->mlx);
 }
 
 void	init(t_vars *v, int argc, char **argv)
@@ -319,15 +132,5 @@ void	init(t_vars *v, int argc, char **argv)
 	(ft_bzero(v->keys, MAX_KEYS), ft_bzero(v->mouses, MAX_MOUSE));
 	initwindow(v, argc, argv);
 	initmodes(v, argc);
-	inittextures(v, 4);
-	v->game.skybox = v->img[ESKYBOX];
-	initsounds(v);
-	inithud(v);
-	initplayeranim(v);
-	initweapon(v);
-	initguardanim(v);
-	check_map(v);
-	init_thread_pool(v, -1);
-	init_player_dir(v);
-	mlx_do_key_autorepeatoff(v->mlx);
+	init2(v);
 }
