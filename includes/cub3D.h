@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/28 23:27:09 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/29 10:24:07 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1094,6 +1094,7 @@ int							printactors(t_vars *v);
 void						sort_descending(t_actor **head, int bound,
 								bool swapped, t_actor *last_sorted);
 void						ft_swaps(t_actor **head, t_actor *a, t_actor *b);
+void						load_images_from_folder(t_vars *v, const char *dir);
 
 // Interactions
 

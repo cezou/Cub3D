@@ -6,7 +6,7 @@
 #    By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 11:28:17 by pmagnero          #+#    #+#              #
-#    Updated: 2024/10/28 23:17:47 by pmagnero         ###   ########.fr        #
+#    Updated: 2024/10/29 10:25:02 by pmagnero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -112,6 +112,7 @@ SRCS =	srcs/cub3D.c \
 		srcs/utils/cub3D_utils5.c \
 		srcs/utils/cub3D_utils6.c \
 		srcs/utils/cub3D_utils7.c \
+		srcs/utils/cub3D_resources_utils.c \
 		srcs/utils/cub3D_clear.c \
 		srcs/utils/cub3D_clear_thread.c \
 		srcs/utils/cub3D_random.c \
