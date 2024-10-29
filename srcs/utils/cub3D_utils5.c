@@ -15,26 +15,26 @@
 /// @brief Print the linked list and the content of each node for debug purpose
 /// @param v Vars
 /// @return 
-int	printactors(t_vars *v)
-{
-	t_actor	*tmp;
-	t_actor	*head;
+// int	printactors(t_vars *v)
+// {
+// 	t_actor	*tmp;
+// 	t_actor	*head;
 
-	head = v->actors;
-	tmp = v->actors->next;
-	printf("Actors: \n");
-	while (tmp != head)
-	{
-		printf("img: %d x: %f y: %f", tmp->img_i,
-			tmp->x, tmp->y);
-		printf("\n");
-		tmp = tmp->next;
-	}
-	printf("img: %d x: %f y: %f", tmp->img_i,
-		tmp->x, tmp->y);
-	printf("\n");
-	return (0);
-}
+// 	head = v->actors;
+// 	tmp = v->actors->next;
+// 	printf("Actors: \n");
+// 	while (tmp != head)
+// 	{
+// 		printf("img: %d x: %f y: %f", tmp->img_i,
+// 			tmp->x, tmp->y);
+// 		printf("\n");
+// 		tmp = tmp->next;
+// 	}
+// 	printf("img: %d x: %f y: %f", tmp->img_i,
+// 		tmp->x, tmp->y);
+// 	printf("\n");
+// 	return (0);
+// }
 
 /// @brief Add a new element to the linked list
 /// @param v Vars

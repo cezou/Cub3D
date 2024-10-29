@@ -94,12 +94,11 @@ void	sort_files_alphabetically(t_vars *v, DIR *fd, struct dirent **f)
 /// @param dir Directory path
 void	load_images_from_folder(t_vars *v, const char *dir)
 {
-	DIR				*fd;
 	struct dirent	*in_file;
 
 	if (MANDATORY)
 		return ;
-	fd = opendir(dir);
+	DIR (*fd) = opendir(dir);
 	if (!fd)
 		exit((prterr(v, "Error : Failed to open input directory\n", 1, 1), 1));
 	sort_files_alphabetically(v, fd, &in_file);

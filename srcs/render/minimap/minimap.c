@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 15:20:01 by cviegas           #+#    #+#             */
-/*   Updated: 2024/10/05 15:20:01 by cviegas          ###   ########.fr       */
+/*   Updated: 2024/10/29 11:50:15 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,17 @@ static void	pick_and_draw(t_v2f size_angle, t_v2i x_y, t_v2f pos, t_vars *v)
 	t_v2i	src;
 	int		color;
 	t_v2f	ratio;
-	t_imga	*img;
 
-	img = &v->img[EMAPHEAD];
+	t_imga (*img) = &v->img[EMAPHEAD];
 	center = (t_v2i){img->width / 2, img->height / 2};
 	ratio[0] = (float)img->width / size_angle[0];
 	ratio[1] = (float)img->height / size_angle[0];
-	src[0] = (i)(((x_y[0] * ratio[0] - center[0]) * cos(size_angle[1]) - (x_y[1]
-					* ratio[1] - center[1]) * sin(size_angle[1])) + center[0]);
-	src[1] = (i)(((x_y[0] * ratio[0] - center[0]) * sin(size_angle[1]) + (x_y[1]
-					* ratio[1] - center[1]) * cos(size_angle[1])) + center[1]);
+	src[0] = (int)(((x_y[0] * ratio[0] - center[0]) * cos(size_angle[1])
+				- (x_y[1] * ratio[1] - center[1]) * sin(size_angle[1]))
+			+ center[0]);
+	src[1] = (int)(((x_y[0] * ratio[0] - center[0]) * sin(size_angle[1])
+				+ (x_y[1] * ratio[1] - center[1]) * cos(size_angle[1]))
+			+ center[1]);
 	if (src[0] >= 0 && src[0] < img->width && src[1] >= 0
 		&& src[1] < img->height)
 	{
@@ -111,21 +112,22 @@ void	rendermap(t_vars *v)
 	t_v2i	i_j;
 	t_v2i	x_y;
 	t_v2f	screen;
-	size_t	nb_blocks;
 	float	size;
 
-	nb_blocks = v->hud.map_zoom;
+	size_t (nb_blocks) = v->hud.map_zoom;
 	size = v->screen.resw * 0.15 / nb_blocks;
-	i_j[0] = (i)v->player.x - (nb_blocks / 2 + 1);
+	i_j[0] = (int)(v->player.x) - (nb_blocks / 2 + 1);
 	x_y[0] = -1;
-	while (++i_j[0] < (i)v->player.x + (i)(nb_blocks / 2 + 1) && (++x_y[0], 1))
+	while (++i_j[0] < (int)(v->player.x) + (int)(nb_blocks / 2 + 1)
+		&& (++x_y[0], 1))
 	{
 		x_y[1] = -1;
-		i_j[1] = (i)v->player.y - (nb_blocks / 2 + 1);
+		i_j[1] = (int)(v->player.y) - (nb_blocks / 2 + 1);
 		while (++i_j[1] < v->player.y + (nb_blocks / 2) && (++x_y[1] || 1))
 		{
-			screen = (t_v2f){size + (x_y[0] - (v->player.x - (i)v->player.x))
-				* size, size + (x_y[1] - (v->player.y - (i)v->player.y))
+			screen = (t_v2f){size + (x_y[0]
+					- (v->player.x - (int)(v->player.x)))
+				* size, size + (x_y[1] - (v->player.y - (int)(v->player.y)))
 				* size};
 			draw_a_block(screen, i_j, size, v);
 		}

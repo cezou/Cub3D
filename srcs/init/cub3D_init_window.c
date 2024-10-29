@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D_init_window.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cviegas <cviegas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/25 08:12:24 by cviegas          ###   ########.fr       */
+/*   Updated: 2024/10/29 16:42:45 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void	initwindow(t_vars *v, int argc, char **argv)
 		if (is_bad_res(v))
 			exit((prterr(v, ERRRES, 1, 0), 1));
 		if (!WSL && (v->screen.resw > v->screen.screenw
-				|| v->screen.resh > v->screen.screenh))
+				|| v->screen.resh > v->screen.screenh
+				|| v->screen.resw < 320 || v->screen.resh < 320))
 			exit((prterr(v, "Resolution is bigger than your screen", 1, 0), 1));
 	}
 	initmainimage(v);

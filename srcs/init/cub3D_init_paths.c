@@ -6,11 +6,21 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/29 10:16:03 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/29 11:40:35 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
+
+void	initpath3(t_vars *v)
+{
+	v->img[ESKYBOX].filename = "resources/textures/skybox.xpm";
+	v->img[EHUDIMG].filename = "resources/textures/HUDempty.xpm";
+	v->img[EMAPBORDER].filename = "resources/textures/MapBorder.xpm";
+	v->img[EMAPHEAD].filename = "resources/textures/MapHead.xpm";
+	v->img[ETITLE].filename = "resources/textures/title.xpm";
+	load_images_from_folder(v, "resources/textures/Animated_SkyBox/SkyBox3");
+}
 
 void	initpath2(t_vars *v)
 {
@@ -37,12 +47,6 @@ void	initpath2(t_vars *v)
 	v->img[EGUARDW].filename = "resources/textures/monster_walk.xpm";
 	v->img[EGUARDDEATH].filename = "resources/textures/monster_death.xpm";
 	v->img[EGUARDATTR].filename = "resources/textures/monster_attack.xpm";
-	v->img[ESKYBOX].filename = "resources/textures/skybox.xpm";
-	v->img[EHUDIMG].filename = "resources/textures/HUDempty.xpm";
-	v->img[EMAPBORDER].filename = "resources/textures/MapBorder.xpm";
-	v->img[EMAPHEAD].filename = "resources/textures/MapHead.xpm";
-	v->img[ETITLE].filename = "resources/textures/title.xpm";
-	load_images_from_folder(v, "resources/textures/Animated_SkyBox/SkyBox3");
 }
 
 // v->img[EGUARDW].filename = "resources/textures/general.xpm";
@@ -50,6 +54,7 @@ void	initpath2(t_vars *v)
 void	initpathtext(t_vars *v)
 {
 	initpath2(v);
+	initpath3(v);
 	v->img[EMENUSELECT].filename = "resources/textures/menus/select.xpm";
 	v->img[EMENU].filename = "resources/textures/menus/menu_start.xpm";
 	v->img[EMENUIG].filename = "resources/textures/menus/menu_ingame.xpm";

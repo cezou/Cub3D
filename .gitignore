@@ -1,6 +1,5 @@
 .vscode/*
-gmon.out
-valgrind*
+logs/*
 objs/*
 objs_b/*
 includes/printf/*.o

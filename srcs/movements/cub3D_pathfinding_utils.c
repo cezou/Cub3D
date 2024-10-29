@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 18:16:14 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/27 14:53:17 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/29 17:16:18 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	erase_head(t_astar *astar, t_pathfinding **lst)
 /// @brief Utilitary function to print the generated path by the astar algorithm
 /// @param v Vars
 /// @param astar Structure holding datas of the pathfinding algorithm
-void	tracepath(t_vars *v, t_astar *astar)
+void	tracepath(t_vars *v, t_astar *astar, t_actor *a)
 {
 	int (row) = astar->target->y;
 	int (col) = astar->target->x;
@@ -80,10 +80,8 @@ void	tracepath(t_vars *v, t_astar *astar)
 		row = tmprow;
 		col = tmpcol;
 	}
-	tmp = new_cell(0.0, row, col, astar->celld[row][col].map);
-	if (!tmp)
-		exit((prterr(v, ERRMALL, 1, 1), 1));
-	add_cell(astar, &tmp, &astar->trace);
+	a->vectorx = a->astar.trace->prev->j - a->x;
+	a->vectory = a->astar.trace->prev->i - a->y;
 }
 
 /// @brief Check if a node exist in a linked list

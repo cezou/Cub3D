@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/25 19:36:00 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/29 17:55:36 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	update_travel(t_vars *v, t_actor *tmp)
 	tmp->x += tmp->ms * tmp->vectorx;
 	tmp->y += tmp->ms * tmp->vectory;
 	tmp->targetdist -= tmp->norm;
-	if (tmp->targetdist <= 1.5 || tmp->dist > 200 - 1
+	if (tmp->targetdist <= 1.0f || tmp->dist > 200 - 1
 		|| !can_move(v, (t_point2){tmp->x, tmp->y, -1, 0}, NULL, tmp))
 		tmp->state = EHIT;
 }

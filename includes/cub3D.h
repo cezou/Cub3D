@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/29 10:24:07 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/29 16:11:11 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "mlx_linux/minilibx-linux/mlx.h"
 # include "mlx_linux/minilibx-linux/mlx_int.h"
 # include "printf/ft_printf.h"
-# include "uthash.h"
+# include "uthash/uthash.h"
 # include <X11/extensions/Xfixes.h>
 # include <X11/keysym.h>
 # include <errno.h>
@@ -64,7 +64,7 @@
 // Sounds
 
 # ifndef MANDATORY
-#  define ACTIVATE_SOUND 0
+#  define ACTIVATE_SOUND 1
 #  define MANDATORY 0
 #  define VALID " \t\n\v\f\r10NSWEDG"
 # else
@@ -482,10 +482,6 @@ typedef struct s_sprite_map
 	int						value;
 	UT_hash_handle			hh;
 }							t_sprite_map;
-
-int							get_sprite_id(t_sprite_map *map, const char *key);
-
-typedef int					i;
 
 typedef struct s_point
 {
@@ -1201,11 +1197,11 @@ void						update_texture_pixels(t_vars *v, t_point p, int *t);
 
 // Pathfinding
 
-bool						astar(t_vars *v, t_astar *astar);
+bool						astar(t_vars *v, t_astar *astar, t_actor *a);
 bool						isdestination(t_map *src, t_map *dst);
 void						check_and_insert_node(t_vars *v,
 								t_astar *astar, t_pair p, t_map *dir);
-void						tracepath(t_vars *v, t_astar *astar);
+void						tracepath(t_vars *v, t_astar *astar, t_actor *a);
 void						clear_lst(t_astar *astar, t_pathfinding **lst);
 t_pathfinding				*del_node(t_astar *astar, int *k,
 								t_pathfinding **head, t_pathfinding **node);
@@ -1309,11 +1305,8 @@ bool						is_there_unclosed_doors(char **map, t_vars *v);
 
 void						draw_square(t_v2f pos, float size, int color,
 								t_vars *v);
-void						draw_rotated_img(t_imga *img, t_v2f pos, float size,
-								t_vars *v, float angle);
 void						draw_scaled_img(t_imga *img, t_v2f pos, float size,
 								t_vars *v);
-;
 void						rendermap(t_vars *v);
 // void					freeall(void **tab);
 void						key_management(t_vars *v);

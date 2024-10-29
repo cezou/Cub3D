@@ -6,7 +6,7 @@
 #    By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 11:28:17 by pmagnero          #+#    #+#              #
-#    Updated: 2024/10/29 10:25:02 by pmagnero         ###   ########.fr        #
+#    Updated: 2024/10/29 18:02:11 by pmagnero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,9 @@ HEADER_MINIAUDIO = ./includes/miniaudio
 OBJS_DIR	= objs/
 OBJS_DIR_B	= objs_b/
 
-FLAG = -Wall -Wextra -Werror -g -O3 #-fsanitize=thread -fPIE
+LOGS		= ./logs
+
+FLAG = -Wall -Wextra -Werror -O3 #-fsanitize=thread -fPIE
 
 MLX_FLAG = -lXext -lX11 -lz -lm -pthread -ldl -lpthread -lXfixes# -lasound
 
@@ -58,7 +60,7 @@ CC	=	cc
 
 VALGRIND_F	=	--leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes --track-origins=yes --suppressions=ignore.txt# --gen-suppressions=all --show-leak-kinds=all --log-fd=1 --trace-children=yes
 
-NORME	=	srcs/**/*.c includes/*.h includes/printf/*.c includes/printf/*.h includes/printf/**/*.c includes/printf/**/*.h
+NORME	=	srcs/** includes/*.h includes/printf/*.c includes/printf/*.h includes/printf/**/*.c includes/printf/**/*.h
 
 # ARGS ?= $(shell bash -c 'read -p "ARGS= " args; echo $$args')
 
@@ -241,9 +243,9 @@ extfunc:
 	@echo "#########  EXTERNAL FUNCTION  ##########"
 	@echo "########################################\033[0m\n"
 ifeq ($(b), 0)
-	@nm -gu $(NAME_BONUS) | awk '!/malloc|exit|free|__|write|memcpy|X|pthread/ {++n;sub(/[ \t]+/, ""); printf "%s", $$0; if ($$0) printf "\t\033[$(COLOR_KO)mERROR!\033[0m\n\n"} END{if (n > 0) {printf "\033[$(COLOR_KO)mYou Fucking DONKEY, what are those forbidden functions !!!\033[0m\n\n";} else {printf "\033[$(COLOR_OK)mOK!, No forbidden functions in use !\033[0m\n\n"}}'
-else
 	@nm -gu $(NAME) | awk '!/malloc|exit|free|__|write|memcpy|X|pthread/ {++n;sub(/[ \t]+/, ""); printf "%s", $$0; if ($$0) printf "\t\033[$(COLOR_KO)mERROR!\033[0m\n\n"} END{if (n > 0) {printf "\033[$(COLOR_KO)mYou Fucking DONKEY, what are those forbidden functions !!!\033[0m\n\n";} else {printf "\033[$(COLOR_OK)mOK!, No forbidden functions in use !\033[0m\n\n"}}'
+else
+	@nm -gu $(NAME_BONUS) | awk '!/malloc|exit|free|__|write|memcpy|X|pthread/ {++n;sub(/[ \t]+/, ""); printf "%s", $$0; if ($$0) printf "\t\033[$(COLOR_KO)mERROR!\033[0m\n\n"} END{if (n > 0) {printf "\033[$(COLOR_KO)mYou Fucking DONKEY, what are those forbidden functions !!!\033[0m\n\n";} else {printf "\033[$(COLOR_OK)mOK!, No forbidden functions in use !\033[0m\n\n"}}'
 endif
 norme:
 	@echo "\n\033[$(COLOR_TITLE)m########################################"
@@ -260,9 +262,9 @@ valgrind:
 	@echo "##############  VALGRIND  ##############"
 	@echo "########################################\033[0m\n"
 ifeq ($(b), 0)
-	@valgrind $(VALGRIND_F) --log-file=valgrind.log ./$(NAME) resources/maps/test.cub 800 600
+	@valgrind $(VALGRIND_F) --log-file=$(LOGS)/valgrind.log ./$(NAME) resources/maps/test.cub 800 600
 else
-	valgrind $(VALGRIND_F) --log-file=valgrind_bonus.log ./$(NAME_BONUS) resources/maps/subject.cub resources/extensions/kek.csv 800 600
+	valgrind $(VALGRIND_F) --log-file=$(LOGS)/valgrind_bonus.log ./$(NAME_BONUS) resources/maps/subject.cub resources/extensions/kek.csv 800 600
 endif
 
 clean:

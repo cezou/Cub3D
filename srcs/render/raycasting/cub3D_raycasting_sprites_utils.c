@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/28 22:35:04 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/29 18:37:06 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	guardattack(t_vars *v, t_sprite_data *sp, t_actor *g)
 		|| sp->drawstartx <= 0 || sp->drawstartx >= v->screen.resw
 		|| sp->transformy > v->ray.zbuffer[sp->drawstartx])
 		return ;
-	if (g->hasrange && !g->justattack && g->dist > 15 && g->state == ECHASE)
+	if (g->hasrange && !g->justattack && g->dist < 3 && g->state == ECHASE)
 	{
 		g->img_i = EGUARDATTR;
 		g->state = EATTACKR;
@@ -76,7 +76,8 @@ void	hitguard(t_vars *v, t_sprite_data *sp, t_actor *g)
 		|| sp->transformy <= 0)
 		return ;
 	if (sp->drawstartx > 0 && g->dist < 50 && sp->drawstartx < v->screen.resw
-		&& sp->transformy < v->ray.zbuffer[sp->drawstartx])
+		&& sp->transformy < v->ray.zbuffer[sp->drawstartx]
+		&& g->dist >= 3.0)
 	{
 		g->img_i = EGUARDW;
 		g->state = ECHASE;
@@ -89,11 +90,7 @@ void	hitguard(t_vars *v, t_sprite_data *sp, t_actor *g)
 		return ;
 	if (v->player.attack && g->dist <= v->player.currweapon.range
 		&& g->state != EDEAD && !v->player.currweapon.isprojectile)
-	{
 		apply_damage(v, g);
-		printf("HIT %d, x: %f, y: %f, dist: %f, state: %d\n", g->hp, g->x, g->y,
-			g->dist, g->state);
-	}
 	else if (g->dist <= v->player.currweapon.range)
 		v->game.canhit = 1;
 }

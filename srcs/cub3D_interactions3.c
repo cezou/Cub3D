@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 09:51:53 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/28 22:45:26 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/29 19:11:04 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,23 @@ void	apply_damage(t_vars *v, t_actor *g)
 	g->hp -= v->player.currweapon.dmg / (p_random(v) % 5 + 1);
 	g->animoffy = 0;
 	g->img_i = EGUARDDEATH;
-	if (p_random(v) >= g->painchance)
+	if (ACTIVATE_SOUND)
 	{
-		g->state = EPAIN;
-		g->timestate = timestamp_in_ms(v);
+		if (ma_sound_is_playing(&v->sound.sound[EGUARDI]))
+			ma_sound_seek_to_pcm_frame((ma_sound_stop(
+						&v->sound.sound[EGUARDI]),
+					&v->sound.sound[EGUARDI]), 0);
+		ma_sound_start(&v->sound.sound[EGUARDI]);
 	}
+	if (p_random(v) >= g->painchance)
+		g->timestate = timestamp_in_ms((g->state = EPAIN, v));
 	if (g->hp <= 0)
 	{
+		if (ACTIVATE_SOUND)
+		{
+			ma_sound_start(&v->sound.sound[EGUARDD]);
+			ma_sound_stop(&v->sound.sound[EGUARDI]);
+		}
 		g->hp = 0;
 		g->state = EDEAD;
 	}

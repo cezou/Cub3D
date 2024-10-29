@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/28 22:51:39 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/29 18:11:32 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,14 @@
 /// @brief Update sprite animations attack range
 /// @param v Vars
 /// @param a Sprite to update
-inline void	update_sprite_anim_attackr(t_vars *v, t_actor *a)
+void	update_sprite_anim_attackr(t_vars *v, t_actor *a)
 {
 	int	d;
 
 	if (a->animoffy >= v->img[a->img_i].height)
 	{
+		if (a->astar.open)
+			clear_lst(&a->astar, &a->astar.open);
 		a->justattack = 1;
 		a->animoffy = 0;
 		a->state = ECHASE;
@@ -38,7 +40,7 @@ inline void	update_sprite_anim_attackr(t_vars *v, t_actor *a)
 /// @brief Update sprite animation pain
 /// @param v Vars
 /// @param a Sprite to update
-inline void	update_sprite_anim_pain(t_vars *v, t_actor *a)
+void	update_sprite_anim_pain(t_vars *v, t_actor *a)
 {
 	a->animoffy = 0;
 	if (timestamp_in_ms(v) - a->timestate > 500)
@@ -52,7 +54,7 @@ inline void	update_sprite_anim_pain(t_vars *v, t_actor *a)
 /// @brief Update sprite animation death
 /// @param v Vars
 /// @param a Sprite to update
-inline void	update_sprite_anim_death(t_vars *v, t_actor *a)
+void	update_sprite_anim_death(t_vars *v, t_actor *a)
 {
 	if (a->animoffy >= v->img[a->img_i].height - v->img[a->img_i].animy)
 	{
@@ -65,14 +67,18 @@ inline void	update_sprite_anim_death(t_vars *v, t_actor *a)
 }
 
 //	a->norm = sqrt(a->vectorx * a->vectorx + a->vectory * a->vectory);
+// printf("x: %f, y: %f, x: %d, y: %d, norm: %f, vx: %f, vy: %f, pj: %d,
+// pi: %d, nb_astar: %d\n", a->x, a->y, (int)round(a->x), (int)round(a->y),
+// a->norm, a->vectorx, a->vectory, path->j, path->i, a->astar.nb_astar);
+// printf("vx: %f, vy: %f, pj: %d, pi: %d, x: %f, y: %f\n", a->vectorx,
+// a->vectory, path->j, path->i, a->x, a->y);
 
 /// @brief Update sprite animation chase
 /// @param v Vars
 /// @param a Sprite to update
-void	update_sprite_anim_chase(t_vars *v, t_actor *a)
+void	update_sprite_anim_chase(t_vars *v, t_actor *a, int i,
+			t_pathfinding *path)
 {
-	int (i) = -1;
-	t_pathfinding (*path) = NULL;
 	if (a->animoffy >= v->img[a->img_i].height)
 	{
 		a->justattack = 0;
@@ -80,22 +86,23 @@ void	update_sprite_anim_chase(t_vars *v, t_actor *a)
 	}
 	a->astar.target = v->player.player;
 	a->astar.curr = a->map_pos;
-	if (!a->astar.trace && !astar(v, &a->astar))
+	if (!a->astar.trace && !astar(v, &a->astar, a))
 		return (a->state = EIDLE, (void)v);
 	path = a->astar.trace->prev;
-	a->vectorx = path->j - a->x;
-	a->vectory = path->i - a->y;
-	a->angle = atan2(a->vectory, a->vectorx);
-	a->x += a->ms * (path->j + 0.5 - a->x);
-	a->y += a->ms * (path->i + 0.5 - a->y);
-	if (path && a->astar.nb_astar > 0
-		&& (int)(a->x) == path->j && (int)(a->y) == path->i)
+	if (path->j != (int)round(a->x) || path->i != (int)round(a->y))
 	{
-		del_node((a->map_pos = path->curr, &a->astar), &i,
-			&a->astar.trace, &path);
-		if (!a->astar.nb_astar)
-			a->astar.trace = NULL;
+		a->angle = atan2(a->vectory, a->vectorx);
+		a->x += a->ms * a->vectorx;
+		a->y += a->ms * a->vectory;
 	}
+	if (!path || !a->astar.nb_astar
+		|| (int)round(a->x) != path->j || (int)round(a->y) != path->i)
+		return ;
+	del_node((a->map_pos = path->curr, &a->astar), &i, &a->astar.trace, &path);
+	a->vectorx = a->astar.trace->prev->j - a->x;
+	a->vectory = a->astar.trace->prev->i - a->y;
+	if (!a->astar.nb_astar)
+		a->astar.trace = NULL;
 }
 
 // path = tmp->astar.trace->prev;
@@ -125,6 +132,6 @@ void	update_guards(t_vars *v, t_actor **actor)
 	else if (tmp->state == EATTACKR)
 		update_sprite_anim_attackr(v, tmp);
 	else if (tmp->state == ECHASE)
-		update_sprite_anim_chase(v, tmp);
+		update_sprite_anim_chase(v, tmp, -1, NULL);
 	calc_angle(v, tmp);
 }

@@ -95,6 +95,8 @@ void	clear_lst(t_astar *astar, t_pathfinding **lst)
 	int				i;
 	t_pathfinding	*tmp;
 
+	if (!lst || !*lst)
+		return ;
 	i = -1;
 	tmp = *lst;
 	while (++i < astar->nb_astar && tmp)

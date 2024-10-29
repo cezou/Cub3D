@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/28 13:38:42 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/29 12:35:26 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /// @brief Update player animations
 /// @param v Vars
 // v->ray.hitguard = 0; Shots per minute
-inline void	update_player_animations(t_vars *v)
+void	update_player_animations(t_vars *v)
 {
 	if (!v->player.pattack)
 		return ;
@@ -35,7 +35,7 @@ inline void	update_player_animations(t_vars *v)
 
 /// @brief Update player movement/bobbing
 /// @param v Vars
-inline void	update_player_movement(t_vars *v)
+void	update_player_movement(t_vars *v)
 {
 	if (v->player.moving)
 	{
@@ -64,7 +64,7 @@ inline void	update_player_movement(t_vars *v)
 
 /// @brief Update player jump/bobbing
 /// @param v Vars
-inline void	update_player_motion(t_vars *v)
+void	update_player_motion(t_vars *v)
 {
 	v->ray.pitch += sin((v->game.cambobtime) * 5.0f) * 1.4f;
 	v->player.motionx = sin((v->game.cambobtime) * 8.0f) * 2.0f;
@@ -89,7 +89,7 @@ inline void	update_player_motion(t_vars *v)
 
 /// @brief Update player hp/damage calculations
 /// @param v Vars
-inline void	update_player_hp(t_vars *v)
+void	update_player_hp(t_vars *v)
 {
 	if (v->player.hit)
 	{

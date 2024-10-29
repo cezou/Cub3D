@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 18:16:14 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/27 14:48:03 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/29 16:10:40 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ bool	init_astar(t_vars *v, t_astar *astar)
 /// @brief Pathfinding algorithm
 /// @param v Vars
 /// @param astar Structure holding datas
-bool	astar(t_vars *v, t_astar *astar)
+bool	astar(t_vars *v, t_astar *astar, t_actor *a)
 {
 	t_pathfinding	*tmp;
 
@@ -170,7 +170,8 @@ bool	astar(t_vars *v, t_astar *astar)
 		erase_head(astar, &astar->open);
 		astar->closedlst[astar->i][astar->j] = true;
 		if (generate_successors(v, astar))
-			return (clear_lst(astar, &astar->open), tracepath(v, astar), true);
+			return (clear_lst(astar, &astar->open),
+				tracepath(v, astar, a), true);
 	}
 	return (clear_lst(astar, &astar->open), false);
 }
