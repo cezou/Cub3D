@@ -6,7 +6,7 @@
 #    By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 11:28:17 by pmagnero          #+#    #+#              #
-#    Updated: 2024/10/29 18:02:11 by pmagnero         ###   ########.fr        #
+#    Updated: 2024/10/29 22:46:27 by pmagnero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ HEADER_MINIAUDIO = ./includes/miniaudio
 OBJS_DIR	= objs/
 OBJS_DIR_B	= objs_b/
 
-LOGS		= ./logs
+LOGS		= logs
 
 FLAG = -Wall -Wextra -Werror -O3 #-fsanitize=thread -fPIE
 

@@ -109,7 +109,8 @@ int	render(t_vars *v)
 		rendermap(v);
 	update_animations(v);
 	mlx_put_image_to_window(v->mlx, v->screen.win, v->img[EBUFF].img, 0, 0);
-	v->player.attack = 0;
+	if (!v->player.currweapon.isprojectile)
+		v->player.attack = 0;
 	v->game.oldtime = v->game.time;
 	v->game.time = timestamp_in_ms(v);
 	v->game.frametime = (v->game.time - v->game.oldtime) / 1000.0;

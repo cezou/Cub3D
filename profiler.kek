@@ -1,0 +1,1140 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ms/call  ms/call  name    
+ 14.22      0.61     0.61 163399835     0.00     0.00  add_pix
+ 12.59      1.15     0.54 65543470     0.00     0.00  add_pix_custom
+ 11.89      1.66     0.51     3713     0.14     0.16  update_floor_ceil_texture_pixels
+  8.39      2.02     0.36                             ft_memcpy
+  7.93      2.36     0.34 65693791     0.00     0.00  img_pix_put
+  7.23      2.67     0.31 115740053     0.00     0.00  getcolorpix
+  6.99      2.97     0.30  5148195     0.00     0.00  color_lerp
+  6.29      3.24     0.27 74222511     0.00     0.00  save_screen_to_buffer
+  4.90      3.45     0.21                             ft_bzero
+  3.50      3.60     0.15   170600     0.00     0.00  update_texture_pixels
+  3.50      3.75     0.15      100     1.50    14.03  draw_skybox
+  2.56      3.86     0.11       56     1.96     7.76  melting
+  1.86      3.94     0.08                             ma_linear_resampler_process_pcm_frames_f32_downsample
+  1.40      4.00     0.06      100     0.60     1.39  render_player
+  1.17      4.05     0.05       21     2.38     2.38  scale_img
+  0.93      4.09     0.04      278     0.14     0.42  renderemptyzone
+  0.70      4.12     0.03    14684     0.00     0.01  draw_scaled_img
+  0.70      4.15     0.03                             mlx_int_get_line
+  0.70      4.18     0.03                             mlx_int_parse_xpm
+  0.47      4.20     0.02   170600     0.00     0.00  perform_dda
+  0.47      4.22     0.02                             mlx_int_str_str_cote
+  0.23      4.23     0.01      516     0.02     0.06  renderdigit
+  0.23      4.24     0.01      100     0.10    19.90  raycasting
+  0.23      4.25     0.01                             ft_strdup
+  0.23      4.26     0.01                             ma_dr_mp3_L3_huffman
+  0.23      4.27     0.01                             ma_linear_resampler_interpolate_frame_f32
+  0.23      4.28     0.01                             ma_pcm_f32_to_s16
+  0.23      4.29     0.01                             mlx_int_str_str
+  0.00      4.29     0.00   871225     0.00     0.00  is_in_string
+  0.00      4.29     0.00   170600     0.00     0.00  dda_utils
+  0.00      4.29     0.00   170600     0.00     0.00  door_extend_ray
+  0.00      4.29     0.00   170600     0.00     0.00  set_dda
+  0.00      4.29     0.00    22593     0.00     0.00  timestamp_in_ms
+  0.00      4.29     0.00    16469     0.00     0.00  maintitleanim
+  0.00      4.29     0.00    12011     0.00     0.00  tab_len
+  0.00      4.29     0.00     3860     0.00     0.00  is_surrounded_aux
+  0.00      4.29     0.00     3649     0.00     0.00  init_data_floor
+  0.00      4.29     0.00     3100     0.00     0.00  draw_sprite
+  0.00      4.29     0.00     3100     0.00     0.00  guardattack
+  0.00      4.29     0.00     3100     0.00     0.00  hitguard
+  0.00      4.29     0.00     3100     0.00     0.00  set_sprite_boundaries
+  0.00      4.29     0.00     2542     0.00     0.00  update_guards
+  0.00      4.29     0.00     2542     0.00     0.00  update_projectiles
+  0.00      4.29     0.00     2047     0.00     0.00  draw_square
+  0.00      4.29     0.00     1731     0.00     0.00  is_char_valid
+  0.00      4.29     0.00     1731     0.00     0.00  is_player_char
+  0.00      4.29     0.00     1674     0.00     0.00  add_element
+  0.00      4.29     0.00     1674     0.00     0.00  new_point
+  0.00      4.29     0.00     1006     0.00     0.00  freeall
+  0.00      4.29     0.00      965     0.00     0.00  tab_dup
+  0.00      4.29     0.00      794     0.00     0.00  is_valid_pos
+  0.00      4.29     0.00      758     0.00     0.00  is_pressed
+  0.00      4.29     0.00      492     0.00     0.00  calc_angle
+  0.00      4.29     0.00      341     0.00     0.00  m_random
+  0.00      4.29     0.00      287     0.00     0.00  number_to_digits
+  0.00      4.29     0.00      172     0.00     0.18  renderelement
+  0.00      4.29     0.00      161     0.00     0.00  set_pos
+  0.00      4.29     0.00      111     0.00     0.01  rendersmalldigitfps
+  0.00      4.29     0.00      100     0.00     0.00  draw_floor_ceiling_threaded
+  0.00      4.29     0.00      100     0.00     0.03  draw_sprites
+  0.00      4.29     0.00      100     0.00     0.01  render_fps
+  0.00      4.29     0.00      100     0.00     1.46  render_hud_parts
+  0.00      4.29     0.00      100     0.00     0.00  rendercrosshair
+  0.00      4.29     0.00      100     0.00     1.52  renderhud
+  0.00      4.29     0.00      100     0.00     0.07  rendermenu
+  0.00      4.29     0.00      100     0.00     0.00  set_skybox
+  0.00      4.29     0.00      100     0.00     0.00  sort_descending
+  0.00      4.29     0.00       99     0.00     0.00  handle_movement
+  0.00      4.29     0.00       99     0.00     0.00  key_management
+  0.00      4.29     0.00       99     0.00    24.14  render
+  0.00      4.29     0.00       99     0.00     1.19  rendermap
+  0.00      4.29     0.00       99     0.00     0.00  update_animations
+  0.00      4.29     0.00       85     0.00     0.00  update_actors
+  0.00      4.29     0.00       85     0.00     0.00  update_door_animations
+  0.00      4.29     0.00       85     0.00     0.00  update_player
+  0.00      4.29     0.00       79     0.00     0.00  len
+  0.00      4.29     0.00       73     0.00     0.00  inittexture
+  0.00      4.29     0.00       57     0.00     0.00  move
+  0.00      4.29     0.00       56     0.00     7.76  transition_melt_screen
+  0.00      4.29     0.00       55     0.00     0.00  moveplayerx
+  0.00      4.29     0.00       55     0.00     0.00  open_door
+  0.00      4.29     0.00       55     0.00     0.00  printmap2
+  0.00      4.29     0.00       55     0.00     0.00  rotatecamx
+  0.00      4.29     0.00       51     0.00     0.00  moveplayery
+  0.00      4.29     0.00       32     0.00     0.00  cmp
+  0.00      4.29     0.00       31     0.00     0.00  add_actor
+  0.00      4.29     0.00       30     0.00     0.01  rendersmalldigit
+  0.00      4.29     0.00       28     0.00     0.51  puttexturesmenu
+  0.00      4.29     0.00       25     0.00     0.00  get_sprite_id
+  0.00      4.29     0.00       25     0.00     0.00  store_an_obj
+  0.00      4.29     0.00       24     0.00     0.00  initimage
+  0.00      4.29     0.00       23     0.00     0.15  renderdoomhead
+  0.00      4.29     0.00        9     0.00     2.38  initanim
+  0.00      4.29     0.00        9     0.00     2.54  keys
+  0.00      4.29     0.00        8     0.00     0.00  keys_release
+  0.00      4.29     0.00        6     0.00     0.00  booltab_clear
+  0.00      4.29     0.00        6     0.00     0.00  cells_clear
+  0.00      4.29     0.00        6     0.00     0.00  init_guard_astar
+  0.00      4.29     0.00        6     0.00     0.00  is_everything_set
+  0.00      4.29     0.00        6     0.00     0.00  is_texture
+  0.00      4.29     0.00        6     0.00     0.00  is_valid_int
+  0.00      4.29     0.00        6     0.00     0.00  new_actor
+  0.00      4.29     0.00        6     0.00     0.00  set_a_value
+  0.00      4.29     0.00        4     0.00     0.00  hooks
+  0.00      4.29     0.00        4     0.00     0.00  init_xpm
+  0.00      4.29     0.00        4     0.00     0.05  renderammun
+  0.00      4.29     0.00        4     0.00     0.00  rendercard
+  0.00      4.29     0.00        4     0.00     0.00  set_texture
+  0.00      4.29     0.00        3     0.00     7.63  returnkey
+  0.00      4.29     0.00        2     0.00     2.38  init_elem
+  0.00      4.29     0.00        2     0.00     0.00  is_color
+  0.00      4.29     0.00        2     0.00     0.00  menuarrow
+  0.00      4.29     0.00        2     0.00     0.00  mouse_move
+  0.00      4.29     0.00        2     0.00     0.00  nb_occur
+  0.00      4.29     0.00        2     0.00     0.01  renderarmdigit
+  0.00      4.29     0.00        2     0.00     0.01  renderarmsdigits
+  0.00      4.29     0.00        2     0.00     0.01  rendercards
+  0.00      4.29     0.00        2     0.00     0.00  set_a_color
+  0.00      4.29     0.00        2     0.00     0.00  there_is_only_whitespaces
+  0.00      4.29     0.00        1     0.00     0.00  actors_clear
+  0.00      4.29     0.00        1     0.00     0.00  calculate_mapsize_checking
+  0.00      4.29     0.00        1     0.00     0.00  clear_sounds
+  0.00      4.29     0.00        1     0.00     0.00  cleardata
+  0.00      4.29     0.00        1     0.00     0.00  clearimgs
+  0.00      4.29     0.00        1     0.00     0.00  create_entries
+  0.00      4.29     0.00        1     0.00     0.00  dupspace
+  0.00      4.29     0.00        1     0.00     0.00  free_sprite_map
+  0.00      4.29     0.00        1     0.00     0.00  init
+  0.00      4.29     0.00        1     0.00    50.00  init2
+  0.00      4.29     0.00        1     0.00     0.00  init_actors
+  0.00      4.29     0.00        1     0.00     0.00  init_doors
+  0.00      4.29     0.00        1     0.00     0.00  init_guard
+  0.00      4.29     0.00        1     0.00     0.00  init_infos
+  0.00      4.29     0.00        1     0.00     0.00  init_objects
+  0.00      4.29     0.00        1     0.00     0.00  init_player_datas
+  0.00      4.29     0.00        1     0.00     0.00  init_player_dir
+  0.00      4.29     0.00        1     0.00     0.00  init_random_melting_array
+  0.00      4.29     0.00        1     0.00     0.00  init_sprite_map
+  0.00      4.29     0.00        1     0.00     0.00  init_thread_pool
+  0.00      4.29     0.00        1     0.00     0.00  initguardanim
+  0.00      4.29     0.00        1     0.00     0.00  initguardpathanim
+  0.00      4.29     0.00        1     0.00    26.19  inithud
+  0.00      4.29     0.00        1     0.00     0.00  initmodes
+  0.00      4.29     0.00        1     0.00     0.00  initpathtext
+  0.00      4.29     0.00        1     0.00     0.00  initplayeranim
+  0.00      4.29     0.00        1     0.00    19.05  initplayerpathanim
+  0.00      4.29     0.00        1     0.00     0.00  initsounds
+  0.00      4.29     0.00        1     0.00     2.38  inittextures
+  0.00      4.29     0.00        1     0.00     0.00  initweapon
+  0.00      4.29     0.00        1     0.00     0.00  initwindow
+  0.00      4.29     0.00        1     0.00     0.00  is_map_closed
+  0.00      4.29     0.00        1     0.00     0.00  is_there_unclosed_doors
+  0.00      4.29     0.00        1     0.00     0.00  isnt_cub_ended
+  0.00      4.29     0.00        1     0.00     0.00  isnt_ended_by
+  0.00      4.29     0.00        1     0.00     0.00  load_images_from_folder
+  0.00      4.29     0.00        1     0.00     0.00  menuexit
+  0.00      4.29     0.00        1     0.00     0.00  mouse_hide
+  0.00      4.29     0.00        1     0.00     0.00  parse
+  0.00      4.29     0.00        1     0.00     0.00  parse_extension
+  0.00      4.29     0.00        1     0.00     0.00  parsing
+  0.00      4.29     0.00        1     0.00     0.00  parsing_csv
+  0.00      4.29     0.00        1     0.00     0.00  skip_whitespaces
+  0.00      4.29     0.00        1     0.00     0.00  sort_files_alphabetically
+  0.00      4.29     0.00        1     0.00     0.00  stop_threads_pool
+  0.00      4.29     0.00        1     0.00     0.00  store_ceil_infos
+  0.00      4.29     0.00        1     0.00     0.00  store_map
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012-2022 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 4 byte(s) for 0.23% of 4.29 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]     66.4    0.00    2.85                 mlx_loop [1]
+                0.00    2.39      99/99          render [2]
+                0.00    0.43      56/56          transition_melt_screen [10]
+                0.00    0.02       9/9           keys [33]
+                0.00    0.00   16469/16469       maintitleanim [66]
+                0.00    0.00       8/8           keys_release [109]
+                0.00    0.00       2/2           mouse_move [123]
+-----------------------------------------------
+                0.00    2.39      99/99          mlx_loop [1]
+[2]     55.7    0.00    2.39      99         render [2]
+                0.01    1.96      99/100         raycasting [3]
+                0.00    0.15      99/100         renderhud [18]
+                0.06    0.08      99/100         render_player [20]
+                0.00    0.12      99/99          rendermap [21]
+                0.00    0.01      14/28          puttexturesmenu [39]
+                0.00    0.01      99/100         rendermenu [46]
+                0.00    0.00      99/99          handle_movement [90]
+                0.00    0.00      99/99          key_management [91]
+                0.00    0.00      99/99          update_animations [92]
+                0.00    0.00      99/22593       timestamp_in_ms [65]
+-----------------------------------------------
+                0.00    0.02       1/100         returnkey [34]
+                0.01    1.96      99/100         render [2]
+[3]     46.4    0.01    1.98     100         raycasting [3]
+                0.15    1.25     100/100         draw_skybox [4]
+                0.15    0.40  170600/170600      update_texture_pixels [9]
+                0.02    0.00  170600/170600      perform_dda [36]
+                0.00    0.00     100/100         draw_sprites [50]
+                0.00    0.00  170600/170600      set_dda [64]
+                0.00    0.00  170600/170600      dda_utils [62]
+                0.00    0.00     100/100         draw_floor_ceiling_threaded [87]
+-----------------------------------------------
+                0.15    1.25     100/100         raycasting [3]
+[4]     32.7    0.15    1.25     100         draw_skybox [4]
+                0.50    0.44 60621004/65543470     add_pix_custom [5]
+                0.31    0.00 60621004/65693791     img_pix_put [13]
+                0.00    0.00     100/100         set_skybox [88]
+-----------------------------------------------
+                0.04    0.04 4922466/65543470     update_floor_ceil_texture_pixels [7]
+                0.50    0.44 60621004/65543470     draw_skybox [4]
+[5]     23.7    0.54    0.48 65543470         add_pix_custom [5]
+                0.30    0.00 5148195/5148195     color_lerp [15]
+                0.18    0.00 65507312/115740053     getcolorpix [14]
+-----------------------------------------------
+                0.00    0.00    2592/163399835     renderarmdigit [59]
+                0.00    0.00    3360/163399835     rendercard [57]
+                0.00    0.00   11400/163399835     rendercrosshair [56]
+                0.00    0.00   38880/163399835     rendersmalldigit [54]
+                0.00    0.00  143856/163399835     rendersmalldigitfps [52]
+                0.00    0.00  526206/163399835     draw_sprite [49]
+                0.00    0.00  655960/163399835     renderdoomhead [48]
+                0.01    0.00 1383772/163399835     draw_square [45]
+                0.01    0.00 2632938/163399835     puttexturesmenu [39]
+                0.01    0.01 4012416/163399835     renderdigit [28]
+                0.04    0.02 9926384/163399835     draw_scaled_img [23]
+                0.05    0.02 14046692/163399835     renderemptyzone [22]
+                0.05    0.02 14618591/163399835     render_player [20]
+                0.15    0.07 40259180/163399835     melting [11]
+                0.28    0.12 75137608/163399835     update_texture_pixels [9]
+[6]     20.5    0.61    0.27 163399835         add_pix [6]
+                0.27    0.00 74222396/74222511     save_screen_to_buffer [16]
+-----------------------------------------------
+                0.51    0.10    3713/3713        job [8]
+[7]     14.3    0.51    0.10    3713         update_floor_ceil_texture_pixels [7]
+                0.04    0.04 4922466/65543470     add_pix_custom [5]
+                0.03    0.00 5025610/65693791     img_pix_put [13]
+-----------------------------------------------
+                                                 <spontaneous>
+[8]     14.3    0.00    0.61                 job [8]
+                0.51    0.10    3713/3713        update_floor_ceil_texture_pixels [7]
+                0.00    0.00    3649/3649        init_data_floor [69]
+-----------------------------------------------
+                0.15    0.40  170600/170600      raycasting [3]
+[9]     12.9    0.15    0.40  170600         update_texture_pixels [9]
+                0.28    0.12 75137608/163399835     add_pix [6]
+                0.00    0.00  170600/170600      door_extend_ray [63]
+-----------------------------------------------
+                0.00    0.43      56/56          mlx_loop [1]
+[10]    10.1    0.00    0.43      56         transition_melt_screen [10]
+                0.11    0.32      56/56          melting [11]
+                0.00    0.00     112/74222511     save_screen_to_buffer [16]
+                0.00    0.00     112/22593       timestamp_in_ms [65]
+-----------------------------------------------
+                0.11    0.32      56/56          transition_melt_screen [10]
+[11]    10.1    0.11    0.32      56         melting [11]
+                0.15    0.07 40259180/163399835     add_pix [6]
+                0.11    0.00 40259180/115740053     getcolorpix [14]
+-----------------------------------------------
+                                                 <spontaneous>
+[12]     8.4    0.36    0.00                 ft_memcpy [12]
+-----------------------------------------------
+                0.00    0.00   47177/65693791     rendermap [21]
+                0.03    0.00 5025610/65693791     update_floor_ceil_texture_pixels [7]
+                0.31    0.00 60621004/65693791     draw_skybox [4]
+[13]     7.9    0.34    0.00 65693791         img_pix_put [13]
+-----------------------------------------------
+                0.00    0.00   47177/115740053     rendermap [21]
+                0.03    0.00 9926384/115740053     draw_scaled_img [23]
+                0.11    0.00 40259180/115740053     melting [11]
+                0.18    0.00 65507312/115740053     add_pix_custom [5]
+[14]     7.2    0.31    0.00 115740053         getcolorpix [14]
+-----------------------------------------------
+                0.30    0.00 5148195/5148195     add_pix_custom [5]
+[15]     7.0    0.30    0.00 5148195         color_lerp [15]
+-----------------------------------------------
+                0.00    0.00       1/74222511     returnkey [34]
+                0.00    0.00       2/74222511     renderhud [18]
+                0.00    0.00     112/74222511     transition_melt_screen [10]
+                0.27    0.00 74222396/74222511     add_pix [6]
+[16]     6.3    0.27    0.00 74222511         save_screen_to_buffer [16]
+-----------------------------------------------
+                                                 <spontaneous>
+[17]     4.9    0.21    0.00                 ft_bzero [17]
+-----------------------------------------------
+                0.00    0.00       1/100         returnkey [34]
+                0.00    0.15      99/100         render [2]
+[18]     3.5    0.00    0.15     100         renderhud [18]
+                0.00    0.15     100/100         render_hud_parts [19]
+                0.00    0.00      23/23          renderdoomhead [48]
+                0.00    0.00       4/278         renderemptyzone [22]
+                0.00    0.00     100/100         render_fps [53]
+                0.00    0.00       4/4           renderammun [55]
+                0.00    0.00     100/100         rendercrosshair [56]
+                0.00    0.00       2/2           rendercards [58]
+                0.00    0.00       2/2           renderarmsdigits [60]
+                0.00    0.00       2/74222511     save_screen_to_buffer [16]
+-----------------------------------------------
+                0.00    0.15     100/100         renderhud [18]
+[19]     3.4    0.00    0.15     100         render_hud_parts [19]
+                0.04    0.07     274/278         renderemptyzone [22]
+                0.00    0.03     172/172         renderelement [29]
+-----------------------------------------------
+                0.00    0.00       1/100         returnkey [34]
+                0.06    0.08      99/100         render [2]
+[20]     3.2    0.06    0.08     100         render_player [20]
+                0.05    0.02 14618591/163399835     add_pix [6]
+-----------------------------------------------
+                0.00    0.12      99/99          render [2]
+[21]     2.7    0.00    0.12      99         rendermap [21]
+                0.03    0.08   14684/14684       draw_scaled_img [23]
+                0.00    0.01    2047/2047        draw_square [45]
+                0.00    0.00   47177/65693791     img_pix_put [13]
+                0.00    0.00   47177/115740053     getcolorpix [14]
+                0.00    0.00   11979/12011       tab_len [67]
+-----------------------------------------------
+                0.00    0.00       4/278         renderhud [18]
+                0.04    0.07     274/278         render_hud_parts [19]
+[22]     2.7    0.04    0.08     278         renderemptyzone [22]
+                0.05    0.02 14046692/163399835     add_pix [6]
+-----------------------------------------------
+                0.03    0.08   14684/14684       rendermap [21]
+[23]     2.6    0.03    0.08   14684         draw_scaled_img [23]
+                0.04    0.02 9926384/163399835     add_pix [6]
+                0.03    0.00 9926384/115740053     getcolorpix [14]
+-----------------------------------------------
+                                                 <spontaneous>
+[24]     1.9    0.08    0.00                 ma_linear_resampler_process_pcm_frames_f32_downsample [24]
+-----------------------------------------------
+                0.00    0.00       1/21          inittextures [51]
+                0.00    0.00       2/21          init_elem [47]
+                0.02    0.00       9/21          initanim [35]
+                0.02    0.00       9/21          inithud [32]
+[25]     1.2    0.05    0.00      21         scale_img [25]
+-----------------------------------------------
+                0.00    0.05       1/1           main [27]
+[26]     1.2    0.00    0.05       1         init2 [26]
+                0.00    0.03       1/1           inithud [32]
+                0.00    0.02       1/1           initplayerpathanim [38]
+                0.00    0.00       1/1           inittextures [51]
+                0.00    0.00       1/9           initanim [35]
+                0.00    0.00       1/1           initsounds [151]
+                0.00    0.00       1/1           initplayeranim [150]
+                0.00    0.00       1/1           initguardpathanim [147]
+                0.00    0.00       1/1           initguardanim [146]
+                0.00    0.00       1/1           initweapon [152]
+                0.00    0.00       1/1           parse [161]
+                0.00    0.00       1/1           init_random_melting_array [143]
+                0.00    0.00       1/1           init_thread_pool [145]
+                0.00    0.00       1/1           init_objects [140]
+                0.00    0.00       1/1           init_actors [136]
+                0.00    0.00       1/1           init_player_dir [142]
+-----------------------------------------------
+                                                 <spontaneous>
+[27]     1.2    0.00    0.05                 main [27]
+                0.00    0.05       1/1           init2 [26]
+                0.00    0.00       4/4           hooks [118]
+                0.00    0.00       1/1           init [135]
+-----------------------------------------------
+                0.01    0.02     516/516         renderelement [29]
+[28]     0.7    0.01    0.02     516         renderdigit [28]
+                0.01    0.01 4012416/163399835     add_pix [6]
+-----------------------------------------------
+                0.00    0.03     172/172         render_hud_parts [19]
+[29]     0.7    0.00    0.03     172         renderelement [29]
+                0.01    0.02     516/516         renderdigit [28]
+                0.00    0.00     172/287         number_to_digits [85]
+-----------------------------------------------
+                                                 <spontaneous>
+[30]     0.7    0.03    0.00                 mlx_int_get_line [30]
+-----------------------------------------------
+                                                 <spontaneous>
+[31]     0.7    0.03    0.00                 mlx_int_parse_xpm [31]
+-----------------------------------------------
+                0.00    0.03       1/1           init2 [26]
+[32]     0.6    0.00    0.03       1         inithud [32]
+                0.02    0.00       9/21          scale_img [25]
+                0.00    0.00       2/2           init_elem [47]
+                0.00    0.00      10/24          initimage [108]
+-----------------------------------------------
+                0.00    0.02       9/9           mlx_loop [1]
+[33]     0.5    0.00    0.02       9         keys [33]
+                0.00    0.02       3/3           returnkey [34]
+                0.00    0.00       4/758         is_pressed [82]
+                0.00    0.00       2/2           menuarrow [122]
+                0.00    0.00       1/1           menuexit [159]
+-----------------------------------------------
+                0.00    0.02       3/3           keys [33]
+[34]     0.5    0.00    0.02       3         returnkey [34]
+                0.00    0.02       1/100         raycasting [3]
+                0.00    0.00       1/100         renderhud [18]
+                0.00    0.00       1/100         render_player [20]
+                0.00    0.00       1/100         rendermenu [46]
+                0.00    0.00       1/74222511     save_screen_to_buffer [16]
+                0.00    0.00       1/1           cleardata [130]
+-----------------------------------------------
+                0.00    0.00       1/9           init2 [26]
+                0.00    0.02       8/9           initplayerpathanim [38]
+[35]     0.5    0.00    0.02       9         initanim [35]
+                0.02    0.00       9/21          scale_img [25]
+                0.00    0.00       9/73          inittexture [97]
+                0.00    0.00       9/24          initimage [108]
+-----------------------------------------------
+                0.02    0.00  170600/170600      raycasting [3]
+[36]     0.5    0.02    0.00  170600         perform_dda [36]
+-----------------------------------------------
+                                                 <spontaneous>
+[37]     0.5    0.02    0.00                 mlx_int_str_str_cote [37]
+-----------------------------------------------
+                0.00    0.02       1/1           init2 [26]
+[38]     0.4    0.00    0.02       1         initplayerpathanim [38]
+                0.00    0.02       8/9           initanim [35]
+-----------------------------------------------
+                0.00    0.01      14/28          rendermenu [46]
+                0.00    0.01      14/28          render [2]
+[39]     0.3    0.00    0.01      28         puttexturesmenu [39]
+                0.01    0.00 2632938/163399835     add_pix [6]
+-----------------------------------------------
+                                                 <spontaneous>
+[40]     0.2    0.01    0.00                 ft_strdup [40]
+-----------------------------------------------
+                                                 <spontaneous>
+[41]     0.2    0.01    0.00                 ma_dr_mp3_L3_huffman [41]
+-----------------------------------------------
+                                                 <spontaneous>
+[42]     0.2    0.01    0.00                 ma_linear_resampler_interpolate_frame_f32 [42]
+-----------------------------------------------
+                                                 <spontaneous>
+[43]     0.2    0.01    0.00                 ma_pcm_f32_to_s16 [43]
+-----------------------------------------------
+                                                 <spontaneous>
+[44]     0.2    0.01    0.00                 mlx_int_str_str [44]
+-----------------------------------------------
+                0.00    0.01    2047/2047        rendermap [21]
+[45]     0.2    0.00    0.01    2047         draw_square [45]
+                0.01    0.00 1383772/163399835     add_pix [6]
+-----------------------------------------------
+                0.00    0.00       1/100         returnkey [34]
+                0.00    0.01      99/100         render [2]
+[46]     0.2    0.00    0.01     100         rendermenu [46]
+                0.00    0.01      14/28          puttexturesmenu [39]
+-----------------------------------------------
+                0.00    0.00       2/2           inithud [32]
+[47]     0.1    0.00    0.00       2         init_elem [47]
+                0.00    0.00       2/21          scale_img [25]
+                0.00    0.00       2/24          initimage [108]
+-----------------------------------------------
+                0.00    0.00      23/23          renderhud [18]
+[48]     0.1    0.00    0.00      23         renderdoomhead [48]
+                0.00    0.00  655960/163399835     add_pix [6]
+-----------------------------------------------
+                0.00    0.00    3100/3100        draw_sprites [50]
+[49]     0.1    0.00    0.00    3100         draw_sprite [49]
+                0.00    0.00  526206/163399835     add_pix [6]
+                0.00    0.00    3100/3100        hitguard [71]
+                0.00    0.00    3100/3100        guardattack [70]
+-----------------------------------------------
+                0.00    0.00     100/100         raycasting [3]
+[50]     0.1    0.00    0.00     100         draw_sprites [50]
+                0.00    0.00    3100/3100        draw_sprite [49]
+                0.00    0.00    3100/3100        set_sprite_boundaries [72]
+                0.00    0.00     100/100         sort_descending [89]
+-----------------------------------------------
+                0.00    0.00       1/1           init2 [26]
+[51]     0.1    0.00    0.00       1         inittextures [51]
+                0.00    0.00       1/21          scale_img [25]
+                0.00    0.00       3/24          initimage [108]
+-----------------------------------------------
+                0.00    0.00     111/111         render_fps [53]
+[52]     0.0    0.00    0.00     111         rendersmalldigitfps [52]
+                0.00    0.00  143856/163399835     add_pix [6]
+-----------------------------------------------
+                0.00    0.00     100/100         renderhud [18]
+[53]     0.0    0.00    0.00     100         render_fps [53]
+                0.00    0.00     111/111         rendersmalldigitfps [52]
+                0.00    0.00      99/287         number_to_digits [85]
+-----------------------------------------------
+                0.00    0.00      30/30          renderammun [55]
+[54]     0.0    0.00    0.00      30         rendersmalldigit [54]
+                0.00    0.00   38880/163399835     add_pix [6]
+-----------------------------------------------
+                0.00    0.00       4/4           renderhud [18]
+[55]     0.0    0.00    0.00       4         renderammun [55]
+                0.00    0.00      30/30          rendersmalldigit [54]
+                0.00    0.00      16/287         number_to_digits [85]
+-----------------------------------------------
+                0.00    0.00     100/100         renderhud [18]
+[56]     0.0    0.00    0.00     100         rendercrosshair [56]
+                0.00    0.00   11400/163399835     add_pix [6]
+-----------------------------------------------
+                0.00    0.00       4/4           rendercards [58]
+[57]     0.0    0.00    0.00       4         rendercard [57]
+                0.00    0.00    3360/163399835     add_pix [6]
+-----------------------------------------------
+                0.00    0.00       2/2           renderhud [18]
+[58]     0.0    0.00    0.00       2         rendercards [58]
+                0.00    0.00       4/4           rendercard [57]
+-----------------------------------------------
+                0.00    0.00       2/2           renderarmsdigits [60]
+[59]     0.0    0.00    0.00       2         renderarmdigit [59]
+                0.00    0.00    2592/163399835     add_pix [6]
+-----------------------------------------------
+                0.00    0.00       2/2           renderhud [18]
+[60]     0.0    0.00    0.00       2         renderarmsdigits [60]
+                0.00    0.00       2/2           renderarmdigit [59]
+-----------------------------------------------
+                0.00    0.00     965/871225      is_map_closed [154]
+                0.00    0.00  870260/871225      is_surrounded_aux [68]
+[61]     0.0    0.00    0.00  871225         is_in_string [61]
+-----------------------------------------------
+                0.00    0.00  170600/170600      raycasting [3]
+[62]     0.0    0.00    0.00  170600         dda_utils [62]
+-----------------------------------------------
+                0.00    0.00  170600/170600      update_texture_pixels [9]
+[63]     0.0    0.00    0.00  170600         door_extend_ray [63]
+-----------------------------------------------
+                0.00    0.00  170600/170600      raycasting [3]
+[64]     0.0    0.00    0.00  170600         set_dda [64]
+-----------------------------------------------
+                0.00    0.00      99/22593       render [2]
+                0.00    0.00     112/22593       transition_melt_screen [10]
+                0.00    0.00     167/22593       update_animations [92]
+                0.00    0.00     492/22593       update_guards [73]
+                0.00    0.00    5087/22593       update_actors [93]
+                0.00    0.00   16636/22593       maintitleanim [66]
+[65]     0.0    0.00    0.00   22593         timestamp_in_ms [65]
+-----------------------------------------------
+                0.00    0.00   16469/16469       mlx_loop [1]
+[66]     0.0    0.00    0.00   16469         maintitleanim [66]
+                0.00    0.00   16636/22593       timestamp_in_ms [65]
+-----------------------------------------------
+                0.00    0.00       1/12011       store_ceil_infos [168]
+                0.00    0.00       6/12011       parsing [163]
+                0.00    0.00      25/12011       store_an_obj [107]
+                0.00    0.00   11979/12011       rendermap [21]
+[67]     0.0    0.00    0.00   12011         tab_len [67]
+-----------------------------------------------
+                             2610780             is_surrounded_aux [68]
+                0.00    0.00    3860/3860        is_map_closed [154]
+[68]     0.0    0.00    0.00    3860+2610780 is_surrounded_aux [68]
+                0.00    0.00  870260/871225      is_in_string [61]
+                             2610780             is_surrounded_aux [68]
+-----------------------------------------------
+                0.00    0.00    3649/3649        job [8]
+[69]     0.0    0.00    0.00    3649         init_data_floor [69]
+-----------------------------------------------
+                0.00    0.00    3100/3100        draw_sprite [49]
+[70]     0.0    0.00    0.00    3100         guardattack [70]
+-----------------------------------------------
+                0.00    0.00    3100/3100        draw_sprite [49]
+[71]     0.0    0.00    0.00    3100         hitguard [71]
+-----------------------------------------------
+                0.00    0.00    3100/3100        draw_sprites [50]
+[72]     0.0    0.00    0.00    3100         set_sprite_boundaries [72]
+-----------------------------------------------
+                0.00    0.00    2542/2542        update_actors [93]
+[73]     0.0    0.00    0.00    2542         update_guards [73]
+                0.00    0.00     492/22593       timestamp_in_ms [65]
+-----------------------------------------------
+                0.00    0.00    2542/2542        update_actors [93]
+[74]     0.0    0.00    0.00    2542         update_projectiles [74]
+-----------------------------------------------
+                0.00    0.00    1731/1731        calculate_mapsize_checking [128]
+[75]     0.0    0.00    0.00    1731         is_char_valid [75]
+-----------------------------------------------
+                0.00    0.00    1731/1731        calculate_mapsize_checking [128]
+[76]     0.0    0.00    0.00    1731         is_player_char [76]
+-----------------------------------------------
+                0.00    0.00    1674/1674        parse [161]
+[77]     0.0    0.00    0.00    1674         add_element [77]
+-----------------------------------------------
+                0.00    0.00    1674/1674        parse [161]
+[78]     0.0    0.00    0.00    1674         new_point [78]
+-----------------------------------------------
+                0.00    0.00       2/1006        set_a_color [125]
+                0.00    0.00       8/1006        parsing [163]
+                0.00    0.00      31/1006        parse_extension [162]
+                0.00    0.00     965/1006        is_map_closed [154]
+[79]     0.0    0.00    0.00    1006         freeall [79]
+-----------------------------------------------
+                0.00    0.00     965/965         is_map_closed [154]
+[80]     0.0    0.00    0.00     965         tab_dup [80]
+-----------------------------------------------
+                0.00    0.00     794/794         set_pos [86]
+[81]     0.0    0.00    0.00     794         is_valid_pos [81]
+-----------------------------------------------
+                0.00    0.00       4/758         keys [33]
+                0.00    0.00     754/758         handle_movement [90]
+[82]     0.0    0.00    0.00     758         is_pressed [82]
+-----------------------------------------------
+                0.00    0.00     492/492         update_actors [93]
+[83]     0.0    0.00    0.00     492         calc_angle [83]
+-----------------------------------------------
+                0.00    0.00     341/341         init_random_melting_array [143]
+[84]     0.0    0.00    0.00     341         m_random [84]
+-----------------------------------------------
+                0.00    0.00      16/287         renderammun [55]
+                0.00    0.00      99/287         render_fps [53]
+                0.00    0.00     172/287         renderelement [29]
+[85]     0.0    0.00    0.00     287         number_to_digits [85]
+-----------------------------------------------
+                0.00    0.00      51/161         moveplayery [103]
+                0.00    0.00      55/161         moveplayerx [99]
+                0.00    0.00      55/161         move [98]
+[86]     0.0    0.00    0.00     161         set_pos [86]
+                0.00    0.00     794/794         is_valid_pos [81]
+-----------------------------------------------
+                0.00    0.00     100/100         raycasting [3]
+[87]     0.0    0.00    0.00     100         draw_floor_ceiling_threaded [87]
+-----------------------------------------------
+                0.00    0.00     100/100         draw_skybox [4]
+[88]     0.0    0.00    0.00     100         set_skybox [88]
+-----------------------------------------------
+                0.00    0.00     100/100         draw_sprites [50]
+[89]     0.0    0.00    0.00     100         sort_descending [89]
+-----------------------------------------------
+                0.00    0.00      99/99          render [2]
+[90]     0.0    0.00    0.00      99         handle_movement [90]
+                0.00    0.00     754/758         is_pressed [82]
+                0.00    0.00      57/57          move [98]
+                0.00    0.00      55/55          open_door [100]
+-----------------------------------------------
+                0.00    0.00      99/99          render [2]
+[91]     0.0    0.00    0.00      99         key_management [91]
+-----------------------------------------------
+                0.00    0.00      99/99          render [2]
+[92]     0.0    0.00    0.00      99         update_animations [92]
+                0.00    0.00     167/22593       timestamp_in_ms [65]
+                0.00    0.00      85/85          update_actors [93]
+                0.00    0.00      85/85          update_player [95]
+                0.00    0.00      85/85          update_door_animations [94]
+-----------------------------------------------
+                0.00    0.00      85/85          update_animations [92]
+[93]     0.0    0.00    0.00      85         update_actors [93]
+                0.00    0.00    5087/22593       timestamp_in_ms [65]
+                0.00    0.00    2542/2542        update_guards [73]
+                0.00    0.00    2542/2542        update_projectiles [74]
+                0.00    0.00     492/492         calc_angle [83]
+-----------------------------------------------
+                0.00    0.00      85/85          update_animations [92]
+[94]     0.0    0.00    0.00      85         update_door_animations [94]
+-----------------------------------------------
+                0.00    0.00      85/85          update_animations [92]
+[95]     0.0    0.00    0.00      85         update_player [95]
+                0.00    0.00      51/51          moveplayery [103]
+-----------------------------------------------
+                0.00    0.00       4/79          isnt_ended_by [157]
+                0.00    0.00      75/79          init_sprite_map [144]
+[96]     0.0    0.00    0.00      79         len [96]
+-----------------------------------------------
+                0.00    0.00       9/73          initanim [35]
+                0.00    0.00      64/73          load_images_from_folder [158]
+[97]     0.0    0.00    0.00      73         inittexture [97]
+-----------------------------------------------
+                0.00    0.00      57/57          handle_movement [90]
+[98]     0.0    0.00    0.00      57         move [98]
+                0.00    0.00      55/55          printmap2 [101]
+                0.00    0.00      55/55          rotatecamx [102]
+                0.00    0.00      55/55          moveplayerx [99]
+                0.00    0.00      55/161         set_pos [86]
+-----------------------------------------------
+                0.00    0.00      55/55          move [98]
+[99]     0.0    0.00    0.00      55         moveplayerx [99]
+                0.00    0.00      55/161         set_pos [86]
+-----------------------------------------------
+                0.00    0.00      55/55          handle_movement [90]
+[100]    0.0    0.00    0.00      55         open_door [100]
+-----------------------------------------------
+                0.00    0.00      55/55          move [98]
+[101]    0.0    0.00    0.00      55         printmap2 [101]
+-----------------------------------------------
+                0.00    0.00      55/55          move [98]
+[102]    0.0    0.00    0.00      55         rotatecamx [102]
+-----------------------------------------------
+                0.00    0.00      51/51          update_player [95]
+[103]    0.0    0.00    0.00      51         moveplayery [103]
+                0.00    0.00      51/161         set_pos [86]
+-----------------------------------------------
+                0.00    0.00       2/32          set_a_value [117]
+                0.00    0.00       3/32          is_color [121]
+                0.00    0.00       9/32          set_texture [120]
+                0.00    0.00      18/32          is_texture [114]
+[104]    0.0    0.00    0.00      32         cmp [104]
+-----------------------------------------------
+                0.00    0.00       6/31          init_guard [138]
+                0.00    0.00      25/31          init_objects [140]
+[105]    0.0    0.00    0.00      31         add_actor [105]
+-----------------------------------------------
+                0.00    0.00      25/25          store_an_obj [107]
+[106]    0.0    0.00    0.00      25         get_sprite_id [106]
+-----------------------------------------------
+                0.00    0.00      25/25          parse_extension [162]
+[107]    0.0    0.00    0.00      25         store_an_obj [107]
+                0.00    0.00      25/12011       tab_len [67]
+                0.00    0.00      25/25          get_sprite_id [106]
+-----------------------------------------------
+                0.00    0.00       2/24          init_elem [47]
+                0.00    0.00       3/24          inittextures [51]
+                0.00    0.00       9/24          initanim [35]
+                0.00    0.00      10/24          inithud [32]
+[108]    0.0    0.00    0.00      24         initimage [108]
+-----------------------------------------------
+                0.00    0.00       8/8           mlx_loop [1]
+[109]    0.0    0.00    0.00       8         keys_release [109]
+-----------------------------------------------
+                0.00    0.00       6/6           actors_clear [127]
+[110]    0.0    0.00    0.00       6         booltab_clear [110]
+-----------------------------------------------
+                0.00    0.00       6/6           actors_clear [127]
+[111]    0.0    0.00    0.00       6         cells_clear [111]
+-----------------------------------------------
+                0.00    0.00       6/6           init_guard [138]
+[112]    0.0    0.00    0.00       6         init_guard_astar [112]
+-----------------------------------------------
+                0.00    0.00       6/6           parsing [163]
+[113]    0.0    0.00    0.00       6         is_everything_set [113]
+-----------------------------------------------
+                0.00    0.00       6/6           set_a_value [117]
+[114]    0.0    0.00    0.00       6         is_texture [114]
+                0.00    0.00      18/32          cmp [104]
+-----------------------------------------------
+                0.00    0.00       6/6           set_a_color [125]
+[115]    0.0    0.00    0.00       6         is_valid_int [115]
+-----------------------------------------------
+                0.00    0.00       6/6           init_guard [138]
+[116]    0.0    0.00    0.00       6         new_actor [116]
+-----------------------------------------------
+                0.00    0.00       6/6           parsing [163]
+[117]    0.0    0.00    0.00       6         set_a_value [117]
+                0.00    0.00       6/6           is_texture [114]
+                0.00    0.00       2/2           is_color [121]
+                0.00    0.00       2/32          cmp [104]
+-----------------------------------------------
+                0.00    0.00       4/4           main [27]
+[118]    0.0    0.00    0.00       4         hooks [118]
+-----------------------------------------------
+                0.00    0.00       4/4           set_texture [120]
+[119]    0.0    0.00    0.00       4         init_xpm [119]
+-----------------------------------------------
+                0.00    0.00       4/4           parsing [163]
+[120]    0.0    0.00    0.00       4         set_texture [120]
+                0.00    0.00       9/32          cmp [104]
+                0.00    0.00       4/4           init_xpm [119]
+-----------------------------------------------
+                0.00    0.00       2/2           set_a_value [117]
+[121]    0.0    0.00    0.00       2         is_color [121]
+                0.00    0.00       3/32          cmp [104]
+-----------------------------------------------
+                0.00    0.00       2/2           keys [33]
+[122]    0.0    0.00    0.00       2         menuarrow [122]
+-----------------------------------------------
+                0.00    0.00       2/2           mlx_loop [1]
+[123]    0.0    0.00    0.00       2         mouse_move [123]
+-----------------------------------------------
+                0.00    0.00       2/2           set_a_color [125]
+[124]    0.0    0.00    0.00       2         nb_occur [124]
+-----------------------------------------------
+                0.00    0.00       2/2           parsing [163]
+[125]    0.0    0.00    0.00       2         set_a_color [125]
+                0.00    0.00       6/6           is_valid_int [115]
+                0.00    0.00       2/2           nb_occur [124]
+                0.00    0.00       2/1006        freeall [79]
+-----------------------------------------------
+                0.00    0.00       2/2           skip_whitespaces [165]
+[126]    0.0    0.00    0.00       2         there_is_only_whitespaces [126]
+-----------------------------------------------
+                0.00    0.00       1/1           cleardata [130]
+[127]    0.0    0.00    0.00       1         actors_clear [127]
+                0.00    0.00       6/6           cells_clear [111]
+                0.00    0.00       6/6           booltab_clear [110]
+-----------------------------------------------
+                0.00    0.00       1/1           parsing [163]
+[128]    0.0    0.00    0.00       1         calculate_mapsize_checking [128]
+                0.00    0.00    1731/1731        is_player_char [76]
+                0.00    0.00    1731/1731        is_char_valid [75]
+-----------------------------------------------
+                0.00    0.00       1/1           cleardata [130]
+[129]    0.0    0.00    0.00       1         clear_sounds [129]
+-----------------------------------------------
+                0.00    0.00       1/1           returnkey [34]
+[130]    0.0    0.00    0.00       1         cleardata [130]
+                0.00    0.00       1/1           clear_sounds [129]
+                0.00    0.00       1/1           clearimgs [131]
+                0.00    0.00       1/1           actors_clear [127]
+                0.00    0.00       1/1           stop_threads_pool [167]
+-----------------------------------------------
+                0.00    0.00       1/1           cleardata [130]
+[131]    0.0    0.00    0.00       1         clearimgs [131]
+-----------------------------------------------
+                0.00    0.00       1/1           init_sprite_map [144]
+[132]    0.0    0.00    0.00       1         create_entries [132]
+-----------------------------------------------
+                0.00    0.00       1/1           store_map [169]
+[133]    0.0    0.00    0.00       1         dupspace [133]
+-----------------------------------------------
+                0.00    0.00       1/1           init [135]
+[134]    0.0    0.00    0.00       1         free_sprite_map [134]
+-----------------------------------------------
+                0.00    0.00       1/1           main [27]
+[135]    0.0    0.00    0.00       1         init [135]
+                0.00    0.00       1/1           parsing [163]
+                0.00    0.00       1/1           initmodes [148]
+                0.00    0.00       1/1           mouse_hide [160]
+                0.00    0.00       1/1           initwindow [153]
+                0.00    0.00       1/1           free_sprite_map [134]
+                0.00    0.00       1/1           parsing_csv [164]
+-----------------------------------------------
+                0.00    0.00       1/1           init2 [26]
+[136]    0.0    0.00    0.00       1         init_actors [136]
+                0.00    0.00       1/1           init_doors [137]
+                0.00    0.00       1/1           init_guard [138]
+-----------------------------------------------
+                0.00    0.00       1/1           init_actors [136]
+[137]    0.0    0.00    0.00       1         init_doors [137]
+-----------------------------------------------
+                0.00    0.00       1/1           init_actors [136]
+[138]    0.0    0.00    0.00       1         init_guard [138]
+                0.00    0.00       6/6           new_actor [116]
+                0.00    0.00       6/6           init_guard_astar [112]
+                0.00    0.00       6/31          add_actor [105]
+-----------------------------------------------
+                0.00    0.00       1/1           parsing [163]
+[139]    0.0    0.00    0.00       1         init_infos [139]
+-----------------------------------------------
+                0.00    0.00       1/1           init2 [26]
+[140]    0.0    0.00    0.00       1         init_objects [140]
+                0.00    0.00      25/31          add_actor [105]
+-----------------------------------------------
+                0.00    0.00       1/1           initmodes [148]
+[141]    0.0    0.00    0.00       1         init_player_datas [141]
+-----------------------------------------------
+                0.00    0.00       1/1           init2 [26]
+[142]    0.0    0.00    0.00       1         init_player_dir [142]
+-----------------------------------------------
+                0.00    0.00       1/1           init2 [26]
+[143]    0.0    0.00    0.00       1         init_random_melting_array [143]
+                0.00    0.00     341/341         m_random [84]
+-----------------------------------------------
+                0.00    0.00       1/1           parsing_csv [164]
+[144]    0.0    0.00    0.00       1         init_sprite_map [144]
+                0.00    0.00      75/79          len [96]
+                0.00    0.00       1/1           create_entries [132]
+-----------------------------------------------
+                0.00    0.00       1/1           init2 [26]
+[145]    0.0    0.00    0.00       1         init_thread_pool [145]
+-----------------------------------------------
+                0.00    0.00       1/1           init2 [26]
+[146]    0.0    0.00    0.00       1         initguardanim [146]
+-----------------------------------------------
+                0.00    0.00       1/1           init2 [26]
+[147]    0.0    0.00    0.00       1         initguardpathanim [147]
+-----------------------------------------------
+                0.00    0.00       1/1           init [135]
+[148]    0.0    0.00    0.00       1         initmodes [148]
+                0.00    0.00       1/1           init_player_datas [141]
+                0.00    0.00       1/1           initpathtext [149]
+-----------------------------------------------
+                0.00    0.00       1/1           initmodes [148]
+[149]    0.0    0.00    0.00       1         initpathtext [149]
+                0.00    0.00       1/1           load_images_from_folder [158]
+-----------------------------------------------
+                0.00    0.00       1/1           init2 [26]
+[150]    0.0    0.00    0.00       1         initplayeranim [150]
+-----------------------------------------------
+                0.00    0.00       1/1           init2 [26]
+[151]    0.0    0.00    0.00       1         initsounds [151]
+-----------------------------------------------
+                0.00    0.00       1/1           init2 [26]
+[152]    0.0    0.00    0.00       1         initweapon [152]
+-----------------------------------------------
+                0.00    0.00       1/1           init [135]
+[153]    0.0    0.00    0.00       1         initwindow [153]
+-----------------------------------------------
+                0.00    0.00       1/1           parsing [163]
+[154]    0.0    0.00    0.00       1         is_map_closed [154]
+                0.00    0.00    3860/3860        is_surrounded_aux [68]
+                0.00    0.00     965/965         tab_dup [80]
+                0.00    0.00     965/871225      is_in_string [61]
+                0.00    0.00     965/1006        freeall [79]
+-----------------------------------------------
+                0.00    0.00       1/1           parsing [163]
+[155]    0.0    0.00    0.00       1         is_there_unclosed_doors [155]
+-----------------------------------------------
+                0.00    0.00       1/1           parsing [163]
+[156]    0.0    0.00    0.00       1         isnt_cub_ended [156]
+-----------------------------------------------
+                0.00    0.00       1/1           parsing_csv [164]
+[157]    0.0    0.00    0.00       1         isnt_ended_by [157]
+                0.00    0.00       4/79          len [96]
+-----------------------------------------------
+                0.00    0.00       1/1           initpathtext [149]
+[158]    0.0    0.00    0.00       1         load_images_from_folder [158]
+                0.00    0.00      64/73          inittexture [97]
+                0.00    0.00       1/1           sort_files_alphabetically [166]
+-----------------------------------------------
+                0.00    0.00       1/1           keys [33]
+[159]    0.0    0.00    0.00       1         menuexit [159]
+-----------------------------------------------
+                0.00    0.00       1/1           init [135]
+[160]    0.0    0.00    0.00       1         mouse_hide [160]
+-----------------------------------------------
+                0.00    0.00       1/1           init2 [26]
+[161]    0.0    0.00    0.00       1         parse [161]
+                0.00    0.00    1674/1674        new_point [78]
+                0.00    0.00    1674/1674        add_element [77]
+-----------------------------------------------
+                0.00    0.00       1/1           parsing_csv [164]
+[162]    0.0    0.00    0.00       1         parse_extension [162]
+                0.00    0.00      31/1006        freeall [79]
+                0.00    0.00      25/25          store_an_obj [107]
+                0.00    0.00       1/1           store_ceil_infos [168]
+-----------------------------------------------
+                0.00    0.00       1/1           init [135]
+[163]    0.0    0.00    0.00       1         parsing [163]
+                0.00    0.00       8/1006        freeall [79]
+                0.00    0.00       6/12011       tab_len [67]
+                0.00    0.00       6/6           set_a_value [117]
+                0.00    0.00       6/6           is_everything_set [113]
+                0.00    0.00       4/4           set_texture [120]
+                0.00    0.00       2/2           set_a_color [125]
+                0.00    0.00       1/1           isnt_cub_ended [156]
+                0.00    0.00       1/1           init_infos [139]
+                0.00    0.00       1/1           skip_whitespaces [165]
+                0.00    0.00       1/1           calculate_mapsize_checking [128]
+                0.00    0.00       1/1           store_map [169]
+                0.00    0.00       1/1           is_map_closed [154]
+                0.00    0.00       1/1           is_there_unclosed_doors [155]
+-----------------------------------------------
+                0.00    0.00       1/1           init [135]
+[164]    0.0    0.00    0.00       1         parsing_csv [164]
+                0.00    0.00       1/1           isnt_ended_by [157]
+                0.00    0.00       1/1           init_sprite_map [144]
+                0.00    0.00       1/1           parse_extension [162]
+-----------------------------------------------
+                0.00    0.00       1/1           parsing [163]
+[165]    0.0    0.00    0.00       1         skip_whitespaces [165]
+                0.00    0.00       2/2           there_is_only_whitespaces [126]
+-----------------------------------------------
+                0.00    0.00       1/1           load_images_from_folder [158]
+[166]    0.0    0.00    0.00       1         sort_files_alphabetically [166]
+-----------------------------------------------
+                0.00    0.00       1/1           cleardata [130]
+[167]    0.0    0.00    0.00       1         stop_threads_pool [167]
+-----------------------------------------------
+                0.00    0.00       1/1           parse_extension [162]
+[168]    0.0    0.00    0.00       1         store_ceil_infos [168]
+                0.00    0.00       1/12011       tab_len [67]
+-----------------------------------------------
+                0.00    0.00       1/1           parsing [163]
+[169]    0.0    0.00    0.00       1         store_map [169]
+                0.00    0.00       1/1           dupspace [133]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012-2022 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+ [127] actors_clear          [108] initimage              [36] perform_dda
+ [105] add_actor             [148] initmodes             [101] printmap2
+  [77] add_element           [149] initpathtext           [39] puttexturesmenu (cub3D_render_menus.c)
+   [6] add_pix               [150] initplayeranim          [3] raycasting
+   [5] add_pix_custom         [38] initplayerpathanim      [2] render
+ [110] booltab_clear         [151] initsounds             [53] render_fps
+  [83] calc_angle             [97] inittexture            [19] render_hud_parts
+ [128] calculate_mapsize_checking [51] inittextures       [20] render_player
+ [111] cells_clear           [152] initweapon             [55] renderammun
+ [129] clear_sounds          [153] initwindow             [59] renderarmdigit
+ [130] cleardata              [75] is_char_valid          [60] renderarmsdigits
+ [131] clearimgs             [121] is_color               [57] rendercard
+ [104] cmp                   [113] is_everything_set      [58] rendercards
+  [15] color_lerp             [61] is_in_string           [56] rendercrosshair
+ [132] create_entries        [154] is_map_closed          [28] renderdigit
+  [62] dda_utils              [76] is_player_char         [48] renderdoomhead
+  [63] door_extend_ray        [82] is_pressed             [29] renderelement
+  [87] draw_floor_ceiling_threaded [68] is_surrounded_aux [22] renderemptyzone
+  [23] draw_scaled_img       [114] is_texture             [18] renderhud
+   [4] draw_skybox           [155] is_there_unclosed_doors [21] rendermap
+  [49] draw_sprite           [115] is_valid_int           [46] rendermenu
+  [50] draw_sprites           [81] is_valid_pos (cub3D_movements2.c) [54] rendersmalldigit
+  [45] draw_square           [156] isnt_cub_ended         [52] rendersmalldigitfps
+ [133] dupspace              [157] isnt_ended_by          [34] returnkey
+ [134] free_sprite_map        [91] key_management        [102] rotatecamx
+  [79] freeall                [33] keys                   [16] save_screen_to_buffer
+  [17] ft_bzero              [109] keys_release           [25] scale_img
+  [12] ft_memcpy              [96] len                   [125] set_a_color
+  [40] ft_strdup             [158] load_images_from_folder [117] set_a_value
+ [106] get_sprite_id          [84] m_random               [64] set_dda
+  [14] getcolorpix            [41] ma_dr_mp3_L3_huffman   [86] set_pos
+  [70] guardattack            [42] ma_linear_resampler_interpolate_frame_f32 [88] set_skybox
+  [90] handle_movement        [24] ma_linear_resampler_process_pcm_frames_f32_downsample [72] set_sprite_boundaries
+  [71] hitguard               [43] ma_pcm_f32_to_s16     [120] set_texture
+ [118] hooks                  [66] maintitleanim         [165] skip_whitespaces
+  [13] img_pix_put            [11] melting                [89] sort_descending
+ [135] init                  [122] menuarrow             [166] sort_files_alphabetically
+  [26] init2                 [159] menuexit              [167] stop_threads_pool
+ [136] init_actors            [30] mlx_int_get_line      [107] store_an_obj
+  [69] init_data_floor        [31] mlx_int_parse_xpm     [168] store_ceil_infos
+ [137] init_doors             [44] mlx_int_str_str       [169] store_map
+  [47] init_elem              [37] mlx_int_str_str_cote   [80] tab_dup
+ [138] init_guard            [160] mouse_hide             [67] tab_len
+ [112] init_guard_astar      [123] mouse_move            [126] there_is_only_whitespaces
+ [139] init_infos             [98] move                   [65] timestamp_in_ms
+ [140] init_objects           [99] moveplayerx            [10] transition_melt_screen
+ [141] init_player_datas     [103] moveplayery            [93] update_actors
+ [142] init_player_dir       [124] nb_occur               [92] update_animations
+ [143] init_random_melting_array [116] new_actor          [94] update_door_animations
+ [144] init_sprite_map        [78] new_point               [7] update_floor_ceil_texture_pixels
+ [145] init_thread_pool       [85] number_to_digits       [73] update_guards
+ [119] init_xpm              [100] open_door              [95] update_player
+  [35] initanim              [161] parse                  [74] update_projectiles
+ [146] initguardanim         [162] parse_extension         [9] update_texture_pixels
+ [147] initguardpathanim     [163] parsing
+  [32] inithud               [164] parsing_csv

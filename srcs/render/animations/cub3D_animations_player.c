@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/29 12:35:26 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/29 23:10:36 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,11 @@ void	update_player_animations(t_vars *v)
 	if (v->player.animoff > v->player.currweapon.img.width)
 	{
 		v->player.animoff = 0;
-		v->player.pattack = 0;
-		v->ray.hitguard = 0;
+		if (!v->player.attack)
+		{
+			v->player.pattack = 0;
+			v->ray.hitguard = 0;
+		}
 	}
 }
 

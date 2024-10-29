@@ -99,6 +99,8 @@ void	actions(t_vars *v, int kd)
 /// @return 0
 int	keys(int kd, t_vars *v)
 {
+	if (kd > 65534)
+		return (0);
 	v->keys[kd] = true;
 	actions(v, kd);
 	if (kd == XK_Escape)

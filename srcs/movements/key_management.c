@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 16:14:16 by cviegas           #+#    #+#             */
-/*   Updated: 2024/10/21 12:30:21 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/29 23:27:40 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,9 @@ void	key_management(t_vars *v)
 		hotreload(v);
 	if (!v->game.won && v->game.won != 4 && v->game.start > 1)
 		handle_movement(v);
+	if (!v->game.won && v->game.won != 4 && v->game.start > 1
+		&& (v->mouses[1] || v->mouses[3]) && (v->player.currweapon.isprojectile
+			|| v->player.currweapon.img.id
+			== v->player.weapon[ECHAINSAW].img.id))
+		attack(v, XK_x);
 }

@@ -37,7 +37,9 @@ int	mouse_down(int button, int x, int y, t_vars *p)
 	}
 	else if (p->game.start > 1 && p->game.god && (button == 1 || button == 3))
 	{
-		attack(p, XK_x);
+		p->mouses[button] = true;
+		if (!p->player.currweapon.isprojectile)
+			attack(p, XK_x);
 		p->mouse.button = button;
 		p->mouse.prevx = x;
 		p->mouse.prevy = y;
@@ -50,12 +52,18 @@ int	mouse_up(int button, int x, int y, t_vars *p)
 {
 	(void)x;
 	(void)y;
-	p->mouses[button] = false;
 	if (p->game.start > 1 && p->game.god && (button == 1 || button == 3))
 	{
+		if (p->player.currweapon.isprojectile
+			&& (!p->mouses[button] || !p->mouses[button]))
+		{
+			p->player.pattack = 0;
+			p->player.attack = 0;
+		}
 		p->game.start = 2;
 		p->mouse.button = 0;
 	}
+	p->mouses[button] = false;
 	return (0);
 }
 
