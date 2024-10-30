@@ -23,7 +23,7 @@ OBJS_DIR_B	= objs_b/
 
 LOGS		= logs
 
-FLAG = -Wall -Wextra -Werror -O3 #-fsanitize=thread -fPIE
+FLAG = -Wall -Wextra -Werror -O3 -g #-fsanitize=thread -fPIE
 
 MLX_FLAG = -lXext -lX11 -lz -lm -pthread -ldl -lpthread -lXfixes# -lasound
 

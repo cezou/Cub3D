@@ -45,8 +45,8 @@ bool	is_bad_coordinates(int x, int y, char **map, t_vars *v)
 
 bool	store_an_obj(char **l, int *i, t_vars *v)
 {
-	double		x;
-	double		y;
+	double	x;
+	double	y;
 
 	if (++(*i) >= 200)
 		return (true);
@@ -96,8 +96,8 @@ void	parse_extension(int fd, t_vars *v)
 			store_ceil_infos(l, fd, v);
 		if (i > 5)
 			if (!store_an_obj(l, &(j), v))
-				(eerr("Bad object: Not 8 values", i + 1),
-					clean_exit(l, fd, v, 1));
+				(eerr("Bad object: Not 8 values", i + 1), clean_exit(l, fd, v,
+						1));
 		freeall(l);
 	}
 	close((v->num_objs = i - 6, fd));

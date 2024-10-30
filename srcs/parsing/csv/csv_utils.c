@@ -23,16 +23,16 @@ bool	isnt_ended_by(const char *s, const char *ext)
 	int	i;
 	int	e;
 
-	if (len(s) < len(ext) + 1)
+	if (len(s) < len(ext))
 		return (1);
 	i = len(s) - 1;
-	e = len(s) - 1;
+	e = len(ext) - 1;
 	while (e >= 0)
 	{
 		if (s[i] != ext[e])
-			return (0);
+			return (1);
 		e--;
 		i--;
 	}
-	return (1);
+	return (0);
 }

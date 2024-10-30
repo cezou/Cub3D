@@ -65,6 +65,8 @@ void	calculate_mapsize_checking(char *line, t_vars *v, int fd, int i)
 		if (!check_line(line, v, i))
 			clean_exit((char **)j, fd, v, 0);
 	}
+	if (!v->infos.player)
+		(merr("There is no player"), clean_exit((char **)line, fd, v, 0));
 	v->infos.map_height = j + 1;
 	close(fd);
 }
