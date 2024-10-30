@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/27 19:47:46 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/30 12:40:39 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,9 @@ void	sort_sprites(t_vars *v)
 /// @param p The actual sprite to draw
 void	draw_sprite(t_vars *v, t_sprite_data *sp, t_actor *g, t_point p)
 {
-	int		tx;
-	int		ty;
-
-	p.x = sp->drawstartx - 1;
-	guardattack((hitguard(v, sp, g), v), sp, g);
+	int (tx) = 0;
+	int (ty) = 0;
+	guardattack((p.x = sp->drawstartx - 1, hitguard(v, sp, g), v), sp, g);
 	while (++p.x < sp->drawendx)
 	{
 		tx = (int)(256 * (p.x - (sp->spritescreenx - sp->spritewidth / 2))
@@ -108,6 +106,8 @@ void	draw_sprite(t_vars *v, t_sprite_data *sp, t_actor *g, t_point p)
 				ty = ((p.z * v->tmp[0].animy) / sp->spriteheight) / 256
 					+ g->animoffy;
 				p.z = (ty * v->tmp[0].len) + (tx * 4);
+				if (v->tmp[0].addr[p.z + 3] != 0)
+					continue ;
 				add_pix(v, p, (t_point3){1, sp->transformy, FOGC, FOGL, 0},
 					(t_point){0});
 			}
