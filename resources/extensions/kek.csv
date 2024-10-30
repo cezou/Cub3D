@@ -4,7 +4,7 @@ TopLeft x,TopLeft y,BottomRight x,BottomRight y,,,
 ,,,,,,
 Objects,,,,,,
 Sprite ID,x,y,Scale factor,Vertical Position,Has hitbox?,Pickable?,Anim offset X
-EPARMOR,14.0,9.0,5,128,1,1,1
+EPARMOR,14.0,9.0,-1,128,1,1,1
 EPARMOR1,14,9.5,5,128,1,1,1
 ESTIM,14,10,5,128,1,1,1
 EMEDI,14.0,10.5,5,128,1,1,1
