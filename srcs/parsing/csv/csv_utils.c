@@ -41,7 +41,6 @@ bool	is_valid(double d)
 {
 	return (d >= 0 && d <= 128);
 }
-
 bool	is_bool(double d)
 {
 	return (d == 0 || d == 1);
