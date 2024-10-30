@@ -1305,6 +1305,8 @@ int							maintitleanim(t_vars *v);
 void						melting(t_vars *v, bool *done, int x);
 
 /* FUNCTIONS */
+bool	there_is_unvalid_values(t_obj obj)
+;
 int							clear_infos_shit(t_vars *v);
 void						free_sprite_map(t_sprite_map **map);
 t_sprite_entry				*create_entries(void);

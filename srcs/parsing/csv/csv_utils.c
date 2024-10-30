@@ -36,3 +36,20 @@ bool	isnt_ended_by(const char *s, const char *ext)
 	}
 	return (0);
 }
+
+bool	is_valid(double d)
+{
+	return (d >= 0 && d <= 128);
+}
+
+bool	is_bool(double d)
+{
+	return (d == 0 || d == 1);
+}
+
+bool	there_is_unvalid_values(t_obj obj)
+{
+	return (!((obj.x && obj.y && obj.animx && is_valid(obj.uv)
+				&& is_valid(obj.v)) && is_bool(obj.h)
+			&& is_bool(obj.pickable)));
+}

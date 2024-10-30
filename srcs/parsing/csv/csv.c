@@ -45,34 +45,29 @@ bool	is_bad_coordinates(int x, int y, char **map, t_vars *v)
 
 bool	store_an_obj(char **l, int *i, t_vars *v)
 {
-	double	x;
-	double	y;
-
 	if (++(*i) >= 200)
 		return (true);
 	if (tab_len(l) != 8)
-		return (false);
+		return (eerr("Bad object: Not 8 values", *i + 7), false);
 	v->g_objs[(*i)].img_id = get_sprite_id(v->sprite_map, l[0]);
-	x = ft_atod(l[1]);
-	y = ft_atod(l[2]);
-	v->g_objs[(*i)].x = x;
-	v->g_objs[(*i)].y = y;
+	v->g_objs[(*i)].x = ft_atod(l[1]);
+	v->g_objs[(*i)].y = ft_atod(l[2]);
 	v->g_objs[(*i)].uv = ft_atod(l[3]);
 	v->g_objs[(*i)].v = ft_atod(l[4]);
 	v->g_objs[(*i)].h = ft_atod(l[5]);
 	v->g_objs[(*i)].pickable = ft_atod(l[6]);
 	v->g_objs[(*i)].animx = ft_atoi(l[7]);
-	if (v->g_objs[(*i)].animx <= 0)
-		v->g_objs[(*i)].animx = 1;
+	if (there_is_unvalid_values(v->g_objs[(*i)]))
+		return (eerr("There is an unvalid value", *i + 7), false);
 	return (true);
 }
 
-// if (is_bad_coordinates(x, y, v->infos.map, v))
+// if	(is_bad_coordinates(x, y, v->infos.map, v))
 // {
 // 	printf("X= %f\nY= %f\n", x, y);
 // 	printf("%c\n", v->infos.map[(int)x][(int)y]);
-// 	(eerr("Bad Coordinates: not on a free block.", line), clean_exit(l, fd,
-// 			v, 1));
+// 	(eerr("Bad Coordinates: not on a free block.", line), clean_exit(l, fd, v,
+// 			1));
 // }
 
 void	parse_extension(int fd, t_vars *v)
@@ -96,8 +91,7 @@ void	parse_extension(int fd, t_vars *v)
 			store_ceil_infos(l, fd, v);
 		if (i > 5)
 			if (!store_an_obj(l, &(j), v))
-				(eerr("Bad object: Not 8 values", i + 1), clean_exit(l, fd, v,
-						1));
+				clean_exit(l, fd, v, 1);
 		freeall(l);
 	}
 	close((v->num_objs = i - 6, fd));
