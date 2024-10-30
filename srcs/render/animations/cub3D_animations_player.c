@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/29 23:10:36 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/30 11:23:00 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	update_player_movement(t_vars *v)
 {
 	if (v->player.moving)
 	{
-		v->game.cambobtime += v->game.frametime;
+		v->game.cambobtime += 0.016 * v->player.movespeedy;
 		v->game.playbobtime += v->game.frametime;
 		if (v->player.movingy)
 		{
@@ -67,11 +67,11 @@ void	update_player_movement(t_vars *v)
 
 /// @brief Update player jump/bobbing
 /// @param v Vars
+// v->ray.pitch += sin((v->game.cambobtime) * 5.0f) * 0.5f;
 void	update_player_motion(t_vars *v)
 {
-	v->ray.pitch += sin((v->game.cambobtime) * 5.0f) * 1.4f;
-	v->player.motionx = sin((v->game.cambobtime) * 8.0f) * 2.0f;
-	v->player.motiony = sin((v->game.cambobtime) * 8.0f) * 5.0f;
+	v->player.motionx = sin((v->game.playbobtime) * 8.0f) * 2.0f;
+	v->player.motiony = sin((v->game.playbobtime) * 8.0f) * 5.0f;
 	if (v->player.jumping)
 	{
 		v->player.z += 1000.0 * v->game.frametime;

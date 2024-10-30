@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/29 16:42:45 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/30 10:47:13 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	initwindow(t_vars *v, int argc, char **argv)
 		if (!WSL && (v->screen.resw > v->screen.screenw
 				|| v->screen.resh > v->screen.screenh
 				|| v->screen.resw < 320 || v->screen.resh < 320))
-			exit((prterr(v, "Resolution is bigger than your screen", 1, 0), 1));
+			exit((prterr(v, "Resolution is bigger than your screen", 1, 1), 1));
 	}
 	initmainimage(v);
 	v->screen.win = mlx_new_window(v->mlx, (int)v->screen.resw,

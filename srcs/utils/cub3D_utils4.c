@@ -81,3 +81,30 @@ void	number_to_digits(t_vars *v, int n, int res[4], int *i)
 	res[*i] = n % 10;
 	(*i)++;
 }
+
+int	clear_infos_shit(t_vars *v)
+{
+	if (v->infos.east.imga.img)
+		if (mlx_destroy_image(v->mlx, v->infos.east.imga.img) < 0)
+			return (ft_printf(2, "ERROR Destroy Image\n"), -1);
+	if (v->infos.north.imga.img)
+		if (mlx_destroy_image(v->mlx, v->infos.north.imga.img) < 0)
+			return (ft_printf(2, "ERROR Destroy Image\n"), -1);
+	if (v->infos.west.imga.img)
+		if (mlx_destroy_image(v->mlx, v->infos.west.imga.img) < 0)
+			return (ft_printf(2, "ERROR Destroy Image\n"), -1);
+	if (v->infos.south.imga.img)
+		if (mlx_destroy_image(v->mlx, v->infos.south.imga.img) < 0)
+			return (ft_printf(2, "ERROR Destroy Image\n"), -1);
+	if (v->infos.map)
+		freeall(v->infos.map);
+	v->infos.east.imga.img = NULL;
+	v->infos.north.imga.img = NULL;
+	v->infos.west.imga.img = NULL;
+	v->infos.south.imga.img = NULL;
+	v->img[ESOUTH].img = NULL;
+	v->img[EEAST].img = NULL;
+	v->img[EWEST].img = NULL;
+	v->img[ENORTH].img = NULL;
+	return (1);
+}

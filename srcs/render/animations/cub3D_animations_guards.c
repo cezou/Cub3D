@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:12:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/29 18:11:32 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/30 10:12:05 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ void	update_sprite_anim_chase(t_vars *v, t_actor *a, int i,
 	if (!a->astar.trace && !astar(v, &a->astar, a))
 		return (a->state = EIDLE, (void)v);
 	path = a->astar.trace->prev;
-	if (path->j != (int)round(a->x) || path->i != (int)round(a->y))
+	if ((path->j != (int)round(a->x) || path->i != (int)round(a->y))
+		&& a->dist >= 3.0)
 	{
 		a->angle = atan2(a->vectory, a->vectorx);
 		a->x += a->ms * a->vectorx;

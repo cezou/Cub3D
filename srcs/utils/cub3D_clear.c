@@ -66,9 +66,9 @@ int	map_clear(t_map *lst)
 /// @return -1 if an error occured or 0
 int	clearimgs(t_vars *v)
 {
-	int	j;
-
 	int (i) = -1;
+	int (j) = -1;
+	clear_infos_shit(v);
 	while (v->img && ++i <= COMP_N)
 	{
 		j = -1;
@@ -82,7 +82,8 @@ int	clearimgs(t_vars *v)
 						v->img[i].anim[j].img) < 0)
 					return (ft_printf(2, "ERROR Destroy Anim Image\n"), -1);
 			}
-			free(v->img[i].anim);
+			if (v->img[i].anim)
+				free(v->img[i].anim);
 			if (mlx_destroy_image(v->mlx, v->img[i].img) < 0)
 				return (ft_printf(2, "ERROR Destroy Image\n"), -1);
 		}
@@ -137,8 +138,6 @@ int	cleardata(t_vars *v, int b)
 		free(v->mlx);
 	if (v->pool.threads)
 		stop_threads_pool(v);
-	if (v->infos.map)
-		freeall(v->infos.map);
 	if (v->img)
 		free(v->img);
 	if (b && v->ray.zbuffer)

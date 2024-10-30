@@ -16,3 +16,5 @@ Makefile
 README.md
 .gitignore
 ignore.txt
+DOOM/
+DOOM/*

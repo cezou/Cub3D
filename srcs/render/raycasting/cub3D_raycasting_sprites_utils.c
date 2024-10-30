@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/29 18:37:06 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/30 10:11:35 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,7 @@ void	hitguard(t_vars *v, t_sprite_data *sp, t_actor *g)
 		|| sp->transformy <= 0)
 		return ;
 	if (sp->drawstartx > 0 && g->dist < 50 && sp->drawstartx < v->screen.resw
-		&& sp->transformy < v->ray.zbuffer[sp->drawstartx]
-		&& g->dist >= 3.0)
+		&& sp->transformy < v->ray.zbuffer[sp->drawstartx])
 	{
 		g->img_i = EGUARDW;
 		g->state = ECHASE;

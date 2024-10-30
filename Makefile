@@ -6,7 +6,7 @@
 #    By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 11:28:17 by pmagnero          #+#    #+#              #
-#    Updated: 2024/10/29 22:46:27 by pmagnero         ###   ########.fr        #
+#    Updated: 2024/10/30 11:15:59 by pmagnero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,8 @@ b	=	0
 
 ifeq ($(d),1)
 	DEBUG	=	-ggdb
-	PG		=	-pg
+#	PG		=	-pg
+	PG		=	
 else
     DEBUG	=	
     PG		=	
@@ -58,7 +59,7 @@ endif
 
 CC	=	cc
 
-VALGRIND_F	=	--leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes --track-origins=yes --suppressions=ignore.txt# --gen-suppressions=all --show-leak-kinds=all --log-fd=1 --trace-children=yes
+VALGRIND_F	=	-s --leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes --track-origins=yes --suppressions=ignore.txt# --gen-suppressions=all --show-leak-kinds=all --log-fd=1 --trace-children=yes
 
 NORME	=	srcs/** includes/*.h includes/printf/*.c includes/printf/*.h includes/printf/**/*.c includes/printf/**/*.h
 

@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/29 16:11:11 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/30 11:24:35 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1115,6 +1115,7 @@ void						scrolling(t_vars *v, float *h, char *str,
 int							clearimgs(t_vars *v);
 int							freeall(char **tab);
 int							cleardata(t_vars *vars, int b);
+int							clear_infos_shit(t_vars *v);
 int							map_clear(t_map *lst);
 int							actors_clear(t_actor *lst);
 int							booltab_clear(bool **tab);
