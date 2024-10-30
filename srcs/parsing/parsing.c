@@ -46,7 +46,7 @@ static void	parse_map(t_vars *v, int fd, int i)
 	calculate_mapsize_checking(skip_whitespaces(v, fd, &i), v, fd, i);
 	store_map(v, 0, -1);
 	if (!is_map_closed(v->infos.map, v->infos.map_index))
-		clean_exit(v->infos.map, INT_MAX, v, 1);
+		clean_exit(v->infos.map, INT_MAX, v, 0);
 	if (!MANDATORY && is_there_unclosed_doors(v->infos.map, v))
 		clean_exit(v->infos.map, INT_MAX, v, 1);
 }
@@ -56,10 +56,13 @@ void	parsing(int ac, char *filename, t_vars *v)
 	int		fd;
 	size_t	i;
 
-	if (ac < 2)
-		(perr(E_ARG), exit(FAIL));
-	if (isnt_cub_ended(filename))
-		exit((merr("file name needs to end with \".cub\""), FAIL));
+	if (MANDATORY && ac != 2)
+		(perr(E_ARG), clean_exit((char **)v->img, INT_MAX, v, 0));
+	if (!MANDATORY && (ac < 2 || ac > 5))
+		(perr(E_ARGB), clean_exit((char **)v->img, INT_MAX, v, 0));
+	if (isnt_ended_by(filename, ".cub"))
+		(merr("file name needs to end with \".cub\""),
+			clean_exit((char **)v->img, INT_MAX, v, 0));
 	init_infos(v, filename, &fd);
 	i = 0;
 	parse_ids(v, fd, &i);

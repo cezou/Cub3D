@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/30 11:24:35 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/29 16:11:11 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@
 
 // Parsing
 # define E_ARG "Usage: ./cub3D *.cub"
+# define E_ARGB "Usage: ./cub3D *.cub (*.csv) (width height)\n\
+(in parenthesis = optionnal)"
 
 # define ERRCF "Closing file failed\n"
 # define ERROF "Opening file failed\n"
@@ -1115,7 +1117,6 @@ void						scrolling(t_vars *v, float *h, char *str,
 int							clearimgs(t_vars *v);
 int							freeall(char **tab);
 int							cleardata(t_vars *vars, int b);
-int							clear_infos_shit(t_vars *v);
 int							map_clear(t_map *lst);
 int							actors_clear(t_actor *lst);
 int							booltab_clear(bool **tab);
@@ -1286,6 +1287,7 @@ int							maintitleanim(t_vars *v);
 void						melting(t_vars *v, bool *done, int x);
 
 /* FUNCTIONS */
+int							clear_infos_shit(t_vars *v);
 void						free_sprite_map(t_sprite_map **map);
 t_sprite_entry				*create_entries(void);
 void						free_sprite_map(t_sprite_map **map);

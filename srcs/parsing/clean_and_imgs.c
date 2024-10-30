@@ -16,7 +16,8 @@ void	init_infos(t_vars *v, char *file, int *fd)
 {
 	*fd = open(file, O_RDONLY);
 	if (*fd == -1)
-		exit((merr("file doesn't exist or open failed"), FAIL));
+		(merr("file doesn't exist or open failed"), clean_exit((char **)v->img,
+				INT_MAX, v, 0));
 	v->infos.north.imga.img = NULL;
 	v->infos.north.is_set = NULL;
 	v->infos.east.imga.img = NULL;

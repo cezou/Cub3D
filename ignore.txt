@@ -1,9 +1,9 @@
-#{
-#    leak mlx_mouse_hide
-#    Memcheck:Leak
-#    ...
-#    fun:mlx_mouse_hide
-#}
+{
+    leak mlx_mouse_hide
+    Memcheck:Leak
+    ...
+    fun:mlx_mouse_hide
+}
 
 {
     leak from /usr/lib/x86_64-linux-gnu/libpulse*

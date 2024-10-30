@@ -51,7 +51,7 @@ void	initwindow(t_vars *v, int argc, char **argv)
 		v->screen.resw = ft_atol(argv[argc - 2]);
 		v->screen.resh = ft_atol(argv[argc - 1]);
 		if (is_bad_res(v))
-			exit((prterr(v, ERRRES, 1, 0), 1));
+			exit((prterr(v, ERRRES, 1, 1), 1));
 		if (!WSL && (v->screen.resw > v->screen.screenw
 				|| v->screen.resh > v->screen.screenh
 				|| v->screen.resw < 320 || v->screen.resh < 320))
@@ -61,6 +61,6 @@ void	initwindow(t_vars *v, int argc, char **argv)
 	v->screen.win = mlx_new_window(v->mlx, (int)v->screen.resw,
 			(int)v->screen.resh, "CUB3D");
 	if (!v->screen.win)
-		exit((prterr(v, ERRMALL, 1, 0), 1));
+		exit((prterr(v, ERRMALL, 1, 1), 1));
 	mouse_hide(v);
 }

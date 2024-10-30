@@ -126,7 +126,7 @@ void	init(t_vars *v, int argc, char **argv)
 		parsing_csv((v->game.ext = argv[2], v->game.ext), v);
 	v->img = (t_imga *)malloc(sizeof(t_imga) * (COMP_N + 1));
 	if (!v->img)
-		exit((prterr(v, ERRMALL, 1, 1), 1));
+		(perr(ERRMALL), clean_exit(argv, INT_MAX, v, 0));
 	while (v->img && ++i <= COMP_N)
 		v->img[i] = (t_imga){0};
 	(ft_bzero(v->keys, MAX_KEYS), ft_bzero(v->mouses, MAX_MOUSE));
