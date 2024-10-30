@@ -100,7 +100,7 @@ t_map	*new_point(t_vars *v, char val, t_map **p)
 /// @param x X coordinate
 /// @param y Y coordinate
 /// @return Index of the door in the door array
-int	find_door(t_vars *v, int x, int y)
+int	find_door(t_vars *v, int x, int y, int pouet)
 {
 	int		i;
 
@@ -108,7 +108,12 @@ int	find_door(t_vars *v, int x, int y)
 	while (++i < v->game.nb_door)
 	{
 		if (v->door[i].x == x && v->door[i].y == y)
+		{
+			if (pouet && v->player.player->x == v->door[i].x
+				&& v->player.player->y == v->door[i].y)
+				continue ;
 			return (i);
+		}
 	}
 	return (-1);
 }

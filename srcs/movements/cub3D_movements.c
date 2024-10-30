@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 18:24:52 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/11 15:31:13 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/30 13:17:08 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ void	move(t_vars *v)
 {
 	if (v->game.pause)
 		return ;
-	printmap2(v);
 	if (ACTIVATE_SOUND && (v->keys[XK_z] || v->keys[XK_s]
 			|| v->keys[XK_q] || v->keys[XK_d]))
 	{

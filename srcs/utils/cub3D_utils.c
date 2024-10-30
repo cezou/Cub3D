@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:59:52 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/26 13:53:04 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/30 13:16:20 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int	printmap2(t_vars *v)
 	t_map	*tmp;
 
 	tmp = v->mapv.map;
-	if (DEBUG || !DEBUG)
-		return (0);
+	// if (DEBUG || !DEBUG)
+	// 	return (0);
 	while (tmp)
 	{
 		if (tmp->x == 0)

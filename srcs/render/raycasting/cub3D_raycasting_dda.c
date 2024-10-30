@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:58:10 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/15 19:34:48 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/30 13:58:15 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	hashit(t_vars *v, t_map *tmp, int i)
 	{
 		if (tmp->val == 'D')
 		{
-			i = find_door(v, tmp->x, tmp->y);
+			i = find_door(v, tmp->x, tmp->y, 0);
 			if (i < 0)
 			{
 				v->ray.img = v->img[ESPACE];

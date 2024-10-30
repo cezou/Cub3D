@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 18:24:52 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/22 15:44:26 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/30 13:59:42 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static bool	is_valid_pos(t_vars *v, t_map *pos, t_point2 p, int d)
 				o = 1;
 				break ;
 			}
-			else if (d && v->door[i].state == ECLOSE && v->door[i].x == p.z
+			else if (d && (v->door[i].state == ECLOSE || v->door[i].state == EOPEN) && v->door[i].x == p.z
 				&& p.z == pos->x && v->door[i].y == p.t
 				&& p.t == pos->y)
 				return (1);
@@ -135,15 +135,19 @@ void	open_door(t_vars *v)
 	int		i;
 	t_map	*pd;
 
+	i = 0;
 	if (v->keys[XK_space])
 	{
 		pd = set_pos(v, (t_point2){0, 0,
-				(int)(v->player.x + v->player.dir_x),
-				(int)(v->player.y + v->player.dir_y)}, v->player.player, 1);
-		i = find_door(v, pd->x, pd->y);
+				v->player.player->x + (int)round(v->player.dir_x),
+				v->player.player->y + (int)round(v->player.dir_y)},
+				v->player.player, 1);
+		i = find_door(v, pd->x, pd->y, 1);
 		if (i < 0)
 			return ;
 		if (v->door[i].state == ECLOSE)
 			v->door[i].state = EOPENING;
+		else if (v->door[i].state == EOPEN)
+			v->door[i].state = ECLOSING;
 	}
 }

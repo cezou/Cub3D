@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:08:42 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/30 11:24:35 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/30 13:58:06 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1070,7 +1070,7 @@ t_point2					get_90_angle(int dir, double x, double y);
 float						deg_to_rad(float deg);
 float						rad_to_deg(float rad);
 void						calc_angle(t_vars *v, t_actor *tmp);
-int							find_door(t_vars *v, int x, int y);
+int							find_door(t_vars *v, int x, int y, int pouet);
 int							find_guard(t_vars *v, t_map *tmp);
 void						hitguard(t_vars *v, t_sprite_data *sp, t_actor *g);
 void						guardattack(t_vars *v, t_sprite_data *sp,

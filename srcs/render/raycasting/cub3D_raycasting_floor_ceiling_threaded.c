@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:38:17 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/21 18:41:01 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/30 14:03:45 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	*job(void *arg)
 	d = (t_thread_data *)arg;
 	while (1)
 	{
-		usleep(1000);
+		usleep(2000);
 		pthread_mutex_lock(&d->pool->job_mutex);
 		while (!d->pool->work_available && !d->pool->stop)
 			pthread_cond_wait(&d->pool->job_cond, &d->pool->job_mutex);
