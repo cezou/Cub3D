@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/29 22:39:48 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/30 11:48:49 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,8 @@ int	raycasting(t_vars *v, t_imga dest)
 		v->ray.pitch = v->screen.gameh / 2;
 	if (v->ray.pitch < (-v->screen.gameh / 2) * 3)
 		v->ray.pitch = -(v->screen.gameh / 2) * 3;
-	draw_skybox(v, (t_point){-1, -1, 0, 0}, &v->floor);
+	if (!MANDATORY)
+		draw_skybox(v, (t_point){-1, -1, 0, 0}, &v->floor);
 	if (!MANDATORY)
 		draw_floor_ceiling_threaded(v, dest);
 	else
