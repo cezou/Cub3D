@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:09:56 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/30 10:47:13 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/30 14:36:14 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static bool	is_bad_res(t_vars *v)
 void	initwindow(t_vars *v, int argc, char **argv)
 {
 	mlx_get_screen_size(v->mlx, &v->screen.screenw, &v->screen.screenh);
-	ft_printf(1, "%d:%d\n", v->screen.screenw, v->screen.screenh);
 	v->screen.screenw--;
 	v->screen.screenh -= TOOLBAR_LINUX_H;
 	v->screen.resw = v->screen.screenw;

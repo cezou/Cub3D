@@ -18,8 +18,6 @@ void	free_shit(t_vars *v)
 		map_clear(v->mapv.map);
 	if (v->actors)
 		actors_clear(v->actors);
-	if (v->infos.map)
-		freeall(v->infos.map);
 	if (v->door)
 		free(v->door);
 	if (v->rand)
@@ -29,6 +27,7 @@ void	free_shit(t_vars *v)
 void	hotreload_clear(t_vars *v, char *filename, char *ext)
 {
 	free_shit(v);
+	clearimgs(v);
 	v->player = (t_player){0};
 	v->infos = (t_infos){0};
 	v->mapv = (t_mapv){0};
@@ -47,7 +46,6 @@ void	hotreload_clear(t_vars *v, char *filename, char *ext)
 	v->game.ext = ext;
 	v->player.animoff = 0;
 	m_clearrandom(v);
-	clearimgs(v);
 }
 
 void	hotreload(t_vars *v)

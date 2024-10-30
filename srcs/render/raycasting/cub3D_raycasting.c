@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/30 11:48:49 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/30 14:56:02 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,16 @@ static void	get_texture_index(t_vars *v)
 	if (v->ray.side == 0)
 	{
 		if (v->ray.dir_x < 0)
-			v->ray.img = v->infos.west.imga;
-		else
 			v->ray.img = v->infos.east.imga;
+		else
+			v->ray.img = v->infos.west.imga;
 	}
 	else
 	{
 		if (v->ray.dir_y > 0)
-			v->ray.img = v->infos.south.imga;
-		else
 			v->ray.img = v->infos.north.imga;
+		else
+			v->ray.img = v->infos.south.imga;
 	}
 }
 
