@@ -18,7 +18,6 @@
 # include "mlx_linux/minilibx-linux/mlx_int.h"
 # include "mlx_linux/minilibx-linux/uthash/uthash.h"
 # include "printf/ft_printf.h"
-# include "uthash/uthash.h"
 # include <X11/extensions/Xfixes.h>
 # include <X11/keysym.h>
 # include <errno.h>
@@ -1073,7 +1072,7 @@ t_point2					get_90_angle(int dir, double x, double y);
 float						deg_to_rad(float deg);
 float						rad_to_deg(float rad);
 void						calc_angle(t_vars *v, t_actor *tmp);
-int							find_door(t_vars *v, int x, int y);
+int							find_door(t_vars *v, int x, int y, int pouet);
 int							find_guard(t_vars *v, t_map *tmp);
 void						hitguard(t_vars *v, t_sprite_data *sp, t_actor *g);
 void						guardattack(t_vars *v, t_sprite_data *sp,
@@ -1288,6 +1287,8 @@ int							maintitleanim(t_vars *v);
 void						melting(t_vars *v, bool *done, int x);
 
 /* FUNCTIONS */
+bool						there_is_unvalid_values(t_obj obj);
+int							clear_infos_shit(t_vars *v);
 void						free_sprite_map(t_sprite_map **map);
 t_sprite_entry				*create_entries(void);
 void						free_sprite_map(t_sprite_map **map);
