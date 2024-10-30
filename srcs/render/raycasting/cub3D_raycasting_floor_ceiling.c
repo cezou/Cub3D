@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:38:17 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/30 11:51:07 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/30 15:16:12 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ void	add_pix_custom(t_vars *v, t_point p, t_point3 fog, t_imga *tmp)
 bool	is_ceiling(t_vars *v, t_floor *f)
 {
 	return ((!MANDATORY && f->cx > v->infos.ceil_topleft[0]
-		&& f->cx < v->infos.ceil_botright[0]
-		&& f->cy > v->infos.ceil_topleft[1]
-		&& f->cy < v->infos.ceil_botright[1]) || MANDATORY);
+			&& f->cx < v->infos.ceil_botright[0]
+			&& f->cy > v->infos.ceil_topleft[1]
+			&& f->cy < v->infos.ceil_botright[1]) || MANDATORY);
 }
 
 /// @brief Add the pixel from the texture to the buffer

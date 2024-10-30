@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 08:17:47 by cviegas           #+#    #+#             */
-/*   Updated: 2024/10/30 14:30:13 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/30 15:16:56 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ bool	is_valid(double d)
 {
 	return (d >= 0 && d <= 128);
 }
+
 bool	is_bool(double d)
 {
 	return (d == 0 || d == 1);

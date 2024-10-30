@@ -6,7 +6,7 @@
 /*   By: pmagnero <pmagnero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 21:30:54 by pmagnero          #+#    #+#             */
-/*   Updated: 2024/10/30 14:56:02 by pmagnero         ###   ########.fr       */
+/*   Updated: 2024/10/30 15:16:44 by pmagnero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,5 @@ int	raycasting(t_vars *v, t_imga dest)
 		update_texture_pixels(v, (t_point){v->ray.x, 0, 0, 0}, t);
 		v->ray.zbuffer[v->ray.x] = v->ray.wall_dist;
 	}
-	draw_sprites(v);
-	return (1);
+	return (draw_sprites(v), 1);
 }
